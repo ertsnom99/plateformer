@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CharacterController : MonoBehaviour
+public class CharacterTypeAController : MonoBehaviour
 {
     [SerializeField]
     private float m_maxSpeed = 100.0f;
