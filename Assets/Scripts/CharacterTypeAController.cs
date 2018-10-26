@@ -47,7 +47,7 @@ public class CharacterTypeAController : MonoBehaviour
         }
 
         m_animator.SetFloat("Speed", Mathf.Abs(move));
-        m_animator.SetBool("IsGrouned", m_isGrounded);
+        m_animator.SetBool("IsGrounded", m_isGrounded);
         m_animator.SetFloat("VerticalSpeed", m_rigidbody2D.velocity.y);
     }
 
@@ -58,7 +58,7 @@ public class CharacterTypeAController : MonoBehaviour
             m_rigidbody2D.AddForce(new Vector2(.0f, m_jumpForce));
 
             m_isGrounded = false;
-            m_animator.SetBool("IsGrouned", m_isGrounded);
+            m_animator.SetBool("IsGrounded", m_isGrounded);
         }
     }
 

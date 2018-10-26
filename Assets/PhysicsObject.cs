@@ -12,6 +12,7 @@ public class PhysicsObject : MonoBehaviour
     protected Vector2 m_groundNormal;
 
     protected Vector2 m_velocity;
+    protected Vector2 m_targetVelocity;
     protected ContactFilter2D m_contactFilter;
     protected RaycastHit2D[] m_hitBuffer = new RaycastHit2D[16];
     protected List<RaycastHit2D> m_hitBufferList = new List<RaycastHit2D>(16);
@@ -21,7 +22,7 @@ public class PhysicsObject : MonoBehaviour
     protected const float MinMoveDistance = 0.001f;
     protected const float ShellRadius = 0.01f;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         m_contactFilter.useTriggers = false;
         // Tells to use the layer settings from the Physics2D settings (the matrix)
@@ -37,12 +38,30 @@ public class PhysicsObject : MonoBehaviour
 
         // Update velocity
         m_velocity += m_gravityModifier * Physics2D.gravity * Time.fixedDeltaTime;
-        
-        // Calculate movement to be done
-        Vector2 movement = Vector2.up * (m_velocity * Time.fixedDeltaTime).y;
+        m_velocity.x = m_targetVelocity.x;
 
+        // Create a Vector prependicular to the normal
+        Vector2 moveAlongGround = new Vector2(m_groundNormal.y, -m_groundNormal.x);
+
+        // Quantity of movement to be done during this fixed update, based on the velocity
+        Vector2 deltaPosition = m_velocity * Time.fixedDeltaTime;
+
+        // The X movement is executed first, then the Y movement is executed. This allows a better control of each type of movement and helps to avoid
+        // corner cases. This tehcnic was used in the 16 bit era.
+        Vector2 movement = moveAlongGround * deltaPosition.x;
+        Move(movement, false);
+
+        movement = Vector2.up * deltaPosition.y;
         Move(movement, true);
     }
+
+    private void Update()
+    {
+        m_targetVelocity = Vector2.zero;
+        ComputeVelocity();
+    }
+
+    protected virtual void ComputeVelocity() { }
 
     private void Move(Vector2 movement, bool yMovement)
     {
