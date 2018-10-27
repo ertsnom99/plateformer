@@ -9,7 +9,7 @@ public class PhysicsObject : MonoBehaviour
     private float m_minGroundNormalY = .65f;
 
     protected bool m_isGrounded = false;
-    protected Vector2 m_groundNormal;
+    protected Vector2 m_groundNormal = Vector3.up;
 
     protected Vector2 m_velocity;
     protected Vector2 m_targetVelocity;

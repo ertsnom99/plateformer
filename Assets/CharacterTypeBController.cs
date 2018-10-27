@@ -12,7 +12,7 @@ public class CharacterTypeBController : PhysicsObject
 
     protected override void Awake()
     {
-        Time.timeScale = 0.2f;
+        //Time.timeScale = 0.2f;
         base.Awake();
 
         m_spriteRenderer = GetComponent<SpriteRenderer>();
