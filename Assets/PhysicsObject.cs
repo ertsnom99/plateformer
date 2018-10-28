@@ -9,9 +9,10 @@ public class PhysicsObject : MonoBehaviour
     private float m_minGroundNormalY = .65f;
 
     protected bool m_isGrounded = false;
-    protected Vector2 m_groundNormal = Vector3.up;
-
-    protected Vector2 m_velocity;
+    protected Vector2 m_groundNormal;
+    
+    protected Vector2 m_horizontalVelocity;
+    protected Vector2 m_verticalVelocity;
     protected Vector2 m_targetVelocity;
     protected ContactFilter2D m_contactFilter;
     protected RaycastHit2D[] m_hitBuffer = new RaycastHit2D[16];
@@ -37,20 +38,19 @@ public class PhysicsObject : MonoBehaviour
         m_isGrounded = false;
 
         // Update velocity
-        m_velocity += m_gravityModifier * Physics2D.gravity * Time.fixedDeltaTime;
-        m_velocity.x = m_targetVelocity.x;
+        m_verticalVelocity += m_gravityModifier * Physics2D.gravity * Time.fixedDeltaTime;
+        m_horizontalVelocity.x = m_targetVelocity.x;
 
         // Create a Vector prependicular to the normal
-        Vector2 moveAlongGround = new Vector2(m_groundNormal.y, -m_groundNormal.x);
-
-        // Quantity of movement to be done during this fixed update, based on the velocity
-        Vector2 deltaPosition = m_velocity * Time.fixedDeltaTime;
+        Vector2 movementAlongGround = new Vector2(m_groundNormal.y, -m_groundNormal.x);
 
         // The X movement is executed first, then the Y movement is executed. This allows a better control of each type of movement and helps to avoid
         // corner cases. This tehcnic was used in the 16 bit era.
-        Vector2 movement = moveAlongGround * deltaPosition.x;
+        Vector2 deltaPosition = m_horizontalVelocity * Time.fixedDeltaTime;
+        Vector2 movement = movementAlongGround * deltaPosition.x;
         Move(movement, false);
 
+        deltaPosition = m_verticalVelocity * Time.fixedDeltaTime;
         movement = Vector2.up * deltaPosition.y;
         Move(movement, true);
     }
@@ -82,7 +82,7 @@ public class PhysicsObject : MonoBehaviour
             foreach (RaycastHit2D hit in m_hitBufferList)
             {
                 Vector2 currentNormal = hit.normal;
-
+                
                 // Check if the object is grounded
                 if (currentNormal.y > m_minGroundNormalY)
                 {
@@ -96,12 +96,20 @@ public class PhysicsObject : MonoBehaviour
                 }
 
                 // Check how much the object is going to go throw other colliders
-                float projection = Vector2.Dot(m_velocity, currentNormal);
+                Vector2 velocityUsed = yMovement ? m_verticalVelocity : m_horizontalVelocity;
+                float projection = Vector2.Dot(velocityUsed, currentNormal);
 
                 if (projection < .0f)
                 {
                     // Remove part of the velocity to prevent from going throw colliders
-                    m_velocity -= projection * currentNormal;
+                    if (yMovement)
+                    {
+                        m_verticalVelocity -= projection * currentNormal;
+                    }
+                    else
+                    {
+                        m_horizontalVelocity -= projection * currentNormal;
+                    }
                 }
 
                 // Calculate how much movement can be done, before touching the ground, considering the ShellRadius  
@@ -110,7 +118,7 @@ public class PhysicsObject : MonoBehaviour
                 distance = modifiedDistance < distance ? modifiedDistance : distance;
             }
         }
-
+        
         // Apply the movement
         m_rigidbody2D.position = m_rigidbody2D.position + movement.normalized * distance;
     }

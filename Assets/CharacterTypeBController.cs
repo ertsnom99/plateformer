@@ -12,7 +12,6 @@ public class CharacterTypeBController : PhysicsObject
 
     protected override void Awake()
     {
-        //Time.timeScale = 0.2f;
         base.Awake();
 
         m_spriteRenderer = GetComponent<SpriteRenderer>();
@@ -27,13 +26,13 @@ public class CharacterTypeBController : PhysicsObject
 
         if (Input.GetButtonDown("Jump") && m_isGrounded)
         {
-            m_velocity.y = m_jumpTakeOffSpeed;
+            m_verticalVelocity.y = m_jumpTakeOffSpeed;
         }
         else if (Input.GetButtonUp("Jump"))
         {
-            if (m_velocity.y > .0f)
+            if (m_verticalVelocity.y > .0f)
             {
-                m_velocity.y = m_velocity.y * 0.5f;
+                m_verticalVelocity.y = m_verticalVelocity.y * 0.5f;
             }
         }
 
@@ -46,8 +45,8 @@ public class CharacterTypeBController : PhysicsObject
             m_spriteRenderer.flipX = !m_spriteRenderer.flipX;
         }
 
-        m_animator.SetFloat("VelocityY", m_velocity.y);
+        m_animator.SetFloat("VelocityY", m_verticalVelocity.y);
         m_animator.SetBool("IsGrounded", m_isGrounded);
-        m_animator.SetFloat("VelocityX", Mathf.Abs(m_velocity.x) / m_maxSpeed);
+        m_animator.SetFloat("VelocityX", Mathf.Abs(m_horizontalVelocity.x) / m_maxSpeed);
     }
 }
