@@ -24,7 +24,7 @@ public class CharacterTypeBController : PhysicsObject
 
         move.x = Input.GetAxis("Horizontal");
 
-        if (Input.GetButtonDown("Jump") && m_isGrounded)
+        if (m_isGrounded && Input.GetButtonDown("Jump"))
         {
             m_verticalVelocity.y = m_jumpTakeOffSpeed;
         }

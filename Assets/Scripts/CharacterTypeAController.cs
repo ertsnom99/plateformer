@@ -62,6 +62,13 @@ public class CharacterTypeAController : MonoBehaviour
             m_isGrounded = false;
             m_animator.SetBool("IsGrounded", m_isGrounded);
         }
+        else if (Input.GetButtonUp("Jump"))
+        {
+            if (m_rigidbody2D.velocity.y > .0f)
+            {
+                m_rigidbody2D.AddForce(new Vector2(m_rigidbody2D.velocity.x, m_rigidbody2D.velocity.y * 0.5f) - m_rigidbody2D.velocity, ForceMode2D.Impulse);
+            }
+        }
     }
 
     private void OnCollisionStay2D(Collision2D col)

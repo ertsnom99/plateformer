@@ -1577,7 +1577,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!50 &376578968
 Rigidbody2D:
   serializedVersion: 4
@@ -1666,7 +1666,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 376578967}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: c9bcec6c11c15184e8dd07e0b0b383a5, type: 2}
+  m_Material: {fileID: 6200000, guid: 04a348a8d9f3e9949b0e07cc257e449e, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -2711,7 +2711,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &632107721
 MonoBehaviour:
   m_ObjectHideFlags: 0
