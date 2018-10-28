@@ -15,40 +15,42 @@ public class CharacterTypeAController : MonoBehaviour
 
     private bool m_isFacingRight = true;
     private bool m_isGrounded = false;
+    private float m_groundAngle;
 
     private Rigidbody2D m_rigidbody2D;
+    private SpriteRenderer m_spriteRenderer;
     private Animator m_animator;
 
     private void Awake()
     {
         m_rigidbody2D = GetComponent<Rigidbody2D>();
+        m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_animator = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
     {
+        m_groundAngle = .0f;
         m_isGrounded = Physics2D.OverlapCircle(m_groundCheck.position, m_groundRadius, m_groundLayer);
 
         float move = Mathf.Ceil(Input.GetAxis("Horizontal"));
         
         //Movement instantanious 
         m_rigidbody2D.AddForce(new Vector2(move * m_maxSpeed * Time.fixedDeltaTime, m_rigidbody2D.velocity.y) - m_rigidbody2D.velocity, ForceMode2D.Impulse);
-        //m_rigidbody2D.velocity = new Vector2(move * m_maxSpeed * Time.fixedDeltaTime, m_rigidbody2D.velocity.y);
         //Movement with acceleration/decceleration
         //m_rigidbody2D.AddForce(new Vector2(move * m_maxSpeed * Time.fixedDeltaTime, m_rigidbody2D.velocity.y) - m_rigidbody2D.velocity, ForceMode2D.Force);
         
-        if (move > .0f && !m_isFacingRight)
+        bool flipSprite = (m_spriteRenderer.flipX ? (move > 0.01f) : (move < -0.01f));
+
+        if (flipSprite)
         {
-            Flip();
-        }
-        else if (move < .0f && m_isFacingRight)
-        {
-            Flip();
+            m_spriteRenderer.flipX = !m_spriteRenderer.flipX;
         }
 
-        m_animator.SetFloat("Speed", Mathf.Abs(move));
+        m_animator.SetFloat("VelocityX", Mathf.Abs(move));
         m_animator.SetBool("IsGrounded", m_isGrounded);
-        m_animator.SetFloat("VerticalSpeed", m_rigidbody2D.velocity.y);
+        m_animator.SetFloat("VelocityY", m_rigidbody2D.velocity.y);
+        m_animator.SetFloat("GroundAngle", m_groundAngle);
     }
 
     private void Update()
@@ -62,12 +64,20 @@ public class CharacterTypeAController : MonoBehaviour
         }
     }
 
-    private void Flip()
+    private void OnCollisionStay2D(Collision2D col)
     {
-        m_isFacingRight = !m_isFacingRight;
-        Vector3 newScale = transform.localScale;
-        newScale.x *= -1;
-        transform.localScale = newScale;
+        foreach (ContactPoint2D contactPoint in col.contacts)
+        {
+            // update ground angle
+            float angle = contactPoint.normal.x != .0f ? Vector2.Angle(contactPoint.normal, new Vector2(contactPoint.normal.x, .0f)) : 90.0f;
+
+            if (angle > m_groundAngle)
+            {
+                m_groundAngle = angle;
+            }
+        }
+
+        m_animator.SetFloat("GroundAngle", m_groundAngle);
     }
 
     private void OnDrawGizmosSelected()

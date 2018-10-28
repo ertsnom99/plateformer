@@ -48,5 +48,6 @@ public class CharacterTypeBController : PhysicsObject
         m_animator.SetFloat("VelocityY", m_verticalVelocity.y);
         m_animator.SetBool("IsGrounded", m_isGrounded);
         m_animator.SetFloat("VelocityX", Mathf.Abs(m_horizontalVelocity.x) / m_maxSpeed);
+        m_animator.SetFloat("GroundAngle", m_groundAngle);
     }
 }

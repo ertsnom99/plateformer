@@ -10,6 +10,7 @@ public class PhysicsObject : MonoBehaviour
 
     protected bool m_isGrounded = false;
     protected Vector2 m_groundNormal;
+    protected float m_groundAngle;
     
     protected Vector2 m_horizontalVelocity;
     protected Vector2 m_verticalVelocity;
@@ -36,6 +37,7 @@ public class PhysicsObject : MonoBehaviour
     private void FixedUpdate()
     {
         m_isGrounded = false;
+        m_groundAngle = .0f;
 
         // Update velocity
         m_verticalVelocity += m_gravityModifier * Physics2D.gravity * Time.fixedDeltaTime;
@@ -90,8 +92,12 @@ public class PhysicsObject : MonoBehaviour
 
                     if (yMovement)
                     {
+                        // Update ground normal
                         m_groundNormal = currentNormal;
                         currentNormal.x = 0;
+
+                        // update ground angle
+                        m_groundAngle = m_groundNormal.x != .0f ? Vector2.Angle(m_groundNormal, new Vector2 (m_groundNormal.x, .0f)) : 90.0f;
                     }
                 }
 
@@ -118,7 +124,7 @@ public class PhysicsObject : MonoBehaviour
                 distance = modifiedDistance < distance ? modifiedDistance : distance;
             }
         }
-        
+
         // Apply the movement
         m_rigidbody2D.position = m_rigidbody2D.position + movement.normalized * distance;
     }
