@@ -14,7 +14,7 @@ public class CharacterTypeAController : MonoBehaviour
     private float m_jumpForce = 700.0f;
 
     private bool m_isFacingRight = true;
-    private bool m_isGrounded = false;
+    public bool IsGrounded { get; private set; }
     private float m_groundAngle;
 
     private Rigidbody2D m_rigidbody2D;
@@ -28,10 +28,15 @@ public class CharacterTypeAController : MonoBehaviour
         m_animator = GetComponent<Animator>();
     }
 
+    private void Start()
+    {
+        IsGrounded = false;
+    }
+
     private void FixedUpdate()
     {
         m_groundAngle = .0f;
-        m_isGrounded = Physics2D.OverlapCircle(m_groundCheck.position, m_groundRadius, m_groundLayer);
+        IsGrounded = Physics2D.OverlapCircle(m_groundCheck.position, m_groundRadius, m_groundLayer);
 
         float move = Mathf.Ceil(Input.GetAxis("Horizontal"));
         
@@ -48,25 +53,25 @@ public class CharacterTypeAController : MonoBehaviour
         }
 
         m_animator.SetFloat("VelocityX", Mathf.Abs(move));
-        m_animator.SetBool("IsGrounded", m_isGrounded);
+        m_animator.SetBool("IsGrounded", IsGrounded);
         m_animator.SetFloat("VelocityY", m_rigidbody2D.velocity.y);
         m_animator.SetFloat("GroundAngle", m_groundAngle);
     }
 
     private void Update()
     {
-        if (m_isGrounded && Input.GetButtonDown("Jump"))
+        if (IsGrounded && Input.GetButtonDown("Jump"))
         {
-            m_rigidbody2D.AddForce(new Vector2(.0f, m_jumpForce));
+            m_rigidbody2D.AddForce(new Vector2(.0f, m_jumpForce) - new Vector2(.0f, m_rigidbody2D.velocity.y), ForceMode2D.Impulse);
 
-            m_isGrounded = false;
-            m_animator.SetBool("IsGrounded", m_isGrounded);
+            IsGrounded = false;
+            m_animator.SetBool("IsGrounded", IsGrounded);
         }
         else if (Input.GetButtonUp("Jump"))
         {
             if (m_rigidbody2D.velocity.y > .0f)
             {
-                m_rigidbody2D.AddForce(new Vector2(m_rigidbody2D.velocity.x, m_rigidbody2D.velocity.y * 0.5f) - m_rigidbody2D.velocity, ForceMode2D.Impulse);
+                m_rigidbody2D.AddForce(new Vector2(m_rigidbody2D.velocity.x, m_rigidbody2D.velocity.y * 0.5f) - new Vector2(.0f, m_rigidbody2D.velocity.y), ForceMode2D.Impulse);
             }
         }
     }

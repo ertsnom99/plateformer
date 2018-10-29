@@ -24,15 +24,16 @@ public class CharacterTypeBController : PhysicsObject
 
         move.x = Input.GetAxis("Horizontal");
 
-        if (m_isGrounded && Input.GetButtonDown("Jump"))
+        if (IsGrounded && Input.GetButtonDown("Jump"))
         {
-            m_verticalVelocity.y = m_jumpTakeOffSpeed;
+            Debug.Log("-------------------------------------------");
+            Jump();
         }
         else if (Input.GetButtonUp("Jump"))
         {
             if (m_verticalVelocity.y > .0f)
             {
-                m_verticalVelocity.y = m_verticalVelocity.y * 0.5f;
+                CancelJump();
             }
         }
 
@@ -46,8 +47,19 @@ public class CharacterTypeBController : PhysicsObject
         }
 
         m_animator.SetFloat("VelocityY", m_verticalVelocity.y);
-        m_animator.SetBool("IsGrounded", m_isGrounded);
+        m_animator.SetBool("IsGrounded", IsGrounded);
         m_animator.SetFloat("VelocityX", Mathf.Abs(m_horizontalVelocity.x) / m_maxSpeed);
         m_animator.SetFloat("GroundAngle", m_groundAngle);
+    }
+
+    private void Jump()
+    {
+        m_verticalVelocity.y = m_jumpTakeOffSpeed;
+        m_groundNormal = new Vector2(.0f, 1.0f);
+    }
+
+    private void CancelJump()
+    {
+        m_verticalVelocity.y = m_verticalVelocity.y * 0.5f;
     }
 }

@@ -8,7 +8,7 @@ public class PhysicsObject : MonoBehaviour
     [SerializeField]
     private float m_minGroundNormalY = .65f;
 
-    protected bool m_isGrounded = false;
+    public bool IsGrounded { get; private set; }
     protected Vector2 m_groundNormal;
     protected float m_groundAngle;
     
@@ -31,12 +31,14 @@ public class PhysicsObject : MonoBehaviour
         m_contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
         m_contactFilter.useLayerMask = true;
 
+        IsGrounded = false;
+
         m_rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     private void FixedUpdate()
     {
-        m_isGrounded = false;
+        IsGrounded = false;
         m_groundAngle = .0f;
 
         // Update velocity
@@ -55,6 +57,8 @@ public class PhysicsObject : MonoBehaviour
         deltaPosition = m_verticalVelocity * Time.fixedDeltaTime;
         movement = Vector2.up * deltaPosition.y;
         Move(movement, true);
+        Debug.DrawLine(transform.position, transform.position + new Vector3(m_verticalVelocity.x, m_verticalVelocity.y, .0f) / 2.0f, Color.red);
+        Debug.Log(m_verticalVelocity.y);
     }
 
     private void Update()
@@ -88,7 +92,7 @@ public class PhysicsObject : MonoBehaviour
                 // Check if the object is grounded
                 if (currentNormal.y > m_minGroundNormalY)
                 {
-                    m_isGrounded = true;
+                    IsGrounded = true;
 
                     if (yMovement)
                     {
@@ -127,5 +131,10 @@ public class PhysicsObject : MonoBehaviour
 
         // Apply the movement
         m_rigidbody2D.position = m_rigidbody2D.position + movement.normalized * distance;
+    }
+
+    public void AddVerticalVelocity(Vector2 addedVelocity)
+    {
+        m_verticalVelocity += addedVelocity;
     }
 }
