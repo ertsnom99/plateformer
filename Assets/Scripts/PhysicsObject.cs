@@ -8,6 +8,9 @@ public class PhysicsObject : MonoBehaviour
     [SerializeField]
     private float m_minGroundNormalY = .65f;
 
+    [SerializeField]
+    private bool m_debugVelocity = false;
+
     public bool IsGrounded { get; private set; }
     protected Vector2 m_groundNormal;
     protected float m_groundAngle;
@@ -57,8 +60,14 @@ public class PhysicsObject : MonoBehaviour
         deltaPosition = m_verticalVelocity * Time.fixedDeltaTime;
         movement = Vector2.up * deltaPosition.y;
         Move(movement, true);
-        Debug.DrawLine(transform.position, transform.position + new Vector3(m_verticalVelocity.x, m_verticalVelocity.y, .0f) / 2.0f, Color.red);
-        Debug.Log(m_verticalVelocity.y);
+
+        if (m_debugVelocity)
+        {
+            Debug.DrawLine(transform.position, transform.position + new Vector3(m_verticalVelocity.x, m_verticalVelocity.y, .0f) / 4.0f, Color.red);
+            Debug.DrawLine(transform.position, transform.position + new Vector3(m_horizontalVelocity.x, .0f, .0f) / 4.0f, Color.blue);
+            Debug.DrawLine(transform.position, transform.position + new Vector3(m_groundNormal.x, m_groundNormal.y, .0f) / 4.0f, Color.yellow);
+            Debug.DrawLine(transform.position, transform.position + new Vector3(movementAlongGround.x, movementAlongGround.y, .0f) / 4.0f, Color.green);
+        }
     }
 
     private void Update()
@@ -114,7 +123,7 @@ public class PhysicsObject : MonoBehaviour
                     // Remove part of the velocity to prevent from going throw colliders
                     if (yMovement)
                     {
-                        m_verticalVelocity -= projection * currentNormal;
+                        m_verticalVelocity.y -= (projection * currentNormal).y;
                     }
                     else
                     {

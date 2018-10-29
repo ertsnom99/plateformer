@@ -1577,7 +1577,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &376578968
 Rigidbody2D:
   serializedVersion: 4
@@ -2777,7 +2777,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &632107721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2791,6 +2791,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_gravityModifier: 1
   m_minGroundNormalY: 0.45
+  m_debugVelocity: 1
   m_maxSpeed: 1.6
   m_jumpTakeOffSpeed: 3.6
 --- !u!50 &632107723

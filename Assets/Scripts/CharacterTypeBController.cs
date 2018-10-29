@@ -26,7 +26,6 @@ public class CharacterTypeBController : PhysicsObject
 
         if (IsGrounded && Input.GetButtonDown("Jump"))
         {
-            Debug.Log("-------------------------------------------");
             Jump();
         }
         else if (Input.GetButtonUp("Jump"))

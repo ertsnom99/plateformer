@@ -14,8 +14,7 @@ public class AnchorDown : MonoBehaviour
         }
 
         CharacterTypeBController typeB = other.GetComponent<CharacterTypeBController>();
-
-        Debug.Log(Time.time + ": " + typeB);
+        
         if (typeB && typeB.IsGrounded)
         {
             typeB.AddVerticalVelocity(Vector2.down * 5.0f);
