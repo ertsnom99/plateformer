@@ -113,6 +113,10 @@ public class PhysicsObject : MonoBehaviour
                         m_groundAngle = m_groundNormal.x != .0f ? Vector2.Angle(m_groundNormal, new Vector2 (m_groundNormal.x, .0f)) : 90.0f;
                     }
                 }
+                else
+                {
+                    Debug.Log(currentNormal.y);
+                }
 
                 // Check how much the object is going to go throw other colliders
                 Vector2 velocityUsed = yMovement ? m_verticalVelocity : m_horizontalVelocity;
