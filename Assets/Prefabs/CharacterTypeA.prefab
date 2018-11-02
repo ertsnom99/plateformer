@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 114951639638425088}
   m_Layer: 8
   m_Name: CharacterTypeA
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1235276901251076}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.195, y: 0.7196149, z: 0.015625}
+  m_LocalPosition: {x: 0.101, y: 0.2422811, z: 0.015625}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4613737209664824}
@@ -84,7 +84,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1137096112924144}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0146, y: -0.1184, z: 0}
+  m_LocalPosition: {x: -0.0146, y: -0.108, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4123487969747056}
@@ -135,7 +135,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.019716471, y: -0.067}
+  m_Offset: {x: -0.019716471, y: -0.07}
   serializedVersion: 2
   m_Radius: 0.083367854
 --- !u!61 &61467082699579494
@@ -192,13 +192,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80aa15f4ecbd824393edd2be0be3a86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxSpeed: 80
+  m_maxSpeed: 85
   m_groundCheck: {fileID: 4407641269220682}
   m_groundRadius: 0.06
   m_groundLayer:
     serializedVersion: 2
-    m_Bits: 1
-  m_jumpForce: 3.6
+    m_Bits: 512
+  m_jumpForce: 3.4
 --- !u!212 &212080987870394184
 SpriteRenderer:
   m_ObjectHideFlags: 1
