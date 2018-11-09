@@ -13,7 +13,7 @@ public class CharacterTypeBController : PhysicsObject
     protected override void Awake()
     {
         base.Awake();
-
+        
         m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_animator = GetComponent<Animator>();
     }

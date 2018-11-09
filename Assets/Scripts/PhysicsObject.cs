@@ -25,7 +25,7 @@ public class PhysicsObject : MonoBehaviour
     protected Rigidbody2D m_rigidbody2D;
 
     protected const float MinMoveDistance = 0.001f;
-    protected const float ShellRadius = 0.01f;
+    protected const float ShellRadius = 0.015f;
 
     protected virtual void Awake()
     {
@@ -52,7 +52,7 @@ public class PhysicsObject : MonoBehaviour
         Vector2 movementAlongGround = new Vector2(m_groundNormal.y, -m_groundNormal.x);
 
         // The X movement is executed first, then the Y movement is executed. This allows a better control of each type of movement and helps to avoid
-        // corner cases. This tehcnic was used in the 16 bit era.
+        // corner cases. This technic was used in the 16 bit era.
         Vector2 deltaPosition = m_horizontalVelocity * Time.fixedDeltaTime;
         Vector2 movement = movementAlongGround * deltaPosition.x;
         Move(movement, false);
