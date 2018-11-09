@@ -15,11 +15,11 @@ public class AnchorDown : MonoBehaviour
             return;
         }
 
-        CharacterTypeBController typeB = other.GetComponent<CharacterTypeBController>();
+        PlayerMovement typeB = other.GetComponent<PlayerMovement>();
         
         if (typeB && typeB.IsGrounded)
         {
-            typeB.AddVerticalVelocity(Vector2.down * m_downForce);
+            typeB.AddVerticalVelocity(-m_downForce);
             return;
         }
     }

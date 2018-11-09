@@ -52,9 +52,9 @@ public class CharacterTypeAController : MonoBehaviour
             m_spriteRenderer.flipX = !m_spriteRenderer.flipX;
         }
 
-        m_animator.SetFloat("VelocityX", Mathf.Abs(move));
+        m_animator.SetFloat("XVelocity", Mathf.Abs(move));
         m_animator.SetBool("IsGrounded", IsGrounded);
-        m_animator.SetFloat("VelocityY", m_rigidbody2D.velocity.y);
+        m_animator.SetFloat("YVelocity", m_rigidbody2D.velocity.y);
         m_animator.SetFloat("GroundAngle", m_groundAngle);
     }
 

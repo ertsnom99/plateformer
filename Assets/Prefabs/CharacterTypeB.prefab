@@ -38,7 +38,8 @@ GameObject:
   - component: {fileID: 95127465243783686}
   - component: {fileID: 50484550208919288}
   - component: {fileID: 61353411224531644}
-  - component: {fileID: 114686389469897412}
+  - component: {fileID: 114867589610096570}
+  - component: {fileID: 114253259727586034}
   m_Layer: 8
   m_Name: CharacterTypeB
   m_TagString: Player
@@ -66,8 +67,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1508018494202180}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.101, y: 0.2422811, z: 0.015625}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.341, y: 0.4800814, z: 0.015625}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4062579112893922}
   m_Father: {fileID: 0}
@@ -105,7 +106,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0011710078, y: -0.04885894}
+  m_Offset: {x: -0.00057029724, y: -0.053422764}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -116,8 +117,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.019468747, y: 0.096844316}
-  m_EdgeRadius: 0.05
+  m_Size: {x: 0.13442975, y: 0.18297458}
+  m_EdgeRadius: 0.01
 --- !u!95 &95127465243783686
 Animator:
   serializedVersion: 3
@@ -136,7 +137,31 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114686389469897412
+--- !u!114 &114253259727586034
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1508018494202180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e959c4768de2674ea60d1c59356d971, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_gravityModifier: 1.4
+  m_minGroundNormalY: 0.4
+  m_debugVelocity: 0
+  m_maxSpeed: 3.3
+  m_jumpTakeOffSpeed: 5.5
+  m_slideRaycastOffset: -0.2
+  m_slideRaycastDistance: 0.2
+  m_slideGravityModifier: 0.1
+  m_debugSlideRaycast: 0
+  m_wallJumpHorizontalVelocity: 3
+  m_wallJumpWindowTime: 0.05
+  m_inWallJumpWindow: 0
+  m_horizontalControlDelayTime: 0.1
+--- !u!114 &114867589610096570
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,11 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a22dc241a534b439eff05fa92180e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_gravityModifier: 1
-  m_minGroundNormalY: 0.4
-  m_debugVelocity: 0
-  m_maxSpeed: 2
-  m_jumpTakeOffSpeed: 3.6
+  m_useKeyboard: 1
 --- !u!212 &212512894946798496
 SpriteRenderer:
   m_ObjectHideFlags: 1
