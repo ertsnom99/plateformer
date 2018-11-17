@@ -8,19 +8,21 @@ using UnityEngine;
 public class PlayerMovement : PhysicsObject
 {
     [SerializeField]
-    private float m_maxSpeed = 3.3f;
+    private float m_maxSpeed = 6.6f;
     [SerializeField]
-    private float m_jumpTakeOffSpeed = 5.5f;
+    private float m_jumpTakeOffSpeed = 15.0f;
 
     private float m_lastHorizontalDirection;
 
     [Header("Slide of wall")]
     [SerializeField]
-    private float m_slideRaycastOffset = -.2f;
+    private float m_slideRaycastOffset = -.45f;
     [SerializeField]
-    private float m_slideRaycastDistance = .2f;
+    private float m_slideRaycastDistance = .6f;
     [SerializeField]
-    private float m_slideGravityModifier = .1f;
+    private float m_slideGravityModifier = .2f;
+    [SerializeField]
+    private bool m_constantSlipeSpeed = false;
 
     private bool m_hitWall = false;
 
@@ -31,7 +33,7 @@ public class PlayerMovement : PhysicsObject
 
     [Header("Wall jump")]
     [SerializeField]
-    private float m_wallJumpHorizontalVelocity = 7.0f;
+    private float m_wallJumpHorizontalVelocity = 6.0f;
     [SerializeField]
     private float m_wallJumpWindowTime = .05f;
     private bool m_inWallJumpWindow = false;
@@ -71,6 +73,12 @@ public class PlayerMovement : PhysicsObject
         // Keep track of the position of the player before it's updated
         Vector2 previousRigidbodyPosition = m_rigidbody2D.position;
 
+        // Reset the Y velocity if the player is suppose to keep the same velocity while sliding of a wall
+        if (IsSlidingOfWall && m_constantSlipeSpeed && m_velocity.y < .0f)
+        {
+            m_velocity.y = .0f;
+        }
+
         base.FixedUpdate();
 
         // Keep track of direction of intended last movement
@@ -92,7 +100,7 @@ public class PlayerMovement : PhysicsObject
         if (m_debugSlideRaycast)
         {
             Vector2 slideRaycastStart = new Vector2(transform.position.x, transform.position.y + m_slideRaycastOffset);
-            Debug.DrawLine(slideRaycastStart, slideRaycastStart + new Vector2(m_lastHorizontalDirection * m_slideRaycastDistance, .0f), Color.yellow);
+            Debug.DrawLine(slideRaycastStart, slideRaycastStart + new Vector2(/*m_lastHorizontalDirection * */m_slideRaycastDistance, .0f), Color.yellow);
         }
     }
 
@@ -237,6 +245,12 @@ public class PlayerMovement : PhysicsObject
     {
         m_velocity.y = m_jumpTakeOffSpeed;
         m_groundNormal = new Vector2(.0f, 1.0f);
+
+        // Update the gravity modifier
+        if (m_currentGravityModifier != m_gravityModifier)
+        {
+            m_currentGravityModifier = m_gravityModifier;
+        }
     }
 
     private void WallJump()

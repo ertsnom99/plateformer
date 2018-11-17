@@ -12,7 +12,10 @@ public class PhysicsObject : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField]
-    protected float m_gravityModifier = 1.4f;
+    protected float m_shellRadius = 0.05f;
+
+    [SerializeField]
+    protected float m_gravityModifier = 2.5f;
     protected float m_currentGravityModifier;
 
     [SerializeField]
@@ -34,7 +37,6 @@ public class PhysicsObject : MonoBehaviour
     protected Rigidbody2D m_rigidbody2D;
 
     protected const float MinMoveDistance = 0.001f;
-    protected const float ShellRadius = 0.015f;
 
     protected virtual void Awake()
     {
@@ -97,7 +99,7 @@ public class PhysicsObject : MonoBehaviour
         // Check for collision only if the object moves enough
         if (distance > MinMoveDistance)
         {
-            int count = m_rigidbody2D.Cast(movement, m_contactFilter, m_hitBuffer, distance + ShellRadius);
+            int count = m_rigidbody2D.Cast(movement, m_contactFilter, m_hitBuffer, distance + m_shellRadius);
             m_hitBufferList.Clear();
 
             // Transfer hits to m_hitBufferList
@@ -149,7 +151,7 @@ public class PhysicsObject : MonoBehaviour
                 }
 
                 // Calculate how much movement can be done, before hitting something, considering the ShellRadius  
-                float modifiedDistance = hit.distance - ShellRadius;
+                float modifiedDistance = hit.distance - m_shellRadius;
                 // If, after calculation, the object should move less then what was tought at first, then move less
                 distance = modifiedDistance < distance ? modifiedDistance : distance;
 
