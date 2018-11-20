@@ -12,7 +12,7 @@ public class PlayerMovement : PhysicsObject
     [SerializeField]
     private float m_jumpTakeOffSpeed = 15.0f;
 
-    private Vector2 m_lastIntendedMovementDirection;
+    private Vector2 m_lastTargetHorizontalVelocityDirection;
 
     [Header("Slide of wall")]
     [SerializeField]
@@ -85,7 +85,7 @@ public class PlayerMovement : PhysicsObject
         // Keep track of direction the player is facing
         if (m_targetHorizontalVelocity != .0f)
         {
-            m_lastIntendedMovementDirection = new Vector2(m_targetHorizontalVelocity, .0f);
+            m_lastTargetHorizontalVelocityDirection = new Vector2(m_targetHorizontalVelocity, .0f).normalized;
         }
 
         base.FixedUpdate();
@@ -103,7 +103,7 @@ public class PlayerMovement : PhysicsObject
         if (m_debugSlideRaycast)
         {
             Vector2 slideRaycastStart = new Vector2(transform.position.x, transform.position.y + m_slideRaycastOffset);
-            Debug.DrawLine(slideRaycastStart, slideRaycastStart + m_lastIntendedMovementDirection.normalized * m_slideRaycastDistance, Color.yellow);
+            Debug.DrawLine(slideRaycastStart, slideRaycastStart + m_lastTargetHorizontalVelocityDirection * m_slideRaycastDistance, Color.yellow);
         }
     }
 
@@ -179,7 +179,7 @@ public class PlayerMovement : PhysicsObject
         Vector2 slideRaycastStart = new Vector2(transform.position.x, transform.position.y + m_slideRaycastOffset);
 
         RaycastHit2D[] results = new RaycastHit2D[1];
-        Physics2D.Raycast(transform.position, m_lastIntendedMovementDirection, m_contactFilter, results, m_slideRaycastDistance);
+        Physics2D.Raycast(transform.position, m_lastTargetHorizontalVelocityDirection, m_contactFilter, results, m_slideRaycastDistance);
 
         return results[0].collider;
     }
@@ -191,11 +191,11 @@ public class PlayerMovement : PhysicsObject
 
         if (!IsSlidingOfWall && !m_isHorizontalControlDelayed)
         {
-            flipSprite = (m_spriteRenderer.flipX ? (m_lastIntendedMovementDirection.x > .01f) : (m_lastIntendedMovementDirection.x < -.01f));
+            flipSprite = (m_spriteRenderer.flipX ? (m_lastTargetHorizontalVelocityDirection.x > .01f) : (m_lastTargetHorizontalVelocityDirection.x < -.01f));
         }
         else if (IsSlidingOfWall)
         {
-            flipSprite = (m_spriteRenderer.flipX ? (m_lastIntendedMovementDirection.x < -.01f) : (m_lastIntendedMovementDirection.x > .01f));
+            flipSprite = (m_spriteRenderer.flipX ? (m_lastTargetHorizontalVelocityDirection.x < -.01f) : (m_lastTargetHorizontalVelocityDirection.x > .01f));
         }
 
         if (flipSprite)
