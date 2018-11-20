@@ -67,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1508018494202180}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0.015625}
+  m_LocalPosition: {x: -0.45, y: 0.9987316, z: 0.015625}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4062579112893922}
@@ -154,10 +154,12 @@ MonoBehaviour:
   m_debugVelocity: 0
   m_maxSpeed: 9
   m_jumpTakeOffSpeed: 20
+  m_canSlideGoingUp: 0
   m_slideRaycastOffset: -0.45
   m_slideRaycastDistance: 0.6
   m_slideGravityModifier: 1
-  m_debugSlideRaycast: 1
+  m_constantSlipeSpeed: 0
+  m_debugSlideRaycast: 0
   m_wallJumpHorizontalVelocity: 6
   m_wallJumpWindowTime: 0.05
   m_horizontalControlDelayTime: 0.1

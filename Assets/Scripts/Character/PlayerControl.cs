@@ -19,7 +19,7 @@ public class PlayerControl : MonoBehaviour
     {
         noControlInputs = new Inputs();
         ControlsEnabled = true;
-
+        
         m_playerMovement = GetComponent<PlayerMovement>();
     }
 

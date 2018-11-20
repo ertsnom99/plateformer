@@ -12,9 +12,11 @@ public class PlayerMovement : PhysicsObject
     [SerializeField]
     private float m_jumpTakeOffSpeed = 15.0f;
 
-    private float m_lastHorizontalDirection;
+    private Vector2 m_lastIntendedMovementDirection;
 
     [Header("Slide of wall")]
+    [SerializeField]
+    private bool m_canSlideGoingUp = false;
     [SerializeField]
     private float m_slideRaycastOffset = -.45f;
     [SerializeField]
@@ -25,6 +27,7 @@ public class PlayerMovement : PhysicsObject
     private bool m_constantSlipeSpeed = false;
 
     private bool m_hitWall = false;
+    private Vector2 m_lastHitWallNormal = Vector2.zero;
 
     public bool IsSlidingOfWall { get; private set; }
 
@@ -79,13 +82,13 @@ public class PlayerMovement : PhysicsObject
             m_velocity.y = .0f;
         }
 
-        base.FixedUpdate();
-
-        // Keep track of direction of intended last movement
+        // Keep track of direction the player is facing
         if (m_targetHorizontalVelocity != .0f)
         {
-            m_lastHorizontalDirection = Mathf.Sign(m_targetHorizontalVelocity);
+            m_lastIntendedMovementDirection = new Vector2(m_targetHorizontalVelocity, .0f);
         }
+
+        base.FixedUpdate();
 
         CheckForWallSlide(m_rigidbody2D.position - previousRigidbodyPosition);
 
@@ -94,13 +97,13 @@ public class PlayerMovement : PhysicsObject
         {
             EndDelayHorizontalControl();
         }
-        
+
         Animate();
 
         if (m_debugSlideRaycast)
         {
             Vector2 slideRaycastStart = new Vector2(transform.position.x, transform.position.y + m_slideRaycastOffset);
-            Debug.DrawLine(slideRaycastStart, slideRaycastStart + new Vector2(/*m_lastHorizontalDirection * */m_slideRaycastDistance, .0f), Color.yellow);
+            Debug.DrawLine(slideRaycastStart, slideRaycastStart + m_lastIntendedMovementDirection.normalized * m_slideRaycastDistance, Color.yellow);
         }
     }
 
@@ -110,6 +113,7 @@ public class PlayerMovement : PhysicsObject
         if (hit.normal.x != .0f && hit.normal.y == .0f)
         {
             m_hitWall = true;
+            m_lastHitWallNormal = hit.normal;
         }
     }
 
@@ -124,7 +128,7 @@ public class PlayerMovement : PhysicsObject
             IsSlidingOfWall = false;
         }
         // Might be starting to slide of a wall
-        else if (m_velocity.y <= .0f && m_hitWall && !IsSlidingOfWall && !IsGrounded)
+        else if ((m_canSlideGoingUp || m_velocity.y <= .0f) && m_hitWall && !IsSlidingOfWall && !IsGrounded)
         {
             // Check if the player can slide of the wall
             IsSlidingOfWall = RaycastForWallSlide();
@@ -145,11 +149,11 @@ public class PlayerMovement : PhysicsObject
             }
         }
 
-        // If the player started to slide of a wall
+        // If the player started to slide of a new wall
         if (!wasSliding && IsSlidingOfWall)
         {
             m_velocity = Vector2.zero;
-
+            
             // Cancel the wall jump window if necessary
             if (m_inWallJumpWindow)
             {
@@ -162,7 +166,7 @@ public class PlayerMovement : PhysicsObject
             m_wallJumpWindowCoroutine = WallJumpWindow();
             StartCoroutine(m_wallJumpWindowCoroutine);
         }
-
+        
         // Update the gravity modifier
         m_currentGravityModifier = IsSlidingOfWall ? m_slideGravityModifier : m_gravityModifier;
 
@@ -175,7 +179,7 @@ public class PlayerMovement : PhysicsObject
         Vector2 slideRaycastStart = new Vector2(transform.position.x, transform.position.y + m_slideRaycastOffset);
 
         RaycastHit2D[] results = new RaycastHit2D[1];
-        Physics2D.Raycast(transform.position, m_lastHorizontalDirection* Vector2.right, m_contactFilter, results, m_slideRaycastDistance);
+        Physics2D.Raycast(transform.position, m_lastIntendedMovementDirection, m_contactFilter, results, m_slideRaycastDistance);
 
         return results[0].collider;
     }
@@ -187,11 +191,11 @@ public class PlayerMovement : PhysicsObject
 
         if (!IsSlidingOfWall && !m_isHorizontalControlDelayed)
         {
-            flipSprite = (m_spriteRenderer.flipX ? (m_currentInputs.horizontal > .01f) : (m_currentInputs.horizontal < -.01f));
+            flipSprite = (m_spriteRenderer.flipX ? (m_lastIntendedMovementDirection.x > .01f) : (m_lastIntendedMovementDirection.x < -.01f));
         }
         else if (IsSlidingOfWall)
         {
-            flipSprite = (m_spriteRenderer.flipX ? (m_lastHorizontalDirection < -.01f) : (m_lastHorizontalDirection > .01f));
+            flipSprite = (m_spriteRenderer.flipX ? (m_lastIntendedMovementDirection.x < -.01f) : (m_lastIntendedMovementDirection.x > .01f));
         }
 
         if (flipSprite)
