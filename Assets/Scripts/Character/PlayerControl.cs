@@ -53,6 +53,8 @@ public class PlayerControl : MonoBehaviour
             inputs.horizontal = Input.GetAxisRaw("Horizontal");
             inputs.jump = Input.GetButtonDown("Jump");
             inputs.releaseJump = Input.GetButtonUp("Jump");
+            inputs.dash = Input.GetButtonDown("Dash");
+            inputs.releaseDash = Input.GetButtonUp("Dash");
         }
         else
         {
@@ -62,6 +64,8 @@ public class PlayerControl : MonoBehaviour
             inputs.horizontal = Input.GetAxisRaw("Horizontal");
             inputs.jump = Input.GetButtonDown("Jump");
             inputs.releaseJump = Input.GetButtonUp("Jump");
+            inputs.dash = Input.GetButtonDown("Dash");
+            inputs.releaseDash = Input.GetButtonUp("Dash");
         }
 
         return inputs;

@@ -5373,6 +5373,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114253259727586034, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 2}
+      propertyPath: m_gravityModifier
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 2}
   m_IsPrefabAsset: 0

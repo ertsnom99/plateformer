@@ -152,7 +152,8 @@ public class PhysicsObject : MonoBehaviour
 
                 // Calculate how much movement can be done, before hitting something, considering the ShellRadius  
                 float modifiedDistance = hit.distance - m_shellRadius;
-                // If, after calculation, the object should move less then what was tought at first, then move less
+
+                // If the object should move less then what was tought at first, then move less
                 distance = modifiedDistance < distance ? modifiedDistance : distance;
 
                 // Will allow inheriting classes to add logic during the hit checks
