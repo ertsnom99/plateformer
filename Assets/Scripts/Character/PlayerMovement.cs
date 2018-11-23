@@ -4,6 +4,7 @@ using UnityEngine;
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AudioSource))]
 
 public class PlayerMovement : PhysicsObject
 {
@@ -58,6 +59,14 @@ public class PlayerMovement : PhysicsObject
 
     public bool IsDashing { get; private set; }
 
+    [Header("Sound")]
+    [SerializeField]
+    private AudioClip m_jumpSound;
+    [SerializeField]
+    private AudioClip m_dashSound;
+
+    private AudioSource m_audioSource;
+
     private Inputs m_currentInputs;
 
     private SpriteRenderer m_spriteRenderer;
@@ -84,6 +93,7 @@ public class PlayerMovement : PhysicsObject
 
         m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_animator = GetComponent<Animator>();
+        m_audioSource = GetComponent<AudioSource>();
     }
 
     protected override void FixedUpdate()
@@ -255,6 +265,7 @@ public class PlayerMovement : PhysicsObject
     protected override void Update()
     {
         ComputeVelocity();
+        PlaySounds();
     }
 
     protected override void ComputeVelocity()
@@ -292,6 +303,19 @@ public class PlayerMovement : PhysicsObject
         }
     }
 
+    private void PlaySounds()
+    {
+        // Play sounds
+        if (m_triggeredJump)
+        {
+        }
+        else if (!IsDashing && InDashWindow())
+        {
+            m_audioSource.pitch = Random.Range(.9f, 1.0f);
+            m_audioSource.PlayOneShot(m_dashSound);
+        }
+    }
+
     // Jump related methods
     private void Jump()
     {
@@ -305,6 +329,10 @@ public class PlayerMovement : PhysicsObject
         m_currentGravityModifier = m_gravityModifier;
 
         m_triggeredJump = true;
+
+        // Play jump sound
+        m_audioSource.pitch = Random.Range(.9f, 1.0f);
+        m_audioSource.PlayOneShot(m_jumpSound);
     }
 
     private IEnumerator WallJumpWindow()
@@ -368,6 +396,10 @@ public class PlayerMovement : PhysicsObject
 
         // Update the gravity modifier
         m_currentGravityModifier = .0f;
+
+        // Play dash sound
+        m_audioSource.pitch = Random.Range(.9f, 1.0f);
+        m_audioSource.PlayOneShot(m_dashSound);
 
         // Cancel the other coroutines if necessary
         if (InWallJumpWindow())
