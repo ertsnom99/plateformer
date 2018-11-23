@@ -53,6 +53,9 @@ TagManager:
   - name: Texts
     uniqueID: 926022953
     locked: 0
+  - name: Gems
+    uniqueID: 1520962181
+    locked: 0
   - name: Character
     uniqueID: 4144600267
     locked: 0
