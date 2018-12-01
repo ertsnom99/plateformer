@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(AudioSource))]
 
-public class PlayerMovement : PhysicsObject
+public class GroundedMovement : PhysicsObject
 {
     [SerializeField]
     private float m_maxSpeed = 6.6f;

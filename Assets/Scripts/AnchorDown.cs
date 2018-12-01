@@ -15,7 +15,7 @@ public class AnchorDown : MonoBehaviour
             return;
         }
 
-        PlayerMovement typeB = other.GetComponent<PlayerMovement>();
+        GroundedMovement typeB = other.GetComponent<GroundedMovement>();
         
         if (typeB && typeB.IsGrounded)
         {

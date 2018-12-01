@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 // This script requires thoses components and will be added if they aren't already there
-[RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(GroundedMovement))]
 
 public class PlayerControl : MonoBehaviour
 {
@@ -13,14 +13,14 @@ public class PlayerControl : MonoBehaviour
     
     public bool ControlsEnabled { get; private set; }
 
-    private PlayerMovement m_playerMovement;
+    private GroundedMovement m_playerMovement;
 
     private void Awake()
     {
         noControlInputs = new Inputs();
         ControlsEnabled = true;
         
-        m_playerMovement = GetComponent<PlayerMovement>();
+        m_playerMovement = GetComponent<GroundedMovement>();
     }
 
     private void Update()
@@ -28,11 +28,11 @@ public class PlayerControl : MonoBehaviour
         // Only update when time isn't stop
         if (Time.deltaTime > .0f)
         {
-            // Get the inputs used during this frame
-            Inputs inputs = FetchInputs();
-
             if (ControlsCharacter())
             {
+                // Get the inputs used during this frame
+                Inputs inputs = FetchInputs();
+
                 UpdateMovement(inputs);
             }
             else
