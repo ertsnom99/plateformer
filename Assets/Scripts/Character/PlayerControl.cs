@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 // This script requires thoses components and will be added if they aren't already there
-[RequireComponent(typeof(GroundedMovement))]
+[RequireComponent(typeof(PlatformerMovement))]
 
 public class PlayerControl : MonoBehaviour
 {
@@ -13,14 +13,14 @@ public class PlayerControl : MonoBehaviour
     
     public bool ControlsEnabled { get; private set; }
 
-    private GroundedMovement m_playerMovement;
+    private PlatformerMovement m_movementScript;
 
     private void Awake()
     {
         noControlInputs = new Inputs();
         ControlsEnabled = true;
         
-        m_playerMovement = GetComponent<GroundedMovement>();
+        m_movementScript = GetComponent<PlatformerMovement>();
     }
 
     private void Update()
@@ -83,7 +83,7 @@ public class PlayerControl : MonoBehaviour
 
     private void UpdateMovement(Inputs inputs)
     {
-        m_playerMovement.SetInputs(inputs);
+        m_movementScript.SetInputs(inputs);
     }
 
     public void EnableControl(bool enable)

@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(AudioSource))]
 
-public class GroundedMovement : PhysicsObject
+public class PlatformerMovement : PhysicsObject
 {
     [SerializeField]
     private float m_maxSpeed = 6.6f;
@@ -17,7 +17,18 @@ public class GroundedMovement : PhysicsObject
 
     private Vector2 m_lastTargetHorizontalVelocityDirection;
 
+    [Header("Airborne jump")]
+    [SerializeField]
+    private bool m_canAirborneJump = false;
+    [SerializeField]
+    private float m_airborneJumpTakeOffSpeed = 10.0f;
+    private bool m_airborneJumpAvailable = true;
+    private bool m_triggeredAirborneJump = false;
+
+    // NOTE: The current implementation would cause problems if m_canSlideOfWall was changed during a wall slide
     [Header("Slide of wall")]
+    [SerializeField]
+    private bool m_canSlideOfWall = false;
     [SerializeField]
     private bool m_canSlideGoingUp = false;
     [SerializeField]
@@ -37,7 +48,10 @@ public class GroundedMovement : PhysicsObject
     [SerializeField]
     private bool m_debugSlideRaycast = false;
 
+    // NOTE: The current implementation needs wall slide to be enable for the wall jump to be used 
     [Header("Wall jump")]
+    [SerializeField]
+    private bool m_canWallJump = false;
     [SerializeField]
     private float m_wallJumpHorizontalVelocity = 6.0f;
     [SerializeField]
@@ -49,6 +63,8 @@ public class GroundedMovement : PhysicsObject
 
     [Header("Dash")]
     [SerializeField]
+    private bool m_canDash = false;
+    [SerializeField]
     private float m_dashSpeed = 15.0f;
     [SerializeField]
     private float m_dashDuration = .5f;
@@ -59,9 +75,15 @@ public class GroundedMovement : PhysicsObject
 
     public bool IsDashing { get; private set; }
 
+    [Header("Animation")]
+    [SerializeField]
+    private bool m_flipSprite = false;
+
     [Header("Sound")]
     [SerializeField]
     private AudioClip m_jumpSound;
+    [SerializeField]
+    private AudioClip m_airborneJumpSound;
     [SerializeField]
     private AudioClip m_dashSound;
 
@@ -77,12 +99,14 @@ public class GroundedMovement : PhysicsObject
     protected int m_isGroundedParamHashId = Animator.StringToHash(IsGroundedParamNameString);
     protected int m_isSlidingOfWallParamHashId = Animator.StringToHash(IsSlidingOfWallParamNameString);
     protected int m_isDashingParamHashId = Animator.StringToHash(IsDashingParamNameString);
+    protected int m_airborneJumpParamHashId = Animator.StringToHash(AirborneJumpParamNameString);
 
     public const string XVelocityParamNameString = "XVelocity";
     public const string YVelocityParamNameString = "YVelocity";
     public const string IsGroundedParamNameString = "IsGrounded";
     public const string IsSlidingOfWallParamNameString = "IsSlidingOfWall";
     public const string IsDashingParamNameString = "IsDashing";
+    public const string AirborneJumpParamNameString = "AirborneJump";
 
     protected override void Awake()
     {
@@ -115,20 +139,27 @@ public class GroundedMovement : PhysicsObject
 
         base.FixedUpdate();
 
-        // Reset jump flags used in Update
-        m_triggeredJump = false;
-        
-        if (m_jumpCanceled)
-        {
-            m_jumpCanceled = !IsGrounded;
-        }
-
-        // Update dashing state base on the coroutine existence, since using the actual movement could create incorrect values!
-        // This could happen because moving the rigidbody doesn't immediatly update the transform and wall slide detection doesn't
-        // use the rigidbody position
+        // Update dashing state before UpdateWallSlide(), since it uses that flag
         IsDashing = InDashWindow();
 
-        UpdateWallSlide(m_rigidbody2D.position - previousRigidbodyPosition);
+        // Only update wall slide if it's allowed
+        if (m_canSlideOfWall)
+        {
+            UpdateWallSlide(m_rigidbody2D.position - previousRigidbodyPosition);
+        }
+
+        // Reset flags if they are in a certain state
+        // While the airborne jump isn't available, keep it unavailable has long has the character isn't grounded and isn't sliding of a wall
+        if (!m_airborneJumpAvailable)
+        {
+            m_airborneJumpAvailable = IsGrounded || IsSlidingOfWall;
+        }
+
+        // While the jump was canceled, keep it canceled has long has the character isn't grounded and isn't sliding of a wall
+        if (m_jumpCanceled)
+        {
+            m_jumpCanceled = !IsGrounded && !IsSlidingOfWall;
+        }
 
         // End the horizontal control delay if there is one and the player is grounded or sliding of a wall
         if (HorizontalControlDelayed() && (IsGrounded || IsSlidingOfWall))
@@ -136,8 +167,14 @@ public class GroundedMovement : PhysicsObject
             EndDelayedHorizontalControl();
         }
 
+        // Animate before resetting flags, since some of those flags are necessary for Animate()
         Animate();
 
+        // Reset jump flags used in Update
+        m_triggeredJump = false;
+        m_triggeredAirborneJump = false;
+
+        // Debug
         if (m_debugSlideRaycast)
         {
             Vector2 slideRaycastStart = new Vector2(transform.position.x, transform.position.y + m_slideRaycastOffset);
@@ -159,7 +196,7 @@ public class GroundedMovement : PhysicsObject
     {
         // Flag to check later if the player started to slide of a wall
         bool wasSliding = IsSlidingOfWall;
-        
+
         // Just touched ground after a slide of a wall
         if (IsSlidingOfWall && IsGrounded)
         {
@@ -206,14 +243,14 @@ public class GroundedMovement : PhysicsObject
                 EndWallJumpWindow();
             }
         }
-        // If the player stopped to slide of a wall and not because of a dashing
-        else if (wasSliding && !IsSlidingOfWall && !IsDashing)
+        // If the player stopped to slide of a wall and not because he did a wall jump or he dashed 
+        else if (wasSliding && !IsSlidingOfWall && !m_triggeredJump && !IsDashing)
         {
             m_wallJumpWindowCoroutine = WallJumpWindow();
             StartCoroutine(m_wallJumpWindowCoroutine);
         }
 
-        // Update the gravity modifier when the player change his sliding state and not because of a dashing
+        // Update the gravity modifier when the player change his sliding state and not because he dashed
         if (wasSliding != IsSlidingOfWall && !IsDashing)
         {
             m_currentGravityModifier = IsSlidingOfWall ? m_slideGravityModifier : m_gravityModifier;
@@ -237,11 +274,11 @@ public class GroundedMovement : PhysicsObject
 
         if (!IsSlidingOfWall && !HorizontalControlDelayed())
         {
-            flipSprite = (m_spriteRenderer.flipX ? (m_lastTargetHorizontalVelocityDirection.x > .01f) : (m_lastTargetHorizontalVelocityDirection.x < -.01f));
+            flipSprite = (m_spriteRenderer.flipX == m_flipSprite ? (m_lastTargetHorizontalVelocityDirection.x < -.01f) : (m_lastTargetHorizontalVelocityDirection.x > .01f));
         }
         else if (IsSlidingOfWall)
         {
-            flipSprite = (m_spriteRenderer.flipX ? (m_lastTargetHorizontalVelocityDirection.x < -.01f) : (m_lastTargetHorizontalVelocityDirection.x > .01f));
+            flipSprite = (m_spriteRenderer.flipX == m_flipSprite ? (m_lastTargetHorizontalVelocityDirection.x > .01f) : (m_lastTargetHorizontalVelocityDirection.x < -.01f));
         }
 
         if (flipSprite)
@@ -255,6 +292,11 @@ public class GroundedMovement : PhysicsObject
         m_animator.SetBool(IsGroundedParamNameString, IsGrounded);
         m_animator.SetBool(m_isSlidingOfWallParamHashId, IsSlidingOfWall);
         m_animator.SetBool(m_isDashingParamHashId, IsDashing);
+
+        if (m_triggeredAirborneJump)
+        {
+            m_animator.SetTrigger(m_airborneJumpParamHashId);
+        }
     }
 
     public void SetInputs(Inputs inputs)
@@ -265,13 +307,12 @@ public class GroundedMovement : PhysicsObject
     protected override void Update()
     {
         ComputeVelocity();
-        PlaySounds();
     }
 
     protected override void ComputeVelocity()
     {
-        // Only do either a jump or a dash during the next FixedUpdate
-        if (!m_triggeredJump && !InDashWindow())
+        // Once a jump or a dash is triggered, neither can be triggered again until the next FixedUpdate is executed
+        if (!m_triggeredJump && !m_triggeredAirborneJump && !InDashWindow())
         {
             // Jump
             if (IsGrounded && m_currentInputs.jump)
@@ -279,12 +320,17 @@ public class GroundedMovement : PhysicsObject
                 Jump();
             }
             // Wall jump
-            else if ((IsSlidingOfWall || InWallJumpWindow()) && m_currentInputs.jump)
+            else if (m_canWallJump && (IsSlidingOfWall || InWallJumpWindow()) && m_currentInputs.jump)
             {
                 WallJump();
             }
+            // Airborne jump
+            else if (m_canAirborneJump && !IsGrounded && m_airborneJumpAvailable && m_currentInputs.jump)
+            {
+                AirborneJump();
+            }
             // Dash
-            else if (m_currentInputs.dash && !InDashWindow() && !DashInCooldown())
+            else if (m_canDash && m_currentInputs.dash && !InDashWindow() && !DashInCooldown())
             {
                 Dash();
             }
@@ -303,23 +349,34 @@ public class GroundedMovement : PhysicsObject
         }
     }
 
-    private void PlaySounds()
-    {
-        // Play sounds
-        if (m_triggeredJump)
-        {
-        }
-        else if (!IsDashing && InDashWindow())
-        {
-            m_audioSource.pitch = Random.Range(.9f, 1.0f);
-            m_audioSource.PlayOneShot(m_dashSound);
-        }
-    }
-
     // Jump related methods
     private void Jump()
     {
-        m_velocity.y = m_jumpTakeOffSpeed;
+        AddJumpImpulse(m_jumpTakeOffSpeed);
+        m_triggeredJump = true;
+
+        // Play sound
+        m_audioSource.pitch = Random.Range(.9f, 1.0f);
+        m_audioSource.PlayOneShot(m_jumpSound);
+    }
+    
+    private void AirborneJump()
+    {
+        AddJumpImpulse(m_airborneJumpTakeOffSpeed);
+        m_airborneJumpAvailable = false;
+        m_triggeredAirborneJump = true;
+
+        // Reset canceled jump to allow airborne jump to be canceled
+        m_jumpCanceled = false;
+
+        // Play sound
+        m_audioSource.pitch = Random.Range(.9f, 1.0f);
+        m_audioSource.PlayOneShot(m_airborneJumpSound);
+    }
+
+    private void AddJumpImpulse(float takeOffSpeed)
+    {
+        m_velocity.y = takeOffSpeed;
 
         // Reset ground normal because it is use for the movement along ground
         // If it's not reset, it could cause the player to move in a strange direction 
@@ -327,12 +384,6 @@ public class GroundedMovement : PhysicsObject
 
         // Update the gravity modifier
         m_currentGravityModifier = m_gravityModifier;
-
-        m_triggeredJump = true;
-
-        // Play jump sound
-        m_audioSource.pitch = Random.Range(.9f, 1.0f);
-        m_audioSource.PlayOneShot(m_jumpSound);
     }
 
     private IEnumerator WallJumpWindow()
@@ -356,6 +407,11 @@ public class GroundedMovement : PhysicsObject
     {
         Jump();
         m_targetHorizontalVelocity = m_spriteRenderer.flipX ? -m_wallJumpHorizontalVelocity : m_wallJumpHorizontalVelocity;
+
+        if (InWallJumpWindow())
+        {
+            EndWallJumpWindow();
+        }
 
         m_horizontalControlDelayCoroutine = DelayHorizontalControl();
         StartCoroutine(m_horizontalControlDelayCoroutine);
@@ -397,10 +453,6 @@ public class GroundedMovement : PhysicsObject
         // Update the gravity modifier
         m_currentGravityModifier = .0f;
 
-        // Play dash sound
-        m_audioSource.pitch = Random.Range(.9f, 1.0f);
-        m_audioSource.PlayOneShot(m_dashSound);
-
         // Cancel the other coroutines if necessary
         if (InWallJumpWindow())
         {
@@ -414,6 +466,10 @@ public class GroundedMovement : PhysicsObject
 
         m_dashWindowCoroutine = UseDashWindow();
         StartCoroutine(m_dashWindowCoroutine);
+
+        // Play sounds
+        m_audioSource.pitch = Random.Range(.9f, 1.0f);
+        m_audioSource.PlayOneShot(m_dashSound);
     }
 
     private IEnumerator UseDashWindow()
@@ -442,6 +498,9 @@ public class GroundedMovement : PhysicsObject
         StartCoroutine(m_dashCooldownCoroutine);
     }
 
+    // Return dashing state base on the coroutine existence, since using the actual movement could create incorrect values!
+    // This could happen because moving the rigidbody doesn't immediatly update the transform and wall slide detection doesn't
+    // use the rigidbody position
     private bool InDashWindow()
     {
         return m_dashWindowCoroutine != null;

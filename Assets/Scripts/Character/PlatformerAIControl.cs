@@ -3,10 +3,10 @@ using Pathfinding;
 using System.Collections;
 
 // This script requires thoses components and will be added if they aren't already there
-[RequireComponent(typeof(GroundedMovement))]
+[RequireComponent(typeof(PlatformerMovement))]
 [RequireComponent(typeof(Seeker))]
 
-public class AIControl : MonoBehaviour
+public class PlatformerAIControl : MonoBehaviour
 {
     [Header("Target")]
     [SerializeField]
@@ -35,13 +35,12 @@ public class AIControl : MonoBehaviour
 
     private Path m_path;
     private int m_targetWaypoint = 0;
-    private bool m_pathHasEnded = false;
 
     private Inputs noControlInputs;
 
     public bool ControlsEnabled { get; private set; }
 
-    private GroundedMovement m_AIMovement;
+    private PlatformerMovement m_movementScript;
     private Seeker m_seeker;
 
     private void Awake()
@@ -49,7 +48,7 @@ public class AIControl : MonoBehaviour
         noControlInputs = new Inputs();
         ControlsEnabled = true;
 
-        m_AIMovement = GetComponent<GroundedMovement>();
+        m_movementScript = GetComponent<PlatformerMovement>();
         m_seeker = GetComponent<Seeker>();
     }
 
@@ -98,10 +97,7 @@ public class AIControl : MonoBehaviour
                     Debug.Log("-----------------------------------------------------");
                 }
             }
-
-            // HACK: When the path is generated, it is generated a few frames AFTER the generation was start.
-            // Because of that, the AI ends up i between the first waypointAND the second one. We then skip
-            // the first waypoint to prevent him from usessly go back to the first waypoint.
+            
             m_targetWaypoint = 0;
         }
     }
@@ -135,7 +131,6 @@ public class AIControl : MonoBehaviour
                     // Check if the AI hasn't reach either the target or the last waypoint
                     if ((!m_stopWhenUnreachable || IsTargetReachable()) && distanceToTarget > m_stopDistanceToTarget && !isWaypointReached)
                     {
-                        //bool isInputsCreated = false;
                         float distanceToWaypoint = Vector3.Distance(transform.position, m_path.vectorPath[m_targetWaypoint]);
 
                         // Update the target waypoint while the last one hasn't been reached and the current one is close enough
@@ -177,11 +172,12 @@ public class AIControl : MonoBehaviour
         Vector3 positionToTargetWaypoint = m_path.vectorPath[m_targetWaypoint] - transform.position;
         bool jumpNeededToReachNextWaypoint = positionToTargetWaypoint.y >= m_minHeightToJump || positionToTargetWaypoint.y <= -m_minHeightToJump;
 
+        // HACK: Normally, if the path was correct, it wouldn't tell to jump anyway. This is a quick fixe since the path generation has issues
         // Choose horizontal movement
         float horizontalMovement = m_canJump || !jumpNeededToReachNextWaypoint ? positionToTargetWaypoint.normalized.x : .0f ;
 
         // Check jump inputs
-        bool jump = m_canJump && !m_jumpInputDown && jumpNeededToReachNextWaypoint && m_AIMovement.IsGrounded;
+        bool jump = m_canJump && !m_jumpInputDown && jumpNeededToReachNextWaypoint && m_movementScript.IsGrounded;
         
         if (jump && !m_jumpInputDown)
         {
@@ -226,7 +222,7 @@ public class AIControl : MonoBehaviour
 
     private void UpdateMovement(Inputs inputs)
     {
-        m_AIMovement.SetInputs(inputs);
+        m_movementScript.SetInputs(inputs);
     }
 
     private void OnEnable()
