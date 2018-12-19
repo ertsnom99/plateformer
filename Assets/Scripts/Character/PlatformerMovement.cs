@@ -1,12 +1,19 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+public interface IPlatformerMovementSubscriber
+{
+    void NotifyDashUsed();
+    void NotifyDashCooldownUpdated(float cooldownProgress);
+    void NotifyDashCooldownOver();
+}
+
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(AudioSource))]
 
-public class PlatformerMovement : PhysicsObject
+public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementSubscriber>
 {
     [SerializeField]
     private float m_maxSpeed = 6.6f;
@@ -72,6 +79,7 @@ public class PlatformerMovement : PhysicsObject
     [SerializeField]
     private float m_dashCooldown = 1.0f;
     private IEnumerator m_dashCooldownCoroutine;
+    private bool m_triggeredDash = false;
 
     public bool IsDashing { get; private set; }
 
@@ -139,6 +147,12 @@ public class PlatformerMovement : PhysicsObject
 
         base.FixedUpdate();
 
+        // Stop the dash window if a jump/airborne jump was triggered during a dash
+        if (InDashWindow() && (m_triggeredJump || m_triggeredAirborneJump))
+        {
+            EndDashWindow();
+        }
+
         // Update dashing state before UpdateWallSlide(), since it uses that flag
         IsDashing = InDashWindow();
 
@@ -173,6 +187,7 @@ public class PlatformerMovement : PhysicsObject
         // Reset jump flags used in Update
         m_triggeredJump = false;
         m_triggeredAirborneJump = false;
+        m_triggeredDash = false;
 
         // Debug
         if (m_debugSlideRaycast)
@@ -236,6 +251,7 @@ public class PlatformerMovement : PhysicsObject
             if (IsDashing)
             {
                 EndDashWindow();
+                IsDashing = false;
             }
             
             if (InWallJumpWindow())
@@ -312,7 +328,7 @@ public class PlatformerMovement : PhysicsObject
     protected override void ComputeVelocity()
     {
         // Once a jump or a dash is triggered, neither can be triggered again until the next FixedUpdate is executed
-        if (!m_triggeredJump && !m_triggeredAirborneJump && !InDashWindow())
+        if (!m_triggeredJump && !m_triggeredAirborneJump && !m_triggeredDash)
         {
             // Jump
             if (IsGrounded && m_currentInputs.jump)
@@ -453,6 +469,8 @@ public class PlatformerMovement : PhysicsObject
         // Update the gravity modifier
         m_currentGravityModifier = .0f;
 
+        m_triggeredDash = true;
+
         // Cancel the other coroutines if necessary
         if (InWallJumpWindow())
         {
@@ -467,6 +485,12 @@ public class PlatformerMovement : PhysicsObject
         m_dashWindowCoroutine = UseDashWindow();
         StartCoroutine(m_dashWindowCoroutine);
 
+        // Tell subscribers that the dash was used
+        foreach (IPlatformerMovementSubscriber subscriber in m_subscribers)
+        {
+            subscriber.NotifyDashUsed();
+        }
+
         // Play sounds
         m_audioSource.pitch = Random.Range(.9f, 1.0f);
         m_audioSource.PlayOneShot(m_dashSound);
@@ -475,15 +499,11 @@ public class PlatformerMovement : PhysicsObject
     private IEnumerator UseDashWindow()
     {
         yield return new WaitForSeconds(m_dashDuration);
-        m_dashWindowCoroutine = null;
-
-        // Update the gravity modifier
-        m_currentGravityModifier = m_gravityModifier;
-
-        m_dashCooldownCoroutine = DashCooldown();
-        StartCoroutine(m_dashCooldownCoroutine);
+        EndDashWindow();
     }
 
+    // Ending the dash window doesn't directly change the IsDashing flag, because it should be set during a FixedUpdate
+    // and this could be called outside of one
     private void EndDashWindow()
     {
         StopCoroutine(m_dashWindowCoroutine);
@@ -491,9 +511,7 @@ public class PlatformerMovement : PhysicsObject
 
         // Update the gravity modifier
         m_currentGravityModifier = m_gravityModifier;
-
-        IsDashing = false;
-
+        
         m_dashCooldownCoroutine = DashCooldown();
         StartCoroutine(m_dashCooldownCoroutine);
     }
@@ -508,8 +526,29 @@ public class PlatformerMovement : PhysicsObject
 
     private IEnumerator DashCooldown()
     {
-        yield return new WaitForSeconds(m_dashCooldown);
-        m_dashCooldownCoroutine = null;  
+        float elapsedTime = .0f;
+        float lastUpdateTime = Time.time;
+
+        while (elapsedTime < m_dashCooldown)
+        {
+            yield return 0;
+
+            elapsedTime += (Time.time - lastUpdateTime); 
+
+            // Tell subscribers that the dash cooldown was updated
+            foreach (IPlatformerMovementSubscriber subscriber in m_subscribers)
+            {
+                subscriber.NotifyDashCooldownUpdated(Mathf.Clamp01(elapsedTime / m_dashCooldown));
+            }
+        }
+
+        m_dashCooldownCoroutine = null;
+
+        // Tell subscribers that the dash cooldown is over
+        foreach (IPlatformerMovementSubscriber subscriber in m_subscribers)
+        {
+            subscriber.NotifyDashCooldownOver();
+        }
     }
 
     private bool DashInCooldown()

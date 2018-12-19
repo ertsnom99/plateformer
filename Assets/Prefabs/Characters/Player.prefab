@@ -266,7 +266,7 @@ MonoBehaviour:
   m_canDash: 1
   m_dashSpeed: 26
   m_dashDuration: 0.2
-  m_dashCooldown: 1
+  m_dashCooldown: 2
   m_flipSprite: 0
   m_jumpSound: {fileID: 8300000, guid: d91b828e8fde9e748a781a3b50778117, type: 3}
   m_airborneJumpSound: {fileID: 8300000, guid: 92147626dea6e614380e791a9993b396, type: 3}
