@@ -81,23 +81,6 @@ public class PlatformerAIControl : MonoBehaviour
         else
         {
             m_path = path;
-
-            if (m_path.vectorPath.Count >= 3)
-            {
-                if (PathNeedsFix())
-                {
-                    Debug.Log("Wrong path");
-                    m_path.vectorPath.Remove(m_path.vectorPath[1]);
-                    Debug.Log("Fixed:");
-
-                    for (int i = 0; i < m_path.vectorPath.Count; i++)
-                    {
-                        Debug.Log(m_path.vectorPath[i].x + " : " + m_path.vectorPath[i].y);
-                    }
-                    Debug.Log("-----------------------------------------------------");
-                }
-            }
-            
             m_targetWaypoint = 0;
         }
     }
