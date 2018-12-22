@@ -3183,7 +3183,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4536785919381258, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.9987315
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4536785919381258, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3208,21 +3208,6 @@ Prefab:
     - target: {fileID: 4536785919381258, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 2}
       propertyPath: m_RootOrder
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114253259727586034, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
-        type: 2}
-      propertyPath: m_airborneJumpTakeOffSpeed
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 114253259727586034, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
-        type: 2}
-      propertyPath: m_debugVelocity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114253259727586034, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
-        type: 2}
-      propertyPath: m_canAirborneJump
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 2}
@@ -4103,7 +4088,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4557625184253204, guid: 2d83156fcd800694f8aa1d6f2243ff36, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.9987316
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4557625184253204, guid: 2d83156fcd800694f8aa1d6f2243ff36, type: 2}
       propertyPath: m_LocalPosition.z
@@ -4134,51 +4119,6 @@ Prefab:
       propertyPath: m_target
       value: 
       objectReference: {fileID: 1054409319}
-    - target: {fileID: 95743423711126710, guid: 2d83156fcd800694f8aa1d6f2243ff36,
-        type: 2}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: c2687c191b655e24d85297581dd4c4b5, type: 2}
-    - target: {fileID: 212154320131080170, guid: 2d83156fcd800694f8aa1d6f2243ff36,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 72de0c64f2c6a498096698322c976a67,
-        type: 3}
-    - target: {fileID: 1222172137614980, guid: 2d83156fcd800694f8aa1d6f2243ff36, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114420989141734892, guid: 2d83156fcd800694f8aa1d6f2243ff36,
-        type: 2}
-      propertyPath: graphMask.value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212154320131080170, guid: 2d83156fcd800694f8aa1d6f2243ff36,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 212154320131080170, guid: 2d83156fcd800694f8aa1d6f2243ff36,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 212154320131080170, guid: 2d83156fcd800694f8aa1d6f2243ff36,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114420989141734892, guid: 2d83156fcd800694f8aa1d6f2243ff36,
-        type: 2}
-      propertyPath: startEndModifier.exactStartPoint
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114107880563175574, guid: 2d83156fcd800694f8aa1d6f2243ff36,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d83156fcd800694f8aa1d6f2243ff36, type: 2}
   m_IsPrefabAsset: 0

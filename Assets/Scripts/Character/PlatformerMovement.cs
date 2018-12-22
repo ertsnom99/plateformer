@@ -9,8 +9,6 @@ public interface IPlatformerMovementSubscriber
 }
 
 // This script requires thoses components and will be added if they aren't already there
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(AudioSource))]
 
 public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementSubscriber>
@@ -123,9 +121,19 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         IsSlidingOfWall = false;
         IsDashing = false;
 
-        m_spriteRenderer = GetComponent<SpriteRenderer>();
-        m_animator = GetComponent<Animator>();
+        m_spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        m_animator = GetComponentInChildren<Animator>();
         m_audioSource = GetComponent<AudioSource>();
+
+        if (!m_spriteRenderer)
+        {
+            Debug.LogError("No SpriteRenderer found in any children!");
+        }
+
+        if (!m_animator)
+        {
+            Debug.LogError("No Animator found in any children!");
+        }
     }
 
     protected override void FixedUpdate()
