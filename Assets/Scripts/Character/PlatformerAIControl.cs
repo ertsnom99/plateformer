@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Pathfinding;
 using System.Collections;
+using System.Collections.Generic;
 
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(PlatformerMovement))]
@@ -15,14 +16,15 @@ public class PlatformerAIControl : MonoBehaviour
     private float m_stopDistanceToTarget = 1.4f;
     [SerializeField]
     private float m_minDistanceForTargetReachable = 6.0f;
+    [SerializeField]
+    private float m_pathFixByAngleThreshold = .1f;
 
     [Header("Update")]
     [SerializeField]
     private int m_updateRate = 2;
     [SerializeField]
-    private float m_nextWaypointDistance = 0.1f;
-    [SerializeField]
     private bool m_stopWhenUnreachable = true;
+    private Vector2 m_previousToCurrentWaypoint;
 
     [Header("Jump")]
     [SerializeField]
@@ -71,9 +73,9 @@ public class PlatformerAIControl : MonoBehaviour
         StartCoroutine(UpdatePath());
     }
 
+    // Called when a new path is created
     public void OnPathComplete(Path path)
     {
-        // We got our path back
         if (path.error)
         {
             Debug.LogError("The path failed!");
@@ -81,14 +83,25 @@ public class PlatformerAIControl : MonoBehaviour
         else
         {
             m_path = path;
-            m_targetWaypoint = 0;
+
+            while (m_path.vectorPath.Count >= 3 && PathNeedsFix())
+            {
+                m_path.vectorPath.RemoveAt(1);
+                Debug.Log(Time.frameCount + " Fixed");
+            }
+
+            m_targetWaypoint = 1;
+            m_previousToCurrentWaypoint = m_path.vectorPath[m_targetWaypoint] - m_path.vectorPath[m_targetWaypoint - 1];
         }
     }
 
     private bool PathNeedsFix()
     {
-        return (m_path.vectorPath[0].x > m_path.vectorPath[1].x && m_path.vectorPath[1].x < m_path.vectorPath[2].x)
-            || (m_path.vectorPath[0].x < m_path.vectorPath[1].x && m_path.vectorPath[1].x > m_path.vectorPath[2].x);
+        Vector2 secondToFirstWaypoint = m_path.vectorPath[0] - m_path.vectorPath[1];
+        Vector2 secondToThirdWaypoint = m_path.vectorPath[2] - m_path.vectorPath[1];
+
+        // Check if both vectors are along the exact same line and in the same direction
+        return Vector2.Angle(secondToFirstWaypoint, secondToThirdWaypoint) <= m_pathFixByAngleThreshold;
     }
 
     private void Update()
@@ -102,22 +115,16 @@ public class PlatformerAIControl : MonoBehaviour
             {
                 if (m_path != null)
                 {
-                    /*for(int i = 0; i < m_path.vectorPath.Count; i++)
-                    {
-                        Debug.Log(m_path.vectorPath[i].x + " : " + m_path.vectorPath[i].y);
-                    }
-                    Debug.Log("-----------------------------------------------------");*/
-
-                    float distanceToTarget = Vector3.Distance(transform.position, m_target.position);
                     bool isWaypointReached = m_targetWaypoint >= m_path.vectorPath.Count;
-
+                    float distanceToTarget = Vector3.Distance(transform.position, m_target.position);
+                    
                     // Check if the AI hasn't reach either the target or the last waypoint
-                    if ((!m_stopWhenUnreachable || IsTargetReachable()) && distanceToTarget > m_stopDistanceToTarget && !isWaypointReached)
+                    if ((!m_stopWhenUnreachable || IsTargetReachable()) && !isWaypointReached && distanceToTarget > m_stopDistanceToTarget)
                     {
-                        float distanceToWaypoint = Vector3.Distance(transform.position, m_path.vectorPath[m_targetWaypoint]);
+                        Vector2 positionToTargetWaypoint = m_path.vectorPath[m_targetWaypoint] - transform.position;
 
-                        // Update the target waypoint while the last one hasn't been reached and the current one is close enough
-                        while (!isWaypointReached && distanceToWaypoint <= m_nextWaypointDistance)
+                        // Update the target waypoint while the last one hasn't been reached and the current one has been past
+                        while (!isWaypointReached && Vector2.Angle(m_previousToCurrentWaypoint, positionToTargetWaypoint) >= 90.0f)
                         {
                             m_targetWaypoint++;
 
@@ -125,9 +132,9 @@ public class PlatformerAIControl : MonoBehaviour
 
                             if (!isWaypointReached)
                             {
-                                distanceToWaypoint = Vector3.Distance(transform.position, m_path.vectorPath[m_targetWaypoint]);
+                                m_previousToCurrentWaypoint = m_path.vectorPath[m_targetWaypoint] - m_path.vectorPath[m_targetWaypoint - 1];
+                                positionToTargetWaypoint = m_path.vectorPath[m_targetWaypoint] - transform.position;
                             }
-
                         }
 
                         // Create the inputs if it wasn't done in the previous
@@ -155,9 +162,10 @@ public class PlatformerAIControl : MonoBehaviour
         Vector3 positionToTargetWaypoint = m_path.vectorPath[m_targetWaypoint] - transform.position;
         bool jumpNeededToReachNextWaypoint = positionToTargetWaypoint.y >= m_minHeightToJump || positionToTargetWaypoint.y <= -m_minHeightToJump;
 
+        // TODO: Rework horizontal movement
         // HACK: Normally, if the path was correct, it wouldn't tell to jump anyway. This is a quick fixe since the path generation has issues
         // Choose horizontal movement
-        float horizontalMovement = m_canJump || !jumpNeededToReachNextWaypoint ? positionToTargetWaypoint.normalized.x : .0f ;
+        float horizontalMovement = m_canJump || !jumpNeededToReachNextWaypoint ? Mathf.Sign(positionToTargetWaypoint.x) : .0f ;
 
         // Check jump inputs
         bool jump = m_canJump && !m_jumpInputDown && jumpNeededToReachNextWaypoint && m_movementScript.IsGrounded;
@@ -190,11 +198,11 @@ public class PlatformerAIControl : MonoBehaviour
         // Inputs from the controler
         //inputs.vertical = Input.GetAxisRaw("Vertical");
         inputs.horizontal = horizontalMovement;
-        inputs.jump = jump;
-        inputs.releaseJump = releaseJump;
+        inputs.jump = false;//jump;
+        inputs.releaseJump = false;//releaseJump;
         //inputs.dash = Input.GetButtonDown("Dash");
         //inputs.releaseDash = Input.GetButtonUp("Dash");
-        
+
         return inputs;
     }
 
