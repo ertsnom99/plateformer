@@ -12,8 +12,7 @@ public class CharacterTypeAController : MonoBehaviour
     private LayerMask m_groundLayer;
     [SerializeField]
     private float m_jumpForce = 700.0f;
-
-    private bool m_isFacingRight = true;
+    
     public bool IsGrounded { get; private set; }
     private float m_groundAngle;
 

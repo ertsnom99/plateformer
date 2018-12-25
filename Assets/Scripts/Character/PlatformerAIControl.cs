@@ -32,7 +32,7 @@ public class PlatformerAIControl : MonoBehaviour
     [SerializeField]
     private float m_minHeightToJump = 0.4f;
     [SerializeField]
-    private float m_minHeightToReleaseJump = 1.5f;
+    private float m_minHeightToReleaseJump = 0.1f;
     private bool m_jumpInputDown = false;
 
     private Path m_path;
@@ -122,12 +122,12 @@ public class PlatformerAIControl : MonoBehaviour
                     if ((!m_stopWhenUnreachable || IsTargetReachable()) && !isWaypointReached && distanceToTarget > m_stopDistanceToTarget)
                     {
                         Vector2 positionToTargetWaypoint = m_path.vectorPath[m_targetWaypoint] - transform.position;
-
+Debug.Log(Time.frameCount + " ----------- " + Vector2.Angle(m_previousToCurrentWaypoint, positionToTargetWaypoint) + " -----------------------------");
                         // Update the target waypoint while the last one hasn't been reached and the current one has been past
                         while (!isWaypointReached && Vector2.Angle(m_previousToCurrentWaypoint, positionToTargetWaypoint) >= 90.0f)
                         {
                             m_targetWaypoint++;
-
+Debug.Log(Time.frameCount + " " + m_targetWaypoint);
                             isWaypointReached = m_targetWaypoint >= m_path.vectorPath.Count;
 
                             if (!isWaypointReached)
@@ -160,46 +160,36 @@ public class PlatformerAIControl : MonoBehaviour
         Inputs inputs = noControlInputs;
         
         Vector3 positionToTargetWaypoint = m_path.vectorPath[m_targetWaypoint] - transform.position;
-        bool jumpNeededToReachNextWaypoint = positionToTargetWaypoint.y >= m_minHeightToJump || positionToTargetWaypoint.y <= -m_minHeightToJump;
 
-        // TODO: Rework horizontal movement
+        // TODO: Use m_previousToCurrentWaypoint the define if a jump is needed or a horizontal movement
+        bool jumpNeededToReachNextWaypoint = m_previousToCurrentWaypoint.y >= m_minHeightToJump/* || positionToTargetWaypoint.y <= -m_minHeightToJump*/;
+        
         // HACK: Normally, if the path was correct, it wouldn't tell to jump anyway. This is a quick fixe since the path generation has issues
         // Choose horizontal movement
-        float horizontalMovement = m_canJump || !jumpNeededToReachNextWaypoint ? Mathf.Sign(positionToTargetWaypoint.x) : .0f ;
+        float horizontalMovement = !jumpNeededToReachNextWaypoint ? Mathf.Sign(positionToTargetWaypoint.x) : Mathf.Sign(positionToTargetWaypoint.x) * Mathf.Clamp01(Mathf.Abs(positionToTargetWaypoint.x / (m_movementScript.MaxSpeed / 3.0f)));
 
         // Check jump inputs
         bool jump = m_canJump && !m_jumpInputDown && jumpNeededToReachNextWaypoint && m_movementScript.IsGrounded;
         
-        if (jump && !m_jumpInputDown)
+        if (jump)
         {
             m_jumpInputDown = true;
+            Debug.LogWarning(Time.frameCount + " " + m_jumpInputDown);
         }
         
         bool releaseJump = m_jumpInputDown && positionToTargetWaypoint.y <= -m_minHeightToReleaseJump;
 
-        if (m_jumpInputDown && releaseJump)
+        if (releaseJump)
         {
             m_jumpInputDown = false;
+            Debug.LogWarning(Time.frameCount + " " + m_jumpInputDown);
         }
-
-        /*if (positionToTargetWaypoint.normalized.x < .0f && (m_target.transform.position.y - transform.position.y) <= 2.0f)
-        {
-            Debug.Log(Time.time + "---    " + positionToTargetWaypoint.normalized.x + " : " + positionToTargetWaypoint.normalized.y);
-            Debug.Log(Time.time + "---" + transform.position.x + " : " + transform.position.y);
-            Time.timeScale = .0f;
-            Debug.Log(Time.time + " -----------Freeze-----------------------------------------------------");
-            for (int i = 0; i < m_path.vectorPath.Count; i++)
-            {
-                Debug.Log(Time.time + "---" + m_path.vectorPath[i].x + " : " + m_path.vectorPath[i].y);
-            }
-            Debug.Log(Time.time + "-----------------------------------------------------");
-        }*/
 
         // Inputs from the controler
         //inputs.vertical = Input.GetAxisRaw("Vertical");
         inputs.horizontal = horizontalMovement;
-        inputs.jump = false;//jump;
-        inputs.releaseJump = false;//releaseJump;
+        inputs.jump = jump;
+        inputs.releaseJump = releaseJump;
         //inputs.dash = Input.GetButtonDown("Dash");
         //inputs.releaseDash = Input.GetButtonUp("Dash");
 

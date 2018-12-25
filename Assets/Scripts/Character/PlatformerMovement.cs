@@ -15,6 +15,13 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 {
     [SerializeField]
     private float m_maxSpeed = 6.6f;
+
+    public float MaxSpeed
+    {
+        get { return m_maxSpeed; }
+        private set { m_maxSpeed = value; }
+    }
+
     [SerializeField]
     private float m_jumpTakeOffSpeed = 15.0f;
     private bool m_triggeredJump = false;
@@ -46,7 +53,6 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     private bool m_constantSlipeSpeed = false;
 
     private bool m_hitWall = false;
-    private Vector2 m_lastHitWallNormal = Vector2.zero;
 
     public bool IsSlidingOfWall { get; private set; }
 
@@ -211,7 +217,6 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         if (hit.normal.x != .0f && hit.normal.y == .0f)
         {
             m_hitWall = true;
-            m_lastHitWallNormal = hit.normal;
         }
     }
     
@@ -283,7 +288,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     private bool RaycastForWallSlide()
     {
-        Vector2 slideRaycastStart = new Vector2(transform.position.x, transform.position.y + m_slideRaycastOffset);
+        //Vector2 slideRaycastStart = new Vector2(transform.position.x, transform.position.y + m_slideRaycastOffset);
 
         RaycastHit2D[] results = new RaycastHit2D[1];
         Physics2D.Raycast(transform.position, m_lastTargetHorizontalVelocityDirection, m_contactFilter, results, m_slideRaycastDistance);
@@ -311,7 +316,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         }
         
         // Update animator parameters
-        m_animator.SetFloat(m_XVelocityParamHashId, Mathf.Abs(m_velocity.x) / m_maxSpeed);
+        m_animator.SetFloat(m_XVelocityParamHashId, Mathf.Abs(m_velocity.x) / MaxSpeed);
         m_animator.SetFloat(m_YVelocityParamHashId, m_velocity.y);
         m_animator.SetBool(IsGroundedParamNameString, IsGrounded);
         m_animator.SetBool(m_isSlidingOfWallParamHashId, IsSlidingOfWall);
@@ -369,7 +374,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         // Set the wanted horizontal velocity, except during the delayed controls window and the dash window
         if (!HorizontalControlDelayed() && !InDashWindow())
         {
-            m_targetHorizontalVelocity = m_currentInputs.horizontal * m_maxSpeed;
+            m_targetHorizontalVelocity = m_currentInputs.horizontal * MaxSpeed;
         }
     }
 
