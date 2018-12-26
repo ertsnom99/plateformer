@@ -18,6 +18,12 @@ public class PhysicsObject : MonoBehaviour
     protected float m_gravityModifier = 2.5f;
     protected float m_currentGravityModifier;
 
+    public float CurrentGravityModifier
+    {
+        get { return m_currentGravityModifier; }
+        private set { m_currentGravityModifier = value; }
+    }
+
     [SerializeField]
     private float m_minGroundNormalY = .4f;
     protected Vector2 m_groundNormal;
@@ -29,6 +35,13 @@ public class PhysicsObject : MonoBehaviour
     private bool m_debugVelocity = false;
 
     protected Vector2 m_velocity;
+
+    public Vector2 Velocity
+    {
+        get { return m_velocity; }
+        protected set { m_velocity = value; }
+    }
+
     protected float m_targetHorizontalVelocity;
     protected ContactFilter2D m_contactFilter;
     protected RaycastHit2D[] m_hitBuffer = new RaycastHit2D[16];
@@ -45,7 +58,7 @@ public class PhysicsObject : MonoBehaviour
         m_contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
         m_contactFilter.useLayerMask = true;
 
-        m_currentGravityModifier = m_gravityModifier;
+        CurrentGravityModifier = m_gravityModifier;
 
         IsGrounded = false;
 
@@ -58,15 +71,15 @@ public class PhysicsObject : MonoBehaviour
         m_groundAngle = .0f;
 
         // Update velocity
-        m_velocity += m_currentGravityModifier * Physics2D.gravity * Time.fixedDeltaTime;
-        m_velocity.x = m_targetHorizontalVelocity;
+        Velocity += CurrentGravityModifier * Physics2D.gravity * Time.fixedDeltaTime;
+        Velocity = new Vector2 (m_targetHorizontalVelocity, Velocity.y);
 
         // Create a Vector prependicular to the normal
         Vector2 movementAlongGround = new Vector2(m_groundNormal.y, -m_groundNormal.x);
 
         // The X movement is executed first, then the Y movement is executed. This allows a better control of each type of movement and helps to avoid
         // corner cases. This technic was used in the 16 bit era.
-        Vector2 deltaPosition = m_velocity * Time.fixedDeltaTime;
+        Vector2 deltaPosition = Velocity * Time.fixedDeltaTime;
 
         Vector2 movement = movementAlongGround * deltaPosition.x;
         Move(movement, false);
@@ -76,11 +89,11 @@ public class PhysicsObject : MonoBehaviour
 
         if (m_debugVelocity)
         {
-            Debug.DrawLine(transform.position, transform.position + new Vector3(.0f, m_velocity.y, .0f), Color.red);
-            Debug.DrawLine(transform.position, transform.position + new Vector3(m_velocity.x, .0f, .0f), Color.blue);
+            Debug.DrawLine(transform.position, transform.position + new Vector3(.0f, Velocity.y, .0f), Color.red);
+            Debug.DrawLine(transform.position, transform.position + new Vector3(Velocity.x, .0f, .0f), Color.blue);
             Debug.DrawLine(transform.position, transform.position + new Vector3(m_groundNormal.x, m_groundNormal.y, .0f), Color.yellow);
             Debug.DrawLine(transform.position, transform.position + new Vector3(movementAlongGround.x, movementAlongGround.y, .0f), Color.green);
-            Debug.Log(m_velocity);
+            Debug.Log(Velocity);
         }
     }
 
@@ -131,7 +144,7 @@ public class PhysicsObject : MonoBehaviour
                 }
 
 
-                Vector2 velocityUsed = yMovement ? Vector2.up * m_velocity.y : Vector2.right * m_velocity.x;
+                Vector2 velocityUsed = yMovement ? Vector2.up * Velocity.y : Vector2.right * Velocity.x;
                 // Check how much of the velocity is responsable for going to go throw other colliders
                 // Dot calculates how much two vectors are parallel
                 // For example Dot([-5, 0], [1, 0]) = -5 , Dot([-5, 0], [-1, 0]) = 5 and Dot([-5, 0], [0, 1]) = 0
@@ -142,11 +155,11 @@ public class PhysicsObject : MonoBehaviour
                     // Remove part of the velocity
                     if (yMovement)
                     {
-                        m_velocity.y -= (projection * currentNormal).y;
+                        Velocity = new Vector2(Velocity.x, Velocity.y - (projection * currentNormal).y);
                     }
                     else
                     {
-                        m_velocity.x -= (projection * currentNormal).x;
+                        Velocity = new Vector2(Velocity.x - (projection * currentNormal).x, Velocity.y);
                     }
                 }
 
@@ -172,6 +185,6 @@ public class PhysicsObject : MonoBehaviour
 
     public void AddVerticalVelocity(float addedVelocity)
     {
-        m_velocity.y += addedVelocity;
+        Velocity = new Vector2(Velocity.x, Velocity.y + addedVelocity);
     }
 }

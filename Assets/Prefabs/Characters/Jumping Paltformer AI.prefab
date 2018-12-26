@@ -69,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1222172137614980}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -11.43, y: 0, z: 0.015625}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4122007947241518}
@@ -313,12 +313,14 @@ MonoBehaviour:
   m_target: {fileID: 0}
   m_stopDistanceToTarget: 1.4
   m_minDistanceForTargetReachable: 6
-  m_updateRate: 10
-  m_nextWaypointDistance: 0.75
+  m_pathFixByAngleThreshold: 0.1
+  m_updateRate: 6
+  m_minDistanceToChangeWaypoint: 0.8
   m_stopWhenUnreachable: 1
   m_canJump: 1
-  m_minHeightToJump: 0.4
-  m_minHeightToReleaseJump: 1.5
+  m_minHeightToJump: 1
+  m_horizontalMovementDoneDuringJump: 1
+  m_minHeightToReleaseJump: -0.6
 --- !u!212 &212623614271195354
 SpriteRenderer:
   m_ObjectHideFlags: 1

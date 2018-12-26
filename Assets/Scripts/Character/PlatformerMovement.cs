@@ -24,6 +24,13 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     [SerializeField]
     private float m_jumpTakeOffSpeed = 15.0f;
+
+    public float JumpTakeOffSpeed
+    {
+        get { return m_jumpTakeOffSpeed; }
+        private set { m_jumpTakeOffSpeed = value; }
+    }
+
     private bool m_triggeredJump = false;
     private bool m_jumpCanceled = false;
 
@@ -381,7 +388,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     // Jump related methods
     private void Jump()
     {
-        AddJumpImpulse(m_jumpTakeOffSpeed);
+        AddJumpImpulse(JumpTakeOffSpeed);
         m_triggeredJump = true;
 
         // Play sound
