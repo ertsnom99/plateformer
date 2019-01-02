@@ -149,7 +149,7 @@ public class PlatformerAIControl : MonoBehaviour
             {
                 m_horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
                 m_verticalMovementinProgress = true;
-                m_delayedMovementProgressCheck = true;
+                m_delayedMovementProgressCheck = m_currentPathLink.type == PathLinkType.Jump || m_movementScript.IsGrounded;
             }
             else if (!m_verticalMovementinProgress && m_currentPathLink.type == PathLinkType.Walk)
             {
@@ -186,7 +186,7 @@ public class PlatformerAIControl : MonoBehaviour
                 if (previousPathLink.type == PathLinkType.Jump)
                 {
                     m_horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
-                    m_delayedMovementProgressCheck = true;
+                    m_delayedMovementProgressCheck = m_movementScript.IsGrounded;
                 }
             }
         }
@@ -251,7 +251,7 @@ public class PlatformerAIControl : MonoBehaviour
                             {
                                 m_horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
                                 m_verticalMovementinProgress = true;
-                                m_delayedMovementProgressCheck = true;
+                                m_delayedMovementProgressCheck = m_currentPathLink.type == PathLinkType.Jump || m_movementScript.IsGrounded;
                             }
                         }
                     }
