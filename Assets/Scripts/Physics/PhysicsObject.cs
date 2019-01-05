@@ -51,6 +51,9 @@ public class PhysicsObject : MonoBehaviour
 
     protected const float MinMoveDistance = 0.001f;
 
+    private List<GameObject> m_previouslyCollidingGameObject = new List<GameObject>();
+    private List<GameObject> m_collidingGameObjects = new List<GameObject>();
+
     protected virtual void Awake()
     {
         m_contactFilter.useTriggers = false;
@@ -63,6 +66,18 @@ public class PhysicsObject : MonoBehaviour
         IsGrounded = false;
 
         m_rigidbody2D = GetComponent<Rigidbody2D>();
+        InitialiseRigidbody2D();
+    }
+
+    private void InitialiseRigidbody2D()
+    {
+        m_rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+        m_rigidbody2D.simulated = true;
+        m_rigidbody2D.useFullKinematicContacts = true;
+        m_rigidbody2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        m_rigidbody2D.sleepMode = RigidbodySleepMode2D.NeverSleep;
+        m_rigidbody2D.interpolation = RigidbodyInterpolation2D.Interpolate;
+        m_rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     protected virtual void FixedUpdate()
@@ -77,6 +92,10 @@ public class PhysicsObject : MonoBehaviour
         // Create a Vector prependicular to the normal
         Vector2 movementAlongGround = new Vector2(m_groundNormal.y, -m_groundNormal.x);
 
+        // Backup the list of gameObjects that used to collide and clearly the original
+        m_previouslyCollidingGameObject = new List<GameObject>(m_collidingGameObjects);
+        m_collidingGameObjects.Clear();
+
         // The X movement is executed first, then the Y movement is executed. This allows a better control of each type of movement and helps to avoid
         // corner cases. This technic was used in the 16 bit era.
         Vector2 deltaPosition = Velocity * Time.fixedDeltaTime;
@@ -87,6 +106,9 @@ public class PhysicsObject : MonoBehaviour
         movement = Vector2.up * deltaPosition.y;
         Move(movement, true);
 
+        // Check and broadcast collision exit message
+        CheckCollisionExit();
+        
         if (m_debugVelocity)
         {
             Debug.DrawLine(transform.position, transform.position + new Vector3(.0f, Velocity.y, .0f), Color.red);
@@ -107,6 +129,8 @@ public class PhysicsObject : MonoBehaviour
 
     private void Move(Vector2 movement, bool yMovement)
     {
+        List<GameObject> currentlyCollidingGameObject = new List<GameObject>();
+
         float distance = movement.magnitude;
 
         // Check for collision only if the object moves enough
@@ -127,6 +151,9 @@ public class PhysicsObject : MonoBehaviour
             {
                 Vector2 currentNormal = hit.normal;
 
+                // Check and broadcast collision enter message
+                CheckCollisionEnter(hit);
+                
                 // Check if the object is grounded
                 if (currentNormal.y > m_minGroundNormalY)
                 {
@@ -142,8 +169,7 @@ public class PhysicsObject : MonoBehaviour
                         m_groundAngle = m_groundNormal.x != .0f ? Vector2.Angle(m_groundNormal, new Vector2 (m_groundNormal.x, .0f)) : 90.0f;
                     }
                 }
-
-
+                
                 Vector2 velocityUsed = yMovement ? Vector2.up * Velocity.y : Vector2.right * Velocity.x;
                 // Check how much of the velocity is responsable for going to go throw other colliders
                 // Dot calculates how much two vectors are parallel
@@ -175,10 +201,39 @@ public class PhysicsObject : MonoBehaviour
         }
 
         // Apply the movement
+        //m_rigidbody2D.MovePosition(m_rigidbody2D.position + movement.normalized * distance);
         m_rigidbody2D.position = m_rigidbody2D.position + movement.normalized * distance;
+
         // Updating m_rigidbody2D.position doesn't update transform.position
         // It is only updated before or at the start of next FixedUpdate() (note sure, should be double checked)
         //transform.position = m_rigidbody2D.position;
+    }
+
+    private void CheckCollisionEnter(RaycastHit2D hit)
+    {
+        // If the hitted gameObject wasn't previously hitted
+        if (m_previouslyCollidingGameObject.IndexOf(hit.collider.gameObject) == -1)
+        {
+            hit.collider.BroadcastMessage("OnCollisionEnter2D", new Collision2D(), SendMessageOptions.DontRequireReceiver);
+        }
+
+        // Update the list of currently colliding gameObject
+        if (m_collidingGameObjects.IndexOf(hit.collider.gameObject) == -1)
+        {
+            m_collidingGameObjects.Add(hit.collider.gameObject);
+        }
+    }
+
+    private void CheckCollisionExit()
+    {
+        // If a gameObject isn't hitted anymore
+        foreach (GameObject previouslyCollidingGameObject in m_previouslyCollidingGameObject)
+        {
+            if (m_collidingGameObjects.IndexOf(previouslyCollidingGameObject) == -1)
+            {
+                previouslyCollidingGameObject.BroadcastMessage("OnCollisionExit2D", new Collision2D(), SendMessageOptions.DontRequireReceiver);
+            }
+        }
     }
 
     protected virtual void OnColliderHitCheck(RaycastHit2D hit) { }
