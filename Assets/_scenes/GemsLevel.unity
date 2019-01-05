@@ -7272,7 +7272,7 @@ CompositeCollider2D:
   m_GameObject: {fileID: 1852403431}
   m_Enabled: 0
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c9bcec6c11c15184e8dd07e0b0b383a5, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -7689,6 +7689,31 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 50484550208919288, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 2}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50484550208919288, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 2}
+      propertyPath: m_Mass
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 50484550208919288, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 2}
+      propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50484550208919288, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 2}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50484550208919288, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: c9bcec6c11c15184e8dd07e0b0b383a5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 2}
   m_IsPrefabAsset: 0

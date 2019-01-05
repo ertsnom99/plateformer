@@ -5,28 +5,61 @@ public interface IInterrupterBreakable
     void NotifyInterrupterBreaked();
 }
 
+public enum WayToBreak
+{
+    Jump = 0,
+    Dash,
+    Explosion
+}
+
 public class BreakableInterrupter : MonoSubscribable<IInterrupterBreakable>
 {
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        Debug.Log(gameObject.name + " Enter " + col.contacts.Length);
-        /*foreach (ContactPoint2D contact in col.contacts)
-        {
-            Debug.Log(gameObject.name + " OnCollisionEnter2D " + contact.normal + " " + contact.otherCollider.gameObject);
-        }*/
-    }
-
-    private void OnCollisionExit2D(Collision2D col)
-    {
-        Debug.Log(gameObject.name + " Exit " + col.contacts.Length);
-        /*foreach (ContactPoint2D contact in col.contacts)
-        {
-            Debug.Log(gameObject.name + " OnCollisionExit2D " + contact.normal);
-        }*/
-    }
+    [Header("Break method")]
+    [SerializeField]
+    private WayToBreak m_wayToBreak;
+    [SerializeField]
+    private float m_velocityToBreak = 30.0f;
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("OnTriggerEnter2D");
+        if (col.CompareTag(GameManager.PlayerTag))
+        {
+            PlatformerMovement movementScript = col.GetComponent<PlatformerMovement>();
+
+            switch (m_wayToBreak)
+            {
+                case WayToBreak.Jump:
+                    float angle = Vector2.Dot(-transform.up, movementScript.Velocity);
+                    
+                    if (angle < 90.0f && movementScript.Velocity.magnitude >= m_velocityToBreak)
+                    {
+                        foreach (IInterrupterBreakable subscriber in m_subscribers)
+                        {
+                            subscriber.NotifyInterrupterBreaked();
+                        }
+
+                        Debug.Log("DESTROYED!");
+                        //Destroy(this);
+                    }
+
+                    break;
+                case WayToBreak.Dash:
+                    if (movementScript.IsDashing)
+                    {
+                        foreach (IInterrupterBreakable subscriber in m_subscribers)
+                        {
+                            subscriber.NotifyInterrupterBreaked();
+                        }
+
+                        Debug.Log("DESTROYED!");
+                        //Destroy(this);
+                    }
+
+                    break;
+                case WayToBreak.Explosion:
+
+                    break;
+            }
+        }
     }
 }
