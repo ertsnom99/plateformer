@@ -3378,7 +3378,7 @@ Prefab:
     - target: {fileID: 50484550208919288, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
         type: 2}
       propertyPath: m_BodyType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 50484550208919288, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
         type: 2}
@@ -3414,6 +3414,11 @@ Prefab:
         type: 2}
       propertyPath: m_Size.y
       value: 1.183108
+      objectReference: {fileID: 0}
+    - target: {fileID: 114253259727586034, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 2}
+      propertyPath: m_shellRadius
+      value: 0.052
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 2}

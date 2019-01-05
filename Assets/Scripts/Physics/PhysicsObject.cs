@@ -5,15 +5,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class PhysicsObjectCollision2D
+{
+    public PhysicsObjectCollision2D(Collider2D collider, Collider2D otherCollider, Rigidbody2D rigidbody, Rigidbody2D otherRigidbody, Transform transform, GameObject gameObject, Vector2 relativeVelocity, bool enabled, Vector2 ?contactPoint = null)
+    {
+        Collider = collider;
+        OtherCollider = otherCollider;
+        Rigidbody = rigidbody;
+        OtherRigidbody = otherRigidbody;
+        Transform = transform;
+        GameObject = gameObject;
+        RelativeVelocity = relativeVelocity;
+        Enabled = enabled;
+
+        if (contactPoint != null)
+        {
+            Contact = true;
+            ContactPoint = (Vector2)contactPoint;
+        }
+        else
+        {
+            Contact = false;
+        }
+    }
+
+    public Collider2D Collider { get; private set; }
+    public Collider2D OtherCollider { get; private set; }
+    public Rigidbody2D Rigidbody { get; private set; }
+    public Rigidbody2D OtherRigidbody { get; private set; }
+    public Transform Transform { get; private set; }
+    public GameObject GameObject { get; private set; }
+    // Doesn't take in consideration the rotation
+    public Vector2 RelativeVelocity { get; private set; }
+    // See: https://docs.unity3d.com/ScriptReference/Collision2D-enabled.html
+    public bool Enabled { get; private set; }
+    public bool Contact { get; private set; }
+    public Vector2 ContactPoint { get; private set; }
+}
+
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Collider2D))]
 
 public class PhysicsObject : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField]
     protected float m_shellRadius = 0.05f;
-
+    
     [SerializeField]
     protected float m_gravityModifier = 2.5f;
     protected float m_currentGravityModifier;
@@ -46,10 +85,16 @@ public class PhysicsObject : MonoBehaviour
     protected ContactFilter2D m_contactFilter;
     protected RaycastHit2D[] m_hitBuffer = new RaycastHit2D[16];
     protected List<RaycastHit2D> m_hitBufferList = new List<RaycastHit2D>(16);
-    
+
+    private Dictionary<Collider2D, Rigidbody2D> m_previouslyCollidingGameObject = new Dictionary<Collider2D, Rigidbody2D>();
+    private Dictionary<Collider2D, Rigidbody2D> m_collidingGameObjects = new Dictionary<Collider2D, Rigidbody2D>();
+
+    protected Collider2D m_collider;
     protected Rigidbody2D m_rigidbody2D;
 
     protected const float MinMoveDistance = 0.001f;
+    protected const string OnCollisionEnterMethodName = "OnPhysicsObjectCollisionEnter";
+    protected const string OnCollisionExitMethodName = "OnPhysicsObjectCollisionExit";
 
     protected virtual void Awake()
     {
@@ -62,7 +107,9 @@ public class PhysicsObject : MonoBehaviour
 
         IsGrounded = false;
 
+        m_collider = GetComponent<Collider2D>();
         m_rigidbody2D = GetComponent<Rigidbody2D>();
+
         InitialiseRigidbody2D();
     }
 
@@ -89,6 +136,10 @@ public class PhysicsObject : MonoBehaviour
         // Create a Vector prependicular to the normal
         Vector2 movementAlongGround = new Vector2(m_groundNormal.y, -m_groundNormal.x);
 
+        // Backup the list of gameObjects that used to collide and clearly the original
+        m_previouslyCollidingGameObject = new Dictionary<Collider2D, Rigidbody2D>(m_collidingGameObjects);
+        m_collidingGameObjects.Clear();
+
         // The X movement is executed first, then the Y movement is executed. This allows a better control of each type of movement and helps to avoid
         // corner cases. This technic was used in the 16 bit era.
         Vector2 deltaPosition = Velocity * Time.fixedDeltaTime;
@@ -98,7 +149,10 @@ public class PhysicsObject : MonoBehaviour
         
         movement = Vector2.up * deltaPosition.y;
         Move(movement, true);
-        
+
+        // Check and broadcast collision exit message
+        CheckCollisionExit();
+
         if (m_debugVelocity)
         {
             Debug.DrawLine(transform.position, transform.position + new Vector3(.0f, Velocity.y, .0f), Color.red);
@@ -119,8 +173,6 @@ public class PhysicsObject : MonoBehaviour
 
     private void Move(Vector2 movement, bool yMovement)
     {
-        List<GameObject> currentlyCollidingGameObject = new List<GameObject>();
-
         float distance = movement.magnitude;
 
         // Check for collision only if the object moves enough
@@ -140,7 +192,10 @@ public class PhysicsObject : MonoBehaviour
             foreach (RaycastHit2D hit in m_hitBufferList)
             {
                 Vector2 currentNormal = hit.normal;
-                
+
+                // Check and broadcast collision enter message
+                CheckCollisionEnter(hit);
+
                 // Check if the object is grounded
                 if (currentNormal.y > m_minGroundNormalY)
                 {
@@ -189,12 +244,60 @@ public class PhysicsObject : MonoBehaviour
 
         // Apply the movement
         m_rigidbody2D.position = m_rigidbody2D.position + movement.normalized * distance;
-        
+
         // Updating m_rigidbody2D.position doesn't update transform.position
         // It is only updated before or at the start of next FixedUpdate() (note sure, should be double checked)
         //transform.position = m_rigidbody2D.position;
     }
-    
+
+    private void CheckCollisionEnter(RaycastHit2D hit)
+    {
+        // If the hitted gameObject wasn't previously hitted
+        if (!m_previouslyCollidingGameObject.ContainsKey(hit.collider))
+        {
+            Vector2 relativeVelocity = hit.rigidbody ? Velocity - hit.rigidbody.velocity : Velocity;
+
+            PhysicsObjectCollision2D physicsObjectCollision2D = new PhysicsObjectCollision2D(m_collider,
+                                                                                             hit.collider,
+                                                                                             m_rigidbody2D,
+                                                                                             hit.rigidbody,
+                                                                                             transform,
+                                                                                             gameObject,
+                                                                                             relativeVelocity,
+                                                                                             true,
+                                                                                             hit.point);
+
+            hit.collider.SendMessage(OnCollisionEnterMethodName, physicsObjectCollision2D, SendMessageOptions.DontRequireReceiver);
+        }
+
+        // Update the list of currently colliding gameObject
+        if (!m_collidingGameObjects.ContainsKey(hit.collider))
+        {
+            m_collidingGameObjects.Add(hit.collider, hit.rigidbody);
+        }
+    }
+
+    private void CheckCollisionExit()
+    {
+        // If a gameObject isn't hitted anymore
+        foreach (KeyValuePair<Collider2D, Rigidbody2D> entry in m_previouslyCollidingGameObject)
+        {
+            if (!m_collidingGameObjects.ContainsKey(entry.Key))
+            {
+                PhysicsObjectCollision2D physicsObjectCollision2D = new PhysicsObjectCollision2D(m_collider,
+                                                                                                 entry.Key,
+                                                                                                 m_rigidbody2D,
+                                                                                                 entry.Value,
+                                                                                                 transform,
+                                                                                                 gameObject,
+                                                                                                 Vector2.zero,
+                                                                                                 true);
+
+                entry.Key.SendMessage(OnCollisionExitMethodName, physicsObjectCollision2D, SendMessageOptions.DontRequireReceiver);
+            }
+        }
+    }
+
     protected virtual void OnColliderHitCheck(RaycastHit2D hit) { }
 
     public void AddVerticalVelocity(float addedVelocity)
