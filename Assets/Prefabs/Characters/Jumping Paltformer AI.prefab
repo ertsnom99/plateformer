@@ -56,7 +56,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1061124074409008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.9987316, z: 0}
+  m_LocalPosition: {x: -0.156, y: 0.6563, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4557625184253204}
@@ -69,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1222172137614980}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.02, y: 8, z: 0.015625}
+  m_LocalPosition: {x: -2.17, y: 0, z: 0.015625}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4122007947241518}
@@ -108,7 +108,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0013335645, y: 0.6661516}
+  m_Offset: {x: -0.15608656, y: 0.68604845}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -119,7 +119,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8292329, y: 1.138303}
+  m_Size: {x: 1.3195059, y: 1.1780967}
   m_EdgeRadius: 0.04
 --- !u!82 &82241674008500906
 AudioSource:
@@ -225,7 +225,7 @@ Animator:
   m_GameObject: {fileID: 1061124074409008}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c2687c191b655e24d85297581dd4c4b5, type: 2}
+  m_Controller: {fileID: 9100000, guid: 69e19dd01b62e234fb31f34d69e925bc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -312,14 +312,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_target: {fileID: 0}
   m_stopDistanceToTarget: 0.4
-  m_minDistanceForTargetReachable: 8
+  m_minDistanceForTargetReachable: 4
   m_updateRate: 5
-  m_minDistanceToChangeWaypoint: 0.6
+  m_minDistanceToChangeWaypoint: 0.5
   m_stopWhenUnreachable: 1
   m_canJump: 1
   m_minHeightForVerticalMovement: 1
   m_minDropDownWidthToJump: 3
-  m_minHeightToReleaseJump: 0.85
+  m_minHeightToReleaseJump: 0.9
 --- !u!212 &212623614271195354
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -355,12 +355,12 @@ SpriteRenderer:
   m_SortingLayerID: -60248483
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 72de0c64f2c6a498096698322c976a67, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 60828feaa4d55fb43979c4858852bfdf, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.33, y: 0.32}
+  m_Size: {x: 1.5, y: 1.3125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

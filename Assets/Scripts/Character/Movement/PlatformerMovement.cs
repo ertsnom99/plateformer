@@ -168,8 +168,8 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
         base.FixedUpdate();
 
-        // Stop the dash window if a jump/airborne jump was triggered during a dash
-        if (InDashWindow() && (m_triggeredJump || m_triggeredAirborneJump))
+        // Stop the dash window if an airborne jump was triggered during a dash
+        if (InDashWindow() && (m_triggeredAirborneJump))
         {
             EndDashWindow();
         }
@@ -205,7 +205,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         // Animate before resetting flags, since some of those flags are necessary for Animate()
         Animate();
 
-        // Reset jump flags used in Update
+        // Reset flags used in Update
         m_triggeredJump = false;
         m_triggeredAirborneJump = false;
         m_triggeredDash = false;

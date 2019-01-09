@@ -4889,6 +4889,16 @@ Prefab:
       propertyPath: m_target
       value: 
       objectReference: {fileID: 1054409319}
+    - target: {fileID: 114904549449585534, guid: 2d83156fcd800694f8aa1d6f2243ff36,
+        type: 2}
+      propertyPath: m_stopWhenUnreachable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114904549449585534, guid: 2d83156fcd800694f8aa1d6f2243ff36,
+        type: 2}
+      propertyPath: m_canJump
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d83156fcd800694f8aa1d6f2243ff36, type: 2}
   m_IsPrefabAsset: 0

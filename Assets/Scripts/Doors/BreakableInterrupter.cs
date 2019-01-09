@@ -19,7 +19,7 @@ public class BreakableInterrupter : MonoSubscribable<IInterrupterBreakable>
     private WayToBreak m_wayToBreak;
     [SerializeField]
     private float m_velocityToBreak = 30.0f;
-    
+
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag(GameManager.PlayerTag))

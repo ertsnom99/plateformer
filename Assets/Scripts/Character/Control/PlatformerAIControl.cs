@@ -85,7 +85,7 @@ public class PlatformerAIControl : MonoBehaviour
     private PlatformerMovement m_movementScript;
     private Seeker m_seeker;
 
-    private const float JumpHorizontalMovementModifier = 1.0f;
+    private const float JumpHorizontalMovementModifier = 1.2f;
     private const float DropDownHorizontalMovementModifier = 1.0f;
     private const float PathFixByAngleThreshold = .1f;
     private const float MinDistanceToMoveDuringVerticalMovement = 0.4f;
@@ -144,6 +144,11 @@ public class PlatformerAIControl : MonoBehaviour
             PathLink previousPathLink = m_currentPathLink;
             m_currentPathLink = new PathLink(m_path.vectorPath[m_targetWaypoint - 1], m_path.vectorPath[m_targetWaypoint], m_minHeightForVerticalMovement);
 
+            // Apply some adjustment needed to certain variables base on how the current path link and those variable were before the path was updated
+            // For exemples:
+            // -link got shorter and doens't have a big enough y to be created has a jump link
+            // -Was a jump link, but suddenly became a drop down link
+
             // If the vertical movement didn't start and it is needed to reach the current waypoint
             if (!m_verticalMovementinProgress && m_currentPathLink.type != PathLinkType.Walk)
             {
@@ -153,13 +158,9 @@ public class PlatformerAIControl : MonoBehaviour
             }
             else if (!m_verticalMovementinProgress && m_currentPathLink.type == PathLinkType.Walk)
             {
-                m_verticalMovementinProgress = false;
                 m_delayedMovementProgressCheck = false;
             }
             // If the vertical movement did start, check if the PathLinkType might need to be adjust
-            // For exemple:
-            // link got shorter and doens't have a big enough y to be created has a jump link
-            // was a jump link, but suddenly became a drop down link
             else if (m_verticalMovementinProgress && m_currentPathLink.link.y > .0f)
             {
                 if (m_currentPathLink.type != PathLinkType.Jump)
@@ -188,6 +189,12 @@ public class PlatformerAIControl : MonoBehaviour
                     m_horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
                     m_delayedMovementProgressCheck = m_movementScript.IsGrounded;
                 }
+            }
+            // If the vertical movement did start, the path was updated at the same moment the AI touch the ground and the current path link is of a walk type
+            else if (m_verticalMovementinProgress && m_movementScript.IsGrounded)
+            {
+                m_verticalMovementinProgress = false;
+                m_delayedMovementProgressCheck = false;
             }
         }
     }
@@ -235,7 +242,7 @@ public class PlatformerAIControl : MonoBehaviour
                     Vector2 positionToTargetWaypoint = m_path.vectorPath[m_targetWaypoint] - transform.position;
 
                     // Update the target waypoint while the last one hasn't been reached and the current one has been past
-                    while (!isWaypointReached && (IsJumpAndDropDownLinkOver() || IsWalkLinkOver(positionToTargetWaypoint)))
+                    while (!isWaypointReached && (IsJumpOrDropDownLinkOver() || IsWalkLinkOver(positionToTargetWaypoint)))
                     {
                         m_targetWaypoint++;
 
@@ -256,7 +263,7 @@ public class PlatformerAIControl : MonoBehaviour
                         }
                     }
                     
-                    // Create the inputs if it wasn't done in the previous
+                    // Create the inputs if the target waypoint still hasn't been reached
                     if (!isWaypointReached)
                     {
                         inputs = CreateInputs();
@@ -264,6 +271,7 @@ public class PlatformerAIControl : MonoBehaviour
                 }
             }
 
+            // Send the final inputs to the movement script
             UpdateMovement(inputs);
         }
     }
@@ -278,15 +286,15 @@ public class PlatformerAIControl : MonoBehaviour
         return m_currentPathLink.type == PathLinkType.Walk && (Vector2.Angle(m_currentPathLink.link, positionToTargetWaypoint) >= 90.0f || positionToTargetWaypoint.magnitude <= m_minDistanceToChangeWaypoint);
     }
 
-    private bool IsJumpAndDropDownLinkOver()
+    private bool IsJumpOrDropDownLinkOver()
     {
         return (m_currentPathLink.type == PathLinkType.DropDown || m_currentPathLink.type == PathLinkType.Jump) && !m_verticalMovementinProgress;
     }
 
+    // Calculate how much time will be needed to complete the horizontal movement
+    // Based on h=vi*t+(g*t^2)/2 formula, but solved to isolate t
     private float CalculateHorizontalInputForVerticalMovement()
     {
-        // Calculate how much time will be needed to complete the horizontal movement
-        // Based on h=vi*t+(g*t^2)/2 formula, but solved to isolate t
         float initialVelocity;
         float gravityUsed;
         float horizontalMovementModifier;
@@ -340,7 +348,6 @@ public class PlatformerAIControl : MonoBehaviour
         
         if (m_verticalMovementinProgress)
         {
-            Debug.Log(Time.time + " " + Mathf.Abs(positionToTargetWaypoint.x));
             if (Mathf.Sign(positionToTargetWaypoint.x) == Mathf.Sign(m_horizontalInputForVerticalMovement) || Mathf.Abs(positionToTargetWaypoint.x) <= MinDistanceToMoveDuringVerticalMovement)
             {
                 horizontalInput = m_horizontalInputForVerticalMovement;
