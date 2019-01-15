@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Shakable : MonoBehaviour
 {
-    [Header("Settings")]
+    [Header("Shake Settings")]
     [SerializeField]
     private float m_duration = 0.2f;
     [SerializeField]
@@ -27,7 +27,7 @@ public class Shakable : MonoBehaviour
         m_initPos = transform.localPosition;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (m_remainingDuration > 0)
         {
