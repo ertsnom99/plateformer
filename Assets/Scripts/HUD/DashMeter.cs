@@ -23,7 +23,7 @@ public class DashMeter : MonoBehaviour, IPlatformerMovementSubscriber
 
     public const string CooldownFinishedParamNameString = "CooldownFinished";
 
-    private void Awake()
+    private void Start()
     {
         if (!m_platformerMovement)
         {

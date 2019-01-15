@@ -136,7 +136,7 @@ public class PhysicsObject : MonoBehaviour
         // Create a Vector prependicular to the normal
         Vector2 movementAlongGround = new Vector2(m_groundNormal.y, -m_groundNormal.x);
 
-        // Backup the list of gameObjects that used to collide and clearly the original
+        // Backup the list of gameObjects that used to collide and clear the original
         m_previouslyCollidingGameObject = new Dictionary<Collider2D, Rigidbody2D>(m_collidingGameObjects);
         m_collidingGameObjects.Clear();
 

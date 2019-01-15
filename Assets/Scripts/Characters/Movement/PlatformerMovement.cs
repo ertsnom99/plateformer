@@ -35,6 +35,8 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     private bool m_jumpCanceled = false;
 
     private Vector2 m_lastTargetHorizontalVelocityDirection;
+    
+    public bool IsKnockedBack { get; private set; }
 
     [Header("Airborne jump")]
     [SerializeField]
@@ -50,6 +52,8 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     private bool m_canSlideOfWall = false;
     [SerializeField]
     private bool m_canSlideGoingUp = false;
+    [SerializeField]
+    private bool m_canSlideDuringKnockBack = false;
     [SerializeField]
     private float m_slideRaycastOffset = -.45f;
     [SerializeField]
@@ -76,7 +80,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     private float m_wallJumpWindowTime = .05f;
     private IEnumerator m_wallJumpWindowCoroutine;
     [SerializeField]
-    private float m_horizontalControlDelayTime = .1f;
+    private float m_WallJumpControlDelayTime = .1f;
     private IEnumerator m_horizontalControlDelayCoroutine;
 
     [Header("Dash")]
@@ -105,13 +109,12 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     private AudioClip m_airborneJumpSound;
     [SerializeField]
     private AudioClip m_dashSound;
-
-    private AudioSource m_audioSource;
-
+    
     private Inputs m_currentInputs;
 
     private SpriteRenderer m_spriteRenderer;
     private Animator m_animator;
+    private AudioSource m_audioSource;
 
     protected int m_XVelocityParamHashId = Animator.StringToHash(XVelocityParamNameString);
     protected int m_YVelocityParamHashId = Animator.StringToHash(YVelocityParamNameString);
@@ -119,6 +122,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     protected int m_isSlidingOfWallParamHashId = Animator.StringToHash(IsSlidingOfWallParamNameString);
     protected int m_isDashingParamHashId = Animator.StringToHash(IsDashingParamNameString);
     protected int m_airborneJumpParamHashId = Animator.StringToHash(AirborneJumpParamNameString);
+    protected int m_knockedBackParamHashId = Animator.StringToHash(KnockedBackParamNameString);
 
     public const string XVelocityParamNameString = "XVelocity";
     public const string YVelocityParamNameString = "YVelocity";
@@ -126,6 +130,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     public const string IsSlidingOfWallParamNameString = "IsSlidingOfWall";
     public const string IsDashingParamNameString = "IsDashing";
     public const string AirborneJumpParamNameString = "AirborneJump";
+    public const string KnockedBackParamNameString = "KnockedBack";
 
     protected override void Awake()
     {
@@ -169,7 +174,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         base.FixedUpdate();
 
         // Stop the dash window if an airborne jump was triggered during a dash
-        if (InDashWindow() && (m_triggeredAirborneJump))
+        if (InDashWindow() && m_triggeredAirborneJump)
         {
             EndDashWindow();
         }
@@ -196,8 +201,8 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
             m_jumpCanceled = !IsGrounded && !IsSlidingOfWall;
         }
 
-        // End the horizontal control delay if there is one and the player is grounded or sliding of a wall
-        if (HorizontalControlDelayed() && (IsGrounded || IsSlidingOfWall))
+        // End the horizontal control delay if there is one, except for the knock back, and the player is grounded or sliding of a wall
+        if (!IsKnockedBack && HorizontalControlDelayed() && (IsGrounded || IsSlidingOfWall))
         {
             EndDelayedHorizontalControl();
         }
@@ -224,6 +229,9 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         if (hit.normal.x != .0f && hit.normal.y == .0f)
         {
             m_hitWall = true;
+
+            // Reset here, because it will allow to cancel horizontal velocity when hitting a wall while the movement can't be controlled
+            m_targetHorizontalVelocity = .0f;
         }
     }
     
@@ -238,7 +246,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
             IsSlidingOfWall = false;
         }
         // Might be starting to slide of a wall
-        else if ((m_canSlideGoingUp || m_velocity.y <= .0f) && m_hitWall && !IsSlidingOfWall && !IsGrounded)
+        else if ((m_canSlideDuringKnockBack || !IsKnockedBack) && (m_canSlideGoingUp || m_velocity.y <= .0f) && m_hitWall && !IsSlidingOfWall && !IsGrounded)
         {
             // Check if the player can slide of the wall
             IsSlidingOfWall = RaycastForWallSlide();
@@ -307,12 +315,12 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     {
         // Flip the sprite if necessary
         bool flipSprite = false;
-
+        
         if (!IsSlidingOfWall && !HorizontalControlDelayed())
         {
             flipSprite = (m_spriteRenderer.flipX == m_flipSprite ? (m_lastTargetHorizontalVelocityDirection.x < -.01f) : (m_lastTargetHorizontalVelocityDirection.x > .01f));
         }
-        else if (IsSlidingOfWall)
+        else if (IsSlidingOfWall || IsKnockedBack)
         {
             flipSprite = (m_spriteRenderer.flipX == m_flipSprite ? (m_lastTargetHorizontalVelocityDirection.x > .01f) : (m_lastTargetHorizontalVelocityDirection.x < -.01f));
         }
@@ -321,13 +329,14 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         {
             m_spriteRenderer.flipX = !m_spriteRenderer.flipX;
         }
-        
+
         // Update animator parameters
         m_animator.SetFloat(m_XVelocityParamHashId, Mathf.Abs(m_velocity.x) / MaxSpeed);
         m_animator.SetFloat(m_YVelocityParamHashId, m_velocity.y);
         m_animator.SetBool(IsGroundedParamNameString, IsGrounded);
         m_animator.SetBool(m_isSlidingOfWallParamHashId, IsSlidingOfWall);
         m_animator.SetBool(m_isDashingParamHashId, IsDashing);
+        m_animator.SetBool(m_knockedBackParamHashId, IsKnockedBack);
 
         if (m_triggeredAirborneJump)
         {
@@ -337,7 +346,10 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     public void SetInputs(Inputs inputs)
     {
-        m_currentInputs = inputs;
+        if (!IsKnockedBack)
+        {
+            m_currentInputs = inputs;
+        }
     }
     
     protected override void Update()
@@ -383,6 +395,47 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         {
             m_targetHorizontalVelocity = m_currentInputs.horizontal * MaxSpeed;
         }
+    }
+
+    // Used to push away. Used in, for exemple, explosion 
+    public void KnockBack(Vector2 knockBackVelocity, float knockBackDelay)
+    {
+        // Cancel any input that was queued
+        m_currentInputs = new Inputs();
+
+        // Reset variables
+        m_triggeredJump = false;
+        m_triggeredAirborneJump = false;
+        m_triggeredDash = false;
+
+        IsSlidingOfWall = false;
+        IsDashing = false;
+
+        // Cancel all possible coroutines
+        if (InWallJumpWindow())
+        {
+            EndWallJumpWindow();
+        }
+
+        if (HorizontalControlDelayed())
+        {
+            EndDelayedHorizontalControl();
+        }
+
+        if (InDashWindow())
+        {
+            EndDashWindow();
+        }
+
+        // Set the movement
+        m_targetHorizontalVelocity = knockBackVelocity.x;
+        AddJumpImpulse(knockBackVelocity.y);
+
+        IsKnockedBack = true;
+
+        // Start delay for controls
+        m_horizontalControlDelayCoroutine = DelayHorizontalControl(knockBackDelay);
+        StartCoroutine(m_horizontalControlDelayCoroutine);
     }
 
     // Jump related methods
@@ -449,20 +502,45 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
             EndWallJumpWindow();
         }
 
-        m_horizontalControlDelayCoroutine = DelayHorizontalControl();
+        m_horizontalControlDelayCoroutine = DelayHorizontalControl(m_WallJumpControlDelayTime);
         StartCoroutine(m_horizontalControlDelayCoroutine);
     }
 
-    private IEnumerator DelayHorizontalControl()
+    private IEnumerator DelayHorizontalControl(float delay)
     {
-        yield return new WaitForSeconds(m_horizontalControlDelayTime);
+        yield return new WaitForSeconds(delay);
         m_horizontalControlDelayCoroutine = null;
+
+        if (IsKnockedBack == true)
+        {
+            IsKnockedBack = false;
+
+            // Reset the target horizontal velocity here, because the fixed update might be called first before the next update
+            m_targetHorizontalVelocity = .0f;
+
+            // Reset the last target horizontal velocity direction to prevent the sprite from flipping to the wrong side during the next Animate() method call
+            if (!IsSlidingOfWall)
+            {
+                m_lastTargetHorizontalVelocityDirection = new Vector2(.0f, m_lastTargetHorizontalVelocityDirection.y);
+            }
+        }
     }
 
     private void EndDelayedHorizontalControl()
     {
         StopCoroutine(m_horizontalControlDelayCoroutine);
-        m_horizontalControlDelayCoroutine = null;
+
+        if (IsKnockedBack == true)
+        {
+            IsKnockedBack = false;
+
+            m_targetHorizontalVelocity = .0f;
+
+            if (!IsSlidingOfWall)
+            {
+                m_lastTargetHorizontalVelocityDirection = new Vector2(.0f, m_lastTargetHorizontalVelocityDirection.y);
+            }
+        }
     }
 
     private bool HorizontalControlDelayed()
