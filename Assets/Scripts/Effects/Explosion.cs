@@ -21,7 +21,7 @@ public class Explosion : MonoBehaviour, IAnimatorEventSubscriber
         m_animatorEventsManager = GetComponentInChildren<AnimatorEventsManager>();
         m_audioSource = GetComponentInChildren<AudioSource>();
 
-        m_animatorEventsManager.Subscribe(AnimatorEvents.AnimationFinished, this);
+        m_animatorEventsManager.Subscribe(AnimatorEvents.AnimationFinish, this);
     }
 
     private void Start()
@@ -59,7 +59,7 @@ public class Explosion : MonoBehaviour, IAnimatorEventSubscriber
     {
         switch(eventName)
         {
-            case AnimatorEvents.AnimationFinished:
+            case AnimatorEvents.AnimationFinish:
                 if (m_soundOver)
                 {
                     Destroy(gameObject);

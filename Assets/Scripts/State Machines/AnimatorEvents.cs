@@ -1,4 +1,5 @@
 ﻿public class AnimatorEvents
 {
-    public const string AnimationFinished = "AnimationFinished";
+    public const string AnimationBegin = "AnimationBegin";
+    public const string AnimationFinish = "AnimationFinish";
 }
