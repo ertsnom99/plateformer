@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
 // This script requires thoses components and will be added if they aren't already there
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AnimatorEventsManager))]
 [RequireComponent(typeof(BoxCollider2D))]
 
 public class Door : MonoBehaviour, IAnimatorEventSubscriber
@@ -19,24 +21,12 @@ public class Door : MonoBehaviour, IAnimatorEventSubscriber
 
     private void Awake()
     {
-        m_animator = GetComponentInChildren<Animator>();
-        m_animatorEventsManager = GetComponentInChildren<AnimatorEventsManager>();
+        m_animator = GetComponent<Animator>();
+        m_animatorEventsManager = GetComponent<AnimatorEventsManager>();
         m_collider = GetComponent<BoxCollider2D>();
-
-        if (!m_animator)
-        {
-            Debug.LogError("No Animator found in any children!");
-        }
-
-        if (!m_animatorEventsManager)
-        {
-            Debug.LogError("No AnimatorEventsManager found in any children!");
-        }
-        else
-        {
-            m_animatorEventsManager.Subscribe(AnimatorEvents.AnimationBegin, this);
-            m_animatorEventsManager.Subscribe(AnimatorEvents.AnimationFinish, this);
-        }
+        
+        m_animatorEventsManager.Subscribe(AnimatorEvents.AnimationBegin, this);
+        m_animatorEventsManager.Subscribe(AnimatorEvents.AnimationFinish, this);
     }
 
     private void Start()

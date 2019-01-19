@@ -11,24 +11,6 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1734917266341686}
   m_IsPrefabAsset: 1
---- !u!1 &1492963170557014
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4514588695647248}
-  - component: {fileID: 212738477448859694}
-  - component: {fileID: 95426276281314502}
-  - component: {fileID: 114726850168967984}
-  m_Layer: 0
-  m_Name: Sprite
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1734917266341686
 GameObject:
   m_ObjectHideFlags: 0
@@ -37,7 +19,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4487545948827292}
+  - component: {fileID: 212859307665078612}
   - component: {fileID: 61773211150302486}
+  - component: {fileID: 95936757572971572}
+  - component: {fileID: 114927370817540516}
   - component: {fileID: 114060924192825970}
   m_Layer: 0
   m_Name: Door
@@ -52,25 +37,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1734917266341686}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.5, y: 9.5, z: 0.08370151}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4514588695647248}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4514588695647248
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1492963170557014}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 27.5, y: 9.5, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4487545948827292}
+  m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &61773211150302486
@@ -85,10 +56,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0.25}
     oldSize: {x: 1, y: 2}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
@@ -98,13 +69,13 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
---- !u!95 &95426276281314502
+--- !u!95 &95936757572971572
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1492963170557014}
+  m_GameObject: {fileID: 1734917266341686}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 9f7eba5b880836345b83d290e4c07829, type: 2}
@@ -128,23 +99,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_initiallyOpen: 1
---- !u!114 &114726850168967984
+--- !u!114 &114927370817540516
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1492963170557014}
+  m_GameObject: {fileID: 1734917266341686}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b1de8177f8dced4b9c22970cd8ff21f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!212 &212738477448859694
+--- !u!212 &212859307665078612
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1492963170557014}
+  m_GameObject: {fileID: 1734917266341686}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -171,8 +142,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1411272273
-  m_SortingLayer: 2
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300020, guid: 827ec743edf62874a949ac8b5cfe1577, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
