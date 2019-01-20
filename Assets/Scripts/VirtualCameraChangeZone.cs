@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class VirtualCameraChangeZone : MonoBehaviour
 {
+    [Header("Camera")]
     [SerializeField]
     private VirtualCameraManager m_virtualCameraManager;
     [SerializeField]

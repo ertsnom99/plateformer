@@ -47,7 +47,6 @@ public class Door : MonoBehaviour, IAnimatorEventSubscriber
     // Methods of the IAnimatorEventSubscriber interface
     public void NotifyEvent(string eventName)
     {
-        Debug.Log(eventName);
         switch (eventName)
         {
             // When the door start to close

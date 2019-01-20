@@ -44,13 +44,13 @@ TagManager:
   - name: Background
     uniqueID: 2167739775
     locked: 0
-  - name: Doors
+  - name: BehindPlatformes
     uniqueID: 1411272273
     locked: 0
   - name: Platforms
     uniqueID: 1011929847
     locked: 0
-  - name: Hazards
+  - name: InFrontPlatformes
     uniqueID: 854317771
     locked: 0
   - name: Texts

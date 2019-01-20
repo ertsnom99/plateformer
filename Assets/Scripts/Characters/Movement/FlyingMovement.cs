@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 // This script requires thoses components and will be added if they aren't already there
+[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Rigidbody2D))]
 
 public class FlyingMovement : MonoBehaviour
@@ -21,22 +20,17 @@ public class FlyingMovement : MonoBehaviour
 
     [Header("Sprites")]
     [SerializeField]
-    private SpriteRenderer m_bodySprite;
-    [SerializeField]
     private SpriteRenderer m_propellantSprite;
 
     private Inputs m_currentInputs;
 
+    private SpriteRenderer m_bodySprite;
     private Rigidbody2D m_rigidbody;
 
     private void Awake()
     {
+        m_bodySprite = GetComponent<SpriteRenderer>();
         m_rigidbody = GetComponent<Rigidbody2D>();
-
-        if (!m_bodySprite)
-        {
-            Debug.LogError("No sprite setted for the body!");
-        }
 
         if (!m_propellantSprite)
         {
