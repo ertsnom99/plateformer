@@ -3,7 +3,7 @@
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(Health))]
 
-public class Boss : MonoBehaviour, IInterrupterBreakable
+public class Boss : MonoBehaviour, IBreakableInterrupterSubscriber
 {
     [Header("Damage")]
     [SerializeField]
@@ -27,7 +27,7 @@ public class Boss : MonoBehaviour, IInterrupterBreakable
     }
 
     // Methods of the IInterrupterBreakable interface
-    public void NotifyInterrupterBreaked()
+    public void NotifyInterrupterBreaked(BreakableInterrupter breakableInterrupter)
     {
         m_health.Damage(m_interrupterBreakableDamage);
     }

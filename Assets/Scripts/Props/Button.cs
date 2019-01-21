@@ -1,9 +1,14 @@
 ﻿using UnityEngine;
 
+public interface IButtonSubscriber
+{
+    void NotifyButtonPressed(Button button);
+}
+
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(Animator))]
 
-public abstract class Button : MonoBehaviour
+public class Button : MonoSubscribable<IButtonSubscriber>
 {
     [Header("Initialization")]
     [SerializeField]
@@ -27,6 +32,11 @@ public abstract class Button : MonoBehaviour
 
     private void Press()
     {
+        foreach (IButtonSubscriber subscriber in m_subscribers)
+        {
+            subscriber.NotifyButtonPressed(this);
+        }
+
         m_animator.SetBool(m_isPressedParamHashId, true);
         IsPressed = true;
     }
@@ -42,9 +52,6 @@ public abstract class Button : MonoBehaviour
         if (!IsPressed && col.CompareTag(GameManager.PlayerTag))
         {
             Press();
-            OnUse();
         }
     }
-
-    protected abstract void OnUse();
 }
