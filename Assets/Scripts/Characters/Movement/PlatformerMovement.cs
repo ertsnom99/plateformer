@@ -645,4 +645,24 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     {
         return m_dashCooldownCoroutine != null;
     }
+
+    public void EnableAirborneJump(bool enable)
+    {
+        m_canAirborneJump = enable;
+    }
+
+    public void EnableSlideOfWall(bool enable)
+    {
+        m_canSlideOfWall = enable;
+    }
+
+    public void EnableWallJump(bool enable)
+    {
+        m_canWallJump = enable;
+    }
+
+    public void EnableDash(bool enable)
+    {
+        m_canDash = enable;
+    }
 }
