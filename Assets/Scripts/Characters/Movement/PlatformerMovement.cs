@@ -295,10 +295,10 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     private bool RaycastForWallSlide()
     {
-        //Vector2 slideRaycastStart = new Vector2(transform.position.x, transform.position.y + m_slideRaycastOffset);
+        Vector2 slideRaycastStart = new Vector2(transform.position.x, transform.position.y + m_slideRaycastOffset);
 
         RaycastHit2D[] results = new RaycastHit2D[1];
-        Physics2D.Raycast(transform.position, m_lastTargetHorizontalVelocityDirection, m_contactFilter, results, m_slideRaycastDistance);
+        Physics2D.Raycast(slideRaycastStart, m_lastTargetHorizontalVelocityDirection, m_contactFilter, results, m_slideRaycastDistance);
         
         return results[0].collider;
     }

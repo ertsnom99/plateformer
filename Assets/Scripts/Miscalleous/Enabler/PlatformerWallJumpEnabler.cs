@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlatformerAirborneJumpEnabler : MonoBehaviour
+public class PlatformerWallJumpEnabler : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField]
@@ -12,7 +12,8 @@ public class PlatformerAirborneJumpEnabler : MonoBehaviour
     {
         if (col.CompareTag(GameManager.PlayerTag))
         {
-            m_movementScript.EnableAirborneJump(m_enable);
+            m_movementScript.EnableSlideOfWall(m_enable);
+            m_movementScript.EnableWallJump(m_enable);
         }
     }
 }
