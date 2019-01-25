@@ -6,9 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/_scenes/TemplateLevel.unity
+    path: Assets/_scenes/GemsLevel.unity
     guid: d725feb9b172f6d49a668d4bafcc8faa
-  - enabled: 1
-    path: Assets/_scenes/BossFight.unity
+  - enabled: 0
+    path: Assets/_scenes/JumpingAI.unity
     guid: 8b73fe7792a630a4d98551208594c76c
+  - enabled: 1
+    path: Assets/_scenes/Demo.unity
+    guid: cb3c3c1028cc8fc4990daeb78afe9c21
   m_configObjects: {}

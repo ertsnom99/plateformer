@@ -7,7 +7,7 @@ public class Respawn : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (m_respawnPos && col.CompareTag("Player"))
+        if (m_respawnPos && col.CompareTag(GameManager.PlayerTag))
         {
             col.transform.position = m_respawnPos.position;
         }
