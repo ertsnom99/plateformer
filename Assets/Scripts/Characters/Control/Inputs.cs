@@ -1,4 +1,7 @@
-﻿public struct Inputs
+﻿using System;
+
+[Serializable]
+public struct Inputs
 {
     public float vertical;
     public float horizontal;

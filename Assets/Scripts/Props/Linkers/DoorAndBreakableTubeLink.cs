@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public struct DoorAndBreakableInterrupterLinkSetting
 {
     public BreakableInterrupter breakableInterrupter;

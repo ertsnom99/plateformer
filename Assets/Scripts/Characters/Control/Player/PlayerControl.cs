@@ -26,19 +26,12 @@ public class PlayerControl : MonoBehaviour
     private void Update()
     {
         // Only update when time isn't stop
-        if (Time.deltaTime > .0f)
+        if (Time.deltaTime > .0f && ControlsCharacter())
         {
-            if (ControlsCharacter())
-            {
-                // Get the inputs used during this frame
-                Inputs inputs = FetchInputs();
+            // Get the inputs used during this frame
+            Inputs inputs = FetchInputs();
 
-                UpdateMovement(inputs);
-            }
-            else
-            {
-                UpdateMovement(noControlInputs);
-            }
+            UpdateMovement(inputs);
         }
     }
     
@@ -88,6 +81,11 @@ public class PlayerControl : MonoBehaviour
 
     public void EnableControl(bool enable)
     {
+        if (!enable)
+        {
+            UpdateMovement(noControlInputs);
+        }
+
         ControlsEnabled = enable;
     }
 }
