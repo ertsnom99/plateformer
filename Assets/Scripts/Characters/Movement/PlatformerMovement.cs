@@ -187,9 +187,6 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         {
             EndDashWindow();
         }
-        
-        // Reset m_hitWall flag for next check
-        m_hitWall = false;
 
         // Reset flags if they are in a certain state
         // While the airborne jump isn't available, keep it unavailable has long has the character isn't grounded and isn't sliding of a wall
@@ -212,6 +209,9 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
         // Animate before resetting flags, since some of those flags are necessary for Animate()
         Animate();
+        
+        // Reset m_hitWall flag for next check
+        m_hitWall = false;
 
         // Reset flags used in Update
         m_triggeredJump = false;
