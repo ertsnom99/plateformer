@@ -92,9 +92,9 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     private float m_dashSpeed = 15.0f;
     [SerializeField]
     private float m_dashDuration = .5f;
-    private IEnumerator m_dashWindowCoroutine;
     [SerializeField]
     private float m_dashCooldown = 1.0f;
+    private IEnumerator m_dashWindowCoroutine;
     private IEnumerator m_dashCooldownCoroutine;
     private bool m_triggeredDash = false;
 
@@ -103,6 +103,8 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     [Header("Animation")]
     [SerializeField]
     private bool m_flipSprite = false;
+    // MAYBE: Flags used to delay animations
+    //private bool m_wasDashAnimeDelayed = false;
 
     [Header("Sound")]
     [SerializeField]
@@ -179,6 +181,15 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         {
             UpdateWallSlide(m_rigidbody2D.position - previousRigidbodyPosition);
         }
+
+        // Cancel dash window if hitted a wall
+        if (InDashWindow() && m_hitWall)
+        {
+            EndDashWindow();
+        }
+        
+        // Reset m_hitWall flag for next check
+        m_hitWall = false;
 
         // Reset flags if they are in a certain state
         // While the airborne jump isn't available, keep it unavailable has long has the character isn't grounded and isn't sliding of a wall
@@ -258,9 +269,6 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
                 IsSlidingOfWall = RaycastForWallSlide();
             }
         }
-
-        // Reset m_hitWall flag for next check
-        m_hitWall = false;
         
         // If the player started to slide of a new wall
         if (!wasSliding && IsSlidingOfWall)
@@ -295,11 +303,11 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     private bool RaycastForWallSlide()
     {
-        Vector2 slideRaycastStart = new Vector2(transform.position.x, transform.position.y + m_slideRaycastOffset);
+        Vector2 slideRaycastStart = new Vector2(m_rigidbody2D.position.x, m_rigidbody2D.transform.position.y + m_slideRaycastOffset);
 
         RaycastHit2D[] results = new RaycastHit2D[1];
         Physics2D.Raycast(slideRaycastStart, m_lastTargetHorizontalVelocityDirection, m_contactFilter, results, m_slideRaycastDistance);
-        
+
         return results[0].collider;
     }
 
@@ -325,8 +333,9 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         // Update animator parameters
         m_animator.SetFloat(m_XVelocityParamHashId, Mathf.Abs(m_velocity.x) / MaxSpeed);
         m_animator.SetFloat(m_YVelocityParamHashId, m_velocity.y);
+        // TODO: Check if parameters needs delay
         m_animator.SetBool(IsGroundedParamNameString, IsGrounded);
-        m_animator.SetBool(m_isSlidingOfWallParamHashId, IsSlidingOfWall);
+        m_animator.SetBool(m_isSlidingOfWallParamHashId, IsSlidingOfWall/* && m_wasDashAnimeDelayed*/);
         m_animator.SetBool(m_isDashingParamHashId, IsDashing);
         m_animator.SetBool(m_knockedBackParamHashId, IsKnockedBack);
 
@@ -334,6 +343,21 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         {
             m_animator.SetTrigger(m_airborneJumpParamHashId);
         }
+
+        // MAYBE: 
+        // Add a delay to play animations that need it:
+        // Since the character is moved using the rigidbody2D position, the position of the character
+        // will visually be the same only around when we reach the next FixedUpdate. Immediately updating
+        // certain animations will actually make them happen too soon. Therefore, those animation needs to
+        // wait until the next FixedUpdate.
+        /*if (IsSlidingOfWall && !m_wasDashAnimeDelayed)
+        {
+            m_wasDashAnimeDelayed = true;
+        }
+        else if (!IsSlidingOfWall && m_wasDashAnimeDelayed)
+        {
+            m_wasDashAnimeDelayed = false;
+        }*/
     }
 
     public void SetInputs(Inputs inputs)

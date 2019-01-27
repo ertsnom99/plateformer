@@ -225,10 +225,10 @@ public class PhysicsObject : MonoBehaviour
                     {
                         Velocity = new Vector2(Velocity.x, Velocity.y - (projection * currentNormal).y);
                     }
-                    else
+                    /*else
                     {
                         Velocity = new Vector2(Velocity.x - (projection * currentNormal).x, Velocity.y);
-                    }
+                    }*/
                 }
 
                 // Calculate how much movement can be done, before hitting something, considering the ShellRadius  
