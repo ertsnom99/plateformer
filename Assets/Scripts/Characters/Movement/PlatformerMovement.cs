@@ -35,8 +35,8 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     private bool m_triggeredJump = false;
     private bool m_jumpCanceled = false;
-
-    private Vector2 m_lastTargetHorizontalVelocityDirection;
+    
+    private float m_lastHorizontalVelocityDirection;
     
     public bool IsKnockedBack { get; private set; }
 
@@ -156,7 +156,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         // Keep track of the direction the player intended to move in
         if (m_targetHorizontalVelocity != .0f)
         {
-            m_lastTargetHorizontalVelocityDirection = new Vector2(m_targetHorizontalVelocity, .0f).normalized;
+            m_lastHorizontalVelocityDirection = Mathf.Sign(m_targetHorizontalVelocity);
         }
 
         // Reset the Y velocity if the player is suppose to keep the same velocity while sliding of a wall
@@ -222,7 +222,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         if (m_debugSlideRaycast)
         {
             Vector2 slideRaycastStart = new Vector2(transform.position.x, transform.position.y + m_slideRaycastOffset);
-            Debug.DrawLine(slideRaycastStart, slideRaycastStart + m_lastTargetHorizontalVelocityDirection * m_slideRaycastDistance, Color.yellow);
+            Debug.DrawLine(slideRaycastStart, slideRaycastStart + m_lastHorizontalVelocityDirection * Vector2.right * m_slideRaycastDistance, Color.yellow);
         }
     }
 
@@ -233,8 +233,11 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         {
             m_hitWall = true;
 
-            // Reset here, because it will allow to cancel horizontal velocity when hitting a wall while the movement can't be controlled
-            m_targetHorizontalVelocity = .0f;
+            // Reset the target velocity when the character is knocked back because it is suppose to loose it's velocity when that happens
+            if (IsKnockedBack)
+            {
+                m_targetHorizontalVelocity = .0f;
+            }
         }
     }
     
@@ -265,8 +268,13 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
             // Check if the player finished sliding off a wall
             else
             {
-                // Check if the player can slide of the wall
                 IsSlidingOfWall = RaycastForWallSlide();
+
+                if (!IsSlidingOfWall)
+                {
+                    // Reverse direction to prevent the character from facing the wrong way
+                    m_lastHorizontalVelocityDirection = -m_lastHorizontalVelocityDirection;
+                }
             }
         }
         
@@ -306,7 +314,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         Vector2 slideRaycastStart = new Vector2(m_rigidbody2D.position.x, m_rigidbody2D.transform.position.y + m_slideRaycastOffset);
 
         RaycastHit2D[] results = new RaycastHit2D[1];
-        Physics2D.Raycast(slideRaycastStart, m_lastTargetHorizontalVelocityDirection, m_contactFilter, results, m_slideRaycastDistance);
+        Physics2D.Raycast(slideRaycastStart, m_lastHorizontalVelocityDirection * Vector2.right, m_contactFilter, results, m_slideRaycastDistance);
 
         return results[0].collider;
     }
@@ -318,13 +326,13 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         
         if (!IsSlidingOfWall && !HorizontalControlDelayed())
         {
-            flipSprite = (m_spriteRenderer.flipX == m_flipSprite ? (m_lastTargetHorizontalVelocityDirection.x < -.01f) : (m_lastTargetHorizontalVelocityDirection.x > .01f));
+            flipSprite = (m_spriteRenderer.flipX == m_flipSprite ? (m_lastHorizontalVelocityDirection < .0f) : (m_lastHorizontalVelocityDirection > .0f));
         }
         else if (IsSlidingOfWall || IsKnockedBack)
         {
-            flipSprite = (m_spriteRenderer.flipX == m_flipSprite ? (m_lastTargetHorizontalVelocityDirection.x > .01f) : (m_lastTargetHorizontalVelocityDirection.x < -.01f));
+            flipSprite = (m_spriteRenderer.flipX == m_flipSprite ? (m_lastHorizontalVelocityDirection > .0f) : (m_lastHorizontalVelocityDirection < .0f));
         }
-
+        
         if (flipSprite)
         {
             m_spriteRenderer.flipX = !m_spriteRenderer.flipX;
@@ -529,16 +537,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
         if (IsKnockedBack == true)
         {
-            IsKnockedBack = false;
-
-            // Reset the target horizontal velocity here, because the fixed update might be called first before the next update
-            m_targetHorizontalVelocity = .0f;
-
-            // Reset the last target horizontal velocity direction to prevent the sprite from flipping to the wrong side during the next Animate() method call
-            if (!IsSlidingOfWall)
-            {
-                m_lastTargetHorizontalVelocityDirection = new Vector2(.0f, m_lastTargetHorizontalVelocityDirection.y);
-            }
+            ResetKnockbackVariables();
         }
     }
 
@@ -548,15 +547,22 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
         if (IsKnockedBack == true)
         {
-            IsKnockedBack = false;
-
-            m_targetHorizontalVelocity = .0f;
-
-            if (!IsSlidingOfWall)
-            {
-                m_lastTargetHorizontalVelocityDirection = new Vector2(.0f, m_lastTargetHorizontalVelocityDirection.y);
-            }
+            ResetKnockbackVariables();
         }
+    }
+    
+    private void ResetKnockbackVariables()
+    {
+        IsKnockedBack = false;
+
+        // Reset the last target horizontal velocity direction to prevent the sprite from flipping to the wrong side during the next Animate() method call
+        if (!IsSlidingOfWall)
+        {
+            m_lastHorizontalVelocityDirection = -Mathf.Sign(m_targetHorizontalVelocity);
+        }
+
+        // Reset the target horizontal velocity here, because the fixed update might be called first before the next update
+        m_targetHorizontalVelocity = .0f;
     }
 
     private bool HorizontalControlDelayed()

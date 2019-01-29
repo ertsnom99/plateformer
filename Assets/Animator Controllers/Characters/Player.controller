@@ -657,23 +657,25 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102549449631440968}
-    m_Position: {x: 300, y: 24, z: 0}
+    m_Position: {x: 300, y: 12, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102225183306670490}
-    m_Position: {x: 552, y: 84, z: 0}
+    m_Position: {x: 552, y: 72, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102470668303618836}
-    m_Position: {x: 300, y: 144, z: 0}
+    m_Position: {x: 300, y: 132, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions:
+  - {fileID: 1109997099109239778}
   - {fileID: 1109187319767214668}
+  - {fileID: 1109448085281693742}
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 60, y: 12, z: 0}
   m_EntryPosition: {x: 60, y: 72, z: 0}
   m_ExitPosition: {x: 60, y: 132, z: 0}
-  m_ParentStateMachinePosition: {x: 300, y: -60, z: 0}
+  m_ParentStateMachinePosition: {x: 300, y: -72, z: 0}
   m_DefaultState: {fileID: 1102549449631440968}
 --- !u!1109 &1109187319767214668
 AnimatorTransition:
@@ -681,9 +683,44 @@ AnimatorTransition:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: IsGrounded
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102549449631440968}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 1
+--- !u!1109 &1109448085281693742
+AnimatorTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: IsGrounded
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 1102225183306670490}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 1
+--- !u!1109 &1109997099109239778
+AnimatorTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 3
+    m_ConditionEvent: XVelocity
+    m_EventTreshold: 0.0001
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 1102470668303618836}
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0

@@ -59,6 +59,10 @@ public class BreakableInterrupter : MonoSubscribable<IBreakableInterrupterSubscr
                         IsBreaked = true;
                         m_animator.SetBool(m_isBreakedParamHashId, true);
                     }
+                    else
+                    {
+                        Debug.Log(movementScript.Velocity.magnitude);
+                    }
 
                     break;
                 case WayToBreak.Dash:
