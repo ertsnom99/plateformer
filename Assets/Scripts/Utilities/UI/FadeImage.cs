@@ -20,6 +20,13 @@ public class FadeImage : MonoSubscribable<IFadeImageSubscriber>
         m_image = GetComponent<Image>();
     }
 
+    public void SetOpacity(bool opaque)
+    {
+        Color color = m_image.color;
+        color.a = opaque ? 1.0f : .0f;
+        m_image.color = color;
+    }
+
     public void FadeIn(float duration)
     {
         StopAllCoroutines();
@@ -44,6 +51,9 @@ public class FadeImage : MonoSubscribable<IFadeImageSubscriber>
 
             yield return 0;
         }
+
+        color.a = to;
+        m_image.color = color;
 
         if (to == AlphaToFadeIn)
         {

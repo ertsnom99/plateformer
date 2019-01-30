@@ -44,8 +44,6 @@ public class EndSequence : MonoBehaviour, IFadeImageSubscriber
 
     public void NotifyFadeOutFinished()
     {
-        // TODO: Load level
-        Debug.Log("Load...");
         SceneManager.LoadScene(m_sceneToLoad, LoadSceneMode.Single);
     }
 }

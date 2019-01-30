@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_scenes/Demo.unity
+    path: Assets/_scenes/Demo/Tutorial.unity
     guid: cb3c3c1028cc8fc4990daeb78afe9c21
   - enabled: 1
-    path: Assets/_scenes/GemsLevel.unity
-    guid: d725feb9b172f6d49a668d4bafcc8faa
+    path: Assets/_scenes/Demo/Boss.unity
+    guid: 3b7d9eedf07bb374eb5599c89a3619e0
   m_configObjects: {}
