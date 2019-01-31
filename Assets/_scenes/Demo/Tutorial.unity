@@ -25061,6 +25061,15 @@ MonoBehaviour:
   m_fade: {fileID: 261130841}
   m_fadeDuration: 1
   m_playerControl: {fileID: 1638727459}
+  m_playerMovement: {fileID: 1854121125}
+  m_enableControlAfterFadeIn: 1
+  m_forcedControls:
+    vertical: 0
+    horizontal: 0
+    jump: 0
+    releaseJump: 0
+    dash: 0
+    releaseDash: 0
 --- !u!4 &1353228064
 Transform:
   m_ObjectHideFlags: 0

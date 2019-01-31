@@ -11,6 +11,14 @@ public class GameManager : MonoBehaviour, IFadeImageSubscriber
     [Header("Player")]
     [SerializeField]
     private PlayerControl m_playerControl;
+    [SerializeField]
+    private PlatformerMovement m_playerMovement;
+    [SerializeField]
+    private bool m_enableControlAfterFadeIn = true;
+
+    [Header("Player Movement")]
+    [SerializeField]
+    private Inputs m_forcedControls;
 
     // Tags
     public const string PlayerTag = "Player";
@@ -22,9 +30,10 @@ public class GameManager : MonoBehaviour, IFadeImageSubscriber
         m_fade.FadeIn(m_fadeDuration);
 
         m_playerControl.EnableControl(false);
+        m_playerMovement.SetInputs(m_forcedControls);
     }
 
-    private void Update ()
+    private void Update()
     {
         if (Input.GetKey(KeyCode.Escape))
         {
@@ -35,7 +44,10 @@ public class GameManager : MonoBehaviour, IFadeImageSubscriber
     // Methods of the IFadeImageSubscriber interface
     public void NotifyFadeInFinished()
     {
-        m_playerControl.EnableControl(true);
+        if(m_enableControlAfterFadeIn)
+        {
+            m_playerControl.EnableControl(true);
+        }
     }
 
     public void NotifyFadeOutFinished() { }
