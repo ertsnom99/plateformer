@@ -15,7 +15,7 @@ public enum WayToBreak
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(Animator))]
 
-public class BreakableInterrupter : MonoSubscribable<IBreakableInterrupterSubscriber>
+public class BreakableInterrupter : MonoSubscribable<IBreakableInterrupterSubscriber>, IDamageable
 {
     [Header("Break method")]
     [SerializeField]
@@ -48,43 +48,47 @@ public class BreakableInterrupter : MonoSubscribable<IBreakableInterrupterSubscr
             {
                 case WayToBreak.Jump:
                     float angle = Vector2.Dot(-transform.up, movementScript.Velocity);
-                    
+
                     if (angle < 90.0f && movementScript.Velocity.magnitude >= m_velocityToBreak)
                     {
-                        foreach (IBreakableInterrupterSubscriber subscriber in m_subscribers)
-                        {
-                            subscriber.NotifyInterrupterBreaked(this);
-                        }
-
-                        IsBreaked = true;
-                        m_animator.SetBool(m_isBreakedParamHashId, true);
+                        Break();
                     }
-                    else
+                    /*else
                     {
                         Debug.Log(movementScript.Velocity.magnitude);
-                    }
+                    }*/
 
                     break;
                 case WayToBreak.Dash:
                     if (movementScript.IsDashing)
                     {
-                        foreach (IBreakableInterrupterSubscriber subscriber in m_subscribers)
-                        {
-                            subscriber.NotifyInterrupterBreaked(this);
-                        }
-
-                        IsBreaked = true;
-                        m_animator.SetBool(m_isBreakedParamHashId, true);
+                        Break();
                     }
 
                     break;
-                case WayToBreak.Explosion:
-
-                    //IsBreaked = true;
-                    //m_animator.SetBool(m_isBreakedParamHashId, true);
-
-                    break;
             }
+        }
+    }
+
+    private void Break()
+    {
+        foreach (IBreakableInterrupterSubscriber subscriber in m_subscribers)
+        {
+            subscriber.NotifyInterrupterBreaked(this);
+        }
+
+        IsBreaked = true;
+        m_animator.SetBool(m_isBreakedParamHashId, true);
+    }
+
+    // Methods of the IDamageable interface
+    public void Damage(int damage)
+    {
+        switch (m_wayToBreak)
+        {
+            case WayToBreak.Explosion:
+                Break();
+                break;
         }
     }
 }

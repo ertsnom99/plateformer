@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 61532605286656936}
   - component: {fileID: 95694649591657978}
   - component: {fileID: 114559699099270174}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Horizontal Breakable Tube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

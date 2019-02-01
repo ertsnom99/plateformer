@@ -383,10 +383,16 @@ public class PlatformerAIControl : MonoBehaviour
         m_movementScript.SetInputs(inputs);
     }
 
+    public void SetTarget(Transform target)
+    {
+        m_target = target;
+    }
+
     private void OnEnable()
     {
         m_seeker.pathCallback += OnPathComplete;
     }
+
     private void OnDisable()
     {
         m_seeker.pathCallback -= OnPathComplete;

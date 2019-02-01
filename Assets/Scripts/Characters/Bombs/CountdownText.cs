@@ -24,15 +24,15 @@ public class CountdownText : MonoBehaviour, IProximityExplodableSubscriber
     }
 
     // Methods of the IProximityExplodableSubscriber interface
-    public void NotifyCountdownStarted(float timeRemaining)
+    public void NotifyCountdownStarted(GameObject explodableGameObject, float timeRemaining)
     {
         m_text.text = Mathf.Ceil(timeRemaining).ToString();
     }
 
-    public void NotifyCountdownUpdated(float timeRemaining)
+    public void NotifyCountdownUpdated(GameObject explodableGameObject, float timeRemaining)
     {
         m_text.text = Mathf.Ceil(timeRemaining).ToString();
     }
 
-    public void NotifyCountdownFinished() { }
+    public void NotifyCountdownFinished(GameObject explodableGameObject) { }
 }

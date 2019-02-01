@@ -9,7 +9,7 @@ public struct DoorAndBreakableInterrupterLinkSetting
     public bool openState;
 }
 
-public class DoorAndBreakableTubeLink : MonoBehaviour, IBreakableInterrupterSubscriber
+public class DoorAndBreakableInterrupterLink : MonoBehaviour, IBreakableInterrupterSubscriber
 {
     [Header("Links")]
     [SerializeField]

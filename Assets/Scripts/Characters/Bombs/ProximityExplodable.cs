@@ -2,9 +2,9 @@
 
 public interface IProximityExplodableSubscriber
 {
-    void NotifyCountdownStarted(float timeRemaining);
-    void NotifyCountdownUpdated(float timeRemaining);
-    void NotifyCountdownFinished();
+    void NotifyCountdownStarted(GameObject explodableGameObject, float timeRemaining);
+    void NotifyCountdownUpdated(GameObject explodableGameObject, float timeRemaining);
+    void NotifyCountdownFinished(GameObject explodableGameObject);
 }
 
 public class ProximityExplodable : MonoSubscribable<IProximityExplodableSubscriber>
@@ -55,15 +55,16 @@ public class ProximityExplodable : MonoSubscribable<IProximityExplodableSubscrib
 
             foreach (IProximityExplodableSubscriber subscriber in m_subscribers)
             {
-                subscriber.NotifyCountdownUpdated(m_timeRemaining);
+                subscriber.NotifyCountdownUpdated(gameObject, m_timeRemaining);
             }
 
             // When countdown ends
             if (m_timeRemaining <= .0f)
             {
+                // Notify the subscriber before destroying the gameobject, because it would send a null gameonject if it was destroy first
                 foreach (IProximityExplodableSubscriber subscriber in m_subscribers)
                 {
-                    subscriber.NotifyCountdownFinished();
+                    subscriber.NotifyCountdownFinished(gameObject);
                 }
                 
                 DamageInRange();
@@ -87,7 +88,7 @@ public class ProximityExplodable : MonoSubscribable<IProximityExplodableSubscrib
 
                 foreach (IProximityExplodableSubscriber subscriber in m_subscribers)
                 {
-                    subscriber.NotifyCountdownStarted(m_timeRemaining);
+                    subscriber.NotifyCountdownStarted(gameObject, m_timeRemaining);
                 }
             }
         }
@@ -100,7 +101,7 @@ public class ProximityExplodable : MonoSubscribable<IProximityExplodableSubscrib
         foreach (Collider2D collider in colliders)
         {
             // Deal damage
-            Health health = collider.GetComponent<Health>();
+            IDamageable health = collider.GetComponent<IDamageable>();
             health.Damage(m_damage);
 
             switch (collider.tag)
@@ -113,6 +114,11 @@ public class ProximityExplodable : MonoSubscribable<IProximityExplodableSubscrib
                     break;
             }
         }
+    }
+
+    public void SetTarget(Transform target)
+    {
+        m_target = target;
     }
 
     private void OnDrawGizmosSelected()
