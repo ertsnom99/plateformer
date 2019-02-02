@@ -94,7 +94,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1222172137614980}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.89, y: -23, z: 0.015625}
+  m_LocalPosition: {x: -30.52, y: -23, z: 0.015625}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224859233211395166}
@@ -434,7 +434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.009225845, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -472,7 +472,7 @@ MonoBehaviour:
   m_countdownTime: 5
   m_damagedLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 2304
   m_damage: 10
   m_explosionEffect: {fileID: 1956474484916810, guid: 72d1de47a8b359a42b83f65433efe6c4,
     type: 2}
