@@ -8,9 +8,13 @@ public abstract class AIControl : CharacterControl
     [SerializeField]
     protected Transform m_target;
     [SerializeField]
+    private float m_distanceToDetect = 10.0f;
+    [SerializeField]
     protected float m_stopDistanceToTarget = 1.4f;
     [SerializeField]
     protected float m_minDistanceForTargetReachable = 6.0f;
+
+    public bool HasDetectedTarget { get; private set; }
 
     [Header("Update")]
     [SerializeField]
@@ -19,6 +23,10 @@ public abstract class AIControl : CharacterControl
     protected float m_minDistanceToChangeWaypoint = 0.5f;
     [SerializeField]
     protected bool m_stopWhenUnreachable = true;
+    
+    [Header("Debug")]
+    [SerializeField]
+    private bool m_drawDistance = false;
 
     protected Path m_path;
     protected int m_targetWaypoint = 0;
@@ -40,6 +48,16 @@ public abstract class AIControl : CharacterControl
         }
 
         StartCoroutine(UpdatePath());
+    }
+
+    protected virtual void Update()
+    {
+        // Enable control when the target is close enough
+        if (ControlsEnabled && !HasDetectedTarget && (transform.position - m_target.position).magnitude <= m_distanceToDetect)
+        {
+            EnableControl(true);
+            HasDetectedTarget = true;
+        }
     }
 
     private IEnumerator UpdatePath()
@@ -73,5 +91,14 @@ public abstract class AIControl : CharacterControl
     private void OnDisable()
     {
         m_seeker.pathCallback -= OnPathComplete;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (m_drawDistance)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(transform.position, m_distanceToDetect);
+        }
     }
 }

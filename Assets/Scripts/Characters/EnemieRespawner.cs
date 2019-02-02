@@ -17,14 +17,19 @@ public class EnemieRespawner : MonoBehaviour, IProximityExplodableSubscriber
     [SerializeField]
     private Transform m_enemieTarget;
 
+    private bool m_spawnEnemies = true;
 
     private void Start()
     {
-        foreach (EnemieSpawnSetting setting in m_spawnSettings)
+        for (int i = 0; i < m_spawnSettings.Length; i++)
         {
-            if (setting.currentEnemie != null)
+            if (m_spawnSettings[i].currentEnemie != null)
             {
-                setting.currentEnemie.Subscribe(this);
+                m_spawnSettings[i].currentEnemie.Subscribe(this);
+            }
+            else
+            {
+                SpawnEnemie(i);
             }
         }
     }
@@ -36,26 +41,31 @@ public class EnemieRespawner : MonoBehaviour, IProximityExplodableSubscriber
 
     public void NotifyCountdownFinished(GameObject explodableGameObject)
     {
-        int settingIndex = -1;
-
-        for (int i = 0; i < m_spawnSettings.Length; i++)
+        if (m_spawnEnemies)
         {
-            if (m_spawnSettings[i].currentEnemie.gameObject == explodableGameObject)
+            for (int i = 0; i < m_spawnSettings.Length; i++)
             {
-                settingIndex = i;
-                break;
+                if (m_spawnSettings[i].currentEnemie.gameObject == explodableGameObject)
+                {
+                    SpawnEnemie(i);
+                    break;
+                }
             }
         }
+    }
 
-        if (settingIndex != -1)
-        {
-            GameObject instanciatedEnemie = Instantiate(m_spawnSettings[settingIndex].spawnedEnemie, m_spawnSettings[settingIndex].spawnPosition.position, Quaternion.identity);
-            instanciatedEnemie.GetComponent<AIProximityActivator>().SetTarget(m_enemieTarget);
-            instanciatedEnemie.GetComponent<AIControl>().SetTarget(m_enemieTarget);
-            instanciatedEnemie.GetComponent<ProximityExplodable>().SetTarget(m_enemieTarget);
+    private void SpawnEnemie(int settingIndex)
+    {
+        GameObject instanciatedEnemie = Instantiate(m_spawnSettings[settingIndex].spawnedEnemie, m_spawnSettings[settingIndex].spawnPosition.position, Quaternion.identity);
+        instanciatedEnemie.GetComponent<AIControl>().SetTarget(m_enemieTarget);
+        instanciatedEnemie.GetComponent<ProximityExplodable>().SetTarget(m_enemieTarget);
 
-            m_spawnSettings[settingIndex].currentEnemie = instanciatedEnemie.GetComponent<ProximityExplodable>();
-            m_spawnSettings[settingIndex].currentEnemie.Subscribe(this);
-        }
+        m_spawnSettings[settingIndex].currentEnemie = instanciatedEnemie.GetComponent<ProximityExplodable>();
+        m_spawnSettings[settingIndex].currentEnemie.Subscribe(this);
+    }
+
+    public void EnableEnemieSpawn(bool spawnEnemie)
+    {
+        m_spawnEnemies = spawnEnemie;
     }
 }

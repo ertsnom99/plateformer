@@ -6,6 +6,9 @@ using Pathfinding;
 
 public class FlyingAIControl : AIControl
 {
+    [SerializeField]
+    private bool m_logPathFailedError = false;
+
     private FlyingMovement m_movementScript;
 
     protected override void Awake()
@@ -20,7 +23,10 @@ public class FlyingAIControl : AIControl
         // We got our path back
         if (path.error)
         {
-            Debug.LogError("The path failed!");
+            if (m_logPathFailedError)
+            {
+                Debug.LogError("The path failed! " + gameObject.name);
+            }
         }
         else
         {
@@ -29,49 +35,49 @@ public class FlyingAIControl : AIControl
         }
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         // Only update when time isn't stop
         if (Time.deltaTime > .0f)
         {
-            Inputs inputs = noControlInputs;
-
-            if (ControlsCharacter())
+            if (ControlsCharacter() && HasDetectedTarget && m_path != null)
             {
-                if (m_path != null)
+                Inputs inputs = noControlInputs;
+
+                float distanceToTarget = Vector3.Distance(transform.position, m_target.position);
+                bool isWaypointReached = m_targetWaypoint >= m_path.vectorPath.Count;
+
+                // Check if the AI hasn't reach either the target or the last waypoint
+                if ((!m_stopWhenUnreachable || IsTargetReachable()) && distanceToTarget > m_stopDistanceToTarget && !isWaypointReached)
                 {
-                    float distanceToTarget = Vector3.Distance(transform.position, m_target.position);
-                    bool isWaypointReached = m_targetWaypoint >= m_path.vectorPath.Count;
+                    float distanceToWaypoint = Vector3.Distance(transform.position, m_path.vectorPath[m_targetWaypoint]);
 
-                    // Check if the AI hasn't reach either the target or the last waypoint
-                    if ((!m_stopWhenUnreachable || IsTargetReachable()) && distanceToTarget > m_stopDistanceToTarget && !isWaypointReached)
+                    // Update the target waypoint while the last one hasn't been reached and the current one is close enough
+                    while (!isWaypointReached && distanceToWaypoint <= m_minDistanceToChangeWaypoint)
                     {
-                        float distanceToWaypoint = Vector3.Distance(transform.position, m_path.vectorPath[m_targetWaypoint]);
+                        m_targetWaypoint++;
 
-                        // Update the target waypoint while the last one hasn't been reached and the current one is close enough
-                        while (!isWaypointReached && distanceToWaypoint <= m_minDistanceToChangeWaypoint)
-                        {
-                            m_targetWaypoint++;
+                        isWaypointReached = m_targetWaypoint >= m_path.vectorPath.Count;
 
-                            isWaypointReached = m_targetWaypoint >= m_path.vectorPath.Count;
-
-                            if (!isWaypointReached)
-                            {
-                                distanceToWaypoint = Vector3.Distance(transform.position, m_path.vectorPath[m_targetWaypoint]);
-                            }
-
-                        }
-
-                        // Create the inputs if it wasn't done in the previous
                         if (!isWaypointReached)
                         {
-                            inputs = CreateInputs();
+                            distanceToWaypoint = Vector3.Distance(transform.position, m_path.vectorPath[m_targetWaypoint]);
                         }
+
+                    }
+
+                    // Create the inputs if it wasn't done in the previous
+                    if (!isWaypointReached)
+                    {
+                        inputs = CreateInputs();
                     }
                 }
-            }
 
-            UpdateMovement(inputs);
+                // Send the final inputs to the movement script
+                UpdateMovement(inputs);
+            }
         }
     }
 

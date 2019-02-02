@@ -23,14 +23,13 @@ GameObject:
   - component: {fileID: 58441817153198732}
   - component: {fileID: 50947607977860052}
   - component: {fileID: 95314765945920930}
-  - component: {fileID: 114763936634128964}
   - component: {fileID: 114081227559062698}
   - component: {fileID: 114265350433793756}
   - component: {fileID: 114671357202289926}
   - component: {fileID: 114755130958357190}
   m_Layer: 10
   m_Name: Flying AI
-  m_TagString: Untagged
+  m_TagString: Enemie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -222,17 +221,20 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1223673435489594}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72ca65efc1d797c4abde012efd5b2f29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_target: {fileID: 0}
+  m_distanceToDetect: 10
   m_stopDistanceToTarget: 1.4
   m_minDistanceForTargetReachable: 3
   m_updateRate: 10
   m_minDistanceToChangeWaypoint: 0.75
   m_stopWhenUnreachable: 1
+  m_drawDistance: 0
+  m_logPathFailedError: 0
 --- !u!114 &114094790223514718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -343,15 +345,15 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1223673435489594}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 885933a14e001d647847769cb86ade1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_target: {fileID: 0}
-  m_distanceToCountdown: 3
+  m_distanceToCountdown: 1.7
   m_distanceOffset: {x: 0, y: 0, z: 0}
-  m_countdownTime: 5
+  m_countdownTime: 3
   m_damagedLayers:
     serializedVersion: 2
     m_Bits: 2304
@@ -362,21 +364,7 @@ MonoBehaviour:
   m_knockBackDirection: {x: 1, y: 1, z: 0}
   m_knockBackStrength: 12
   m_knockBackDuration: 0.3
-  m_drawDistance: 0
---- !u!114 &114763936634128964
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1223673435489594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58b1a4acff9a8c84595d155b953838fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_target: {fileID: 0}
-  m_maxDistance: 10
-  m_drawDistance: 0
+  m_drawDistance: 1
 --- !u!114 &114902986284765354
 MonoBehaviour:
   m_ObjectHideFlags: 1

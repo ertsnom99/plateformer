@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d5751a2c961df945a34295ccf5e576d, type: 3}
-  m_Name: HorizontalBreakableTubeBrush
+  m_Name: HorizontalDestroyableTubeBrush
   m_EditorClassIdentifier: 
   m_Prefabs:
   - {fileID: 1407713637701676, guid: 713e7036ffbeead4bb42b8872a919fdd, type: 2}

@@ -24,14 +24,13 @@ GameObject:
   - component: {fileID: 50824239911952624}
   - component: {fileID: 95242770317378704}
   - component: {fileID: 82241674008500906}
-  - component: {fileID: 114388744625304550}
   - component: {fileID: 114904549449585534}
   - component: {fileID: 114107880563175574}
   - component: {fileID: 114420989141734892}
   - component: {fileID: 114995939018924468}
   m_Layer: 10
   m_Name: Jumping Paltformer AI
-  m_TagString: Player
+  m_TagString: Enemie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -345,20 +344,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 100
---- !u!114 &114388744625304550
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1222172137614980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58b1a4acff9a8c84595d155b953838fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_target: {fileID: 0}
-  m_maxDistance: 10
-  m_drawDistance: 0
 --- !u!114 &114420989141734892
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -408,17 +393,20 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1222172137614980}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83748b8269be1934fb55c08305675f83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_target: {fileID: 0}
+  m_distanceToDetect: 10
   m_stopDistanceToTarget: 0.4
   m_minDistanceForTargetReachable: 4
   m_updateRate: 5
   m_minDistanceToChangeWaypoint: 0.5
   m_stopWhenUnreachable: 1
+  m_drawDistance: 0
+  m_logPathFailedError: 0
   m_canJump: 1
   m_minHeightForVerticalMovement: 1
   m_minDropDownWidthToJump: 3
@@ -462,15 +450,15 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1222172137614980}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 885933a14e001d647847769cb86ade1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_target: {fileID: 0}
-  m_distanceToCountdown: 2
+  m_distanceToCountdown: 1.7
   m_distanceOffset: {x: -0.06, y: 0.685, z: 0}
-  m_countdownTime: 5
+  m_countdownTime: 3
   m_damagedLayers:
     serializedVersion: 2
     m_Bits: 2304
@@ -481,7 +469,7 @@ MonoBehaviour:
   m_knockBackDirection: {x: 1, y: 1, z: 0}
   m_knockBackStrength: 12
   m_knockBackDuration: 0.3
-  m_drawDistance: 0
+  m_drawDistance: 1
 --- !u!212 &212942751839728614
 SpriteRenderer:
   m_ObjectHideFlags: 1

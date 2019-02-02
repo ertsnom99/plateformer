@@ -42,6 +42,9 @@ public struct PathLink
 
 public class PlatformerAIControl : AIControl
 {
+    [SerializeField]
+    private bool m_logPathFailedError = false;
+
     [Header("Vertical Movement")]
     [SerializeField]
     private bool m_canJump = true;
@@ -77,7 +80,10 @@ public class PlatformerAIControl : AIControl
     {
         if (path.error)
         {
-            Debug.LogError("The path failed!");
+            if (m_logPathFailedError)
+            {
+                Debug.LogError("The path failed! " + gameObject.name);
+            }
         }
         else
         {
@@ -162,8 +168,10 @@ public class PlatformerAIControl : AIControl
         return Vector2.Angle(secondToFirstWaypoint, secondToThirdWaypoint) <= PathFixByAngleThreshold;
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         // Only update when time isn't stop
         if (Time.deltaTime > .0f)
         {
@@ -183,10 +191,10 @@ public class PlatformerAIControl : AIControl
                 m_horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
             }
 
-            Inputs inputs = noControlInputs;
-
-            if (ControlsCharacter() && m_path != null)
+            if (ControlsCharacter() && HasDetectedTarget && m_path != null)
             {
+                Inputs inputs = noControlInputs;
+
                 bool isWaypointReached = m_targetWaypoint >= m_path.vectorPath.Count;
                 float distanceToTarget = Vector3.Distance(transform.position, m_target.position);
 
@@ -223,10 +231,10 @@ public class PlatformerAIControl : AIControl
                         inputs = CreateInputs();
                     }
                 }
-            }
 
-            // Send the final inputs to the movement script
-            UpdateMovement(inputs);
+                // Send the final inputs to the movement script
+                UpdateMovement(inputs);
+            }
         }
     }
 

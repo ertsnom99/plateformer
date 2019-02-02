@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 95044975582642036}
   - component: {fileID: 114915350709145786}
   m_Layer: 11
-  m_Name: Vertical Breakable Tube
+  m_Name: Vertical Destroyable Tube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
