@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Pathfinding;
-using System.Collections;
 
 public enum PathLinkType
 {
@@ -41,29 +40,8 @@ public struct PathLink
 [RequireComponent(typeof(PlatformerMovement))]
 [RequireComponent(typeof(Seeker))]
 
-public class PlatformerAIControl : MonoBehaviour
+public class PlatformerAIControl : AIControl
 {
-    [Header("Target")]
-    [SerializeField]
-    private Transform m_target;
-    [SerializeField]
-    private float m_stopDistanceToTarget = 1.4f;
-    [SerializeField]
-    private float m_minDistanceForTargetReachable = 6.0f;
-
-    [Header("Update")]
-    [SerializeField]
-    private int m_updateRate = 6;
-    [SerializeField]
-    private float m_minDistanceToChangeWaypoint = 0.2f;
-    [SerializeField]
-    private bool m_stopWhenUnreachable = true;
-
-    private PathLink m_currentPathLink;
-    private bool m_verticalMovementinProgress = false;
-    private bool m_delayedMovementProgressCheck = false;
-    private float m_horizontalInputForVerticalMovement = .0f;
-
     [Header("Vertical Movement")]
     [SerializeField]
     private bool m_canJump = true;
@@ -75,51 +53,27 @@ public class PlatformerAIControl : MonoBehaviour
     private float m_minHeightToReleaseJump = 0.1f;
     private bool m_jumpInputDown = false;
 
-    private Path m_path;
-    private int m_targetWaypoint = 0;
-
-    private Inputs noControlInputs;
-
-    public bool ControlsEnabled { get; private set; }
+    private PathLink m_currentPathLink;
+    private bool m_verticalMovementinProgress = false;
+    private bool m_delayedMovementProgressCheck = false;
+    private float m_horizontalInputForVerticalMovement = .0f;
 
     private PlatformerMovement m_movementScript;
-    private Seeker m_seeker;
 
     private const float JumpHorizontalMovementModifier = 1.2f;
     private const float DropDownHorizontalMovementModifier = 1.0f;
     private const float PathFixByAngleThreshold = .1f;
     private const float MinDistanceToMoveDuringVerticalMovement = 0.4f;
 
-    private void Awake()
+    protected override void Awake()
     {
-        noControlInputs = new Inputs();
-        ControlsEnabled = true;
+        base.Awake();
 
         m_movementScript = GetComponent<PlatformerMovement>();
-        m_seeker = GetComponent<Seeker>();
-    }
-
-    private void Start()
-    {
-        if (m_target == null)
-        {
-            Debug.LogError("No target was set!");
-            return;
-        }
-
-        StartCoroutine(UpdatePath());
-    }
-
-    private IEnumerator UpdatePath()
-    {
-        m_seeker.StartPath(transform.position, m_target.position);
-
-        yield return new WaitForSeconds(1.0f / m_updateRate);
-        StartCoroutine(UpdatePath());
     }
 
     // Called when a new path is created
-    public void OnPathComplete(Path path)
+    public override void OnPathComplete(Path path)
     {
         if (path.error)
         {
@@ -276,11 +230,6 @@ public class PlatformerAIControl : MonoBehaviour
         }
     }
 
-    private bool IsTargetReachable()
-    {
-        return (m_target.position - m_path.vectorPath[m_path.vectorPath.Count - 1]).magnitude < m_minDistanceForTargetReachable;
-    }
-
     private bool IsWalkLinkOver(Vector2 positionToTargetWaypoint)
     {
         return m_currentPathLink.type == PathLinkType.Walk && (Vector2.Angle(m_currentPathLink.link, positionToTargetWaypoint) >= 90.0f || positionToTargetWaypoint.magnitude <= m_minDistanceToChangeWaypoint);
@@ -323,7 +272,7 @@ public class PlatformerAIControl : MonoBehaviour
         return Mathf.Clamp(distanceBySecond / m_movementScript.MaxSpeed, -1.0f, 1.0f);
     }
 
-    private Inputs CreateInputs()
+    protected override Inputs CreateInputs()
     {
         Inputs inputs = noControlInputs;
 
@@ -373,28 +322,8 @@ public class PlatformerAIControl : MonoBehaviour
         return inputs;
     }
 
-    private bool ControlsCharacter()
-    {
-        return ControlsEnabled;
-    }
-
-    private void UpdateMovement(Inputs inputs)
+    protected override void UpdateMovement(Inputs inputs)
     {
         m_movementScript.SetInputs(inputs);
-    }
-
-    public void SetTarget(Transform target)
-    {
-        m_target = target;
-    }
-
-    private void OnEnable()
-    {
-        m_seeker.pathCallback += OnPathComplete;
-    }
-
-    private void OnDisable()
-    {
-        m_seeker.pathCallback -= OnPathComplete;
     }
 }

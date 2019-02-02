@@ -3,23 +3,18 @@
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(PlatformerMovement))]
 
-public class PlayerControl : MonoBehaviour
+public class PlayerControl : CharacterControl
 {
     [Header("Controls")]
     [SerializeField]
     private bool m_useKeyboard;
 
-    private Inputs noControlInputs;
-    
-    public bool ControlsEnabled { get; private set; }
-
     private PlatformerMovement m_movementScript;
 
-    private void Awake()
+    protected override void Awake()
     {
-        noControlInputs = new Inputs();
-        ControlsEnabled = true;
-        
+        base.Awake();
+
         m_movementScript = GetComponent<PlatformerMovement>();
     }
 
@@ -34,7 +29,7 @@ public class PlayerControl : MonoBehaviour
             UpdateMovement(inputs);
         }
     }
-    
+
     private Inputs FetchInputs()
     {
         Inputs inputs = new Inputs();
@@ -69,23 +64,8 @@ public class PlayerControl : MonoBehaviour
         m_useKeyboard = useKeyboard;
     }
 
-    private bool ControlsCharacter()
-    {
-        return ControlsEnabled;
-    }
-
-    private void UpdateMovement(Inputs inputs)
+    protected override void UpdateMovement(Inputs inputs)
     {
         m_movementScript.SetInputs(inputs);
-    }
-
-    public void EnableControl(bool enable)
-    {
-        if (!enable)
-        {
-            UpdateMovement(noControlInputs);
-        }
-
-        ControlsEnabled = enable;
     }
 }
