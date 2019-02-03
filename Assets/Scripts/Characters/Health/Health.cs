@@ -68,6 +68,8 @@ public class Health : MonoSubscribable<IHealthSubscriber>, IDamageable, IHealabl
 
     protected virtual void OnHealthDepleted() { }
 
+    protected virtual void OnHealed() { }
+
     // Methods of the IDamageable interface
     public virtual void Damage(int damage)
     {
@@ -103,6 +105,8 @@ public class Health : MonoSubscribable<IHealthSubscriber>, IDamageable, IHealabl
     public virtual void Heal(int gain)
     {
         HealthPoint = HealthPoint + gain > MaxHealth ? MaxHealth : HealthPoint + gain;
+
+        OnHealed();
 
         foreach (IHealthSubscriber subscriber in m_subscribers)
         {

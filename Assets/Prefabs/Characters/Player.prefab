@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 82653445126395802}
   - component: {fileID: 114867589610096570}
   - component: {fileID: 114253259727586034}
-  - component: {fileID: 114215327323016728}
+  - component: {fileID: 114959804128495902}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -69,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1508018494202180}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.25, y: 59.98, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4062579112893922}
@@ -132,7 +132,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.65
   m_Pitch: 0.95666194
   Loop: 0
   Mute: 0
@@ -234,18 +234,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114215327323016728
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1508018494202180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7d02b3f4ce478e48bac647dc40c1cda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_maxHealth: 100
 --- !u!114 &114253259727586034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -297,6 +285,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_useKeyboard: 1
+--- !u!114 &114959804128495902
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1508018494202180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1a898fc828517458f08cdea5f0d326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_maxHealth: 100
+  m_damagedSound: {fileID: 8300000, guid: b743f93fe6a8c844ab8402d39d3b1b5c, type: 3}
+  m_healedSound: {fileID: 8300000, guid: 1d1c4f6964f2b584f892faea0e30cb6d, type: 3}
 --- !u!212 &212392765523624570
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -351,12 +351,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_target: {fileID: 0}
-  m_distanceToCountdown: 1.7
+  m_distanceToCountdown: 6
   m_distanceOffset: {x: 0, y: 0, z: 0}
   m_countdownTime: 3
   m_damagedLayers:
     serializedVersion: 2
     m_Bits: 2304
+  m_explosionRange: 1.7
   m_damage: 10
   m_explosionEffect: {fileID: 1956474484916810, guid: 72d1de47a8b359a42b83f65433efe6c4,
     type: 2}
@@ -364,7 +365,8 @@ MonoBehaviour:
   m_knockBackDirection: {x: 1, y: 1, z: 0}
   m_knockBackStrength: 12
   m_knockBackDuration: 0.3
-  m_drawDistance: 1
+  m_drawDistanceToCountdown: 0
+  m_drawExplosionRange: 0
 --- !u!114 &114902986284765354
 MonoBehaviour:
   m_ObjectHideFlags: 1

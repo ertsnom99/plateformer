@@ -26,6 +26,8 @@ public class ProximityExplodable : MonoSubscribable<IProximityExplodableSubscrib
     [SerializeField]
     private LayerMask m_damagedLayers;
     [SerializeField]
+    private float m_explosionRange = 1.7f;
+    [SerializeField]
     private int m_damage = 10;
 
     [Header("Explosion")]
@@ -44,7 +46,9 @@ public class ProximityExplodable : MonoSubscribable<IProximityExplodableSubscrib
 
     [Header("Debug")]
     [SerializeField]
-    private bool m_drawDistance = false;
+    private bool m_drawDistanceToCountdown = false;
+    [SerializeField]
+    private bool m_drawExplosionRange = false;
 
     private void Update()
     {
@@ -96,7 +100,7 @@ public class ProximityExplodable : MonoSubscribable<IProximityExplodableSubscrib
 
     private void DamageInRange()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position + m_distanceOffset, m_distanceToCountdown, m_damagedLayers);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position + m_distanceOffset, m_explosionRange, m_damagedLayers);
 
         foreach (Collider2D collider in colliders)
         {
@@ -123,10 +127,16 @@ public class ProximityExplodable : MonoSubscribable<IProximityExplodableSubscrib
 
     private void OnDrawGizmosSelected()
     {
-        if (m_drawDistance)
+        if (m_drawDistanceToCountdown)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(transform.position + m_distanceOffset, m_distanceToCountdown);
+        }
+
+        if (m_drawExplosionRange)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(transform.position + m_distanceOffset, m_explosionRange);
         }
     }
 }

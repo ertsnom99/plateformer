@@ -37,8 +37,7 @@ public class Explosion : MonoBehaviour, IAnimatorEventSubscriber
             m_soundOver = true;
         }
     }
-
-
+    
     private void Update()
     {
         if (!m_soundOver && !m_audioSource.isPlaying)

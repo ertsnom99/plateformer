@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour, IHealthSubscriber, IFadeImageSubscriber
+public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeImageSubscriber
 {
     [Header("Fade out")]
     [SerializeField]
@@ -130,6 +130,12 @@ public class GameManager : MonoBehaviour, IHealthSubscriber, IFadeImageSubscribe
 
     public void NotifyFadeOutFinished()
     {
+        if (m_gameEnded)
+        {
+            // Destroy the ambiant since the game is restarting
+            Destroy(AmbiantManager.Instance.gameObject);
+        }
+
         if (m_gameWon)
         {
             SceneManager.LoadScene(m_sceneToLoadOnWon, LoadSceneMode.Single);
