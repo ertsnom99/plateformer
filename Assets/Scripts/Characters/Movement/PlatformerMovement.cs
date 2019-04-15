@@ -493,7 +493,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
         // Reset ground normal because it is use for the movement along ground
         // If it's not reset, it could cause the player to move in a strange direction 
-        m_groundNormal = new Vector2(.0f, 1.0f);
+        //m_groundNormal = new Vector2(.0f, 1.0f);
 
         // Update the gravity modifier
         m_currentGravityModifier = m_gravityModifier;
@@ -584,7 +584,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
         // Reset ground normal because it is use for the movement along ground
         // If it's not reset, it could cause the player to move in a strange direction 
-        m_groundNormal = new Vector2(.0f, 1.0f);
+        //m_groundNormal = new Vector2(.0f, 1.0f);
 
         // Update the gravity modifier
         m_currentGravityModifier = .0f;

@@ -1,14 +1,13 @@
 ﻿using Cinemachine;
 using System;
-using UnityEngine;
 
-public class VirtualCameraManager : MonoBehaviour
+public class VirtualCameraManager : MonoSingleton<VirtualCameraManager>
 {
     private CinemachineVirtualCamera[] m_virtualCameras;
 
     public CinemachineVirtualCamera ActiveVirtualCamera { get; private set; }
 
-    private void Awake()
+    protected override void Awake()
     {
         m_virtualCameras = GetComponentsInChildren<CinemachineVirtualCamera>(true);
 
