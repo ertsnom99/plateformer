@@ -2,7 +2,7 @@
 
 public class PhysicsCollision2D
 {
-    public PhysicsCollision2D(Collider2D collider, Collider2D otherCollider, Rigidbody2D rigidbody, Rigidbody2D otherRigidbody, Transform transform, GameObject gameObject, Vector2 relativeVelocity, bool enabled, Vector2? contactPoint = null)
+    public PhysicsCollision2D(Collider2D collider, Collider2D otherCollider, Rigidbody2D rigidbody, Rigidbody2D otherRigidbody, Transform transform, GameObject gameObject, Vector2 relativeVelocity, bool enabled, Vector2? contactPoint = null, Vector2? normal = null)
     {
         Collider = collider;
         OtherCollider = otherCollider;
@@ -22,6 +22,11 @@ public class PhysicsCollision2D
         {
             Contact = false;
         }
+
+        if (normal != null)
+        {
+            Normal = (Vector2)normal;
+        }
     }
 
     public Collider2D Collider { get; private set; }
@@ -36,4 +41,5 @@ public class PhysicsCollision2D
     public bool Enabled { get; private set; }
     public bool Contact { get; private set; }
     public Vector2 ContactPoint { get; private set; }
+    public Vector2 Normal { get; private set; }
 }

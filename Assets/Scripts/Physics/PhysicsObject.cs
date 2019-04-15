@@ -227,7 +227,8 @@ public class PhysicsObject : MonoBehaviour
                                                                                  gameObject,
                                                                                  relativeVelocity,
                                                                                  true,
-                                                                                 hit.point);
+                                                                                 hit.point,
+                                                                                 hit.normal);
 
             hit.collider.SendMessage(OnCollisionEnterMethodName, physicsObjectCollision2D, SendMessageOptions.DontRequireReceiver);
         }

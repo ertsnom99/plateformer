@@ -3,8 +3,17 @@ using UnityEngine;
 
 public class BouncingPhysicsObject : PhysicsObject
 {
+    [Header("Bounce")]
+    [SerializeField]
+    private float m_bounciness = 1.0f;
+    [SerializeField]
+    private bool m_applyGravity = true;
+    [SerializeField]
+    private int m_bounceMaxTry = 100;
     [SerializeField]
     private Vector2 m_force = new Vector2(-10.0f, -2.0f);
+
+    private int m_bounceCount = 0;
 
     private void Start()
     {
@@ -13,23 +22,19 @@ public class BouncingPhysicsObject : PhysicsObject
 
     protected override void FixedUpdate()
     {
-        // Update velocity
-        //Velocity += CurrentGravityModifier * Physics2D.gravity * Time.fixedDeltaTime;
-        //Velocity = new Vector2(m_targetHorizontalVelocity, Velocity.y);
+        // Apply gravity
+        if (m_applyGravity)
+        {
+            Velocity += CurrentGravityModifier * Physics2D.gravity * Time.fixedDeltaTime;
+        }
 
         // Backup the list of gameObjects that used to collide and clear the original
         m_previouslyCollidingGameObject = new Dictionary<Collider2D, Rigidbody2D>(m_collidingGameObjects);
         m_collidingGameObjects.Clear();
 
-        // Move
+        // Move the object
         Vector2 movement = Velocity * Time.fixedDeltaTime;
         Move(movement);
-
-        /*Vector2 movement = movementAlongGround * deltaPosition.x;
-        Move(movement, false);
-
-        movement = Vector2.up * deltaPosition.y;
-        Move(movement, true);*/
 
         // Check and broadcast collision exit message
         CheckCollisionExit();
@@ -43,20 +48,16 @@ public class BouncingPhysicsObject : PhysicsObject
         }
     }
 
-    protected override void Update()
-    {
-        /*m_targetHorizontalVelocity = .0f;
-        ComputeVelocity();*/
-    }
+    protected override void Update() { }
 
     private void Move(Vector2 movement)
     {
-        Vector2 movementDirection = movement.normalized;
+        int tryCount = 0;
         float distanceToTravel = movement.magnitude;
         float distanceBeforeHit = movement.magnitude;
 
         // Keeps trying to move until the object travelled the necessary distance
-        while(distanceToTravel > .0f)
+        while (tryCount <= m_bounceMaxTry && distanceToTravel > .0f)
         {
             // Consider that the objet can travel all the remining distance without hitting anything
             distanceBeforeHit = distanceToTravel;
@@ -64,41 +65,42 @@ public class BouncingPhysicsObject : PhysicsObject
             // Check for collision only if the object moves enough
             if (distanceToTravel > MinMoveDistance)
             {
-                int count = m_rigidbody2D.Cast(movementDirection, m_contactFilter, m_hitBuffer, distanceToTravel + m_shellRadius);
-                m_hitBufferList.Clear();
+                // Cast and only consider the first collision
+                int count = m_rigidbody2D.Cast(Velocity.normalized, m_contactFilter, m_hitBuffer, distanceToTravel + m_shellRadius);
 
-                // TEMP: Pourrais prendre juste le premier
-                // Transfer hits to m_hitBufferList
-                // m_hitBuffer has always the same number of elements in it, but some might be null.
-                // The purpose of the transfer is to only keep the actual result of the cast
-                for (int i = 0; i < count; i++)
+                if (count > 0 && m_hitBuffer[0])
                 {
-                    m_hitBufferList.Add(m_hitBuffer[i]);
-                }
-
-                foreach (RaycastHit2D hit in m_hitBufferList)
-                {
-                    // Update the movement direction
-                    movementDirection = Vector2.Reflect(movementDirection, hit.normal);
-                    Velocity = Velocity.magnitude * movementDirection;
+                    // Update the velocity
+                    UpdateVelocityOnHit(m_hitBuffer[0].normal);
 
                     // Check and broadcast collision enter message
-                    CheckCollisionEnter(hit);
-                    
-                    // Calculate how much movement can be done, before hitting something, considering the ShellRadius  
-                    distanceBeforeHit = hit.distance - m_shellRadius;
-                    
-                    // Will allow inheriting classes to add logic during the hit checks
-                    OnColliderHitCheck(hit);
+                    CheckCollisionEnter(m_hitBuffer[0]);
 
-                    break;
+                    // Update how much distance can be done before hitting something  
+                    distanceBeforeHit = m_hitBuffer[0].distance - m_shellRadius;
+
+                    // Will allow inheriting classes to add logic during the hit checks
+                    OnColliderHitCheck(m_hitBuffer[0]);
                 }
             }
 
             distanceToTravel -= distanceBeforeHit;
 
             // Apply the movement
-            m_rigidbody2D.position = m_rigidbody2D.position + movementDirection * distanceBeforeHit;
+            m_rigidbody2D.position = m_rigidbody2D.position + Velocity.normalized * distanceBeforeHit;
+
+            tryCount++;
         }
+    }
+
+    private void UpdateVelocityOnHit(Vector2 normal)
+    {
+        Velocity = Velocity.magnitude * m_bounciness * Vector2.Reflect(Velocity.normalized, normal).normalized;
+        m_bounceCount++;
+    }
+
+    private void OnPhysicsObjectCollisionEnter(PhysicsCollision2D physicsObjectCollision2D)
+    {
+        UpdateVelocityOnHit(physicsObjectCollision2D.Normal);
     }
 }
