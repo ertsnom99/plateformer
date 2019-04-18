@@ -16,7 +16,7 @@ public class PhysicsObject : MonoBehaviour
     protected float m_shellRadius = 0.05f;
     
     [SerializeField]
-    protected float m_gravityModifier = 2.5f;
+    protected float m_gravityModifier = 1.0f;
     protected float m_currentGravityModifier;
 
     public float CurrentGravityModifier
