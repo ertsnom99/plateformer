@@ -19,7 +19,7 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
     [SerializeField]
     private bool m_enableControlAfterFadeIn = true;
     [SerializeField]
-    private Inputs m_forcedControls;
+    private Inputs m_forcedControlsAtLevelStart;
     
     [Header("Enemies")]
     [SerializeField]
@@ -50,7 +50,7 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
 
         m_playerControl.GetComponent<Health>().Subscribe(this);
         m_playerControl.EnableControl(false);
-        m_playerMovement.SetInputs(m_forcedControls);
+        m_playerMovement.SetInputs(m_forcedControlsAtLevelStart);
     }
 
     private void Update()

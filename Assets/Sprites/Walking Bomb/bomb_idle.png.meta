@@ -5,7 +5,7 @@ TextureImporter:
     21300000: bomb_idle_0
     21300002: bomb_idle_1
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -105,7 +105,7 @@ TextureImporter:
         width: 24
         height: 21
       alignment: 9
-      pivot: {x: 0.54142624, y: 0}
+      pivot: {x: 0.563, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -125,7 +125,7 @@ TextureImporter:
         width: 24
         height: 21
       alignment: 9
-      pivot: {x: 0.54142624, y: 0}
+      pivot: {x: 0.563, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

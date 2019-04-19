@@ -1,15 +1,16 @@
 fileFormatVersion: 2
-guid: 65196e40664e2a54ea6f3754e2497bf7
+guid: e1cc94752fa7cea498dc07e19c464158
 TextureImporter:
   fileIDToRecycleName:
-    21300000: bomb_walk_0
-    21300002: bomb_walk_1
-    21300004: bomb_walk_2
-    21300006: bomb_walk_3
-    21300008: bomb_walk_4
-    21300010: bomb_walk_5
-    21300012: bomb_walk_6
-    21300014: bomb_walk_7
+    21300000: emoticons_0
+    21300002: emoticons_1
+    21300004: emoticons_2
+    21300006: emoticons_3
+    21300008: emoticons_4
+    21300010: emoticons_5
+    21300012: emoticons_6
+    21300014: emoticons_7
+    21300016: emoticons_8
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -53,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 200
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -71,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -82,18 +83,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-  - serializedVersion: 2
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -103,161 +93,181 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bomb_walk_0
+      name: emoticons_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 42
-        width: 24
-        height: 21
-      alignment: 9
-      pivot: {x: 0.563, y: 0}
+        y: 376
+        width: 200
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 56a2f3c32e170194aa211157796fd73a
+      spriteID: d1955857eefb57343a61d0a2c072c60f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bomb_walk_1
+      name: emoticons_1
       rect:
         serializedVersion: 2
-        x: 24
-        y: 42
-        width: 24
-        height: 21
-      alignment: 9
-      pivot: {x: 0.563, y: 0}
+        x: 200
+        y: 376
+        width: 200
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2448689fbc46d1847b498ec6e8755c63
+      spriteID: feae9824bd86daf4e8d2b6965257b7a1
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bomb_walk_2
+      name: emoticons_2
       rect:
         serializedVersion: 2
-        x: 48
-        y: 42
-        width: 24
-        height: 21
-      alignment: 9
-      pivot: {x: 0.563, y: 0}
+        x: 400
+        y: 376
+        width: 200
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ce061efaf443aa4bae0750502f904ca
+      spriteID: 6a1ae43846d3de84dab9834f3203f445
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bomb_walk_3
+      name: emoticons_3
       rect:
         serializedVersion: 2
         x: 0
-        y: 21
-        width: 24
-        height: 21
-      alignment: 9
-      pivot: {x: 0.563, y: 0}
+        y: 188
+        width: 200
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a09fba4b30fc5b34dbaf343720f454ee
+      spriteID: 9d965e325dd34a24a9905542cdfb2207
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bomb_walk_4
+      name: emoticons_4
       rect:
         serializedVersion: 2
-        x: 24
-        y: 21
-        width: 24
-        height: 21
-      alignment: 9
-      pivot: {x: 0.563, y: 0}
+        x: 200
+        y: 188
+        width: 200
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 735e5d0ec41d7c14f80dd33114e216b2
+      spriteID: d9244e7c927a7224dbf8b634176361e2
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bomb_walk_5
+      name: emoticons_5
       rect:
         serializedVersion: 2
-        x: 48
-        y: 21
-        width: 24
-        height: 21
-      alignment: 9
-      pivot: {x: 0.563, y: 0}
+        x: 400
+        y: 188
+        width: 200
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 795adb98f0645364f89adb9b98fd20db
+      spriteID: d57a8442ece2c5d4eba17b869eb07a7d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bomb_walk_6
+      name: emoticons_6
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 24
-        height: 21
-      alignment: 9
-      pivot: {x: 0.563, y: 0}
+        width: 200
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a3730b4c531d5214cb56fabc8c1b5bfa
+      spriteID: 7588b2af0d18559418c7795fbead59c9
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bomb_walk_7
+      name: emoticons_7
       rect:
         serializedVersion: 2
-        x: 24
+        x: 200
         y: 0
-        width: 24
-        height: 21
-      alignment: 9
-      pivot: {x: 0.563, y: 0}
+        width: 200
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9022265efa96fa144a8113b77a00c05b
+      spriteID: 1b3c202d5f4269346935706634696750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: emoticons_8
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 200
+        height: 188
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29492346e80c9e240a2aa1c775066a81
       vertices: []
       indices: 
       edges: []
@@ -265,7 +275,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 2a16e00df2f7fa5428f2afb4ca1b9f8e
+    spriteID: 58486e7c75d2899439bb28ff473ed983
     vertices: []
     indices: 
     edges: []

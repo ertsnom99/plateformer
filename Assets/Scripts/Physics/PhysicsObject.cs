@@ -60,10 +60,10 @@ public class PhysicsObject : MonoBehaviour
 
     protected virtual void Awake()
     {
-        m_contactFilter.useTriggers = false;
         // Tells to use the layer settings from the Physics2D settings (the matrix)
         m_contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
         m_contactFilter.useLayerMask = true;
+        m_contactFilter.useTriggers = false;
 
         CurrentGravityModifier = m_gravityModifier;
 

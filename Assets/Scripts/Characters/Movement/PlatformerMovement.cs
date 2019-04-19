@@ -24,6 +24,10 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         private set { m_maxSpeed = value; }
     }
 
+    [Header("Jump")]
+    [SerializeField]
+    private bool m_canJump = true;
+
     [SerializeField]
     private float m_jumpTakeOffSpeed = 15.0f;
 
@@ -387,7 +391,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         if (!m_triggeredJump && !m_triggeredAirborneJump && !m_triggeredDash)
         {
             // Jump
-            if (IsGrounded && m_currentInputs.jump)
+            if (m_canJump && IsGrounded && m_currentInputs.jump)
             {
                 Jump();
             }

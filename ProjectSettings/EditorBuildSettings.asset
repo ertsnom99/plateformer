@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/_scenes/Demo/Tutorial.unity
-    guid: cb3c3c1028cc8fc4990daeb78afe9c21
-  - enabled: 0
-    path: Assets/_scenes/Demo/Boss.unity
-    guid: 3b7d9eedf07bb374eb5599c89a3619e0
   - enabled: 1
     path: Assets/_scenes/BouncingMechanic.unity
     guid: 2dd84a93954ab5644b1fc5f6a8ce7492
+  - enabled: 1
+    path: Assets/_scenes/Demo/Tutorial.unity
+    guid: cb3c3c1028cc8fc4990daeb78afe9c21
+  - enabled: 1
+    path: Assets/_scenes/Demo/Boss.unity
+    guid: 3b7d9eedf07bb374eb5599c89a3619e0
   m_configObjects: {}

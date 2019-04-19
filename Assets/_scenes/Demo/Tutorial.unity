@@ -946,7 +946,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.35027027, y: 1}
-  m_AnchoredPosition: {x: 0.00025305987, y: -0.000091552734}
+  m_AnchoredPosition: {x: 0.00025305987, y: 0}
   m_SizeDelta: {x: -0.00030518, y: 0.2}
   m_Pivot: {x: 0.000000011175871, y: 1.0000001}
 --- !u!114 &159075246
@@ -21955,7 +21955,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.016479168, y: 0.97200006}
   m_AnchorMax: {x: 0.35552084, y: 0.97200006}
-  m_AnchoredPosition: {x: 0.00061035156, y: -0.00024414062}
+  m_AnchoredPosition: {x: 0.00048828125, y: -0.00024414062}
   m_SizeDelta: {x: -0.00061035, y: 0}
   m_Pivot: {x: 0.000000017695129, y: 0.9999997}
 --- !u!114 &799338431
@@ -24318,7 +24318,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.23900001, y: 0.13268392}
   m_AnchorMax: {x: 0.9268766, y: 0.6893846}
-  m_AnchoredPosition: {x: 0, y: -0.000015258789}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0.000030518, y: 0.0000016878969}
   m_Pivot: {x: 0.49999997, y: 0.5}
 --- !u!114 &1212211256
@@ -25612,18 +25612,20 @@ MonoBehaviour:
   m_playerControl: {fileID: 1638727459}
   m_playerMovement: {fileID: 1854121125}
   m_enableControlAfterFadeIn: 1
-  m_forcedControls:
+  m_forcedControlsAtLevelStart:
     vertical: 0
     horizontal: 0
     jump: 0
     releaseJump: 0
     dash: 0
     releaseDash: 0
+    heldCharge: 0
+    releaseCharge: 0
   m_enemieRespawner: {fileID: 0}
   m_endGameWonText: {fileID: 1619944387}
   m_endGameLoseText: {fileID: 436463833}
-  m_sceneToLoadOnWon: 0
-  m_sceneToLoadOnLose: 0
+  m_sceneToLoadOnWon: 1
+  m_sceneToLoadOnLose: 1
 --- !u!4 &1353228064
 Transform:
   m_ObjectHideFlags: 0
@@ -25869,7 +25871,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: -0.000076293945}
+  m_AnchoredPosition: {x: 0.00012207031, y: -0.000076293945}
   m_SizeDelta: {x: 0, y: -0.000015259}
   m_Pivot: {x: 0.5, y: 0.5000001}
 --- !u!114 &1371019419
@@ -28530,7 +28532,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -49.299927}
+  m_AnchoredPosition: {x: 0, y: -49.299805}
   m_SizeDelta: {x: -1017.2, y: -653.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1694392583
@@ -28684,7 +28686,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.2768871, y: 0.41584533}
   m_AnchorMax: {x: 1, y: 0.8075774}
-  m_AnchoredPosition: {x: -0.000015258789, y: -0.0945282}
+  m_AnchoredPosition: {x: 0, y: -0.09454346}
   m_SizeDelta: {x: -0.026794, y: 0.1}
   m_Pivot: {x: -0.00000002142042, y: -0.00000051036477}
 --- !u!114 &1734904895
@@ -29168,7 +29170,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -49.299927}
+  m_AnchoredPosition: {x: 0, y: -49.299805}
   m_SizeDelta: {x: -1017.2, y: -184.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1830684579
@@ -30865,9 +30867,11 @@ MonoBehaviour:
     releaseJump: 0
     dash: 0
     releaseDash: 0
+    heldCharge: 0
+    releaseCharge: 0
   m_fade: {fileID: 261130841}
   m_fadeDuration: 1
-  m_sceneToLoad: 1
+  m_sceneToLoad: 2
 --- !u!61 &2030209160
 BoxCollider2D:
   m_ObjectHideFlags: 0
