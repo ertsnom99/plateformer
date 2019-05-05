@@ -17,13 +17,11 @@ public class PhysicsObject : MonoBehaviour
     
     [SerializeField]
     protected float m_gravityModifier = 1.0f;
-    protected float m_currentGravityModifier;
 
-    public float CurrentGravityModifier
-    {
-        get { return m_currentGravityModifier; }
-        private set { m_currentGravityModifier = value; }
-    }
+    public float CurrentGravityModifier { get; protected set; }
+
+    [SerializeField]
+    protected float m_fallModifier = 1.0f;
 
     [SerializeField]
     private float m_minGroundNormalY = .4f;
@@ -35,13 +33,7 @@ public class PhysicsObject : MonoBehaviour
     [SerializeField]
     protected bool m_debugVelocity = false;
 
-    protected Vector2 m_velocity;
-
-    public Vector2 Velocity
-    {
-        get { return m_velocity; }
-        protected set { m_velocity = value; }
-    }
+    public Vector2 Velocity { get; protected set; }
 
     protected float m_targetHorizontalVelocity;
     protected ContactFilter2D m_contactFilter;
@@ -92,7 +84,14 @@ public class PhysicsObject : MonoBehaviour
         //m_groundAngle = .0f;
 
         // Update velocity
-        Velocity += CurrentGravityModifier * Physics2D.gravity * Time.fixedDeltaTime;
+        Vector2 yVelocityAdded = CurrentGravityModifier * Physics2D.gravity * Time.fixedDeltaTime;
+
+        if (Velocity.y < .0f)
+        {
+            yVelocityAdded *= m_fallModifier;
+        }
+
+        Velocity += yVelocityAdded;
         Velocity = new Vector2 (m_targetHorizontalVelocity, Velocity.y);
 
         // Create a Vector prependicular to the normal

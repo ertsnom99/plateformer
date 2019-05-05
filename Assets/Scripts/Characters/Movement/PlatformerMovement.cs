@@ -164,9 +164,9 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         }
 
         // Reset the Y velocity if the player is suppose to keep the same velocity while sliding of a wall
-        if (IsSlidingOfWall && m_constantSlipeSpeed && m_velocity.y < .0f)
+        if (IsSlidingOfWall && m_constantSlipeSpeed && Velocity.y < .0f)
         {
-            m_velocity.y = .0f;
+            Velocity = new Vector2(Velocity.x, .0f);
         }
 
         base.FixedUpdate();
@@ -256,7 +256,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
             IsSlidingOfWall = false;
         }
         // Might be starting to slide of a wall
-        else if ((m_canSlideDuringKnockBack || !IsKnockedBack) && (m_canSlideGoingUp || m_velocity.y <= .0f) && m_hitWall && !IsSlidingOfWall && !IsGrounded)
+        else if ((m_canSlideDuringKnockBack || !IsKnockedBack) && (m_canSlideGoingUp || Velocity.y <= .0f) && m_hitWall && !IsSlidingOfWall && !IsGrounded)
         {
             // Check if the player can slide of the wall
             IsSlidingOfWall = RaycastForWallSlide();
@@ -285,7 +285,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         // If the player started to slide of a new wall
         if (!wasSliding && IsSlidingOfWall)
         {
-            m_velocity = Vector2.zero;
+            Velocity = Vector2.zero;
 
             // Cancel the other coroutines if necessary
             if (IsDashing)
@@ -309,7 +309,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         // Update the gravity modifier when the player change his sliding state and not because he dashed
         if (wasSliding != IsSlidingOfWall && !IsDashing)
         {
-            m_currentGravityModifier = IsSlidingOfWall ? m_slideGravityModifier : m_gravityModifier;
+            CurrentGravityModifier = IsSlidingOfWall ? m_slideGravityModifier : m_gravityModifier;
         }
     }
 
@@ -343,8 +343,8 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         }
 
         // Update animator parameters
-        m_animator.SetFloat(m_XVelocityParamHashId, Mathf.Abs(m_velocity.x) / MaxSpeed);
-        m_animator.SetFloat(m_YVelocityParamHashId, m_velocity.y);
+        m_animator.SetFloat(m_XVelocityParamHashId, Mathf.Abs(Velocity.x) / MaxSpeed);
+        m_animator.SetFloat(m_YVelocityParamHashId, Velocity.y);
         // TODO: Check if parameters needs delay
         m_animator.SetBool(IsGroundedParamNameString, IsGrounded);
         m_animator.SetBool(m_isSlidingOfWallParamHashId, IsSlidingOfWall/* && m_wasDashAnimeDelayed*/);
@@ -413,7 +413,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         }
 
         // Cancel jump if release jump button while having some jump velocity remaining
-        if (!m_jumpCanceled && m_velocity.y > .0f && m_currentInputs.releaseJump)
+        if (!m_jumpCanceled && Velocity.y > .0f && m_currentInputs.releaseJump)
         {
             CancelJump();
         }
@@ -493,14 +493,14 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     private void AddJumpImpulse(float takeOffSpeed)
     {
-        m_velocity.y = takeOffSpeed;
+        Velocity = new Vector2(Velocity.x, takeOffSpeed);
 
         // Reset ground normal because it is use for the movement along ground
         // If it's not reset, it could cause the player to move in a strange direction 
         //m_groundNormal = new Vector2(.0f, 1.0f);
 
         // Update the gravity modifier
-        m_currentGravityModifier = m_gravityModifier;
+        CurrentGravityModifier = m_gravityModifier;
     }
 
     private IEnumerator WallJumpWindow()
@@ -576,14 +576,14 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     private void CancelJump()
     {
-        m_velocity.y *= 0.5f;
+        Velocity = new Vector2(Velocity.x, Velocity.y * 0.5f);
         m_jumpCanceled = true;
     }
 
     // Dash related methods
     private void Dash()
     {
-        m_velocity.y = .0f;
+        Velocity = new Vector2(Velocity.x, .0f);
         m_targetHorizontalVelocity = m_spriteRenderer.flipX ? -m_dashSpeed : m_dashSpeed;
 
         // Reset ground normal because it is use for the movement along ground
@@ -591,7 +591,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         //m_groundNormal = new Vector2(.0f, 1.0f);
 
         // Update the gravity modifier
-        m_currentGravityModifier = .0f;
+        CurrentGravityModifier = .0f;
 
         m_triggeredDash = true;
 
@@ -634,7 +634,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         m_dashWindowCoroutine = null;
 
         // Update the gravity modifier
-        m_currentGravityModifier = m_gravityModifier;
+        CurrentGravityModifier = m_gravityModifier;
         
         m_dashCooldownCoroutine = DashCooldown();
         StartCoroutine(m_dashCooldownCoroutine);
