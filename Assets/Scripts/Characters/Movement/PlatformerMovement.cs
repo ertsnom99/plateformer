@@ -506,7 +506,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     private IEnumerator WallJumpWindow()
     {
         yield return new WaitForSeconds(m_wallJumpWindowTime);
-        m_wallJumpWindowCoroutine = null;
+        EndWallJumpWindow();
     }
 
     private void EndWallJumpWindow()
@@ -537,17 +537,13 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     private IEnumerator DelayHorizontalControl(float delay)
     {
         yield return new WaitForSeconds(delay);
-        m_horizontalControlDelayCoroutine = null;
-
-        if (IsKnockedBack == true)
-        {
-            ResetKnockbackVariables();
-        }
+        EndDelayedHorizontalControl();
     }
 
     private void EndDelayedHorizontalControl()
     {
         StopCoroutine(m_horizontalControlDelayCoroutine);
+        m_horizontalControlDelayCoroutine = null;
 
         if (IsKnockedBack == true)
         {
