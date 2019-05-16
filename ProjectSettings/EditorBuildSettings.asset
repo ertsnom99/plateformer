@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/_scenes/BouncingMechanic.unity
     guid: 2dd84a93954ab5644b1fc5f6a8ce7492
   - enabled: 1

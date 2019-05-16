@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class EmoteSphere : MonoBehaviour
+public class EmoteSphere : MonoBehaviour, IPhysicsObjectCollisionListener
 {
     [Header("Emote")]
     [SerializeField]
@@ -16,7 +16,7 @@ public class EmoteSphere : MonoBehaviour
     private Color m_intactColor;
     [SerializeField]
     private Color m_brokenColor;
-    
+
     private void Awake()
     {
         if (!m_emote)
@@ -33,15 +33,18 @@ public class EmoteSphere : MonoBehaviour
         UpdateEmote();
     }
 
-    private void OnPhysicsObjectCollisionEnter(PhysicsCollision2D physicsObjectCollision2D)
-    {
-        m_emoteIndex = (m_emoteIndex + 1) % m_emotes.Length;
-        UpdateEmote();
-    }
-
     private void UpdateEmote()
     {
         m_emote.sprite = m_emotes[m_emoteIndex];
         m_colorBackground.color = Color.Lerp(m_intactColor, m_brokenColor, (float)m_emoteIndex / (m_emotes.Length - 1));
+    }
+
+    // Methods of the IPhysicsObjectCollisionListener interface
+    public void OnPhysicsObjectCollisionExit(PhysicsCollision2D collision) { }
+
+    public void OnPhysicsObjectCollisionEnter(PhysicsCollision2D collision)
+    {
+        m_emoteIndex = (m_emoteIndex + 1) % m_emotes.Length;
+        UpdateEmote();
     }
 }

@@ -347,7 +347,7 @@ public class BouncingCharacterControl : CharacterControl, IBouncingPhysicsObject
     {
         if (!m_bounceForm.activeSelf)
         {
-            Debug.LogError("Can't launch the bouncing form because it'snt active!!!");
+            Debug.LogError("Can't launch the bouncing form because it isn't active!!!");
         }
         else
         {

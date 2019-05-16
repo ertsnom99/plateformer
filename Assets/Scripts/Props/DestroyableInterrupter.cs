@@ -16,7 +16,7 @@ public enum WayToBreak
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(DestroyableInterrupterHealth))]
 
-public class DestroyableInterrupter : MonoSubscribable<IDestroyableInterrupterSubscriber>, IHealthSubscriber
+public class DestroyableInterrupter : MonoSubscribable<IDestroyableInterrupterSubscriber>, IPhysicsObjectCollisionListener, IHealthSubscriber
 {
     [Header("Break method")]
     [SerializeField]
@@ -58,11 +58,6 @@ public class DestroyableInterrupter : MonoSubscribable<IDestroyableInterrupterSu
     {
         OnImpact(col.relativeVelocity, col.collider.gameObject);
     }
-
-    private void OnPhysicsObjectCollisionEnter(PhysicsCollision2D physicsObjectCollision2D)
-    {
-        OnImpact(physicsObjectCollision2D.RelativeVelocity, physicsObjectCollision2D.Collider.gameObject);
-    }
     
     private void OnImpact(Vector2 relativeVelocity, GameObject collidingGameObject)
     {
@@ -97,6 +92,14 @@ public class DestroyableInterrupter : MonoSubscribable<IDestroyableInterrupterSu
 
         IsBroken = true;
         m_animator.SetBool(m_isDestroyedParamHashId, true);
+    }
+
+    // Methods of the IPhysicsObjectCollisionListener interface
+    public void OnPhysicsObjectCollisionExit(PhysicsCollision2D collision) { }
+
+    public void OnPhysicsObjectCollisionEnter(PhysicsCollision2D collision)
+    {
+        OnImpact(collision.RelativeVelocity, collision.Collider.gameObject);
     }
 
     // Methods of the IHealthSubscriber interface

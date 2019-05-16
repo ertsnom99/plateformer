@@ -11,7 +11,7 @@ public interface IBouncingPhysicsObjectSubscriber
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(AudioSource))]
 
-public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsObjectSubscriber>
+public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsObjectSubscriber>, IPhysicsObjectCollisionListener
 {
     enum BounceStopCondition { BounceDurationElapsed, MaxBounceCountReached, UnderMinVelocity };
 
@@ -126,14 +126,14 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
             Velocity += CurrentGravityModifier * Physics2D.gravity * Time.fixedDeltaTime;
 
             // Backup the list of gameObjects that used to collide and clear the original
-            m_previouslyCollidingGameObject = new Dictionary<Collider2D, Rigidbody2D>(m_collidingGameObjects);
+            m_previouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsObjectCollisionListener[]>(m_collidingGameObjects);
             m_collidingGameObjects.Clear();
 
             // Move the object
             Vector2 movement = Velocity * Time.fixedDeltaTime;
             Move(movement);
 
-            // Check and broadcast collision exit message
+            // Check and call collision exit methods
             CheckCollisionExit();
 
             if (m_debugVelocity)
@@ -179,7 +179,7 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
                         StartCoroutine(FreezeMovementOnBounce());
                     }
 
-                    // Check and broadcast collision enter message
+                    // Check and call collision enter methods
                     CheckCollisionEnter(m_hitBuffer[0]);
 
                     // Update how much distance can be done before hitting something  
@@ -253,16 +253,19 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
 
     protected virtual void OnFreezeEnd() { }
 
-    private void OnPhysicsObjectCollisionEnter(PhysicsCollision2D physicsObjectCollision2D)
-    {
-        if (!MovementFrozen)
-        {
-            OnHit(physicsObjectCollision2D.Normal);
-        }
-    }
-
     private void OnDisable()
     {
         FreezeMovement(true);
+    }
+
+    // Methods of the IPhysicsObjectCollisionListener interface
+    public void OnPhysicsObjectCollisionExit(PhysicsCollision2D collision) { }
+
+    public void OnPhysicsObjectCollisionEnter(PhysicsCollision2D collision)
+    {
+        if (!MovementFrozen)
+        {
+            OnHit(collision.Normal);
+        }
     }
 }
