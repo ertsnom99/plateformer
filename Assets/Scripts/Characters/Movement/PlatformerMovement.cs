@@ -155,12 +155,12 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     protected override void FixedUpdate()
     {
         // Keep track of the position of the player before it's updated
-        Vector2 previousRigidbodyPosition = m_rigidbody2D.position;
+        Vector2 previousRigidbodyPosition = Rigidbody2D.position;
 
         // Keep track of the direction the player intended to move in
-        if (m_targetHorizontalVelocity != .0f)
+        if (TargetHorizontalVelocity != .0f)
         {
-            m_lastHorizontalVelocityDirection = Mathf.Sign(m_targetHorizontalVelocity);
+            m_lastHorizontalVelocityDirection = Mathf.Sign(TargetHorizontalVelocity);
         }
 
         // Reset the Y velocity if the player is suppose to keep the same velocity while sliding of a wall
@@ -183,7 +183,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         // Only update wall slide if it's allowed
         if (m_canSlideOfWall)
         {
-            UpdateWallSlide(m_rigidbody2D.position - previousRigidbodyPosition);
+            UpdateWallSlide(Rigidbody2D.position - previousRigidbodyPosition);
         }
 
         // Cancel dash window if hitted a wall
@@ -240,7 +240,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
             // Reset the target velocity when the character is knocked back because it is suppose to loose it's velocity when that happens
             if (IsKnockedBack)
             {
-                m_targetHorizontalVelocity = .0f;
+                TargetHorizontalVelocity = .0f;
             }
         }
     }
@@ -309,16 +309,16 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         // Update the gravity modifier when the player change his sliding state and not because he dashed
         if (wasSliding != IsSlidingOfWall && !IsDashing)
         {
-            CurrentGravityModifier = IsSlidingOfWall ? m_slideGravityModifier : m_gravityModifier;
+            CurrentGravityModifier = IsSlidingOfWall ? m_slideGravityModifier : GravityModifier;
         }
     }
 
     private bool RaycastForWallSlide()
     {
-        Vector2 slideRaycastStart = new Vector2(m_rigidbody2D.position.x, m_rigidbody2D.transform.position.y + m_slideRaycastOffset);
+        Vector2 slideRaycastStart = new Vector2(Rigidbody2D.position.x, Rigidbody2D.transform.position.y + m_slideRaycastOffset);
 
         RaycastHit2D[] results = new RaycastHit2D[1];
-        Physics2D.Raycast(slideRaycastStart, m_lastHorizontalVelocityDirection * Vector2.right, m_contactFilter, results, m_slideRaycastDistance);
+        Physics2D.Raycast(slideRaycastStart, m_lastHorizontalVelocityDirection * Vector2.right, ContactFilter, results, m_slideRaycastDistance);
 
         return results[0].collider;
     }
@@ -391,29 +391,29 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         if (!m_triggeredJump && !m_triggeredAirborneJump && !m_triggeredDash)
         {
             // Jump
-            if (m_canJump && IsGrounded && m_currentInputs.jump)
+            if (m_canJump && IsGrounded && m_currentInputs.Jump)
             {
                 Jump();
             }
             // Wall jump
-            else if (m_canWallJump && (IsSlidingOfWall || InWallJumpWindow()) && m_currentInputs.jump)
+            else if (m_canWallJump && (IsSlidingOfWall || InWallJumpWindow()) && m_currentInputs.Jump)
             {
                 WallJump();
             }
             // Airborne jump
-            else if (m_canAirborneJump && !IsGrounded && m_airborneJumpAvailable && m_currentInputs.jump)
+            else if (m_canAirborneJump && !IsGrounded && m_airborneJumpAvailable && m_currentInputs.Jump)
             {
                 AirborneJump();
             }
             // Dash
-            else if (m_canDash && m_currentInputs.dash && !InDashWindow() && !DashInCooldown())
+            else if (m_canDash && m_currentInputs.Dash && !InDashWindow() && !DashInCooldown())
             {
                 Dash();
             }
         }
 
         // Cancel jump if release jump button while having some jump velocity remaining
-        if (!m_jumpCanceled && Velocity.y > .0f && m_currentInputs.releaseJump)
+        if (!m_jumpCanceled && Velocity.y > .0f && m_currentInputs.ReleaseJump)
         {
             CancelJump();
         }
@@ -421,7 +421,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         // Set the wanted horizontal velocity, except during the delayed controls window and the dash window
         if (!HorizontalControlDelayed() && !InDashWindow())
         {
-            m_targetHorizontalVelocity = m_currentInputs.horizontal * MaxSpeed;
+            TargetHorizontalVelocity = m_currentInputs.Horizontal * MaxSpeed;
         }
     }
 
@@ -456,7 +456,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         }
 
         // Set the movement
-        m_targetHorizontalVelocity = knockBackVelocity.x;
+        TargetHorizontalVelocity = knockBackVelocity.x;
         AddJumpImpulse(knockBackVelocity.y);
 
         IsKnockedBack = true;
@@ -500,7 +500,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         //m_groundNormal = new Vector2(.0f, 1.0f);
 
         // Update the gravity modifier
-        CurrentGravityModifier = m_gravityModifier;
+        CurrentGravityModifier = GravityModifier;
     }
 
     private IEnumerator WallJumpWindow()
@@ -523,7 +523,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     private void WallJump()
     {
         Jump();
-        m_targetHorizontalVelocity = m_spriteRenderer.flipX ? -m_wallJumpHorizontalVelocity : m_wallJumpHorizontalVelocity;
+        TargetHorizontalVelocity = m_spriteRenderer.flipX ? -m_wallJumpHorizontalVelocity : m_wallJumpHorizontalVelocity;
 
         if (InWallJumpWindow())
         {
@@ -558,11 +558,11 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         // Reset the last target horizontal velocity direction to prevent the sprite from flipping to the wrong side during the next Animate() method call
         if (!IsSlidingOfWall)
         {
-            m_lastHorizontalVelocityDirection = -Mathf.Sign(m_targetHorizontalVelocity);
+            m_lastHorizontalVelocityDirection = -Mathf.Sign(TargetHorizontalVelocity);
         }
 
         // Reset the target horizontal velocity here, because the fixed update might be called first before the next update
-        m_targetHorizontalVelocity = .0f;
+        TargetHorizontalVelocity = .0f;
     }
 
     private bool HorizontalControlDelayed()
@@ -580,7 +580,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     private void Dash()
     {
         Velocity = new Vector2(Velocity.x, .0f);
-        m_targetHorizontalVelocity = m_spriteRenderer.flipX ? -m_dashSpeed : m_dashSpeed;
+        TargetHorizontalVelocity = m_spriteRenderer.flipX ? -m_dashSpeed : m_dashSpeed;
 
         // Reset ground normal because it is use for the movement along ground
         // If it's not reset, it could cause the player to move in a strange direction 
@@ -606,7 +606,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         StartCoroutine(m_dashWindowCoroutine);
 
         // Tell subscribers that the dash was used
-        foreach (IPlatformerMovementSubscriber subscriber in m_subscribers)
+        foreach (IPlatformerMovementSubscriber subscriber in Subscribers)
         {
             subscriber.NotifyDashUsed();
         }
@@ -630,7 +630,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         m_dashWindowCoroutine = null;
 
         // Update the gravity modifier
-        CurrentGravityModifier = m_gravityModifier;
+        CurrentGravityModifier = GravityModifier;
         
         m_dashCooldownCoroutine = DashCooldown();
         StartCoroutine(m_dashCooldownCoroutine);
@@ -656,7 +656,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
             elapsedTime += (Time.time - lastUpdateTime); 
 
             // Tell subscribers that the dash cooldown was updated
-            foreach (IPlatformerMovementSubscriber subscriber in m_subscribers)
+            foreach (IPlatformerMovementSubscriber subscriber in Subscribers)
             {
                 subscriber.NotifyDashCooldownUpdated(Mathf.Clamp01(elapsedTime / m_dashCooldown));
             }
@@ -665,7 +665,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         m_dashCooldownCoroutine = null;
 
         // Tell subscribers that the dash cooldown is over
-        foreach (IPlatformerMovementSubscriber subscriber in m_subscribers)
+        foreach (IPlatformerMovementSubscriber subscriber in Subscribers)
         {
             subscriber.NotifyDashCooldownOver();
         }

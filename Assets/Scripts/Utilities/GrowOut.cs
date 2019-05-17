@@ -4,21 +4,21 @@ public class GrowOut : MonoBehaviour
 {
     [Header("Pulsation")]
     [SerializeField]
-    private float m_minScale = 0.1f;
+    private float _minScale = 0.1f;
     [SerializeField]
-    private float m_maxScale = 1.0f;
-    private float m_scaleDiff;
+    private float _maxScale = 1.0f;
+    private float _scaleDiff;
     [SerializeField]
-    private float m_growDuration = 0.2f;
+    private float _growDuration = 0.2f;
     [SerializeField]
-    private AnimationCurve m_pgrowOutMovement;
+    private AnimationCurve _pgrowOutMovement;
 
-    private bool m_growing = false;
-    private float m_startTime;
+    private bool _growing = false;
+    private float _startTime;
 
     private void Awake()
     {
-        m_scaleDiff = m_maxScale - m_minScale;
+        _scaleDiff = _maxScale - _minScale;
     }
 
     private void Start()
@@ -28,17 +28,17 @@ public class GrowOut : MonoBehaviour
 
     private void Update()
     {
-        if (m_growing)
+        if (_growing)
         {
-            float progress = (Time.time - m_startTime) / m_growDuration;
+            float progress = (Time.time - _startTime) / _growDuration;
 
             if (progress > 1.0f)
             {
                 progress = 1.0f;
-                m_growing = false;
+                _growing = false;
             }
 
-            float scale = m_minScale + m_pgrowOutMovement.Evaluate(progress) * m_scaleDiff;
+            float scale = _minScale + _pgrowOutMovement.Evaluate(progress) * _scaleDiff;
             transform.localScale = new Vector3(scale, scale, 1.0f);
         }
     }
@@ -47,12 +47,12 @@ public class GrowOut : MonoBehaviour
     {
         ResetScale();
 
-        m_startTime = Time.time;
-        m_growing = true;
+        _startTime = Time.time;
+        _growing = true;
     }
 
     private void ResetScale()
     {
-        transform.localScale = new Vector3(m_minScale, m_minScale, 1.0f);
+        transform.localScale = new Vector3(_minScale, _minScale, 1.0f);
     }
 }

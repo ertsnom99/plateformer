@@ -22,17 +22,17 @@ public class Health : MonoSubscribable<IHealthSubscriber>, IDamageable, IHealabl
 {
     [Header("Health")]
     [SerializeField]
-    private int m_maxHealth = 100;
+    private int _maxHealth = 100;
     public int MaxHealth
     {
-        get { return m_maxHealth; }
-        private set { m_maxHealth = value; }
+        get { return _maxHealth; }
+        private set { _maxHealth = value; }
     }
 
     public int HealthPoint { get; protected set; }
 
-    private float m_invulnerabilityDuration;
-    private float m_invulnerabilityStartTime;
+    private float _invulnerabilityDuration;
+    private float _invulnerabilityStartTime;
 
     public bool IsInvulnerability { get; private set; }
 
@@ -45,7 +45,7 @@ public class Health : MonoSubscribable<IHealthSubscriber>, IDamageable, IHealabl
     protected virtual void Update()
     {
         // Update invulnerability
-        if (IsInvulnerability && (Time.time - m_invulnerabilityStartTime) > m_invulnerabilityDuration)
+        if (IsInvulnerability && (Time.time - _invulnerabilityStartTime) > _invulnerabilityDuration)
         {
             IsInvulnerability = false;
         }
@@ -55,8 +55,8 @@ public class Health : MonoSubscribable<IHealthSubscriber>, IDamageable, IHealabl
     {
         IsInvulnerability = true;
 
-        m_invulnerabilityStartTime = Time.time;
-        m_invulnerabilityDuration = duration;
+        _invulnerabilityStartTime = Time.time;
+        _invulnerabilityDuration = duration;
     }
 
     public void StopInvulnerability()
@@ -73,7 +73,7 @@ public class Health : MonoSubscribable<IHealthSubscriber>, IDamageable, IHealabl
     // Methods of the IDamageable interface
     public virtual void Damage(int damage)
     {
-        foreach (IHealthSubscriber subscriber in m_subscribers)
+        foreach (IHealthSubscriber subscriber in Subscribers)
         {
             subscriber.NotifyDamageApplied(this, damage);
         }
@@ -89,7 +89,7 @@ public class Health : MonoSubscribable<IHealthSubscriber>, IDamageable, IHealabl
                 OnHealthDepleted();
             }
 
-            foreach (IHealthSubscriber subscriber in m_subscribers)
+            foreach (IHealthSubscriber subscriber in Subscribers)
             {
                 subscriber.NotifyHealthChange(this, HealthPoint);
 
@@ -108,7 +108,7 @@ public class Health : MonoSubscribable<IHealthSubscriber>, IDamageable, IHealabl
 
         OnHealed();
 
-        foreach (IHealthSubscriber subscriber in m_subscribers)
+        foreach (IHealthSubscriber subscriber in Subscribers)
         {
             subscriber.NotifyHealthChange(this, HealthPoint);
         }

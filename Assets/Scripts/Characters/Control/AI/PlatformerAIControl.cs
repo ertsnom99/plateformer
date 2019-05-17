@@ -10,28 +10,28 @@ public enum PathLinkType
 
 public struct PathLink
 {
-    public Vector2 start;
-    public Vector2 end;
-    public Vector2 link;
-    public PathLinkType type;
+    public Vector2 Start;
+    public Vector2 End;
+    public Vector2 Link;
+    public PathLinkType Type;
 
     public PathLink(Vector2 pStart, Vector2 pEnd, float minHeightForVerticalMovement)
     {
-        start = pStart;
-        end = pEnd;
-        link = end - start;
+        Start = pStart;
+        End = pEnd;
+        Link = End - Start;
 
-        if (link.y >= minHeightForVerticalMovement)
+        if (Link.y >= minHeightForVerticalMovement)
         {
-            type = PathLinkType.Jump;
+            Type = PathLinkType.Jump;
         }
-        else if (link.y <= -minHeightForVerticalMovement)
+        else if (Link.y <= -minHeightForVerticalMovement)
         {
-            type = PathLinkType.DropDown;
+            Type = PathLinkType.DropDown;
         }
         else
         {
-            type = PathLinkType.Walk;
+            Type = PathLinkType.Walk;
         }
     }
 }
@@ -43,36 +43,36 @@ public struct PathLink
 public class PlatformerAIControl : AIControl
 {
     [SerializeField]
-    private bool m_logPathFailedError = false;
+    private bool _logPathFailedError = false;
 
     [Header("Vertical Movement")]
     [SerializeField]
-    private bool m_canJump = true;
+    private bool _canJump = true;
     [SerializeField]
-    private float m_minHeightForVerticalMovement = 0.4f;
+    private float _minHeightForVerticalMovement = 1.0f;
     [SerializeField]
-    private float m_minDropDownWidthToJump = 2.0f;
+    private float _minDropDownWidthToJump = 3.0f;
     [SerializeField]
-    private float m_minHeightToReleaseJump = 0.1f;
-    private bool m_jumpInputDown = false;
+    private float _minHeightToReleaseJump = 0.9f;
+    private bool _jumpInputDown = false;
 
-    private PathLink m_currentPathLink;
-    private bool m_verticalMovementinProgress = false;
-    private bool m_delayedMovementProgressCheck = false;
-    private float m_horizontalInputForVerticalMovement = .0f;
+    private PathLink _currentPathLink;
+    private bool _verticalMovementinProgress = false;
+    private bool _delayedMovementProgressCheck = false;
+    private float _horizontalInputForVerticalMovement = .0f;
 
-    private PlatformerMovement m_movementScript;
+    private PlatformerMovement _movementScript;
 
-    private const float JumpHorizontalMovementModifier = 1.2f;
-    private const float DropDownHorizontalMovementModifier = 1.0f;
-    private const float PathFixByAngleThreshold = .1f;
-    private const float MinDistanceToMoveDuringVerticalMovement = 0.4f;
+    private const float _jumpHorizontalMovementModifier = 1.2f;
+    private const float _dropDownHorizontalMovementModifier = 1.0f;
+    private const float _pathFixByAngleThreshold = .1f;
+    private const float _minDistanceToMoveDuringVerticalMovement = 0.4f;
 
     protected override void Awake()
     {
         base.Awake();
 
-        m_movementScript = GetComponent<PlatformerMovement>();
+        _movementScript = GetComponent<PlatformerMovement>();
     }
 
     // Called when a new path is created
@@ -80,29 +80,29 @@ public class PlatformerAIControl : AIControl
     {
         if (path.error)
         {
-            if (m_logPathFailedError)
+            if (_logPathFailedError)
             {
                 Debug.LogError("The path failed! " + gameObject.name);
             }
         }
         else
         {
-            m_path = path;
+            Path = path;
             
             // Fix the path has long has it needs to be
-            while (m_path.vectorPath.Count >= 3 && PathNeedsFix())
+            while (Path.vectorPath.Count >= 3 && PathNeedsFix())
             {
-                m_path.vectorPath.RemoveAt(1);
+                Path.vectorPath.RemoveAt(1);
                 Debug.Log(Time.frameCount + " Fixed");
             }
 
             // Normally, the first point of the path SHOULD be extremely close to the position of the AI,
             // therefore it already reached the first waypoint which mean we can skip waypoint 0
-            m_targetWaypoint = 1;
+            TargetWaypoint = 1;
 
             // Create the path link
-            PathLink previousPathLink = m_currentPathLink;
-            m_currentPathLink = new PathLink(m_path.vectorPath[m_targetWaypoint - 1], m_path.vectorPath[m_targetWaypoint], m_minHeightForVerticalMovement);
+            PathLink previousPathLink = _currentPathLink;
+            _currentPathLink = new PathLink(Path.vectorPath[TargetWaypoint - 1], Path.vectorPath[TargetWaypoint], _minHeightForVerticalMovement);
 
             // Apply some adjustment needed to certain variables base on how the current path link and those variable were before the path was updated
             // For exemples:
@@ -110,62 +110,62 @@ public class PlatformerAIControl : AIControl
             // -Was a jump link, but suddenly became a drop down link
 
             // If the vertical movement didn't start and it is needed to reach the current waypoint
-            if (!m_verticalMovementinProgress && m_currentPathLink.type != PathLinkType.Walk)
+            if (!_verticalMovementinProgress && _currentPathLink.Type != PathLinkType.Walk)
             {
-                m_horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
-                m_verticalMovementinProgress = true;
-                m_delayedMovementProgressCheck = m_currentPathLink.type == PathLinkType.Jump || m_movementScript.IsGrounded;
+                _horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
+                _verticalMovementinProgress = true;
+                _delayedMovementProgressCheck = _currentPathLink.Type == PathLinkType.Jump || _movementScript.IsGrounded;
             }
-            else if (!m_verticalMovementinProgress && m_currentPathLink.type == PathLinkType.Walk)
+            else if (!_verticalMovementinProgress && _currentPathLink.Type == PathLinkType.Walk)
             {
-                m_delayedMovementProgressCheck = false;
+                _delayedMovementProgressCheck = false;
             }
             // If the vertical movement did start, check if the PathLinkType might need to be adjust
-            else if (m_verticalMovementinProgress && m_currentPathLink.link.y > .0f)
+            else if (_verticalMovementinProgress && _currentPathLink.Link.y > .0f)
             {
-                if (m_currentPathLink.type != PathLinkType.Jump)
+                if (_currentPathLink.Type != PathLinkType.Jump)
                 {
-                    m_currentPathLink.type = PathLinkType.Jump;
+                    _currentPathLink.Type = PathLinkType.Jump;
                 }
 
                 // Check if the PathLinkType pass from a drop down to a jump
-                if (previousPathLink.type == PathLinkType.DropDown)
+                if (previousPathLink.Type == PathLinkType.DropDown)
                 {
                     // TODO: Addapt calculation
-                    m_horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
-                    m_delayedMovementProgressCheck = true;
+                    _horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
+                    _delayedMovementProgressCheck = true;
                 }
             }
-            else if (m_verticalMovementinProgress && m_currentPathLink.link.y < .0f)
+            else if (_verticalMovementinProgress && _currentPathLink.Link.y < .0f)
             {
-                if (m_currentPathLink.type != PathLinkType.DropDown)
+                if (_currentPathLink.Type != PathLinkType.DropDown)
                 {
-                    m_currentPathLink.type = PathLinkType.DropDown;
+                    _currentPathLink.Type = PathLinkType.DropDown;
                 }
 
                 // Check if the PathLinkType pass from a jump to a drop down
-                if (previousPathLink.type == PathLinkType.Jump)
+                if (previousPathLink.Type == PathLinkType.Jump)
                 {
-                    m_horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
-                    m_delayedMovementProgressCheck = m_movementScript.IsGrounded;
+                    _horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
+                    _delayedMovementProgressCheck = _movementScript.IsGrounded;
                 }
             }
             // If the vertical movement did start, the path was updated at the same moment the AI touch the ground and the current path link is of a walk type
-            else if (m_verticalMovementinProgress && m_movementScript.IsGrounded)
+            else if (_verticalMovementinProgress && _movementScript.IsGrounded)
             {
-                m_verticalMovementinProgress = false;
-                m_delayedMovementProgressCheck = false;
+                _verticalMovementinProgress = false;
+                _delayedMovementProgressCheck = false;
             }
         }
     }
 
     private bool PathNeedsFix()
     {
-        Vector2 secondToFirstWaypoint = m_path.vectorPath[0] - m_path.vectorPath[1];
-        Vector2 secondToThirdWaypoint = m_path.vectorPath[2] - m_path.vectorPath[1];
+        Vector2 secondToFirstWaypoint = Path.vectorPath[0] - Path.vectorPath[1];
+        Vector2 secondToThirdWaypoint = Path.vectorPath[2] - Path.vectorPath[1];
 
         // Check if both vectors are along the exact same line and in the same direction
-        return Vector2.Angle(secondToFirstWaypoint, secondToThirdWaypoint) <= PathFixByAngleThreshold;
+        return Vector2.Angle(secondToFirstWaypoint, secondToThirdWaypoint) <= _pathFixByAngleThreshold;
     }
 
     protected override void Update()
@@ -176,51 +176,51 @@ public class PlatformerAIControl : AIControl
         if (Time.deltaTime > .0f)
         {
             // Wait for the delay to end, before checking if the vertical movement is in progress 
-            if (m_delayedMovementProgressCheck && !m_movementScript.IsGrounded && ((m_currentPathLink.link.y < .0f && m_movementScript.Velocity.y < .0f) || (m_currentPathLink.link.y > .0f && m_movementScript.Velocity.y > .0f)))
+            if (_delayedMovementProgressCheck && !_movementScript.IsGrounded && ((_currentPathLink.Link.y < .0f && _movementScript.Velocity.y < .0f) || (_currentPathLink.Link.y > .0f && _movementScript.Velocity.y > .0f)))
             {
-                m_delayedMovementProgressCheck = false;
+                _delayedMovementProgressCheck = false;
             }
-            else if (!m_delayedMovementProgressCheck && m_verticalMovementinProgress && m_movementScript.IsGrounded)
+            else if (!_delayedMovementProgressCheck && _verticalMovementinProgress && _movementScript.IsGrounded)
             {
-                m_verticalMovementinProgress = false;
+                _verticalMovementinProgress = false;
             }
 
             // The horizontal velocity might need to be adjusted
-            if (m_movementScript.IsGrounded && Mathf.Sign(m_horizontalInputForVerticalMovement) != Mathf.Sign(m_currentPathLink.link.x))
+            if (_movementScript.IsGrounded && Mathf.Sign(_horizontalInputForVerticalMovement) != Mathf.Sign(_currentPathLink.Link.x))
             {
-                m_horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
+                _horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
             }
 
-            if (ControlsCharacter() && HasDetectedTarget && m_path != null)
+            if (ControlsCharacter() && HasDetectedTarget && Path != null)
             {
-                Inputs inputs = noControlInputs;
+                Inputs inputs = NoControlInputs;
 
-                bool isWaypointReached = m_targetWaypoint >= m_path.vectorPath.Count;
-                float distanceToTarget = Vector3.Distance(transform.position, m_target.position);
+                bool isWaypointReached = TargetWaypoint >= Path.vectorPath.Count;
+                float distanceToTarget = Vector3.Distance(transform.position, Target.position);
 
                 // Check if the AI hasn't reach either the target or the last waypoint
-                if ((!m_stopWhenUnreachable || IsTargetReachable()) && !isWaypointReached && distanceToTarget > m_stopDistanceToTarget)
+                if ((!StopWhenUnreachable || IsTargetReachable()) && !isWaypointReached && distanceToTarget > StopDistanceToTarget)
                 {
-                    Vector2 positionToTargetWaypoint = m_path.vectorPath[m_targetWaypoint] - transform.position;
+                    Vector2 positionToTargetWaypoint = Path.vectorPath[TargetWaypoint] - transform.position;
 
                     // Update the target waypoint while the last one hasn't been reached and the current one has been past
                     while (!isWaypointReached && (IsJumpOrDropDownLinkOver() || IsWalkLinkOver(positionToTargetWaypoint)))
                     {
-                        m_targetWaypoint++;
+                        TargetWaypoint++;
 
-                        isWaypointReached = m_targetWaypoint >= m_path.vectorPath.Count;
+                        isWaypointReached = TargetWaypoint >= Path.vectorPath.Count;
 
                         if (!isWaypointReached)
                         {
-                            m_currentPathLink = new PathLink(m_path.vectorPath[m_targetWaypoint - 1], m_path.vectorPath[m_targetWaypoint], m_minHeightForVerticalMovement);
-                            positionToTargetWaypoint = m_path.vectorPath[m_targetWaypoint] - transform.position;
+                            _currentPathLink = new PathLink(Path.vectorPath[TargetWaypoint - 1], Path.vectorPath[TargetWaypoint], _minHeightForVerticalMovement);
+                            positionToTargetWaypoint = Path.vectorPath[TargetWaypoint] - transform.position;
 
                             // If a vertical movement is needed to reach the current waypoint, the horizontal input can be calculated immediatly
-                            if (m_currentPathLink.type != PathLinkType.Walk)
+                            if (_currentPathLink.Type != PathLinkType.Walk)
                             {
-                                m_horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
-                                m_verticalMovementinProgress = true;
-                                m_delayedMovementProgressCheck = m_currentPathLink.type == PathLinkType.Jump || m_movementScript.IsGrounded;
+                                _horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
+                                _verticalMovementinProgress = true;
+                                _delayedMovementProgressCheck = _currentPathLink.Type == PathLinkType.Jump || _movementScript.IsGrounded;
                             }
                         }
                     }
@@ -240,12 +240,12 @@ public class PlatformerAIControl : AIControl
 
     private bool IsWalkLinkOver(Vector2 positionToTargetWaypoint)
     {
-        return m_currentPathLink.type == PathLinkType.Walk && (Vector2.Angle(m_currentPathLink.link, positionToTargetWaypoint) >= 90.0f || positionToTargetWaypoint.magnitude <= m_minDistanceToChangeWaypoint);
+        return _currentPathLink.Type == PathLinkType.Walk && (Vector2.Angle(_currentPathLink.Link, positionToTargetWaypoint) >= 90.0f || positionToTargetWaypoint.magnitude <= MinDistanceToChangeWaypoint);
     }
 
     private bool IsJumpOrDropDownLinkOver()
     {
-        return (m_currentPathLink.type == PathLinkType.DropDown || m_currentPathLink.type == PathLinkType.Jump) && !m_verticalMovementinProgress;
+        return (_currentPathLink.Type == PathLinkType.DropDown || _currentPathLink.Type == PathLinkType.Jump) && !_verticalMovementinProgress;
     }
 
     // Calculate how much time will be needed to complete the horizontal movement
@@ -257,57 +257,57 @@ public class PlatformerAIControl : AIControl
         float horizontalMovementModifier;
 
         // Use different values based on vertical movement direction
-        if (m_currentPathLink.link.y >= .0f)
+        if (_currentPathLink.Link.y >= .0f)
         {
-            initialVelocity = m_movementScript.JumpTakeOffSpeed;
-            gravityUsed = m_movementScript.CurrentGravityModifier * Physics2D.gravity.y;
-            horizontalMovementModifier = JumpHorizontalMovementModifier;
+            initialVelocity = _movementScript.JumpTakeOffSpeed;
+            gravityUsed = _movementScript.CurrentGravityModifier * Physics2D.gravity.y;
+            horizontalMovementModifier = _jumpHorizontalMovementModifier;
         }
         else
         {
             initialVelocity = .0f;
-            gravityUsed = Mathf.Abs(m_movementScript.CurrentGravityModifier * Physics2D.gravity.y);
-            horizontalMovementModifier = DropDownHorizontalMovementModifier;
+            gravityUsed = Mathf.Abs(_movementScript.CurrentGravityModifier * Physics2D.gravity.y);
+            horizontalMovementModifier = _dropDownHorizontalMovementModifier;
         }
 
-        float verticalMovement = Mathf.Abs(m_currentPathLink.link.y);
+        float verticalMovement = Mathf.Abs(_currentPathLink.Link.y);
         float predictedTimeToReach = (Mathf.Sqrt(Mathf.Pow(initialVelocity, 2) + 2.0f * gravityUsed * verticalMovement) - initialVelocity) / gravityUsed;
         
         // Calculate how much distance/sec is need to cover the horizontal part of the movement
-        float distanceBySecond = (m_currentPathLink.link.x * horizontalMovementModifier) / predictedTimeToReach;
+        float distanceBySecond = (_currentPathLink.Link.x * horizontalMovementModifier) / predictedTimeToReach;
 
         // Calculate how much of the horizontal speed is necessary and save it for later use
-        return Mathf.Clamp(distanceBySecond / m_movementScript.MaxSpeed, -1.0f, 1.0f);
+        return Mathf.Clamp(distanceBySecond / _movementScript.MaxSpeed, -1.0f, 1.0f);
     }
 
     protected override Inputs CreateInputs()
     {
-        Inputs inputs = noControlInputs;
+        Inputs inputs = NoControlInputs;
 
-        Vector3 positionToTargetWaypoint = m_path.vectorPath[m_targetWaypoint] - transform.position;
+        Vector3 positionToTargetWaypoint = Path.vectorPath[TargetWaypoint] - transform.position;
 
         // Check jump inputs
-        bool jumpNeededToReachNextWaypoint = m_currentPathLink.type == PathLinkType.Jump || (m_currentPathLink.type == PathLinkType.DropDown && Mathf.Abs(m_currentPathLink.link.x) >= m_minDropDownWidthToJump);
-        bool jump = m_canJump && !m_jumpInputDown && jumpNeededToReachNextWaypoint && m_movementScript.IsGrounded;
-        bool releaseJump = m_jumpInputDown && (positionToTargetWaypoint.y <= -m_minHeightToReleaseJump || m_movementScript.Velocity.y < .0f);
+        bool jumpNeededToReachNextWaypoint = _currentPathLink.Type == PathLinkType.Jump || (_currentPathLink.Type == PathLinkType.DropDown && Mathf.Abs(_currentPathLink.Link.x) >= _minDropDownWidthToJump);
+        bool jump = _canJump && !_jumpInputDown && jumpNeededToReachNextWaypoint && _movementScript.IsGrounded;
+        bool releaseJump = _jumpInputDown && (positionToTargetWaypoint.y <= -_minHeightToReleaseJump || _movementScript.Velocity.y < .0f);
 
         if (jump)
         {
-            m_jumpInputDown = true;
+            _jumpInputDown = true;
         }
         else if (releaseJump)
         {
-            m_jumpInputDown = false;
+            _jumpInputDown = false;
         }
 
         // The horizontal input must be calculate differently during a horizontal movement (before releasing the jump input in the case of a jump)
         float horizontalInput;
         
-        if (m_verticalMovementinProgress)
+        if (_verticalMovementinProgress)
         {
-            if (Mathf.Sign(positionToTargetWaypoint.x) == Mathf.Sign(m_horizontalInputForVerticalMovement) || Mathf.Abs(positionToTargetWaypoint.x) <= MinDistanceToMoveDuringVerticalMovement)
+            if (Mathf.Sign(positionToTargetWaypoint.x) == Mathf.Sign(_horizontalInputForVerticalMovement) || Mathf.Abs(positionToTargetWaypoint.x) <= _minDistanceToMoveDuringVerticalMovement)
             {
-                horizontalInput = m_horizontalInputForVerticalMovement;
+                horizontalInput = _horizontalInputForVerticalMovement;
             }
             else
             {
@@ -321,9 +321,9 @@ public class PlatformerAIControl : AIControl
 
         // Inputs from the controler
         //inputs.vertical = Input.GetAxisRaw("Vertical");
-        inputs.horizontal = horizontalInput;
-        inputs.jump = jump;
-        inputs.releaseJump = releaseJump;
+        inputs.Horizontal = horizontalInput;
+        inputs.Jump = jump;
+        inputs.ReleaseJump = releaseJump;
         //inputs.dash = Input.GetButtonDown("Dash");
         //inputs.releaseDash = Input.GetButtonUp("Dash");
 
@@ -332,6 +332,6 @@ public class PlatformerAIControl : AIControl
 
     protected override void UpdateMovement(Inputs inputs)
     {
-        m_movementScript.SetInputs(inputs);
+        _movementScript.SetInputs(inputs);
     }
 }

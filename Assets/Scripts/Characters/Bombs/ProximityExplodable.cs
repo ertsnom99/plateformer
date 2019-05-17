@@ -11,62 +11,62 @@ public class ProximityExplodable : MonoSubscribable<IProximityExplodableSubscrib
 {
     [Header("Countdown")]
     [SerializeField]
-    private Transform m_target;
+    private Transform _target;
     [SerializeField]
-    private float m_distanceToCountdown = 2.0f;
+    private float _distanceToCountdown = 6.0f;
     [SerializeField]
-    private Vector3 m_distanceOffset = Vector3.zero;
+    private Vector3 _distanceOffset = Vector3.zero;
     [SerializeField]
-    private float m_countdownTime = 5.0f;
+    private float _countdownTime = 3.0f;
 
-    private bool m_countdownStarted = false;
-    private float m_timeRemaining;
+    private bool _countdownStarted = false;
+    private float _timeRemaining;
 
     [Header("Damage")]
     [SerializeField]
-    private LayerMask m_damagedLayers;
+    private LayerMask _damagedLayers;
     [SerializeField]
-    private float m_explosionRange = 1.7f;
+    private float _explosionRange = 1.7f;
     [SerializeField]
-    private int m_damage = 10;
+    private int _damage = 10;
 
     [Header("Explosion")]
     [SerializeField]
-    private GameObject m_explosionEffect;
+    private GameObject _explosionEffect;
     [SerializeField]
-    private Transform m_explosionPosition;
+    private Transform _explosionPosition;
 
     [Header("Knock Back")]
     [SerializeField]
-    private Vector3 m_knockBackDirection = new Vector3 (1.0f, 1.0f, .0f);
+    private Vector3 _knockBackDirection = new Vector3 (1.0f, 1.0f, .0f);
     [SerializeField]
-    private float m_knockBackStrength = 12.0f;
+    private float _knockBackStrength = 12.0f;
     [SerializeField]
-    private float m_knockBackDuration = .3f;
+    private float _knockBackDuration = .3f;
 
     [Header("Debug")]
     [SerializeField]
-    private bool m_drawDistanceToCountdown = false;
+    private bool _drawDistanceToCountdown = false;
     [SerializeField]
-    private bool m_drawExplosionRange = false;
+    private bool _drawExplosionRange = false;
 
     private void Update()
     {
         // Check if in countdown
-        if (m_countdownStarted)
+        if (_countdownStarted)
         {
-            m_timeRemaining -= Time.deltaTime;
+            _timeRemaining -= Time.deltaTime;
 
-            foreach (IProximityExplodableSubscriber subscriber in m_subscribers)
+            foreach (IProximityExplodableSubscriber subscriber in Subscribers)
             {
-                subscriber.NotifyCountdownUpdated(gameObject, m_timeRemaining);
+                subscriber.NotifyCountdownUpdated(gameObject, _timeRemaining);
             }
 
             // When countdown ends
-            if (m_timeRemaining <= .0f)
+            if (_timeRemaining <= .0f)
             {
                 // Notify the subscriber before destroying the gameobject, because it would send a null gameonject if it was destroy first
-                foreach (IProximityExplodableSubscriber subscriber in m_subscribers)
+                foreach (IProximityExplodableSubscriber subscriber in Subscribers)
                 {
                     subscriber.NotifyCountdownFinished(gameObject);
                 }
@@ -77,22 +77,22 @@ public class ProximityExplodable : MonoSubscribable<IProximityExplodableSubscrib
                 Destroy(gameObject);
 
                 // Show explosion effect
-                Instantiate(m_explosionEffect, m_explosionPosition.position, Quaternion.identity);
+                Instantiate(_explosionEffect, _explosionPosition.position, Quaternion.identity);
             }
         }
         else
         {
-            float distanceToTarget = ((m_target.position - transform.position) + m_distanceOffset).magnitude;
+            float distanceToTarget = ((_target.position - transform.position) + _distanceOffset).magnitude;
 
             // Check if close enough to trigger countdown
-            if (distanceToTarget <= m_distanceToCountdown)
+            if (distanceToTarget <= _distanceToCountdown)
             {
-                m_timeRemaining = m_countdownTime;
-                m_countdownStarted = true;
+                _timeRemaining = _countdownTime;
+                _countdownStarted = true;
 
-                foreach (IProximityExplodableSubscriber subscriber in m_subscribers)
+                foreach (IProximityExplodableSubscriber subscriber in Subscribers)
                 {
-                    subscriber.NotifyCountdownStarted(gameObject, m_timeRemaining);
+                    subscriber.NotifyCountdownStarted(gameObject, _timeRemaining);
                 }
             }
         }
@@ -100,21 +100,21 @@ public class ProximityExplodable : MonoSubscribable<IProximityExplodableSubscrib
 
     private void DamageInRange()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position + m_distanceOffset, m_explosionRange, m_damagedLayers);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position + _distanceOffset, _explosionRange, _damagedLayers);
 
         foreach (Collider2D collider in colliders)
         {
             // Deal damage
             IDamageable health = collider.GetComponent<IDamageable>();
-            health.Damage(m_damage);
+            health.Damage(_damage);
 
             switch (collider.tag)
             {
                 case GameManager.PlayerTag:
                     // Knock back
-                    float horizontalDirection = Mathf.Sign((collider.bounds.center - m_explosionPosition.position).x);
-                    Vector2 knockBackForce = new Vector2(horizontalDirection * Mathf.Abs(m_knockBackDirection.x), Mathf.Abs(m_knockBackDirection.y)).normalized * m_knockBackStrength;
-                    collider.GetComponent<PlatformerMovement>().KnockBack(knockBackForce, m_knockBackDuration);
+                    float horizontalDirection = Mathf.Sign((collider.bounds.center - _explosionPosition.position).x);
+                    Vector2 knockBackForce = new Vector2(horizontalDirection * Mathf.Abs(_knockBackDirection.x), Mathf.Abs(_knockBackDirection.y)).normalized * _knockBackStrength;
+                    collider.GetComponent<PlatformerMovement>().KnockBack(knockBackForce, _knockBackDuration);
                     break;
             }
         }
@@ -122,21 +122,21 @@ public class ProximityExplodable : MonoSubscribable<IProximityExplodableSubscrib
 
     public void SetTarget(Transform target)
     {
-        m_target = target;
+        _target = target;
     }
 
     private void OnDrawGizmosSelected()
     {
-        if (m_drawDistanceToCountdown)
+        if (_drawDistanceToCountdown)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawSphere(transform.position + m_distanceOffset, m_distanceToCountdown);
+            Gizmos.DrawSphere(transform.position + _distanceOffset, _distanceToCountdown);
         }
 
-        if (m_drawExplosionRange)
+        if (_drawExplosionRange)
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(transform.position + m_distanceOffset, m_explosionRange);
+            Gizmos.DrawSphere(transform.position + _distanceOffset, _explosionRange);
         }
     }
 }

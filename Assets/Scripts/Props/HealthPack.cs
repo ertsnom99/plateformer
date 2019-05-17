@@ -4,17 +4,17 @@ public class HealthPack : MonoBehaviour
 {
     [Header("Health")]
     [SerializeField]
-    private int m_healthGain = 100;
+    private int _healthGain = 100;
 
-    private bool m_taked = false;
+    private bool _taked = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!m_taked && collision.CompareTag(GameManager.PlayerTag))
+        if (!_taked && collision.CompareTag(GameManager.PlayerTag))
         {
-            m_taked = true;
+            _taked = true;
 
-            collision.GetComponent<Health>().Heal(m_healthGain);
+            collision.GetComponent<Health>().Heal(_healthGain);
             Destroy(gameObject);
         }
     }

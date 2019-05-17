@@ -5,15 +5,15 @@ public class HealthBar : MonoBehaviour, IHealthSubscriber
 {
     [Header("Health")]
     [SerializeField]
-    private Health m_health;
+    private Health _health;
 
-    private Slider m_healthBar;
+    private Slider _healthBar;
 
     private void Awake()
     {
-        m_healthBar = GetComponentInChildren<Slider>();
+        _healthBar = GetComponentInChildren<Slider>();
 
-        if (!m_healthBar)
+        if (!_healthBar)
         {
             Debug.LogError("No Slider component found!");
         }
@@ -21,21 +21,21 @@ public class HealthBar : MonoBehaviour, IHealthSubscriber
 
     private void Start()
     {
-        m_health.Subscribe(this);
+        _health.Subscribe(this);
     }
 
     // Methods of the IHealthSubscriber interface
     public void NotifyJustSubscribed(Health healthScript)
     {
-        m_healthBar.maxValue = healthScript.MaxHealth;
-        m_healthBar.value = healthScript.MaxHealth;
+        _healthBar.maxValue = healthScript.MaxHealth;
+        _healthBar.value = healthScript.MaxHealth;
     }
 
     public void NotifyDamageApplied(Health healthScript, int damage) { }
 
     public void NotifyHealthChange(Health healthScript, int health)
     {
-        m_healthBar.value = health;
+        _healthBar.value = health;
     }
 
     public void NotifyHealthDepleted(Health healthScript) { }

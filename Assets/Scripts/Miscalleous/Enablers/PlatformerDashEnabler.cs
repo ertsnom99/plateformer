@@ -4,18 +4,18 @@ public class PlatformerDashEnabler : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField]
-    private PlatformerMovement m_movementScript;
+    private PlatformerMovement _movementScript;
     [SerializeField]
-    private GameObject m_dashMeter;
+    private GameObject _dashMeter;
     [SerializeField]
-    private bool m_enable = true;
+    private bool _enable = true;
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag(GameManager.PlayerTag))
         {
-            m_movementScript.EnableDash(m_enable);
-            m_dashMeter.SetActive(m_enable);
+            _movementScript.EnableDash(_enable);
+            _dashMeter.SetActive(_enable);
         }
     }
 }

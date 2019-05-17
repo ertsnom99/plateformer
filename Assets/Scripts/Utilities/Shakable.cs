@@ -5,50 +5,50 @@ public class Shakable : MonoBehaviour
 {
     [Header("Shake Settings")]
     [SerializeField]
-    private float m_duration = 0.2f;
+    private float _duration = 0.2f;
     [SerializeField]
-    private float m_frequence = 0.01f;
+    private float _frequence = 0.01f;
     [SerializeField]
-    private float m_strength = 0.8f;
+    private float _strength = 0.8f;
     [SerializeField]
-    private float m_angle = -4.0f;
+    private float _angle = -4.0f;
     [SerializeField]
-    private bool m_useRotation = true;
+    private bool _useRotation = true;
     [SerializeField]
-    private Vector3 m_usedRotationAxis = new Vector3(1, 0, 1);
+    private Vector3 _usedRotationAxis = new Vector3(1, 0, 1);
 
-    private Vector3 m_initPos;
-    private float m_remainingDuration = 0.0f;
-    private Vector3 m_direction = new Vector3(0, 0, 0);
-    private Vector3 m_axis = new Vector3(0, 0, 0);
+    private Vector3 _initPos;
+    private float _remainingDuration = 0.0f;
+    private Vector3 _direction = new Vector3(0, 0, 0);
+    private Vector3 _axis = new Vector3(0, 0, 0);
 
     protected virtual void Awake()
     {
-        m_initPos = transform.localPosition;
+        _initPos = transform.localPosition;
     }
 
     protected virtual void Update()
     {
-        if (m_remainingDuration > 0)
+        if (_remainingDuration > 0)
         {
-            float shakeProgress = m_remainingDuration / m_duration;
+            float shakeProgress = _remainingDuration / _duration;
 
-            transform.localPosition = m_initPos + new Vector3(m_direction.x, m_direction.y, 0);
+            transform.localPosition = _initPos + new Vector3(_direction.x, _direction.y, 0);
 
-            if (m_useRotation)
+            if (_useRotation)
             {
-                transform.localEulerAngles = m_axis * m_angle * shakeProgress;
+                transform.localEulerAngles = _axis * _angle * shakeProgress;
             }
 
-            m_remainingDuration -= Time.deltaTime;
+            _remainingDuration -= Time.deltaTime;
 
-            if (m_remainingDuration < 0.0f)
+            if (_remainingDuration < 0.0f)
             {
-                m_remainingDuration = 0.0f;
+                _remainingDuration = 0.0f;
 
-                transform.localPosition = m_initPos;
+                transform.localPosition = _initPos;
 
-                if (m_useRotation)
+                if (_useRotation)
                 {
                     transform.localEulerAngles = Vector3.zero;
                 }
@@ -60,9 +60,9 @@ public class Shakable : MonoBehaviour
 
     public void Shake()
     {
-        m_remainingDuration = m_duration;
-        m_direction = GenerateShakeDirection();
-        m_axis = GenerateShakeAxis();
+        _remainingDuration = _duration;
+        _direction = GenerateShakeDirection();
+        _axis = GenerateShakeAxis();
         
         StartCoroutine(UpdateShakePos());
     }
@@ -71,20 +71,20 @@ public class Shakable : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(m_frequence);
+            yield return new WaitForSeconds(_frequence);
 
-            m_direction = GenerateShakeDirection();
+            _direction = GenerateShakeDirection();
         }
     }
 
     private Vector3 GenerateShakeDirection()
     {
-        float shakeProgress = m_remainingDuration / m_duration;
-        return Random.insideUnitCircle * m_strength * shakeProgress;
+        float shakeProgress = _remainingDuration / _duration;
+        return Random.insideUnitCircle * _strength * shakeProgress;
     }
 
     private Vector3 GenerateShakeAxis()
     {
-        return new Vector3(Mathf.Sign(Random.Range(0, 2) - 1) * m_usedRotationAxis.x, Mathf.Sign(Random.Range(0, 2) - 1) * m_usedRotationAxis.y, Mathf.Sign(Random.Range(0, 2) - 1) * m_usedRotationAxis.z);
+        return new Vector3(Mathf.Sign(Random.Range(0, 2) - 1) * _usedRotationAxis.x, Mathf.Sign(Random.Range(0, 2) - 1) * _usedRotationAxis.y, Mathf.Sign(Random.Range(0, 2) - 1) * _usedRotationAxis.z);
     }
 }

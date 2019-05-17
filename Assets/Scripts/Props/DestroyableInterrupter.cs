@@ -20,26 +20,26 @@ public class DestroyableInterrupter : MonoSubscribable<IDestroyableInterrupterSu
 {
     [Header("Break method")]
     [SerializeField]
-    private WayToBreak m_wayToDamage;
+    private WayToBreak _wayToDamage;
 
     [Header("Ram")]
     [SerializeField]
-    private bool m_onlyPlayerCanRam = false;
+    private bool _onlyPlayerCanRam = false;
     [SerializeField]
-    private Vector2[] m_localVectorsForAngleCalculation;
+    private Vector2[] _localVectorsForAngleCalculation;
     [SerializeField]
-    private float m_maxAngleToDamage = 45.0f;
+    private float _maxAngleToDamage = 45.0f;
     [SerializeField]
-    private float m_minVelocityToDamage = 30.0f;
+    private float _minVelocityToDamage = 30.0f;
     [SerializeField]
-    private int m_damageDealtOnHit = 1;
+    private int _damageDealtOnHit = 1;
 
     public bool IsBroken { get; private set; }
 
-    private Animator m_animator;
-    private DestroyableInterrupterHealth m_health;
+    private Animator _animator;
+    private DestroyableInterrupterHealth _health;
 
-    protected int m_isDestroyedParamHashId = Animator.StringToHash(IsDestroyedParamNameString);
+    protected int IsDestroyedParamHashId = Animator.StringToHash(IsDestroyedParamNameString);
 
     public const string IsDestroyedParamNameString = "IsDestroyed";
 
@@ -47,11 +47,11 @@ public class DestroyableInterrupter : MonoSubscribable<IDestroyableInterrupterSu
     {
         IsBroken = false;
         
-        m_animator = GetComponent<Animator>();
-        m_health = GetComponent<DestroyableInterrupterHealth>();
+        _animator = GetComponent<Animator>();
+        _health = GetComponent<DestroyableInterrupterHealth>();
 
-        m_health.SetCanBeDirectlyDamage(m_wayToDamage == WayToBreak.DirectDamage || m_wayToDamage == WayToBreak.Any);
-        m_health.Subscribe(this);
+        _health.SetCanBeDirectlyDamage(_wayToDamage == WayToBreak.DirectDamage || _wayToDamage == WayToBreak.Any);
+        _health.Subscribe(this);
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -61,19 +61,19 @@ public class DestroyableInterrupter : MonoSubscribable<IDestroyableInterrupterSu
     
     private void OnImpact(Vector2 relativeVelocity, GameObject collidingGameObject)
     {
-        if (!IsBroken && (!m_onlyPlayerCanRam || collidingGameObject.CompareTag(GameManager.PlayerTag)))
+        if (!IsBroken && (!_onlyPlayerCanRam || collidingGameObject.CompareTag(GameManager.PlayerTag)))
         {
-            switch (m_wayToDamage)
+            switch (_wayToDamage)
             {
                 case WayToBreak.Ram:
 
-                    foreach(Vector2 localVectorForAngleCalculation in m_localVectorsForAngleCalculation)
+                    foreach(Vector2 localVectorForAngleCalculation in _localVectorsForAngleCalculation)
                     {
                         float angle = Vector2.Angle(transform.TransformDirection(localVectorForAngleCalculation), relativeVelocity);
 
-                        if (angle <= m_maxAngleToDamage && relativeVelocity.magnitude >= m_minVelocityToDamage)
+                        if (angle <= _maxAngleToDamage && relativeVelocity.magnitude >= _minVelocityToDamage)
                         {
-                            m_health.ForceDamage(m_damageDealtOnHit);
+                            _health.ForceDamage(_damageDealtOnHit);
                             break;
                         }
                     }
@@ -85,13 +85,13 @@ public class DestroyableInterrupter : MonoSubscribable<IDestroyableInterrupterSu
 
     private void Break()
     {
-        foreach (IDestroyableInterrupterSubscriber subscriber in m_subscribers)
+        foreach (IDestroyableInterrupterSubscriber subscriber in Subscribers)
         {
             subscriber.NotifyInterrupterDestroyed(this);
         }
 
         IsBroken = true;
-        m_animator.SetBool(m_isDestroyedParamHashId, true);
+        _animator.SetBool(IsDestroyedParamHashId, true);
     }
 
     // Methods of the IPhysicsObjectCollisionListener interface

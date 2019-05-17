@@ -4,39 +4,39 @@ using UnityEngine;
 [Serializable]
 public struct DoorAndDestroyableInterrupterLinkSetting
 {
-    public DestroyableInterrupter destroyableInterrupter;
-    public Door door;
-    public bool openState;
+    public DestroyableInterrupter DestroyableInterrupter;
+    public Door Door;
+    public bool OpenState;
 }
 
 public class DoorAndDestroyableInterrupterLink : MonoBehaviour, IDestroyableInterrupterSubscriber
 {
     [Header("Links")]
     [SerializeField]
-    private DoorAndDestroyableInterrupterLinkSetting[] m_doorsControl;
+    private DoorAndDestroyableInterrupterLinkSetting[] _doorsControl;
 
     private void Start()
     {
-        foreach (DoorAndDestroyableInterrupterLinkSetting controlSetting in m_doorsControl)
+        foreach (DoorAndDestroyableInterrupterLinkSetting controlSetting in _doorsControl)
         {
-            controlSetting.destroyableInterrupter.Subscribe(this);
+            controlSetting.DestroyableInterrupter.Subscribe(this);
         }
     }
 
     // Methods of the IBreakableInterrupterSubscriber interface
     public void NotifyInterrupterDestroyed(DestroyableInterrupter destroyableInterrupter)
     {
-        foreach (DoorAndDestroyableInterrupterLinkSetting controlSetting in m_doorsControl)
+        foreach (DoorAndDestroyableInterrupterLinkSetting controlSetting in _doorsControl)
         {
-            if (controlSetting.destroyableInterrupter == destroyableInterrupter)
+            if (controlSetting.DestroyableInterrupter == destroyableInterrupter)
             {
-                if (controlSetting.openState)
+                if (controlSetting.OpenState)
                 {
-                    controlSetting.door.Open();
+                    controlSetting.Door.Open();
                 }
                 else
                 {
-                    controlSetting.door.Close();
+                    controlSetting.Door.Close();
                 }
             }
         }

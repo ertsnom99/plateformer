@@ -13,117 +13,117 @@ public class BouncingCharacterControl : CharacterControl, IBouncingPhysicsObject
 {
     [Header("Controls")]
     [SerializeField]
-    private bool m_useKeyboard;
+    private bool _useKeyboard = false;
 
     [Header("Charge")]
     [SerializeField]
-    private float m_maxChargeTime = 5.0f;
-    private bool m_isCharging = false;
-    private float m_chargeTime = .0f;
+    private float _maxChargeTime = 5.0f;
+    private bool _isCharging = false;
+    private float _chargeTime = .0f;
 
     // TEMP
     [SerializeField]
-    private Text m_chargeText;
+    private Text _chargeText;
 
     [Header("Bounce")]
     [SerializeField]
-    private GameObject m_arrow;
+    private GameObject _arrow;
     [SerializeField]
-    private GameObject m_bounceFormPrefab;
-    private GameObject m_bounceForm;
+    private GameObject _bounceFormPrefab;
+    private GameObject _bounceForm;
     [SerializeField]
-    private CircleCollider2D m_bounceFormSpawnAreaCollider;
-    protected ContactFilter2D m_contactFilter;
+    private CircleCollider2D _bounceFormSpawnAreaCollider;
+    protected ContactFilter2D ContactFilter;
     [SerializeField]
-    private float m_minLaunchStrength = 30.0f;
+    private float _minLaunchStrength = 50.0f;
     [SerializeField]
-    private float m_maxLaunchStrength = 70.0f;
+    private float _maxLaunchStrength = 100.0f;
 
     [Header("Sound")]
     [SerializeField]
-    private AudioClip m_chargeSound;
+    private AudioClip _chargeSound;
     [SerializeField]
-    private AudioClip m_launchSound;
+    private AudioClip _launchSound;
     [SerializeField]
-    private AudioClip m_returnToNormalFormSound;
+    private AudioClip _returnToNormalFormSound;
 
     [Header("Camera")]
     [SerializeField]
-    private CinemachineVirtualCamera m_virtualCameraNormalForm;
+    private CinemachineVirtualCamera _virtualCameraNormalForm;
     [SerializeField]
-    private CinemachineVirtualCamera m_virtualCameraBounceForm;
+    private CinemachineVirtualCamera _virtualCameraBounceForm;
     
-    private SpriteRenderer m_renderer;
-    private BoxCollider2D m_collider;
-    private AudioSource m_audioSource;
-    private PlatformerMovement m_movementScript;
-    private BouncingPhysicsObject m_bouncingPhysicsObjectScript;
+    private SpriteRenderer _renderer;
+    private BoxCollider2D _collider;
+    private AudioSource _audioSource;
+    private PlatformerMovement _movementScript;
+    private BouncingPhysicsObject _bouncingPhysicsObjectScript;
 
     protected override void Awake()
     {
         base.Awake();
 
-        m_arrow.SetActive(false);
+        _arrow.SetActive(false);
 
         // Tells to use the layer settings from the Physics2D settings (the matrix)
-        m_contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
-        m_contactFilter.useLayerMask = true;
-        m_contactFilter.useTriggers = false;
+        ContactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+        ContactFilter.useLayerMask = true;
+        ContactFilter.useTriggers = false;
 
         // Get all component, correctly set them up and check that nothing is missing
-        m_renderer = GetComponent<SpriteRenderer>();
-        m_collider = GetComponent<BoxCollider2D>();
-        m_audioSource = GetComponent<AudioSource>();
-        m_movementScript = GetComponent<PlatformerMovement>();
+        _renderer = GetComponent<SpriteRenderer>();
+        _collider = GetComponent<BoxCollider2D>();
+        _audioSource = GetComponent<AudioSource>();
+        _movementScript = GetComponent<PlatformerMovement>();
 
-        if (!m_bounceFormPrefab)
+        if (!_bounceFormPrefab)
         {
             Debug.LogError("No bouncing form gameobject was set!");
         }
         else
         {
-            m_bounceForm = Instantiate(m_bounceFormPrefab);
-            m_bouncingPhysicsObjectScript = m_bounceForm.GetComponent<BouncingPhysicsObject>();
+            _bounceForm = Instantiate(_bounceFormPrefab);
+            _bouncingPhysicsObjectScript = _bounceForm.GetComponent<BouncingPhysicsObject>();
 
-            if (!m_bouncingPhysicsObjectScript)
+            if (!_bouncingPhysicsObjectScript)
             {
                 Debug.LogError("No BouncingPhysicsObject script on the bouncing form gameobject!");
             }
             else
             {
-                m_bouncingPhysicsObjectScript.Subscribe(this);
+                _bouncingPhysicsObjectScript.Subscribe(this);
             }
 
-            if (!m_virtualCameraBounceForm)
+            if (!_virtualCameraBounceForm)
             {
                 Debug.LogError("No virtual camera for during bounce was set!");
             }
             else
             {
-                m_virtualCameraBounceForm.Follow = m_bounceForm.transform;
+                _virtualCameraBounceForm.Follow = _bounceForm.transform;
             }
         }
 
-        if (!m_virtualCameraNormalForm)
+        if (!_virtualCameraNormalForm)
         {
             Debug.LogError("No virtual camera for out of bounce was set!");
         }
         else
         {
-            m_virtualCameraNormalForm.Follow = transform;
+            _virtualCameraNormalForm.Follow = transform;
         }
 
-        if (!m_bounceFormSpawnAreaCollider)
+        if (!_bounceFormSpawnAreaCollider)
         {
             Debug.LogError("No circle collider to check for enough space for bouncing form was set!");
         }
         else
         {
-            m_bounceFormSpawnAreaCollider.enabled = false;
+            _bounceFormSpawnAreaCollider.enabled = false;
         }
 
         // TEMP
-        m_chargeText.text = "";
+        _chargeText.text = "";
     }
 
     private void Start()
@@ -148,59 +148,59 @@ public class BouncingCharacterControl : CharacterControl, IBouncingPhysicsObject
                 Inputs inputs = FetchInputs();
 
                 // Check if charge started
-                if (m_movementScript.IsGrounded && !m_isCharging && inputs.heldCharge && HasEnoughSpaceForBounceForm())
+                if (_movementScript.IsGrounded && !_isCharging && inputs.HeldCharge && HasEnoughSpaceForBounceForm())
                 {
                     UpdateMovement(new Inputs());
 
-                    m_bounceFormSpawnAreaCollider.enabled = true;
-                    m_audioSource.PlayOneShot(m_chargeSound);
+                    _bounceFormSpawnAreaCollider.enabled = true;
+                    _audioSource.PlayOneShot(_chargeSound);
 
-                    m_chargeTime = .0f;
-                    m_isCharging = true;
+                    _chargeTime = .0f;
+                    _isCharging = true;
                 }
-                else if (m_isCharging && inputs.releaseCharge)
+                else if (_isCharging && inputs.ReleaseCharge)
                 {
-                    m_bounceFormSpawnAreaCollider.enabled = false;
-                    m_arrow.SetActive(false);
-                    m_audioSource.Stop();
+                    _bounceFormSpawnAreaCollider.enabled = false;
+                    _arrow.SetActive(false);
+                    _audioSource.Stop();
 
-                    m_isCharging = false;
+                    _isCharging = false;
 
                     // Only launch of a launch direction is given
-                    if (inputs.vertical != .0f || inputs.horizontal != .0f)
+                    if (inputs.Vertical != .0f || inputs.Horizontal != .0f)
                     {
                         ShowBouncingForm(true);
                         LaunchBouncingForm(inputs);
                     }
                     
                     // TEMP
-                    m_chargeText.text = "";
+                    _chargeText.text = "";
                 }
 
-                if (!m_isCharging)
+                if (!_isCharging)
                 {
                     UpdateMovement(inputs);
                 }
                 else
                 {
-                    if (inputs.vertical != .0f || inputs.horizontal != .0f)
+                    if (inputs.Vertical != .0f || inputs.Horizontal != .0f)
                     {
-                        m_arrow.SetActive(true);
+                        _arrow.SetActive(true);
 
-                        float angle = Mathf.Atan2(inputs.vertical, inputs.horizontal) * Mathf.Rad2Deg;
-                        m_arrow.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                        float angle = Mathf.Atan2(inputs.Vertical, inputs.Horizontal) * Mathf.Rad2Deg;
+                        _arrow.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                     }
                     else
                     {
-                        m_arrow.SetActive(false);
+                        _arrow.SetActive(false);
                     }
 
-                    if (m_chargeTime < m_maxChargeTime)
+                    if (_chargeTime < _maxChargeTime)
                     {
-                        m_chargeTime = Mathf.Clamp(m_chargeTime + Time.deltaTime, .0f, m_maxChargeTime);
+                        _chargeTime = Mathf.Clamp(_chargeTime + Time.deltaTime, .0f, _maxChargeTime);
 
                         // TEMP
-                        m_chargeText.text = Mathf.Lerp(m_minLaunchStrength, m_maxLaunchStrength, m_chargeTime / m_maxChargeTime).ToString();
+                        _chargeText.text = Mathf.Lerp(_minLaunchStrength, _maxLaunchStrength, _chargeTime / _maxChargeTime).ToString();
                     }
                 }
             }
@@ -220,37 +220,37 @@ public class BouncingCharacterControl : CharacterControl, IBouncingPhysicsObject
 
     protected override bool ControlsCharacter()
     {
-        return base.ControlsCharacter() && m_bouncingPhysicsObjectScript.MovementFrozen;
+        return base.ControlsCharacter() && _bouncingPhysicsObjectScript.MovementFrozen;
     }
 
     private Inputs FetchInputs()
     {
         Inputs inputs = new Inputs();
 
-        if (m_useKeyboard)
+        if (_useKeyboard)
         {
             // Inputs from the keyboard
-            inputs.vertical = Input.GetAxisRaw("Vertical");
-            inputs.horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.jump = Input.GetButtonDown("Jump");
-            inputs.releaseJump = Input.GetButtonUp("Jump");
-            inputs.dash = Input.GetButtonDown("Dash");
-            inputs.releaseDash = Input.GetButtonUp("Dash");
-            inputs.heldCharge = Input.GetButton("Charge");
-            inputs.releaseCharge = Input.GetButtonUp("Charge");
+            inputs.Vertical = Input.GetAxisRaw("Vertical");
+            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
+            inputs.Jump = Input.GetButtonDown("Jump");
+            inputs.ReleaseJump = Input.GetButtonUp("Jump");
+            inputs.Dash = Input.GetButtonDown("Dash");
+            inputs.ReleaseDash = Input.GetButtonUp("Dash");
+            inputs.HeldCharge = Input.GetButton("Charge");
+            inputs.ReleaseCharge = Input.GetButtonUp("Charge");
         }
         else
         {
             // TODO: Create inputs specific to the controler
             // Inputs from the controler
-            inputs.vertical = Input.GetAxisRaw("Vertical");
-            inputs.horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.jump = Input.GetButtonDown("Jump");
-            inputs.releaseJump = Input.GetButtonUp("Jump");
-            inputs.dash = Input.GetButtonDown("Dash");
-            inputs.releaseDash = Input.GetButtonUp("Dash");
-            inputs.heldCharge = Input.GetButton("Charge");
-            inputs.releaseCharge = Input.GetButtonUp("Charge");
+            inputs.Vertical = Input.GetAxisRaw("Vertical");
+            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
+            inputs.Jump = Input.GetButtonDown("Jump");
+            inputs.ReleaseJump = Input.GetButtonUp("Jump");
+            inputs.Dash = Input.GetButtonDown("Dash");
+            inputs.ReleaseDash = Input.GetButtonUp("Dash");
+            inputs.HeldCharge = Input.GetButton("Charge");
+            inputs.ReleaseCharge = Input.GetButtonUp("Charge");
         }
 
         return inputs;
@@ -258,16 +258,16 @@ public class BouncingCharacterControl : CharacterControl, IBouncingPhysicsObject
 
     private bool HasEnoughSpaceForNormalForm()
     {
-        Vector2 point = (Vector2)transform.position + m_collider.offset;
-        Vector2 size = m_collider.size + new Vector2(2.0f, 2.0f) * m_collider.edgeRadius;
+        Vector2 point = (Vector2)transform.position + _collider.offset;
+        Vector2 size = _collider.size + new Vector2(2.0f, 2.0f) * _collider.edgeRadius;
 
         // Check if there is a collider in the way
         Collider2D[] colliders = Physics2D.OverlapBoxAll(point, size, .0f);
-        m_collider.OverlapCollider(m_contactFilter, colliders);
+        _collider.OverlapCollider(ContactFilter, colliders);
 
         foreach (Collider2D collider in colliders)
         {
-            if (collider.gameObject != m_bounceForm && !collider.isTrigger)
+            if (collider.gameObject != _bounceForm && !collider.isTrigger)
             {
                 return false;
             }
@@ -279,7 +279,7 @@ public class BouncingCharacterControl : CharacterControl, IBouncingPhysicsObject
     private void ShowNormalForm(bool replace)
     {
         // Hide the bouncing form
-        m_bounceForm.SetActive(false);
+        _bounceForm.SetActive(false);
 
         // Replace and show the current character
         if (replace)
@@ -287,23 +287,23 @@ public class BouncingCharacterControl : CharacterControl, IBouncingPhysicsObject
             AlignNormalFormToBouncingForm();
         }
 
-        m_renderer.enabled = true;
-        m_collider.enabled = true;
-        m_movementScript.enabled = true;
+        _renderer.enabled = true;
+        _collider.enabled = true;
+        _movementScript.enabled = true;
 
         // Update the virtual camera to use
-        VirtualCameraManager.Instance.ChangeVirtualCamera(m_virtualCameraNormalForm);
+        VirtualCameraManager.Instance.ChangeVirtualCamera(_virtualCameraNormalForm);
     }
 
     private void AlignNormalFormToBouncingForm()
     {
-        transform.position = m_bounceForm.transform.position - m_bounceFormSpawnAreaCollider.transform.localPosition - (Vector3)m_bounceFormSpawnAreaCollider.offset;
+        transform.position = _bounceForm.transform.position - _bounceFormSpawnAreaCollider.transform.localPosition - (Vector3)_bounceFormSpawnAreaCollider.offset;
     }
 
     private bool HasEnoughSpaceForBounceForm()
     {
-        float overlapRadius = Mathf.Max(m_bounceFormSpawnAreaCollider.transform.lossyScale.x, m_bounceFormSpawnAreaCollider.transform.lossyScale.y) * m_bounceFormSpawnAreaCollider.radius;
-        Vector2 overlapPoint = (Vector2)m_bounceFormSpawnAreaCollider.transform.position + m_bounceFormSpawnAreaCollider.offset;
+        float overlapRadius = Mathf.Max(_bounceFormSpawnAreaCollider.transform.lossyScale.x, _bounceFormSpawnAreaCollider.transform.lossyScale.y) * _bounceFormSpawnAreaCollider.radius;
+        Vector2 overlapPoint = (Vector2)_bounceFormSpawnAreaCollider.transform.position + _bounceFormSpawnAreaCollider.offset;
 
         // Check if there is a collider in the way
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(overlapPoint, overlapRadius);
@@ -322,9 +322,9 @@ public class BouncingCharacterControl : CharacterControl, IBouncingPhysicsObject
     private void ShowBouncingForm(bool replace)
     {
         // Hide the current character
-        m_renderer.enabled = false;
-        m_collider.enabled = false;
-        m_movementScript.enabled = false;
+        _renderer.enabled = false;
+        _collider.enabled = false;
+        _movementScript.enabled = false;
 
         // Replace and show the bouncing form
         if (replace)
@@ -332,41 +332,41 @@ public class BouncingCharacterControl : CharacterControl, IBouncingPhysicsObject
             AlignBouncingFormToNormalForm();
         }
 
-        m_bounceForm.SetActive(true);
+        _bounceForm.SetActive(true);
 
         // Update the virtual camera to use
-        VirtualCameraManager.Instance.ChangeVirtualCamera(m_virtualCameraBounceForm);
+        VirtualCameraManager.Instance.ChangeVirtualCamera(_virtualCameraBounceForm);
     }
 
     private void AlignBouncingFormToNormalForm()
     {
-        m_bounceForm.transform.position = (Vector2)m_bounceFormSpawnAreaCollider.transform.position + m_bounceFormSpawnAreaCollider.offset;
+        _bounceForm.transform.position = (Vector2)_bounceFormSpawnAreaCollider.transform.position + _bounceFormSpawnAreaCollider.offset;
     }
 
     private void LaunchBouncingForm(Inputs inputs)
     {
-        if (!m_bounceForm.activeSelf)
+        if (!_bounceForm.activeSelf)
         {
             Debug.LogError("Can't launch the bouncing form because it isn't active!!!");
         }
         else
         {
-            Vector2 launchDirection = new Vector2(inputs.horizontal, inputs.vertical).normalized;
-            Vector2 launchForce = launchDirection * Mathf.Lerp(m_minLaunchStrength, m_maxLaunchStrength, m_chargeTime / m_maxChargeTime);
-            m_bouncingPhysicsObjectScript.Launch(launchForce);
+            Vector2 launchDirection = new Vector2(inputs.Horizontal, inputs.Vertical).normalized;
+            Vector2 launchForce = launchDirection * Mathf.Lerp(_minLaunchStrength, _maxLaunchStrength, _chargeTime / _maxChargeTime);
+            _bouncingPhysicsObjectScript.Launch(launchForce);
 
-            m_audioSource.PlayOneShot(m_launchSound);
+            _audioSource.PlayOneShot(_launchSound);
         }
     }
 
     protected override void UpdateMovement(Inputs inputs)
     {
-        m_movementScript.SetInputs(inputs);
+        _movementScript.SetInputs(inputs);
     }
 
     public void SetKeyboardUse(bool useKeyboard)
     {
-        m_useKeyboard = useKeyboard;
+        this._useKeyboard = useKeyboard;
     }
 
     // Methods of the IBouncingPhysicsObjectSubscriber interface
@@ -380,7 +380,7 @@ public class BouncingCharacterControl : CharacterControl, IBouncingPhysicsObject
         if (HasEnoughSpaceForNormalForm())
         {
             ShowNormalForm(true);
-            m_audioSource.PlayOneShot(m_returnToNormalFormSound);
+            _audioSource.PlayOneShot(_returnToNormalFormSound);
         }
         else
         {
@@ -398,7 +398,7 @@ public class BouncingCharacterControl : CharacterControl, IBouncingPhysicsObject
             if (HasEnoughSpaceForNormalForm())
             {
                 ShowNormalForm(true);
-                m_audioSource.PlayOneShot(m_returnToNormalFormSound);
+                _audioSource.PlayOneShot(_returnToNormalFormSound);
                 StopAllCoroutines();
             }
 

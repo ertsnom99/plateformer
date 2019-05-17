@@ -2,13 +2,13 @@
 
 public abstract class CharacterControl : MonoBehaviour
 {
-    protected Inputs noControlInputs;
+    protected Inputs NoControlInputs;
 
     public bool ControlsEnabled { get; protected set; }
 
     protected virtual void Awake()
     {
-        noControlInputs = new Inputs();
+        NoControlInputs = new Inputs();
         ControlsEnabled = true;
     }
 
@@ -23,7 +23,7 @@ public abstract class CharacterControl : MonoBehaviour
     {
         if (!enable)
         {
-            UpdateMovement(noControlInputs);
+            UpdateMovement(NoControlInputs);
         }
 
         ControlsEnabled = enable;

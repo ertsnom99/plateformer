@@ -6,42 +6,42 @@ public abstract class AIControl : CharacterControl
 {
     [Header("Target")]
     [SerializeField]
-    protected Transform m_target;
+    protected Transform Target;
     [SerializeField]
-    private float m_distanceToDetect = 10.0f;
+    private float _distanceToDetect = 10.0f;
     [SerializeField]
-    protected float m_stopDistanceToTarget = 1.4f;
+    protected float StopDistanceToTarget = .4f;
     [SerializeField]
-    protected float m_minDistanceForTargetReachable = 6.0f;
+    protected float MinDistanceForTargetReachable = 4.0f;
 
     public bool HasDetectedTarget { get; private set; }
 
     [Header("Update")]
     [SerializeField]
-    protected int m_updateRate = 6;
+    protected int UpdateRate = 5;
     [SerializeField]
-    protected float m_minDistanceToChangeWaypoint = 0.5f;
+    protected float MinDistanceToChangeWaypoint = 0.5f;
     [SerializeField]
-    protected bool m_stopWhenUnreachable = true;
+    protected bool StopWhenUnreachable = true;
     
     [Header("Debug")]
     [SerializeField]
-    private bool m_drawDistance = false;
+    private bool _drawDistance = false;
 
-    protected Path m_path;
-    protected int m_targetWaypoint = 0;
-    protected Seeker m_seeker;
+    protected Path Path;
+    protected int TargetWaypoint = 0;
+    protected Seeker Seeker;
 
     protected override void Awake()
     {
         base.Awake();
         
-        m_seeker = GetComponent<Seeker>();
+        Seeker = GetComponent<Seeker>();
     }
 
     protected virtual void Start()
     {
-        if (m_target == null)
+        if (Target == null)
         {
             Debug.LogError("No target was set!");
             return;
@@ -53,7 +53,7 @@ public abstract class AIControl : CharacterControl
     protected virtual void Update()
     {
         // Enable control when the target is close enough
-        if (ControlsEnabled && !HasDetectedTarget && (transform.position - m_target.position).magnitude <= m_distanceToDetect)
+        if (ControlsEnabled && !HasDetectedTarget && (transform.position - Target.position).magnitude <= _distanceToDetect)
         {
             EnableControl(true);
             HasDetectedTarget = true;
@@ -62,9 +62,9 @@ public abstract class AIControl : CharacterControl
 
     private IEnumerator UpdatePath()
     {
-        m_seeker.StartPath(transform.position, m_target.position);
+        Seeker.StartPath(transform.position, Target.position);
 
-        yield return new WaitForSeconds(1.0f / m_updateRate);
+        yield return new WaitForSeconds(1.0f / UpdateRate);
         StartCoroutine(UpdatePath());
     }
 
@@ -73,32 +73,32 @@ public abstract class AIControl : CharacterControl
 
     protected bool IsTargetReachable()
     {
-        return (m_target.position - m_path.vectorPath[m_path.vectorPath.Count - 1]).magnitude < m_minDistanceForTargetReachable;
+        return (Target.position - Path.vectorPath[Path.vectorPath.Count - 1]).magnitude < MinDistanceForTargetReachable;
     }
 
     protected abstract Inputs CreateInputs();
     
     public void SetTarget(Transform target)
     {
-        m_target = target;
+        Target = target;
     }
 
     private void OnEnable()
     {
-        m_seeker.pathCallback += OnPathComplete;
+        Seeker.pathCallback += OnPathComplete;
     }
 
     private void OnDisable()
     {
-        m_seeker.pathCallback -= OnPathComplete;
+        Seeker.pathCallback -= OnPathComplete;
     }
 
     private void OnDrawGizmosSelected()
     {
-        if (m_drawDistance)
+        if (_drawDistance)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawSphere(transform.position, m_distanceToDetect);
+            Gizmos.DrawSphere(transform.position, _distanceToDetect);
         }
     }
 }

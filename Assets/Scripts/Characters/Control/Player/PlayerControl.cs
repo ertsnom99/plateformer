@@ -7,15 +7,15 @@ public class PlayerControl : CharacterControl
 {
     [Header("Controls")]
     [SerializeField]
-    private bool m_useKeyboard;
+    private bool _useKeyboard = false;
 
-    private PlatformerMovement m_movementScript;
+    private PlatformerMovement _movementScript;
 
     protected override void Awake()
     {
         base.Awake();
 
-        m_movementScript = GetComponent<PlatformerMovement>();
+        _movementScript = GetComponent<PlatformerMovement>();
     }
 
     private void Update()
@@ -34,26 +34,26 @@ public class PlayerControl : CharacterControl
     {
         Inputs inputs = new Inputs();
 
-        if (m_useKeyboard)
+        if (_useKeyboard)
         {
             // Inputs from the keyboard
-            inputs.vertical = Input.GetAxisRaw("Vertical");
-            inputs.horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.jump = Input.GetButtonDown("Jump");
-            inputs.releaseJump = Input.GetButtonUp("Jump");
-            inputs.dash = Input.GetButtonDown("Dash");
-            inputs.releaseDash = Input.GetButtonUp("Dash");
+            inputs.Vertical = Input.GetAxisRaw("Vertical");
+            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
+            inputs.Jump = Input.GetButtonDown("Jump");
+            inputs.ReleaseJump = Input.GetButtonUp("Jump");
+            inputs.Dash = Input.GetButtonDown("Dash");
+            inputs.ReleaseDash = Input.GetButtonUp("Dash");
         }
         else
         {
             // TODO: Create inputs specific to the controler
             // Inputs from the controler
-            inputs.vertical = Input.GetAxisRaw("Vertical");
-            inputs.horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.jump = Input.GetButtonDown("Jump");
-            inputs.releaseJump = Input.GetButtonUp("Jump");
-            inputs.dash = Input.GetButtonDown("Dash");
-            inputs.releaseDash = Input.GetButtonUp("Dash");
+            inputs.Vertical = Input.GetAxisRaw("Vertical");
+            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
+            inputs.Jump = Input.GetButtonDown("Jump");
+            inputs.ReleaseJump = Input.GetButtonUp("Jump");
+            inputs.Dash = Input.GetButtonDown("Dash");
+            inputs.ReleaseDash = Input.GetButtonUp("Dash");
         }
 
         return inputs;
@@ -61,11 +61,11 @@ public class PlayerControl : CharacterControl
 
     public void SetKeyboardUse(bool useKeyboard)
     {
-        m_useKeyboard = useKeyboard;
+        _useKeyboard = useKeyboard;
     }
 
     protected override void UpdateMovement(Inputs inputs)
     {
-        m_movementScript.SetInputs(inputs);
+        _movementScript.SetInputs(inputs);
     }
 }

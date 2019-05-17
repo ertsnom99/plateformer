@@ -4,26 +4,26 @@ public class HealthGauge : MonoBehaviour, IHealthSubscriber
 {
     [Header("Health")]
     [SerializeField]
-    private Health m_health;
+    private Health _health;
 
     [Header("Gauge")]
     [SerializeField]
-    private Transform m_gaugeFill;
+    private Transform _gaugeFill;
     [SerializeField]
-    private float m_gaugeFullRotation = .0f;
+    private float _gaugeFullRotation = .0f;
     [SerializeField]
-    private float m_gaugeEmptyRotation = 180.0f;
+    private float _gaugeEmptyRotation = 180.0f;
 
     private void Start()
     {
-        m_health.Subscribe(this);
+        _health.Subscribe(this);
     }
 
     private void UpdateGauge()
     {
-        float ZRotation = Mathf.Lerp(m_gaugeEmptyRotation, m_gaugeFullRotation, (float)m_health.HealthPoint / m_health.MaxHealth);
+        float ZRotation = Mathf.Lerp(_gaugeEmptyRotation, _gaugeFullRotation, (float)_health.HealthPoint / _health.MaxHealth);
         Vector3 eulerAngles = transform.rotation.eulerAngles;
-        m_gaugeFill.rotation = Quaternion.Euler(eulerAngles.x, eulerAngles.z, ZRotation);
+        _gaugeFill.rotation = Quaternion.Euler(eulerAngles.x, eulerAngles.z, ZRotation);
     }
 
     // Methods of the IHealthSubscriber interface

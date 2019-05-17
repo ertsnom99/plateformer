@@ -4,39 +4,39 @@ public class EmoteSphere : MonoBehaviour, IPhysicsObjectCollisionListener
 {
     [Header("Emote")]
     [SerializeField]
-    private SpriteRenderer m_emote;
+    private SpriteRenderer _emote;
     [SerializeField]
-    private Sprite[] m_emotes;
-    private int m_emoteIndex = 0;
+    private Sprite[] _emotes;
+    private int _emoteIndex = 0;
 
     [Header("Color")]
     [SerializeField]
-    private SpriteRenderer m_colorBackground;
+    private SpriteRenderer _colorBackground;
     [SerializeField]
-    private Color m_intactColor;
+    private Color _intactColor;
     [SerializeField]
-    private Color m_brokenColor;
+    private Color _brokenColor;
 
     private void Awake()
     {
-        if (!m_emote)
+        if (!_emote)
         {
             Debug.LogError("m_emoteSpriteRenderer isn't set!!!");
         }
 
-        if (!m_colorBackground)
+        if (!_colorBackground)
         {
             Debug.LogError("m_colorBackground isn't set!!!");
         }
 
-        m_emote.sprite = m_emotes[m_emoteIndex];
+        _emote.sprite = _emotes[_emoteIndex];
         UpdateEmote();
     }
 
     private void UpdateEmote()
     {
-        m_emote.sprite = m_emotes[m_emoteIndex];
-        m_colorBackground.color = Color.Lerp(m_intactColor, m_brokenColor, (float)m_emoteIndex / (m_emotes.Length - 1));
+        _emote.sprite = _emotes[_emoteIndex];
+        _colorBackground.color = Color.Lerp(_intactColor, _brokenColor, (float)_emoteIndex / (_emotes.Length - 1));
     }
 
     // Methods of the IPhysicsObjectCollisionListener interface
@@ -44,7 +44,7 @@ public class EmoteSphere : MonoBehaviour, IPhysicsObjectCollisionListener
 
     public void OnPhysicsObjectCollisionEnter(PhysicsCollision2D collision)
     {
-        m_emoteIndex = (m_emoteIndex + 1) % m_emotes.Length;
+        _emoteIndex = (_emoteIndex + 1) % _emotes.Length;
         UpdateEmote();
     }
 }

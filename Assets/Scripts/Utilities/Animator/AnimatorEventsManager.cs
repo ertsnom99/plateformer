@@ -8,20 +8,20 @@ public interface IAnimatorEventSubscriber
 
 public class AnimatorEventsManager : MonoBehaviour
 {
-    private Dictionary<string, List<IAnimatorEventSubscriber>> m_subscribers = new Dictionary<string, List<IAnimatorEventSubscriber>>();
+    private Dictionary<string, List<IAnimatorEventSubscriber>> _subscribers = new Dictionary<string, List<IAnimatorEventSubscriber>>();
 
     public void Subscribe(string eventName, IAnimatorEventSubscriber subscriber)
     {
-        if (m_subscribers.ContainsKey(eventName))
+        if (_subscribers.ContainsKey(eventName))
         {
-            if(!m_subscribers[eventName].Contains(subscriber))
+            if(!_subscribers[eventName].Contains(subscriber))
             {
-                m_subscribers[eventName].Add(subscriber);
+                _subscribers[eventName].Add(subscriber);
             }
         }
         else
         {
-            m_subscribers[eventName] = new List<IAnimatorEventSubscriber> { subscriber };
+            _subscribers[eventName] = new List<IAnimatorEventSubscriber> { subscriber };
         }
     }
 
@@ -31,9 +31,9 @@ public class AnimatorEventsManager : MonoBehaviour
 
         foreach(string eventName in eventNames)
         {
-            if (m_subscribers.ContainsKey(eventName))
+            if (_subscribers.ContainsKey(eventName))
             {
-                foreach (IAnimatorEventSubscriber subscriber in m_subscribers[eventName])
+                foreach (IAnimatorEventSubscriber subscriber in _subscribers[eventName])
                 {
                     subscriber.NotifyEvent(eventName);
                 }

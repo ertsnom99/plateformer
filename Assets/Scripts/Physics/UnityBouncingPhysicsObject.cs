@@ -18,74 +18,74 @@ public class UnityBouncingPhysicsObject : MonoSubscribable<IUnityBouncingPhysics
 
     [Header("Bounce")]
     [SerializeField]
-    private float m_bounceFreezeDuration = .1f;
+    private float _bounceFreezeDuration = .1f;
     [SerializeField]
-    private bool m_bounceHasStopCondition = true;
+    private bool _bounceHasStopCondition = true;
     [SerializeField]
-    private bool m_freezeWhenStopConditionReached = false;
+    private bool _freezeWhenStopConditionReached = false;
 
     [Header("Sound")]
     [SerializeField]
-    private AudioClip m_bounceSound;
+    private AudioClip _bounceSound;
     [SerializeField]
-    private bool m_playBounceSoundOnLastBounce = false;
+    private bool _playBounceSoundOnLastBounce = false;
 
     [Header("Condition")]
     [SerializeField]
-    private BounceStopCondition m_bounceStopCondition;
+    private BounceStopCondition _bounceStopCondition;
     [SerializeField]
-    private float m_bounceDuration = 3.0f;
-    private float m_bounceElapsedTime = .0f;
+    private float _bounceDuration = 3.0f;
+    private float _bounceElapsedTime = .0f;
     [SerializeField]
-    private int m_maxBounceCount = 10;
+    private int _maxBounceCount = 10;
     [SerializeField]
-    private float m_minVelocity = 5.0f;
+    private float _minVelocity = 5.0f;
 
-    private bool m_collisionHappened = false;
-    private Vector2 m_velocityAtFreeze;
-    private int m_bounceCount = 0;
+    private bool _collisionHappened = false;
+    private Vector2 _velocityAtFreeze;
+    private int _bounceCount = 0;
 
-    private bool m_movementFrozen = false;
+    private bool _movementFrozen = false;
 
     public bool MovementFrozen
     {
-        get { return m_movementFrozen; }
-        private set { m_movementFrozen = value; }
+        get { return _movementFrozen; }
+        private set { _movementFrozen = value; }
     }
 
-    private Rigidbody2D m_rigidbody2D;
-    private AudioSource m_audioSource;
+    private Rigidbody2D _rigidbody2D;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
-        m_rigidbody2D = GetComponent<Rigidbody2D>();
+        _rigidbody2D = GetComponent<Rigidbody2D>();
         InitialiseRigidbody2D();
 
-        m_audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
 
         FreezeMovement(true);
     }
 
     private void InitialiseRigidbody2D()
     {
-        m_rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-        m_rigidbody2D.simulated = true;
-        m_rigidbody2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-        m_rigidbody2D.sleepMode = RigidbodySleepMode2D.NeverSleep;
-        m_rigidbody2D.interpolation = RigidbodyInterpolation2D.Interpolate;
-        m_rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+        _rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+        _rigidbody2D.simulated = true;
+        _rigidbody2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        _rigidbody2D.sleepMode = RigidbodySleepMode2D.NeverSleep;
+        _rigidbody2D.interpolation = RigidbodyInterpolation2D.Interpolate;
+        _rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     public void Launch(Vector2 force)
     {
-        m_bounceElapsedTime = .0f;
-        m_bounceCount = 0;
+        _bounceElapsedTime = .0f;
+        _bounceCount = 0;
 
         FreezeMovement(false);
-        m_rigidbody2D.AddForce(force, ForceMode2D.Impulse);
+        _rigidbody2D.AddForce(force, ForceMode2D.Impulse);
 
         // Tell subscribers that the bounce started
-        foreach (IUnityBouncingPhysicsObjectSubscriber subscriber in m_subscribers)
+        foreach (IUnityBouncingPhysicsObjectSubscriber subscriber in Subscribers)
         {
             subscriber.NotifyBounceStarted();
         }
@@ -95,32 +95,32 @@ public class UnityBouncingPhysicsObject : MonoSubscribable<IUnityBouncingPhysics
     {
         if (!MovementFrozen)
         {
-            m_bounceElapsedTime += Time.deltaTime;
+            _bounceElapsedTime += Time.deltaTime;
 
-            if (m_bounceHasStopCondition)
+            if (_bounceHasStopCondition)
             {
-                if (m_bounceStopCondition == BounceStopCondition.BounceDurationElapsed && m_bounceElapsedTime >= m_bounceDuration)
+                if (_bounceStopCondition == BounceStopCondition.BounceDurationElapsed && _bounceElapsedTime >= _bounceDuration)
                 {
-                    if (m_freezeWhenStopConditionReached)
+                    if (_freezeWhenStopConditionReached)
                     {
                         FreezeMovement(true);
                     }
 
                     // Tell subscribers that the bounce finished
-                    foreach (IUnityBouncingPhysicsObjectSubscriber subscriber in m_subscribers)
+                    foreach (IUnityBouncingPhysicsObjectSubscriber subscriber in Subscribers)
                     {
                         subscriber.NotifyBounceFinished();
                     }
                 }
-                else if (m_bounceStopCondition == BounceStopCondition.UnderMinVelocity && m_rigidbody2D.velocity.magnitude < m_minVelocity)
+                else if (_bounceStopCondition == BounceStopCondition.UnderMinVelocity && _rigidbody2D.velocity.magnitude < _minVelocity)
                 {
-                    if (m_freezeWhenStopConditionReached)
+                    if (_freezeWhenStopConditionReached)
                     {
                         FreezeMovement(true);
                     }
 
                     // Tell subscribers that the bounce finished
-                    foreach (IUnityBouncingPhysicsObjectSubscriber subscriber in m_subscribers)
+                    foreach (IUnityBouncingPhysicsObjectSubscriber subscriber in Subscribers)
                     {
                         subscriber.NotifyBounceFinished();
                     }
@@ -133,37 +133,37 @@ public class UnityBouncingPhysicsObject : MonoSubscribable<IUnityBouncingPhysics
     {
         if (!MovementFrozen)
         {
-            m_collisionHappened = false;
+            _collisionHappened = false;
 
             // Rotate to be oriented toward Velocity direction
-            float angle = Mathf.Atan2(m_rigidbody2D.velocity.y, m_rigidbody2D.velocity.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(_rigidbody2D.velocity.y, _rigidbody2D.velocity.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (!MovementFrozen && !m_collisionHappened)
+        if (!MovementFrozen && !_collisionHappened)
         {
-            m_collisionHappened = true;
-            m_bounceCount++;
+            _collisionHappened = true;
+            _bounceCount++;
 
-            m_audioSource.PlayOneShot(m_bounceSound);
+            _audioSource.PlayOneShot(_bounceSound);
 
-            if (m_bounceHasStopCondition && m_bounceStopCondition == BounceStopCondition.MaxBounceCountReached && m_bounceCount >= m_maxBounceCount)
+            if (_bounceHasStopCondition && _bounceStopCondition == BounceStopCondition.MaxBounceCountReached && _bounceCount >= _maxBounceCount)
             {
-                if (m_freezeWhenStopConditionReached)
+                if (_freezeWhenStopConditionReached)
                 {
                     FreezeMovement(true);
                 }
 
-                if (!m_playBounceSoundOnLastBounce)
+                if (!_playBounceSoundOnLastBounce)
                 {
-                    m_audioSource.Stop();
+                    _audioSource.Stop();
                 }
 
                 // Tell subscribers that the bounce finished
-                foreach (IUnityBouncingPhysicsObjectSubscriber subscriber in m_subscribers)
+                foreach (IUnityBouncingPhysicsObjectSubscriber subscriber in Subscribers)
                 {
                     subscriber.NotifyBounceFinished();
                 }
@@ -179,13 +179,13 @@ public class UnityBouncingPhysicsObject : MonoSubscribable<IUnityBouncingPhysics
     {
         if (freeze)
         {
-            m_rigidbody2D.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
-            m_velocityAtFreeze = m_rigidbody2D.velocity;
+            _rigidbody2D.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
+            _velocityAtFreeze = _rigidbody2D.velocity;
         }
         else
         {
-            m_rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
-            m_rigidbody2D.velocity = m_velocityAtFreeze;
+            _rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+            _rigidbody2D.velocity = _velocityAtFreeze;
         }
 
         MovementFrozen = freeze;
@@ -196,7 +196,7 @@ public class UnityBouncingPhysicsObject : MonoSubscribable<IUnityBouncingPhysics
         FreezeMovement(true);
         OnFreezeStart();
 
-        yield return new WaitForSeconds(m_bounceFreezeDuration);
+        yield return new WaitForSeconds(_bounceFreezeDuration);
 
         FreezeMovement(false);
         OnFreezeEnd();

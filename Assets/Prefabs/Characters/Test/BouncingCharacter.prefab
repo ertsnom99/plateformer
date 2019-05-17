@@ -294,18 +294,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4a95471ee0639a4cba4a1c1baefa025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_useKeyboard: 0
-  m_maxChargeTime: 5
-  m_chargeText: {fileID: 4761221932693649462}
-  m_arrow: {fileID: 4514407309020739263}
-  m_bounceFormPrefab: {fileID: 8337540354551453393, guid: a3162429443be1f4da3f8048a2eeb7b3,
+  _useKeyboard: 0
+  _maxChargeTime: 5
+  _chargeText: {fileID: 4761221932693649462}
+  _arrow: {fileID: 4514407309020739263}
+  _bounceFormPrefab: {fileID: 8337540354551453393, guid: a3162429443be1f4da3f8048a2eeb7b3,
     type: 3}
-  m_bounceFormSpawnAreaCollider: {fileID: 1031556400318552027}
-  m_minLaunchStrength: 50
-  m_maxLaunchStrength: 100
-  m_chargeSound: {fileID: 8300000, guid: d60980ad52a0dfc4b83c27c5d592df36, type: 3}
-  m_launchSound: {fileID: 8300000, guid: 8029264457e8e45448b95d04e58b40f6, type: 3}
-  m_returnToNormalFormSound: {fileID: 8300000, guid: 62791b2a9e903334ca9b4ff55d0db30c,
+  _bounceFormSpawnAreaCollider: {fileID: 1031556400318552027}
+  _minLaunchStrength: 50
+  _maxLaunchStrength: 100
+  _chargeSound: {fileID: 8300000, guid: d60980ad52a0dfc4b83c27c5d592df36, type: 3}
+  _launchSound: {fileID: 8300000, guid: 8029264457e8e45448b95d04e58b40f6, type: 3}
+  _returnToNormalFormSound: {fileID: 8300000, guid: 62791b2a9e903334ca9b4ff55d0db30c,
     type: 3}
   m_virtualCameraNormalForm: {fileID: 0}
   m_virtualCameraBounceForm: {fileID: 0}
@@ -323,6 +323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_shellRadius: 0.05
   m_gravityModifier: 5
+  m_fallModifier: 1
   m_minGroundNormalY: 0.4
   m_debugVelocity: 0
   m_maxSpeed: 9

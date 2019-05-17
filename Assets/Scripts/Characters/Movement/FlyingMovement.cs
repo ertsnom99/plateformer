@@ -40,7 +40,7 @@ public class FlyingMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        m_rigidbody.AddForce(new Vector2(m_currentInputs.horizontal, m_currentInputs.vertical) * m_speed - m_rigidbody.velocity);
+        m_rigidbody.AddForce(new Vector2(m_currentInputs.Horizontal, m_currentInputs.Vertical) * m_speed - m_rigidbody.velocity);
 
         Animate();
     }

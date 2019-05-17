@@ -5,37 +5,37 @@ public class EndSequence : MonoBehaviour, IFadeImageSubscriber
 {
     [Header("Camera")]
     [SerializeField]
-    private VirtualCameraManager m_virtualCameraManager;
+    private VirtualCameraManager _virtualCameraManager;
 
     [Header("Player Movement")]
     [SerializeField]
-    private Inputs m_forcedControls;
+    private Inputs _forcedControls;
 
     [Header("Fade out")]
     [SerializeField]
-    private FadeImage m_fade;
+    private FadeImage _fade;
     [SerializeField]
-    private float m_fadeDuration;
+    private float _fadeDuration;
 
     [Header("Scene Change")]
     [SerializeField]
-    private int m_sceneToLoad;
+    private int _sceneToLoad;
 
     private void Start()
     {
-        m_fade.Subscribe(this);
+        _fade.Subscribe(this);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (m_virtualCameraManager.ActiveVirtualCamera && col.CompareTag(GameManager.PlayerTag))
+        if (_virtualCameraManager.ActiveVirtualCamera && col.CompareTag(GameManager.PlayerTag))
         {
-            m_virtualCameraManager.ActiveVirtualCamera.Follow = null;
+            _virtualCameraManager.ActiveVirtualCamera.Follow = null;
 
             col.GetComponent<PlayerControl>().EnableControl(false);
-            col.GetComponent<PlatformerMovement>().SetInputs(m_forcedControls);
+            col.GetComponent<PlatformerMovement>().SetInputs(_forcedControls);
 
-            m_fade.FadeOut(m_fadeDuration);
+            _fade.FadeOut(_fadeDuration);
         }
     }
 
@@ -44,6 +44,6 @@ public class EndSequence : MonoBehaviour, IFadeImageSubscriber
 
     public void NotifyFadeOutFinished()
     {
-        SceneManager.LoadScene(m_sceneToLoad, LoadSceneMode.Single);
+        SceneManager.LoadScene(_sceneToLoad, LoadSceneMode.Single);
     }
 }

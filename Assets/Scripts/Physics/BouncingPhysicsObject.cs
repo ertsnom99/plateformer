@@ -17,64 +17,64 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
 
     [Header("Bounce")]
     [SerializeField]
-    private float m_bounciness = 1.0f;
+    private float _bounciness = 1.0f;
     [SerializeField]
-    private float m_bounceFreezeDuration = .1f;
+    private float _bounceFreezeDuration = .0f;
     [SerializeField]
-    private int m_bounceMaxTry = 100;
+    private int _bounceMaxTry = 100;
     [SerializeField]
-    private bool m_bounceHasStopCondition = true;
+    private bool _bounceHasStopCondition = true;
     [SerializeField]
-    private bool m_freezeWhenStopConditionReached = false;
+    private bool _freezeWhenStopConditionReached = false;
 
     [Header("Sound")]
     [SerializeField]
-    private AudioClip m_bounceSound;
+    private AudioClip _bounceSound;
     [SerializeField]
-    private bool m_playBounceSoundOnLastBounce = false;
+    private bool _playBounceSoundOnLastBounce = false;
 
     [Header("Condition")]
     [SerializeField]
-    private BounceStopCondition m_bounceStopCondition;
+    private BounceStopCondition _bounceStopCondition;
     [SerializeField]
-    private float m_bounceDuration = 3.0f;
-    private float m_bounceElapsedTime = .0f;
+    private float _bounceDuration = 10.0f;
+    private float _bounceElapsedTime = .0f;
     [SerializeField]
-    private int m_maxBounceCount = 10;
+    private int _maxBounceCount = 40;
     [SerializeField]
-    private float m_minVelocity = 5.0f;
+    private float _minVelocity = 5.0f;
 
-    private bool m_movementFrozen = true;
+    private bool _movementFrozen = true;
 
     public bool MovementFrozen
     {
-        get { return m_movementFrozen; }
-        private set { m_movementFrozen = value; }
+        get { return _movementFrozen; }
+        private set { _movementFrozen = value; }
     }
 
-    private int m_bounceCount = 0;
+    private int _bounceCount = 0;
 
-    private AudioSource m_audioSource;
+    private AudioSource _audioSource;
 
     protected override void Awake()
     {
         base.Awake();
 
-        m_audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
 
         FreezeMovement(true);
     }
 
     public void Launch(Vector2 force)
     {
-        m_bounceElapsedTime = .0f;
-        m_bounceCount = 0;
+        _bounceElapsedTime = .0f;
+        _bounceCount = 0;
 
         FreezeMovement(false);
         Velocity = force;
 
         // Tell subscribers that the bounce started
-        foreach (IBouncingPhysicsObjectSubscriber subscriber in m_subscribers)
+        foreach (IBouncingPhysicsObjectSubscriber subscriber in Subscribers)
         {
             subscriber.NotifyBounceStarted();
         }
@@ -84,32 +84,32 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
     {
         if (!MovementFrozen)
         {
-            m_bounceElapsedTime += Time.deltaTime;
+            _bounceElapsedTime += Time.deltaTime;
 
-            if (m_bounceHasStopCondition)
+            if (_bounceHasStopCondition)
             {
-                if (m_bounceStopCondition == BounceStopCondition.BounceDurationElapsed && m_bounceElapsedTime >= m_bounceDuration)
+                if (_bounceStopCondition == BounceStopCondition.BounceDurationElapsed && _bounceElapsedTime >= _bounceDuration)
                 {
-                    if (m_freezeWhenStopConditionReached)
+                    if (_freezeWhenStopConditionReached)
                     {
                         FreezeMovement(true);
                     }
                     
                     // Tell subscribers that the bounce finished
-                    foreach (IBouncingPhysicsObjectSubscriber subscriber in m_subscribers)
+                    foreach (IBouncingPhysicsObjectSubscriber subscriber in Subscribers)
                     {
                         subscriber.NotifyBounceFinished();
                     }
                 }
-                else if (m_bounceStopCondition == BounceStopCondition.UnderMinVelocity && Velocity.magnitude < m_minVelocity)
+                else if (_bounceStopCondition == BounceStopCondition.UnderMinVelocity && Velocity.magnitude < _minVelocity)
                 {
-                    if (m_freezeWhenStopConditionReached)
+                    if (_freezeWhenStopConditionReached)
                     {
                         FreezeMovement(true);
                     }
 
                     // Tell subscribers that the bounce finished
-                    foreach (IBouncingPhysicsObjectSubscriber subscriber in m_subscribers)
+                    foreach (IBouncingPhysicsObjectSubscriber subscriber in Subscribers)
                     {
                         subscriber.NotifyBounceFinished();
                     }
@@ -126,8 +126,8 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
             Velocity += CurrentGravityModifier * Physics2D.gravity * Time.fixedDeltaTime;
 
             // Backup the list of gameObjects that used to collide and clear the original
-            m_previouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsObjectCollisionListener[]>(m_collidingGameObjects);
-            m_collidingGameObjects.Clear();
+            PreviouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsObjectCollisionListener[]>(CollidingGameObjects);
+            CollidingGameObjects.Clear();
 
             // Move the object
             Vector2 movement = Velocity * Time.fixedDeltaTime;
@@ -136,11 +136,11 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
             // Check and call collision exit methods
             CheckCollisionExit();
 
-            if (m_debugVelocity)
+            if (DebugVelocity)
             {
                 Debug.DrawLine(transform.position, transform.position + (Vector3)Velocity, Color.blue);
                 Debug.DrawLine(transform.position, transform.position + (Vector3)movement, Color.red);
-                Debug.DrawLine(transform.position, transform.position + Vector3.up * m_shellRadius, Color.yellow);
+                Debug.DrawLine(transform.position, transform.position + Vector3.up * ShellRadius, Color.yellow);
                 Debug.Log(Velocity);
             }
         }
@@ -154,7 +154,7 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
         Vector2 currentVelocityDirection = Velocity.normalized;
 
         // Keeps trying to move until the object travelled the necessary distance
-        while (!MovementFrozen && tryCount <= m_bounceMaxTry && distanceToTravel > .0f)
+        while (!MovementFrozen && tryCount <= _bounceMaxTry && distanceToTravel > .0f)
         {
             // Consider that the objet can travel all the remining distance without hitting anything
             distanceBeforeHit = distanceToTravel;
@@ -166,12 +166,12 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
             if (distanceToTravel > MinMoveDistance)
             {
                 // Cast and only consider the first collision
-                int count = m_rigidbody2D.Cast(Velocity.normalized, m_contactFilter, m_hitBuffer, distanceToTravel + m_shellRadius);
+                int count = Rigidbody2D.Cast(Velocity.normalized, ContactFilter, HitBuffer, distanceToTravel + ShellRadius);
 
-                if (count > 0 && m_hitBuffer[0])
+                if (count > 0 && HitBuffer[0])
                 {
                     // Update the velocity and the number of bounce
-                    OnHit(m_hitBuffer[0].normal);
+                    OnHit(HitBuffer[0].normal);
 
                     if (!MovementFrozen)
                     {
@@ -180,20 +180,20 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
                     }
 
                     // Check and call collision enter methods
-                    CheckCollisionEnter(m_hitBuffer[0]);
+                    CheckCollisionEnter(HitBuffer[0]);
 
                     // Update how much distance can be done before hitting something  
-                    distanceBeforeHit = m_hitBuffer[0].distance - m_shellRadius;
+                    distanceBeforeHit = HitBuffer[0].distance - ShellRadius;
 
                     // Will allow inheriting classes to add logic during the hit checks
-                    OnColliderHitCheck(m_hitBuffer[0]);
+                    OnColliderHitCheck(HitBuffer[0]);
                 }
             }
 
             distanceToTravel -= distanceBeforeHit;
 
             // Apply the movement
-            m_rigidbody2D.position = m_rigidbody2D.position + currentVelocityDirection * distanceBeforeHit;
+            Rigidbody2D.position = Rigidbody2D.position + currentVelocityDirection * distanceBeforeHit;
 
             tryCount++;
         }
@@ -206,27 +206,27 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
     private void OnHit(Vector2 normal)
     {
         // Reflect the direction of the velocity along the normal
-        Velocity = Velocity.magnitude * m_bounciness * Vector2.Reflect(Velocity.normalized, normal).normalized;
+        Velocity = Velocity.magnitude * _bounciness * Vector2.Reflect(Velocity.normalized, normal).normalized;
 
         // Increment and check the number of bounce
-        m_bounceCount++;
+        _bounceCount++;
 
-        m_audioSource.PlayOneShot(m_bounceSound);
+        _audioSource.PlayOneShot(_bounceSound);
         
-        if (m_bounceHasStopCondition && m_bounceStopCondition == BounceStopCondition.MaxBounceCountReached && m_bounceCount >= m_maxBounceCount)
+        if (_bounceHasStopCondition && _bounceStopCondition == BounceStopCondition.MaxBounceCountReached && _bounceCount >= _maxBounceCount)
         {
-            if (m_freezeWhenStopConditionReached)
+            if (_freezeWhenStopConditionReached)
             {
                 FreezeMovement(true);
             }
 
-            if (!m_playBounceSoundOnLastBounce)
+            if (!_playBounceSoundOnLastBounce)
             {
-                m_audioSource.Stop();
+                _audioSource.Stop();
             }
 
             // Tell subscribers that the bounce finished
-            foreach (IBouncingPhysicsObjectSubscriber subscriber in m_subscribers)
+            foreach (IBouncingPhysicsObjectSubscriber subscriber in Subscribers)
             {
                 subscriber.NotifyBounceFinished();
             }
@@ -243,7 +243,7 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
         FreezeMovement(true);
         OnFreezeStart();
 
-        yield return new WaitForSeconds(m_bounceFreezeDuration);
+        yield return new WaitForSeconds(_bounceFreezeDuration);
 
         FreezeMovement(false);
         OnFreezeEnd();

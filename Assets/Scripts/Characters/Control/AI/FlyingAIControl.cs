@@ -7,15 +7,15 @@ using Pathfinding;
 public class FlyingAIControl : AIControl
 {
     [SerializeField]
-    private bool m_logPathFailedError = false;
+    private readonly bool _logPathFailedError = false;
 
-    private FlyingMovement m_movementScript;
+    private FlyingMovement _movementScript;
 
     protected override void Awake()
     {
         base.Awake();
 
-        m_movementScript = GetComponent<FlyingMovement>();
+        _movementScript = GetComponent<FlyingMovement>();
     }
 
     public override void OnPathComplete(Path path)
@@ -23,15 +23,15 @@ public class FlyingAIControl : AIControl
         // We got our path back
         if (path.error)
         {
-            if (m_logPathFailedError)
+            if (_logPathFailedError)
             {
                 Debug.LogError("The path failed! " + gameObject.name);
             }
         }
         else
         {
-            m_path = path;
-            m_targetWaypoint = 0;
+            Path = path;
+            TargetWaypoint = 0;
         }
     }
 
@@ -42,28 +42,28 @@ public class FlyingAIControl : AIControl
         // Only update when time isn't stop
         if (Time.deltaTime > .0f)
         {
-            if (ControlsCharacter() && HasDetectedTarget && m_path != null)
+            if (ControlsCharacter() && HasDetectedTarget && Path != null)
             {
-                Inputs inputs = noControlInputs;
+                Inputs inputs = NoControlInputs;
 
-                float distanceToTarget = Vector3.Distance(transform.position, m_target.position);
-                bool isWaypointReached = m_targetWaypoint >= m_path.vectorPath.Count;
+                float distanceToTarget = Vector3.Distance(transform.position, Target.position);
+                bool isWaypointReached = TargetWaypoint >= Path.vectorPath.Count;
 
                 // Check if the AI hasn't reach either the target or the last waypoint
-                if ((!m_stopWhenUnreachable || IsTargetReachable()) && distanceToTarget > m_stopDistanceToTarget && !isWaypointReached)
+                if ((!StopWhenUnreachable || IsTargetReachable()) && distanceToTarget > StopDistanceToTarget && !isWaypointReached)
                 {
-                    float distanceToWaypoint = Vector3.Distance(transform.position, m_path.vectorPath[m_targetWaypoint]);
+                    float distanceToWaypoint = Vector3.Distance(transform.position, Path.vectorPath[TargetWaypoint]);
 
                     // Update the target waypoint while the last one hasn't been reached and the current one is close enough
-                    while (!isWaypointReached && distanceToWaypoint <= m_minDistanceToChangeWaypoint)
+                    while (!isWaypointReached && distanceToWaypoint <= MinDistanceToChangeWaypoint)
                     {
-                        m_targetWaypoint++;
+                        TargetWaypoint++;
 
-                        isWaypointReached = m_targetWaypoint >= m_path.vectorPath.Count;
+                        isWaypointReached = TargetWaypoint >= Path.vectorPath.Count;
 
                         if (!isWaypointReached)
                         {
-                            distanceToWaypoint = Vector3.Distance(transform.position, m_path.vectorPath[m_targetWaypoint]);
+                            distanceToWaypoint = Vector3.Distance(transform.position, Path.vectorPath[TargetWaypoint]);
                         }
 
                     }
@@ -83,13 +83,13 @@ public class FlyingAIControl : AIControl
 
     protected override Inputs CreateInputs()
     {
-        Inputs inputs = noControlInputs;
+        Inputs inputs = NoControlInputs;
 
-        Vector3 DirectionToTargetWaypoint = (m_path.vectorPath[m_targetWaypoint] - transform.position).normalized;
+        Vector3 DirectionToTargetWaypoint = (Path.vectorPath[TargetWaypoint] - transform.position).normalized;
 
         // Inputs from the controler
-        inputs.vertical = DirectionToTargetWaypoint.y;
-        inputs.horizontal = DirectionToTargetWaypoint.x;
+        inputs.Vertical = DirectionToTargetWaypoint.y;
+        inputs.Horizontal = DirectionToTargetWaypoint.x;
         //inputs.jump = jump;
         //inputs.releaseJump = releaseJump;
         //inputs.dash = Input.GetButtonDown("Dash");
@@ -100,6 +100,6 @@ public class FlyingAIControl : AIControl
 
     protected override void UpdateMovement(Inputs inputs)
     {
-        m_movementScript.SetInputs(inputs);
+        _movementScript.SetInputs(inputs);
     }
 }

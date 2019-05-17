@@ -2,13 +2,13 @@
 
 public class BossAmbiantEnabler : MonoBehaviour
 {
-    private bool m_triggered = false;
+    private bool _triggered = false;
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (!m_triggered && col.CompareTag(GameManager.PlayerTag))
+        if (!_triggered && col.CompareTag(GameManager.PlayerTag))
         {
-            m_triggered = true;
+            _triggered = true;
             AmbiantManager.Instance.StartBossAmbiant();
         }
     }

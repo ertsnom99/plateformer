@@ -5,23 +5,23 @@ public class FlashingImage : MonoBehaviour
 {
     [Header("Flash")]
     [SerializeField]
-    private float m_flashDuration = 1.0f;
+    private float _flashDuration = 1.0f;
     [SerializeField]
-    private bool m_useStartTimeHasReference;
-    private float m_startTime;
+    private bool _useStartTimeHasReference;
+    private float _startTime;
 
-    private Image m_image;
+    private Image _image;
 
     private void Awake()
     {
-        m_image = GetComponent<Image>();
+        _image = GetComponent<Image>();
     }
 
     private void Start()
     {
-        if (m_useStartTimeHasReference)
+        if (_useStartTimeHasReference)
         {
-            m_startTime = Time.time;
+            _startTime = Time.time;
         }
     }
 
@@ -32,15 +32,15 @@ public class FlashingImage : MonoBehaviour
 
     private void UpdateColor()
     {
-        float alpha = Mathf.Lerp(0.0f, 1.0f, Mathf.PingPong((Time.time - m_startTime) / m_flashDuration, 1));
-        m_image.color = new Color(m_image.color.r, m_image.color.g, m_image.color.b, alpha);
+        float alpha = Mathf.Lerp(0.0f, 1.0f, Mathf.PingPong((Time.time - _startTime) / _flashDuration, 1));
+        _image.color = new Color(_image.color.r, _image.color.g, _image.color.b, alpha);
     }
 
     private void OnEnable()
     {
-        if (!m_useStartTimeHasReference)
+        if (!_useStartTimeHasReference)
         {
-            m_startTime = Time.time;
+            _startTime = Time.time;
         }
         else
         {
@@ -50,6 +50,6 @@ public class FlashingImage : MonoBehaviour
 
     private void OnDisable()
     {
-        m_image.color = new Color(m_image.color.r, m_image.color.g, m_image.color.b, 0.0f);
+        _image.color = new Color(_image.color.r, _image.color.g, _image.color.b, 0.0f);
     }
 }

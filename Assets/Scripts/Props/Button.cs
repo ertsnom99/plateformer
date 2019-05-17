@@ -12,38 +12,38 @@ public class Button : MonoSubscribable<IButtonSubscriber>
 {
     [Header("Initialization")]
     [SerializeField]
-    private bool m_initiallyPressed = false;
+    private bool _initiallyPressed = false;
 
     public bool IsPressed { get; private set; }
 
-    private Animator m_animator;
+    private Animator _animator;
 
-    protected int m_isPressedParamHashId = Animator.StringToHash(IsPressedParamNameString);
+    protected int IsPressedParamHashId = Animator.StringToHash(IsPressedParamNameString);
 
     public const string IsPressedParamNameString = "IsPressed";
 
     private void Awake()
     {
-        m_animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
 
-        m_animator.SetBool(m_isPressedParamHashId, m_initiallyPressed);
-        IsPressed = m_initiallyPressed;
+        _animator.SetBool(IsPressedParamHashId, _initiallyPressed);
+        IsPressed = _initiallyPressed;
     }
 
     private void Press()
     {
-        foreach (IButtonSubscriber subscriber in m_subscribers)
+        foreach (IButtonSubscriber subscriber in Subscribers)
         {
             subscriber.NotifyButtonPressed(this);
         }
 
-        m_animator.SetBool(m_isPressedParamHashId, true);
+        _animator.SetBool(IsPressedParamHashId, true);
         IsPressed = true;
     }
 
     private void Unpress()
     {
-        m_animator.SetBool(m_isPressedParamHashId, false);
+        _animator.SetBool(IsPressedParamHashId, false);
         IsPressed = false;
     }
 

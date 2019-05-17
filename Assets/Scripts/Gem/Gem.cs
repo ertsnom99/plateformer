@@ -15,41 +15,41 @@ public class Gem : MonoSubscribable<IGemSubscriber>
 {
     [Header("Sound")]
     [SerializeField]
-    private AudioClip m_pickupSound;
+    private AudioClip _pickupSound;
 
-    private SpriteRenderer m_spriteRenderer;
-    private BoxCollider2D m_collider;
-    private AudioSource m_audioSource;
+    private SpriteRenderer _spriteRenderer;
+    private BoxCollider2D _collider;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
-        m_spriteRenderer = GetComponent<SpriteRenderer>();
-        m_collider = GetComponent<BoxCollider2D>();
-        m_audioSource = GetComponent<AudioSource>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _collider = GetComponent<BoxCollider2D>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag == GameManager.PlayerTag)
         {
-            foreach(IGemSubscriber subscriber in m_subscribers)
+            foreach(IGemSubscriber subscriber in Subscribers)
             {
                 subscriber.NotifyGemCollected(this);
             }
 
-            m_spriteRenderer.enabled = false;
-            m_collider.enabled = false;
+            _spriteRenderer.enabled = false;
+            _collider.enabled = false;
 
             PlayPickupSound();
 
-            StartCoroutine(Destroy(m_pickupSound.length + .5f));
+            StartCoroutine(Destroy(_pickupSound.length + .5f));
         }
     }
 
     private void PlayPickupSound()
     {
-        m_audioSource.pitch = Random.Range(.9f, 1.0f);
-        m_audioSource.PlayOneShot(m_pickupSound);
+        _audioSource.pitch = Random.Range(.9f, 1.0f);
+        _audioSource.PlayOneShot(_pickupSound);
     }
 
     private IEnumerator Destroy(float destructionDelay)

@@ -4,11 +4,11 @@ public class BossFight : MonoBehaviour, IHealthSubscriber
 {
     [Header("Boss")]
     [SerializeField]
-    private Health m_bossHealth;
+    private Health _bossHealth;
 
     private void Awake()
     {
-        m_bossHealth.Subscribe(this);
+        _bossHealth.Subscribe(this);
     }
 
     // Methods of the IHealable interface

@@ -5,23 +5,23 @@ public class FlashingText : MonoBehaviour
 {
     [Header("Flash")]
     [SerializeField]
-    private float m_flashDuration = 1.0f;
+    private float _flashDuration = 1.0f;
     [SerializeField]
-    private bool m_useStartTimeHasReference;
-    private float m_startTime;
+    private bool _useStartTimeHasReference;
+    private float _startTime;
 
-    private Text m_text;
+    private Text _text;
 
     private void Awake()
     {
-        m_text = GetComponent<Text>();
+        _text = GetComponent<Text>();
     }
 
     private void Start()
     {
-        if (m_useStartTimeHasReference)
+        if (_useStartTimeHasReference)
         {
-            m_startTime = Time.time;
+            _startTime = Time.time;
         }
     }
 
@@ -32,15 +32,15 @@ public class FlashingText : MonoBehaviour
 
     private void UpdateColor()
     {
-        float alpha = Mathf.Lerp(0.0f, 1.0f, Mathf.PingPong((Time.time - m_startTime) / m_flashDuration, 1));
-        m_text.color = new Color(m_text.color.r, m_text.color.g, m_text.color.b, alpha);
+        float alpha = Mathf.Lerp(0.0f, 1.0f, Mathf.PingPong((Time.time - _startTime) / _flashDuration, 1));
+        _text.color = new Color(_text.color.r, _text.color.g, _text.color.b, alpha);
     }
 
     private void OnEnable()
     {
-        if (!m_useStartTimeHasReference)
+        if (!_useStartTimeHasReference)
         {
-            m_startTime = Time.time;
+            _startTime = Time.time;
         }
         else
         {
@@ -50,6 +50,6 @@ public class FlashingText : MonoBehaviour
 
     private void OnDisable()
     {
-        m_text.color = new Color(m_text.color.r, m_text.color.g, m_text.color.b, 0.0f);
+        _text.color = new Color(_text.color.r, _text.color.g, _text.color.b, 0.0f);
     }
 }

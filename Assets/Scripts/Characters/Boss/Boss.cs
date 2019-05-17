@@ -7,20 +7,20 @@ public class Boss : MonoBehaviour, IDestroyableInterrupterSubscriber
 {
     [Header("Damage")]
     [SerializeField]
-    private DestroyableInterrupter[] m_interrupters;
+    private DestroyableInterrupter[] _interrupters;
     [SerializeField]
-    private int m_interrupterBreakableDamage = 10;
+    private int _interrupterBreakableDamage = 10;
 
-    private Health m_health;
+    private Health _health;
     
     private void Awake()
     {
-        m_health = GetComponent<Health>();
+        _health = GetComponent<Health>();
     }
 
     private void Start()
     {
-        foreach (DestroyableInterrupter interrupter in m_interrupters)
+        foreach (DestroyableInterrupter interrupter in _interrupters)
         {
             interrupter.Subscribe(this);
         }
@@ -29,6 +29,6 @@ public class Boss : MonoBehaviour, IDestroyableInterrupterSubscriber
     // Methods of the IInterrupterBreakable interface
     public void NotifyInterrupterDestroyed(DestroyableInterrupter destroyableInterrupter)
     {
-        m_health.Damage(m_interrupterBreakableDamage);
+        _health.Damage(_interrupterBreakableDamage);
     }
 }

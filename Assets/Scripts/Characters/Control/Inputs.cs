@@ -3,12 +3,12 @@
 [Serializable]
 public struct Inputs
 {
-    public float vertical;
-    public float horizontal;
-    public bool jump;
-    public bool releaseJump;
-    public bool dash;
-    public bool releaseDash;
-    public bool heldCharge;
-    public bool releaseCharge;
+    public float Vertical;
+    public float Horizontal;
+    public bool Jump;
+    public bool ReleaseJump;
+    public bool Dash;
+    public bool ReleaseDash;
+    public bool HeldCharge;
+    public bool ReleaseCharge;
 }

@@ -111,8 +111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1451300574c0a24a94f71738e01e49c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_emote: {fileID: 1902525547507865754}
-  m_emotes:
+  _emote: {fileID: 1902525547507865754}
+  _emotes:
   - {fileID: 21300012, guid: e1cc94752fa7cea498dc07e19c464158, type: 3}
   - {fileID: 21300006, guid: e1cc94752fa7cea498dc07e19c464158, type: 3}
   - {fileID: 21300014, guid: e1cc94752fa7cea498dc07e19c464158, type: 3}
@@ -121,9 +121,9 @@ MonoBehaviour:
   - {fileID: 21300004, guid: e1cc94752fa7cea498dc07e19c464158, type: 3}
   - {fileID: 21300008, guid: e1cc94752fa7cea498dc07e19c464158, type: 3}
   - {fileID: 21300000, guid: e1cc94752fa7cea498dc07e19c464158, type: 3}
-  m_colorBackground: {fileID: 1902525547522077701}
-  m_intactColor: {r: 0.11764706, g: 0.7647059, b: 0.09019608, a: 1}
-  m_brokenColor: {r: 0.7647059, g: 0.09019607, b: 0.09019607, a: 1}
+  _colorBackground: {fileID: 1902525547522077701}
+  _intactColor: {r: 0, g: 1, b: 0, a: 1}
+  _brokenColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1902525547507865756
 GameObject:
   m_ObjectHideFlags: 0

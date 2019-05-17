@@ -291,7 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a22dc241a534b439eff05fa92180e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_useKeyboard: 1
+  _useKeyboard: 0
 --- !u!114 &114253259727586034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,11 +304,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e959c4768de2674ea60d1c59356d971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_shellRadius: 0.05
-  m_gravityModifier: 5
-  m_fallModifier: 1.1
-  m_minGroundNormalY: 0.4
-  m_debugVelocity: 0
+  ShellRadius: 0.05
+  GravityModifier: 5
+  FallModifier: 1.1
+  _minGroundNormalY: 0.4
+  DebugVelocity: 0
   m_maxSpeed: 9
   m_canJump: 1
   m_jumpTakeOffSpeed: 20
@@ -346,6 +346,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf1a898fc828517458f08cdea5f0d326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxHealth: 100
-  m_damagedSound: {fileID: 8300000, guid: b743f93fe6a8c844ab8402d39d3b1b5c, type: 3}
-  m_healedSound: {fileID: 8300000, guid: 1d1c4f6964f2b584f892faea0e30cb6d, type: 3}
+  _maxHealth: 100
+  _damagedSound: {fileID: 8300000, guid: b743f93fe6a8c844ab8402d39d3b1b5c, type: 3}
+  _healedSound: {fileID: 8300000, guid: 1d1c4f6964f2b584f892faea0e30cb6d, type: 3}

@@ -4,26 +4,26 @@ public class Pulsating : MonoBehaviour
 {
     [Header("Pulsation")]
     [SerializeField]
-    private float m_pulsationScale = 1.1f;
-    private Vector3 m_initScale;
+    private float _pulsationScale = 1.1f;
+    private Vector3 _initScale;
     [SerializeField]
-    private float m_pulseDuration = 1.0f;
+    private float _pulseDuration = 1.0f;
     [SerializeField]
-    private AnimationCurve m_pulsationMovement;
+    private AnimationCurve _pulsationMovement;
     [SerializeField]
-    private bool m_useStartTimeHasReference;
-    private float m_startTime;
+    private bool _useStartTimeHasReference;
+    private float _startTime;
 
     private void Awake()
     {
-        m_initScale = transform.localScale;
+        _initScale = transform.localScale;
     }
 
     private void Start()
     {
-        if (m_useStartTimeHasReference)
+        if (_useStartTimeHasReference)
         {
-            m_startTime = Time.time;
+            _startTime = Time.time;
         }
     }
 
@@ -34,15 +34,15 @@ public class Pulsating : MonoBehaviour
 
     private void UpdateLocalScale()
     {
-        float scale = m_pulsationMovement.Evaluate(Mathf.PingPong((Time.time - m_startTime) / (m_pulseDuration / 2), 1)) * m_pulsationScale;
-        transform.localScale = new Vector3(m_initScale.x + scale, m_initScale.y + scale, m_initScale.z + scale);
+        float scale = _pulsationMovement.Evaluate(Mathf.PingPong((Time.time - _startTime) / (_pulseDuration / 2), 1)) * _pulsationScale;
+        transform.localScale = new Vector3(_initScale.x + scale, _initScale.y + scale, _initScale.z + scale);
     }
 
     private void OnEnable()
     {
-        if (!m_useStartTimeHasReference)
+        if (!_useStartTimeHasReference)
         {
-            m_startTime = Time.time;
+            _startTime = Time.time;
         }
         else
         {
@@ -52,6 +52,6 @@ public class Pulsating : MonoBehaviour
 
     private void OnDisable()
     {
-        transform.localScale = m_initScale;
+        transform.localScale = _initScale;
     }
 }

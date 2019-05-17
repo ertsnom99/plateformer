@@ -7,35 +7,35 @@ public class AmbiantManager : KeptMonoSingleton<AmbiantManager>
 {
     [Header("Ambiant")]
     [SerializeField]
-    private AudioClip m_generalAmbiant;
+    private AudioClip _generalAmbiant;
     [SerializeField]
-    private float m_generalAmbiantVolume = .8f;
+    private float _generalAmbiantVolume = .8f;
     [SerializeField]
-    private AudioClip m_bossAmbiant;
+    private AudioClip _bossAmbiant;
     [SerializeField]
-    private float m_bossAmbiantVolume = .5f;
+    private float _bossAmbiantVolume = .5f;
 
-    private AudioSource m_audioSource;
+    private AudioSource _audioSource;
 
     protected override void Awake()
     {
         base.Awake();
 
-        m_audioSource = GetComponent<AudioSource>();
-        m_audioSource.loop = true;
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.loop = true;
     }
 
     private void Start()
     {
-        m_audioSource.clip = m_generalAmbiant;
-        m_audioSource.volume = m_generalAmbiantVolume;
-        m_audioSource.Play();
+        _audioSource.clip = _generalAmbiant;
+        _audioSource.volume = _generalAmbiantVolume;
+        _audioSource.Play();
     }
 
     public void StartBossAmbiant()
     {
-        m_audioSource.clip = m_bossAmbiant;
-        m_audioSource.volume = m_bossAmbiantVolume;
-        m_audioSource.Play();
+        _audioSource.clip = _bossAmbiant;
+        _audioSource.volume = _bossAmbiantVolume;
+        _audioSource.Play();
     }
 }

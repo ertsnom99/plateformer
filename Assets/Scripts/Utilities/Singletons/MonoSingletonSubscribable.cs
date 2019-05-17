@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 public class MonoSingletonSubscribable<T, U> : MonoSingleton<U> where U : MonoBehaviour
 {
-    protected List<T> m_subscribers = new List<T>();
+    protected List<T> Subscribers = new List<T>();
 
     public virtual void Subscribe(T subscriber)
     {
-        m_subscribers.Add(subscriber);
+        Subscribers.Add(subscriber);
     }
 
     public virtual void Unsubscribe(T subscriber)
     {
-        m_subscribers.Remove(subscriber);
+        Subscribers.Remove(subscriber);
     }
 }

@@ -3,28 +3,28 @@
 public class CharacterTypeAController : MonoBehaviour
 {
     [SerializeField]
-    private float m_maxSpeed = 100.0f;
+    private float _maxSpeed = 100.0f;
     [SerializeField]
-    private Transform m_groundCheck;
+    private Transform _groundCheck;
     [SerializeField]
-    private float m_groundRadius = .2f;
+    private float _groundRadius = .2f;
     [SerializeField]
-    private LayerMask m_groundLayer;
+    private LayerMask _groundLayer;
     [SerializeField]
-    private float m_jumpForce = 700.0f;
+    private float _jumpForce = 700.0f;
     
     public bool IsGrounded { get; private set; }
-    private float m_groundAngle;
+    private float _groundAngle;
 
-    private Rigidbody2D m_rigidbody2D;
-    private SpriteRenderer m_spriteRenderer;
-    private Animator m_animator;
+    private Rigidbody2D _rigidbody2D;
+    private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
 
     private void Awake()
     {
-        m_rigidbody2D = GetComponent<Rigidbody2D>();
-        m_spriteRenderer = GetComponent<SpriteRenderer>();
-        m_animator = GetComponent<Animator>();
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -34,43 +34,43 @@ public class CharacterTypeAController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        m_groundAngle = .0f;
-        IsGrounded = Physics2D.OverlapCircle(m_groundCheck.position, m_groundRadius, m_groundLayer);
+        _groundAngle = .0f;
+        IsGrounded = Physics2D.OverlapCircle(_groundCheck.position, _groundRadius, _groundLayer);
 
         float move = Mathf.Ceil(Input.GetAxis("Horizontal"));
         
         //Movement instantanious 
-        m_rigidbody2D.AddForce(new Vector2(move * m_maxSpeed * Time.fixedDeltaTime, m_rigidbody2D.velocity.y) - m_rigidbody2D.velocity, ForceMode2D.Impulse);
+        _rigidbody2D.AddForce(new Vector2(move * _maxSpeed * Time.fixedDeltaTime, _rigidbody2D.velocity.y) - _rigidbody2D.velocity, ForceMode2D.Impulse);
         //Movement with acceleration/decceleration
         //m_rigidbody2D.AddForce(new Vector2(move * m_maxSpeed * Time.fixedDeltaTime, m_rigidbody2D.velocity.y) - m_rigidbody2D.velocity, ForceMode2D.Force);
         
-        bool flipSprite = (m_spriteRenderer.flipX ? (move > 0.01f) : (move < -0.01f));
+        bool flipSprite = (_spriteRenderer.flipX ? (move > 0.01f) : (move < -0.01f));
 
         if (flipSprite)
         {
-            m_spriteRenderer.flipX = !m_spriteRenderer.flipX;
+            _spriteRenderer.flipX = !_spriteRenderer.flipX;
         }
 
-        m_animator.SetFloat("XVelocity", Mathf.Abs(move));
-        m_animator.SetBool("IsGrounded", IsGrounded);
-        m_animator.SetFloat("YVelocity", m_rigidbody2D.velocity.y);
-        m_animator.SetFloat("GroundAngle", m_groundAngle);
+        _animator.SetFloat("XVelocity", Mathf.Abs(move));
+        _animator.SetBool("IsGrounded", IsGrounded);
+        _animator.SetFloat("YVelocity", _rigidbody2D.velocity.y);
+        _animator.SetFloat("GroundAngle", _groundAngle);
     }
 
     private void Update()
     {
         if (IsGrounded && Input.GetButtonDown("Jump"))
         {
-            m_rigidbody2D.AddForce(new Vector2(.0f, m_jumpForce) - new Vector2(.0f, m_rigidbody2D.velocity.y), ForceMode2D.Impulse);
+            _rigidbody2D.AddForce(new Vector2(.0f, _jumpForce) - new Vector2(.0f, _rigidbody2D.velocity.y), ForceMode2D.Impulse);
 
             IsGrounded = false;
-            m_animator.SetBool("IsGrounded", IsGrounded);
+            _animator.SetBool("IsGrounded", IsGrounded);
         }
         else if (Input.GetButtonUp("Jump"))
         {
-            if (m_rigidbody2D.velocity.y > .0f)
+            if (_rigidbody2D.velocity.y > .0f)
             {
-                m_rigidbody2D.AddForce(new Vector2(m_rigidbody2D.velocity.x, m_rigidbody2D.velocity.y * 0.5f) - new Vector2(.0f, m_rigidbody2D.velocity.y), ForceMode2D.Impulse);
+                _rigidbody2D.AddForce(new Vector2(_rigidbody2D.velocity.x, _rigidbody2D.velocity.y * 0.5f) - new Vector2(.0f, _rigidbody2D.velocity.y), ForceMode2D.Impulse);
             }
         }
     }
@@ -82,19 +82,19 @@ public class CharacterTypeAController : MonoBehaviour
             // update ground angle
             float angle = contactPoint.normal.x != .0f ? Vector2.Angle(contactPoint.normal, new Vector2(contactPoint.normal.x, .0f)) : 90.0f;
 
-            if (angle > m_groundAngle)
+            if (angle > _groundAngle)
             {
-                m_groundAngle = angle;
+                _groundAngle = angle;
             }
         }
 
-        m_animator.SetFloat("GroundAngle", m_groundAngle);
+        _animator.SetFloat("GroundAngle", _groundAngle);
     }
 
     private void OnDrawGizmosSelected()
     {
         // Display the explosion radius when selected
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(m_groundCheck.position, m_groundRadius);
+        Gizmos.DrawWireSphere(_groundCheck.position, _groundRadius);
     }
 }

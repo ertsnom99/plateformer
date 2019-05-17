@@ -4,15 +4,15 @@ public class BossHealthBarEnabler : MonoBehaviour
 {
     [Header("Boss")]
     [SerializeField]
-    private GameObject m_healthBar;
+    private GameObject _healthBar;
     [SerializeField]
-    private bool m_enable = true;
+    private bool _enable = true;
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag(GameManager.PlayerTag))
         {
-            m_healthBar.SetActive(m_enable);
+            _healthBar.SetActive(_enable);
         }
     }
 }

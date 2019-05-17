@@ -7,23 +7,23 @@ using UnityEngine;
 public class DestroyableInterrupterHealth : Health
 {
     [SerializeField]
-    private int m_healthRegenRate = 10;
+    private int _healthRegenRate = 10;
 
     [Header("Color")]
     [SerializeField]
-    private Color m_intactColor;
+    private Color _intactColor;
     [SerializeField]
-    private Color m_brokenColor;
+    private Color _brokenColor;
 
-    private SpriteRenderer m_renderer;
+    private SpriteRenderer _renderer;
 
-    private bool m_canBeDirectlyDamage = true;
+    private bool _canBeDirectlyDamage = true;
 
     protected override void Awake()
     {
         base.Awake();
 
-        m_renderer = GetComponent<SpriteRenderer>();
+        _renderer = GetComponent<SpriteRenderer>();
         UpdateColor();
     }
 
@@ -33,13 +33,13 @@ public class DestroyableInterrupterHealth : Health
 
         if (HealthPoint > 0)
         {
-            Heal((int)(Time.deltaTime * m_healthRegenRate));
+            Heal((int)(Time.deltaTime * _healthRegenRate));
         }
     }
 
     public void SetCanBeDirectlyDamage(bool canBeDirectlyDamage)
     {
-        m_canBeDirectlyDamage = canBeDirectlyDamage;
+        _canBeDirectlyDamage = canBeDirectlyDamage;
     }
 
     public void ForceDamage(int damage)
@@ -49,7 +49,7 @@ public class DestroyableInterrupterHealth : Health
 
     public override void Damage(int damage)
     {
-        if (m_canBeDirectlyDamage)
+        if (_canBeDirectlyDamage)
         {
             base.Damage(damage);
         }
@@ -67,6 +67,6 @@ public class DestroyableInterrupterHealth : Health
 
     private void UpdateColor()
     {
-        m_renderer.color = Color.Lerp(m_brokenColor, m_intactColor, (float)HealthPoint / MaxHealth);
+        _renderer.color = Color.Lerp(_brokenColor, _intactColor, (float)HealthPoint / MaxHealth);
     }
 }

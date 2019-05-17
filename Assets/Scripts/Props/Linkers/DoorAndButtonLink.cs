@@ -4,39 +4,39 @@ using UnityEngine;
 [Serializable]
 public struct DoorAndButtonLinkSetting
 {
-    public Button button;
-    public Door door;
-    public bool openState;
+    public Button Button;
+    public Door Door;
+    public bool OpenState;
 }
 
 public class DoorAndButtonLink : MonoBehaviour, IButtonSubscriber
 {
     [Header("Links")]
     [SerializeField]
-    private DoorAndButtonLinkSetting[] m_doorsControl;
+    private DoorAndButtonLinkSetting[] _doorsControl;
 
     private void Start()
     {
-        foreach(DoorAndButtonLinkSetting controlSetting in m_doorsControl)
+        foreach(DoorAndButtonLinkSetting controlSetting in _doorsControl)
         {
-            controlSetting.button.Subscribe(this);
+            controlSetting.Button.Subscribe(this);
         }
     }
 
     // Methods of the IButtonSubscriber interface
     public void NotifyButtonPressed(Button button)
     {
-        foreach(DoorAndButtonLinkSetting controlSetting in m_doorsControl)
+        foreach(DoorAndButtonLinkSetting controlSetting in _doorsControl)
         {
-            if (controlSetting.button == button)
+            if (controlSetting.Button == button)
             {
-                if (controlSetting.openState)
+                if (controlSetting.OpenState)
                 {
-                    controlSetting.door.Open();
+                    controlSetting.Door.Open();
                 }
                 else
                 {
-                    controlSetting.door.Close();
+                    controlSetting.Door.Close();
                 }
             }
         }

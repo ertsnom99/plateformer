@@ -4,21 +4,21 @@ public class HealthTester : MonoBehaviour
 {
     [Header("Health")]
     [SerializeField]
-    private Health m_health;
+    private Health _health;
     [SerializeField]
-    private int m_healthChange;
+    private int _healthChange;
 
     private void Update()
     {
 		if (Input.anyKeyDown)
         {
-            if (m_healthChange > 0)
+            if (_healthChange > 0)
             {
-                m_health.Heal(m_healthChange);
+                _health.Heal(_healthChange);
             }
-            else if (m_healthChange < 0)
+            else if (_healthChange < 0)
             {
-                m_health.Damage(Mathf.Abs(m_healthChange));
+                _health.Damage(Mathf.Abs(_healthChange));
             }
         }
 	}

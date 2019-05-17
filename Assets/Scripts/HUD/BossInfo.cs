@@ -4,31 +4,31 @@ public class BossInfo : Shakable, IHealthSubscriber
 {
     [Header("Health")]
     [SerializeField]
-    private Health m_health;
+    private Health _health;
 
-    private float m_healthPoint;
+    private float _healthPoint;
 
     private void Start()
     {
-        m_health.Subscribe(this);
+        _health.Subscribe(this);
     }
 
     // Methods of the IHealthSubscriber interface
     public void NotifyJustSubscribed(Health healthScript)
     {
-        m_healthPoint = healthScript.HealthPoint;
+        _healthPoint = healthScript.HealthPoint;
     }
 
     public void NotifyDamageApplied(Health healthScript, int damage) { }
 
     public void NotifyHealthChange(Health healthScript, int health)
     {
-        if (m_healthPoint > health)
+        if (_healthPoint > health)
         {
             Shake();
         }
 
-        m_healthPoint = healthScript.HealthPoint;
+        _healthPoint = healthScript.HealthPoint;
     }
 
     public void NotifyHealthDepleted(Health healthScript) { }

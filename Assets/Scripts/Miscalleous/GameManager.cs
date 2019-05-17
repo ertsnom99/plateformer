@@ -5,38 +5,38 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
 {
     [Header("Fade out")]
     [SerializeField]
-    private FadeImage m_fade;
+    private FadeImage _fade;
     [SerializeField]
-    private float m_fadeDuration;
+    private float _fadeDuration;
 
-    private bool m_fading = false;
+    private bool _fading = false;
 
     [Header("Player")]
     [SerializeField]
-    private PlayerControl m_playerControl;
+    private PlayerControl _playerControl;
     [SerializeField]
-    private PlatformerMovement m_playerMovement;
+    private PlatformerMovement _playerMovement;
     [SerializeField]
-    private bool m_enableControlAfterFadeIn = true;
+    private bool _enableControlAfterFadeIn = true;
     [SerializeField]
-    private Inputs m_forcedControlsAtLevelStart;
+    private Inputs _forcedControlsAtLevelStart;
     
     [Header("Enemies")]
     [SerializeField]
-    private EnemieRespawner m_enemieRespawner;
+    private EnemieRespawner _enemieRespawner;
 
     [Header("End Game")]
     [SerializeField]
-    private GameObject m_endGameWonText;
+    private GameObject _endGameWonText;
     [SerializeField]
-    private GameObject m_endGameLoseText;
+    private GameObject _endGameLoseText;
     [SerializeField]
-    private int m_sceneToLoadOnWon = 0;
+    private int _sceneToLoadOnWon = 0;
     [SerializeField]
-    private int m_sceneToLoadOnLose = 1;
+    private int _sceneToLoadOnLose = 1;
 
-    private bool m_gameEnded = false;
-    private bool m_gameWon = false;
+    private bool _gameEnded = false;
+    private bool _gameWon = false;
 
     // Tags
     public const string PlayerTag = "Player";
@@ -44,13 +44,13 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
 
     private void Start()
     {
-        m_fade.Subscribe(this);
-        m_fade.SetOpacity(true);
-        m_fade.FadeIn(m_fadeDuration);
+        _fade.Subscribe(this);
+        _fade.SetOpacity(true);
+        _fade.FadeIn(_fadeDuration);
 
-        m_playerControl.GetComponent<Health>().Subscribe(this);
-        m_playerControl.EnableControl(false);
-        m_playerMovement.SetInputs(m_forcedControlsAtLevelStart);
+        _playerControl.GetComponent<Health>().Subscribe(this);
+        _playerControl.EnableControl(false);
+        _playerMovement.SetInputs(_forcedControlsAtLevelStart);
     }
 
     private void Update()
@@ -64,16 +64,16 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
         {
             Application.Quit();
         }
-        else if (m_gameEnded && !m_fading && Input.GetButtonDown("Restart"))
+        else if (_gameEnded && !_fading && Input.GetButtonDown("Restart"))
         {
-            m_fade.FadeOut(m_fadeDuration);
-            m_fading = true;
+            _fade.FadeOut(_fadeDuration);
+            _fading = true;
         }
     }
 
     public void EndGame(bool won)
     {
-        if (!m_gameEnded)
+        if (!_gameEnded)
         {
             // Disable all enemies
             GameObject[] enemies = GameObject.FindGameObjectsWithTag(EnemieTag);
@@ -84,26 +84,26 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
                 enemie.GetComponent<AIControl>().EnableControl(false);
             }
 
-            if (m_enemieRespawner)
+            if (_enemieRespawner)
             {
-                m_enemieRespawner.EnableEnemieSpawn(false);
+                _enemieRespawner.EnableEnemieSpawn(false);
             }
 
             // Disable player
-            m_playerControl.EnableControl(false);
+            _playerControl.EnableControl(false);
 
             // Show end text
             if (won)
             {
-                m_endGameWonText.SetActive(true);
+                _endGameWonText.SetActive(true);
             }
             else
             {
-                m_endGameLoseText.SetActive(true);
+                _endGameLoseText.SetActive(true);
             }
 
-            m_gameEnded = true;
-            m_gameWon = won;
+            _gameEnded = true;
+            _gameWon = won;
         }
     }
 
@@ -122,27 +122,27 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
     // Methods of the IFadeImageSubscriber interface
     public void NotifyFadeInFinished()
     {
-        if(m_enableControlAfterFadeIn)
+        if(_enableControlAfterFadeIn)
         {
-            m_playerControl.EnableControl(true);
+            _playerControl.EnableControl(true);
         }
     }
 
     public void NotifyFadeOutFinished()
     {
-        if (m_gameEnded)
+        if (_gameEnded)
         {
             // Destroy the ambiant since the game is restarting
             Destroy(AmbiantManager.Instance.gameObject);
         }
 
-        if (m_gameWon)
+        if (_gameWon)
         {
-            SceneManager.LoadScene(m_sceneToLoadOnWon, LoadSceneMode.Single);
+            SceneManager.LoadScene(_sceneToLoadOnWon, LoadSceneMode.Single);
         }
         else
         {
-            SceneManager.LoadScene(m_sceneToLoadOnLose, LoadSceneMode.Single);
+            SceneManager.LoadScene(_sceneToLoadOnLose, LoadSceneMode.Single);
         }
     }
 }

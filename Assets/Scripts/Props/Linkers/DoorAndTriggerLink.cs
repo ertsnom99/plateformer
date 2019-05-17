@@ -4,39 +4,39 @@ using UnityEngine;
 [Serializable]
 public struct DoorAndTriggerZoneLinkSetting
 {
-    public TriggerZone triggerZone;
-    public Door door;
-    public bool openState;
+    public TriggerZone TriggerZone;
+    public Door Door;
+    public bool OpenState;
 }
 
 public class DoorAndTriggerLink : MonoBehaviour, ITriggerZoneSubscriber
 {
     [Header("Links")]
     [SerializeField]
-    private DoorAndTriggerZoneLinkSetting[] m_doorsControl;
+    private DoorAndTriggerZoneLinkSetting[] _doorsControl;
 
     private void Start()
     {
-        foreach (DoorAndTriggerZoneLinkSetting controlSetting in m_doorsControl)
+        foreach (DoorAndTriggerZoneLinkSetting controlSetting in _doorsControl)
         {
-            controlSetting.triggerZone.Subscribe(this);
+            controlSetting.TriggerZone.Subscribe(this);
         }
     }
 
     // Methods of the ITriggerZoneSubscriber interface
     public void NotifyTriggerEntered(TriggerZone triggerZone)
     {
-        foreach (DoorAndTriggerZoneLinkSetting controlSetting in m_doorsControl)
+        foreach (DoorAndTriggerZoneLinkSetting controlSetting in _doorsControl)
         {
-            if (controlSetting.triggerZone == triggerZone)
+            if (controlSetting.TriggerZone == triggerZone)
             {
-                if (controlSetting.openState)
+                if (controlSetting.OpenState)
                 {
-                    controlSetting.door.Open();
+                    controlSetting.Door.Open();
                 }
                 else
                 {
-                    controlSetting.door.Close();
+                    controlSetting.Door.Close();
                 }
             }
         }

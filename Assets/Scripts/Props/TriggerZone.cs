@@ -11,7 +11,7 @@ public class TriggerZone : MonoSubscribable<ITriggerZoneSubscriber>
     {
         if (col.CompareTag(GameManager.PlayerTag))
         {
-            foreach(ITriggerZoneSubscriber subscriber in m_subscribers)
+            foreach(ITriggerZoneSubscriber subscriber in Subscribers)
             {
                 subscriber.NotifyTriggerEntered(this);
             }

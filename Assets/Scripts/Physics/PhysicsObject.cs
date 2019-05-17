@@ -19,67 +19,67 @@ public class PhysicsObject : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField]
-    protected float m_shellRadius = 0.05f;
+    protected float ShellRadius = 0.05f;
     
     [SerializeField]
-    protected float m_gravityModifier = 1.0f;
+    protected float GravityModifier = 1.0f;
 
     public float CurrentGravityModifier { get; protected set; }
 
     [SerializeField]
-    protected float m_fallModifier = 1.0f;
+    protected float FallModifier = 1.0f;
 
     [SerializeField]
-    private float m_minGroundNormalY = .4f;
-    protected Vector2 m_groundNormal;
+    private float _minGroundNormalY = .4f;
+    protected Vector2 GroundNormal;
     //protected float m_groundAngle;
 
     public bool IsGrounded { get; private set; }
 
     [SerializeField]
-    protected bool m_debugVelocity = false;
+    protected bool DebugVelocity = false;
 
     public Vector2 Velocity { get; protected set; }
 
-    protected float m_targetHorizontalVelocity;
-    protected ContactFilter2D m_contactFilter;
-    protected RaycastHit2D[] m_hitBuffer = new RaycastHit2D[16];
-    protected List<RaycastHit2D> m_hitBufferList = new List<RaycastHit2D>(16);
+    protected float TargetHorizontalVelocity;
+    protected ContactFilter2D ContactFilter;
+    protected RaycastHit2D[] HitBuffer = new RaycastHit2D[16];
+    protected List<RaycastHit2D> HitBufferList = new List<RaycastHit2D>(16);
 
-    protected Dictionary<Collider2D, IPhysicsObjectCollisionListener[]> m_previouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsObjectCollisionListener[]>();
-    protected Dictionary<Collider2D, IPhysicsObjectCollisionListener[]> m_collidingGameObjects = new Dictionary<Collider2D, IPhysicsObjectCollisionListener[]>();
+    protected Dictionary<Collider2D, IPhysicsObjectCollisionListener[]> PreviouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsObjectCollisionListener[]>();
+    protected Dictionary<Collider2D, IPhysicsObjectCollisionListener[]> CollidingGameObjects = new Dictionary<Collider2D, IPhysicsObjectCollisionListener[]>();
 
-    protected Collider2D m_collider;
-    protected Rigidbody2D m_rigidbody2D;
+    protected Collider2D Collider;
+    protected Rigidbody2D Rigidbody2D;
 
     protected const float MinMoveDistance = 0.001f;
 
     protected virtual void Awake()
     {
         // Tells to use the layer settings from the Physics2D settings (the matrix)
-        m_contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
-        m_contactFilter.useLayerMask = true;
-        m_contactFilter.useTriggers = false;
+        ContactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+        ContactFilter.useLayerMask = true;
+        ContactFilter.useTriggers = false;
 
-        CurrentGravityModifier = m_gravityModifier;
+        CurrentGravityModifier = GravityModifier;
 
         IsGrounded = false;
 
-        m_collider = GetComponent<Collider2D>();
-        m_rigidbody2D = GetComponent<Rigidbody2D>();
+        Collider = GetComponent<Collider2D>();
+        Rigidbody2D = GetComponent<Rigidbody2D>();
 
         InitialiseRigidbody2D();
     }
 
     private void InitialiseRigidbody2D()
     {
-        m_rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
-        m_rigidbody2D.simulated = true;
-        m_rigidbody2D.useFullKinematicContacts = true;
-        m_rigidbody2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-        m_rigidbody2D.sleepMode = RigidbodySleepMode2D.NeverSleep;
-        m_rigidbody2D.interpolation = RigidbodyInterpolation2D.Interpolate;
-        m_rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+        Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+        Rigidbody2D.simulated = true;
+        Rigidbody2D.useFullKinematicContacts = true;
+        Rigidbody2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        Rigidbody2D.sleepMode = RigidbodySleepMode2D.NeverSleep;
+        Rigidbody2D.interpolation = RigidbodyInterpolation2D.Interpolate;
+        Rigidbody2D.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     protected virtual void FixedUpdate()
@@ -92,18 +92,18 @@ public class PhysicsObject : MonoBehaviour
 
         if (Velocity.y < .0f)
         {
-            yVelocityAdded *= m_fallModifier;
+            yVelocityAdded *= FallModifier;
         }
 
         Velocity += yVelocityAdded;
-        Velocity = new Vector2 (m_targetHorizontalVelocity, Velocity.y);
+        Velocity = new Vector2 (TargetHorizontalVelocity, Velocity.y);
 
         // Create a Vector prependicular to the normal
-        Vector2 movementAlongGround = new Vector2(m_groundNormal.y, -m_groundNormal.x);
+        Vector2 movementAlongGround = new Vector2(GroundNormal.y, -GroundNormal.x);
 
         // Backup the list of gameObjects that used to collide and clear the original
-        m_previouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsObjectCollisionListener[]>(m_collidingGameObjects);
-        m_collidingGameObjects.Clear();
+        PreviouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsObjectCollisionListener[]>(CollidingGameObjects);
+        CollidingGameObjects.Clear();
 
         // The X movement is executed first, then the Y movement is executed. This allows a better control of each type of movement and helps to avoid
         // corner cases. This technic was used in the 16 bit era.
@@ -118,7 +118,7 @@ public class PhysicsObject : MonoBehaviour
         // Check and call collision exit methods
         CheckCollisionExit();
 
-        if (m_debugVelocity)
+        if (DebugVelocity)
         {
             Debug.DrawLine(transform.position, transform.position + new Vector3(.0f, Velocity.y, .0f), Color.red);
             Debug.DrawLine(transform.position, transform.position + new Vector3(Velocity.x, .0f, .0f), Color.blue);
@@ -130,7 +130,7 @@ public class PhysicsObject : MonoBehaviour
 
     protected virtual void Update()
     {
-        m_targetHorizontalVelocity = .0f;
+        TargetHorizontalVelocity = .0f;
         ComputeVelocity();
     }
 
@@ -143,18 +143,18 @@ public class PhysicsObject : MonoBehaviour
         // Check for collision only if the object moves enough
         if (distance > MinMoveDistance)
         {
-            int count = m_rigidbody2D.Cast(movement, m_contactFilter, m_hitBuffer, distance + m_shellRadius);
-            m_hitBufferList.Clear();
+            int count = Rigidbody2D.Cast(movement, ContactFilter, HitBuffer, distance + ShellRadius);
+            HitBufferList.Clear();
 
             // Transfer hits to m_hitBufferList
             // m_hitBuffer has always the same number of elements in it, but some might be null.
             // The purpose of the transfer is to only keep the actual result of the cast
             for (int i = 0; i < count; i++)
             {
-                m_hitBufferList.Add(m_hitBuffer[i]);
+                HitBufferList.Add(HitBuffer[i]);
             }
 
-            foreach (RaycastHit2D hit in m_hitBufferList)
+            foreach (RaycastHit2D hit in HitBufferList)
             {
                 Vector2 currentNormal = hit.normal;
 
@@ -162,14 +162,14 @@ public class PhysicsObject : MonoBehaviour
                 CheckCollisionEnter(hit);
 
                 // Check if the object is grounded
-                if (currentNormal.y > m_minGroundNormalY)
+                if (currentNormal.y > _minGroundNormalY)
                 {
                     IsGrounded = true;
 
                     if (yMovement)
                     {
                         // Update ground normal
-                        m_groundNormal = currentNormal;
+                        GroundNormal = currentNormal;
                         currentNormal.x = 0;
 
                         // update ground angle
@@ -197,7 +197,7 @@ public class PhysicsObject : MonoBehaviour
                 }
 
                 // Calculate how much movement can be done, before hitting something, considering the ShellRadius  
-                float modifiedDistance = hit.distance - m_shellRadius;
+                float modifiedDistance = hit.distance - ShellRadius;
 
                 // If the object should move less then what was tought at first, then move less
                 distance = modifiedDistance < distance ? modifiedDistance : distance;
@@ -208,7 +208,7 @@ public class PhysicsObject : MonoBehaviour
         }
 
         // Apply the movement
-        m_rigidbody2D.position = m_rigidbody2D.position + movement.normalized * distance;
+        Rigidbody2D.position = Rigidbody2D.position + movement.normalized * distance;
 
         // Updating m_rigidbody2D.position doesn't update transform.position
         // It is only updated before or at the start of next FixedUpdate() (note sure, should be double checked)
@@ -220,7 +220,7 @@ public class PhysicsObject : MonoBehaviour
         IPhysicsObjectCollisionListener[] collisionListeners;
         
         // If the hitted gameObject wasn't previously hitted
-        if (!m_previouslyCollidingGameObject.ContainsKey(hit.collider))
+        if (!PreviouslyCollidingGameObject.ContainsKey(hit.collider))
         {
             collisionListeners = hit.collider.GetComponents<IPhysicsObjectCollisionListener>();
 
@@ -228,9 +228,9 @@ public class PhysicsObject : MonoBehaviour
             {
                 Vector2 relativeVelocity = hit.rigidbody ? Velocity - hit.rigidbody.velocity : Velocity;
 
-                PhysicsCollision2D physicsObjectCollision2D = new PhysicsCollision2D(m_collider,
+                PhysicsCollision2D physicsObjectCollision2D = new PhysicsCollision2D(Collider,
                                                                                      hit.collider,
-                                                                                     m_rigidbody2D,
+                                                                                     Rigidbody2D,
                                                                                      hit.rigidbody,
                                                                                      transform,
                                                                                      gameObject,
@@ -247,27 +247,27 @@ public class PhysicsObject : MonoBehaviour
         }
         else
         {
-            collisionListeners = m_previouslyCollidingGameObject[hit.collider];
+            collisionListeners = PreviouslyCollidingGameObject[hit.collider];
         }
 
         // Update the list of currently colliding gameObject
-        if (!m_collidingGameObjects.ContainsKey(hit.collider))
+        if (!CollidingGameObjects.ContainsKey(hit.collider))
         {
-            m_collidingGameObjects.Add(hit.collider, collisionListeners);
+            CollidingGameObjects.Add(hit.collider, collisionListeners);
         }
     }
 
     protected void CheckCollisionExit()
     {
         // If a gameObject isn't hitted anymore
-        foreach (KeyValuePair<Collider2D, IPhysicsObjectCollisionListener[]> entry in m_previouslyCollidingGameObject)
+        foreach (KeyValuePair<Collider2D, IPhysicsObjectCollisionListener[]> entry in PreviouslyCollidingGameObject)
         {
-            if (!m_collidingGameObjects.ContainsKey(entry.Key))
+            if (!CollidingGameObjects.ContainsKey(entry.Key))
             {
-                PhysicsCollision2D physicsObjectCollision2D = new PhysicsCollision2D(m_collider,
+                PhysicsCollision2D physicsObjectCollision2D = new PhysicsCollision2D(Collider,
                                                                                      entry.Key,
-                                                                                     m_rigidbody2D,
-                                                                                     m_collider.attachedRigidbody,
+                                                                                     Rigidbody2D,
+                                                                                     Collider.attachedRigidbody,
                                                                                      transform,
                                                                                      gameObject,
                                                                                      Vector2.zero,

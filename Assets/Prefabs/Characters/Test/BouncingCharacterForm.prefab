@@ -365,17 +365,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_shellRadius: 0.05
-  m_gravityModifier: 0
+  GravityModifier: 0
+  m_fallModifier: 1
   m_minGroundNormalY: 0.4
   m_debugVelocity: 0
-  m_bounciness: 1
-  m_bounceFreezeDuration: 0
-  m_bounceMaxTry: 100
-  m_bounceHasStopCondition: 1
-  m_freezeWhenStopConditionReached: 0
-  m_bounceSound: {fileID: 8300000, guid: 97753f95fd25e2c41a5ac7c8e9e5d310, type: 3}
-  m_playBounceSoundOnLastBounce: 0
-  m_bounceStopCondition: 1
-  m_bounceDuration: 10
-  m_maxBounceCount: 40
-  m_minVelocity: 5
+  _bounciness: 1
+  _bounceFreezeDuration: 0
+  _bounceMaxTry: 100
+  _bounceHasStopCondition: 1
+  _freezeWhenStopConditionReached: 0
+  _bounceSound: {fileID: 8300000, guid: 97753f95fd25e2c41a5ac7c8e9e5d310, type: 3}
+  _playBounceSoundOnLastBounce: 0
+  _bounceStopCondition: 1
+  _bounceDuration: 10
+  _maxBounceCount: 40
+  _minVelocity: 5

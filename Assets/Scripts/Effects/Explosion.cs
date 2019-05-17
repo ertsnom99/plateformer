@@ -8,47 +8,47 @@ public class Explosion : MonoBehaviour, IAnimatorEventSubscriber
 {
     [Header("Sound")]
     [SerializeField]
-    private AudioClip m_explosionSound;
+    private AudioClip _explosionSound;
 
-    private bool m_animationOver = false;
-    private bool m_soundOver = false;
+    private bool _animationOver = false;
+    private bool _soundOver = false;
 
-    private AnimatorEventsManager m_animatorEventsManager;
-    private AudioSource m_audioSource;
+    private AnimatorEventsManager _animatorEventsManager;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
-        m_animatorEventsManager = GetComponentInChildren<AnimatorEventsManager>();
-        m_audioSource = GetComponentInChildren<AudioSource>();
+        _animatorEventsManager = GetComponentInChildren<AnimatorEventsManager>();
+        _audioSource = GetComponentInChildren<AudioSource>();
 
-        m_animatorEventsManager.Subscribe(AnimatorEvents.AnimationFinish, this);
+        _animatorEventsManager.Subscribe(AnimatorEvents.AnimationFinish, this);
     }
 
     private void Start()
     {
-        if (m_explosionSound)
+        if (_explosionSound)
         {
             // Play sound
-            m_audioSource.pitch = Random.Range(.9f, 1.0f);
-            m_audioSource.PlayOneShot(m_explosionSound);
+            _audioSource.pitch = Random.Range(.9f, 1.0f);
+            _audioSource.PlayOneShot(_explosionSound);
         }
         else
         {
-            m_soundOver = true;
+            _soundOver = true;
         }
     }
     
     private void Update()
     {
-        if (!m_soundOver && !m_audioSource.isPlaying)
+        if (!_soundOver && !_audioSource.isPlaying)
         {
-            if (m_animationOver)
+            if (_animationOver)
             {
                 Destroy(gameObject);
             }
             else
             {
-                m_soundOver = true;
+                _soundOver = true;
             }
         }
     }
@@ -59,13 +59,13 @@ public class Explosion : MonoBehaviour, IAnimatorEventSubscriber
         switch(eventName)
         {
             case AnimatorEvents.AnimationFinish:
-                if (m_soundOver)
+                if (_soundOver)
                 {
                     Destroy(gameObject);
                 }
                 else
                 {
-                    m_animationOver = true;
+                    _animationOver = true;
                 }
 
                 break;

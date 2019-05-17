@@ -3,13 +3,13 @@
 public class Respawn : MonoBehaviour
 {
     [SerializeField]
-    private Transform m_respawnPos;
+    private Transform _respawnPos;
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (m_respawnPos && col.CompareTag(GameManager.PlayerTag))
+        if (_respawnPos && col.CompareTag(GameManager.PlayerTag))
         {
-            col.transform.position = m_respawnPos.position;
+            col.transform.position = _respawnPos.position;
         }
     }
 }

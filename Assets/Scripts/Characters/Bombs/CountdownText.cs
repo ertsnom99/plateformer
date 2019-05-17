@@ -8,30 +8,30 @@ public class CountdownText : MonoBehaviour, IProximityExplodableSubscriber
 {
     [Header("Explodable")]
     [SerializeField]
-    private ProximityExplodable m_proximityExplodable;
+    private ProximityExplodable _proximityExplodable;
 
-    private Text m_text;
+    private Text _text;
 
     private void Awake()
     {
-        m_text = GetComponent<Text>();
-        m_text.text = "";
+        _text = GetComponent<Text>();
+        _text.text = "";
     }
 
     private void Start()
     {
-        m_proximityExplodable.Subscribe(this);
+        _proximityExplodable.Subscribe(this);
     }
 
     // Methods of the IProximityExplodableSubscriber interface
     public void NotifyCountdownStarted(GameObject explodableGameObject, float timeRemaining)
     {
-        m_text.text = Mathf.Ceil(timeRemaining).ToString();
+        _text.text = Mathf.Ceil(timeRemaining).ToString();
     }
 
     public void NotifyCountdownUpdated(GameObject explodableGameObject, float timeRemaining)
     {
-        m_text.text = Mathf.Ceil(timeRemaining).ToString();
+        _text.text = Mathf.Ceil(timeRemaining).ToString();
     }
 
     public void NotifyCountdownFinished(GameObject explodableGameObject) { }

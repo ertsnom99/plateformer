@@ -2,7 +2,7 @@
 
 public class AnchorDown : MonoBehaviour
 {
-    public float m_downForce = 5.0f;
+    public float _downForce = 5.0f;
 
     private void OnTriggerStay2D(Collider2D other)
     {
@@ -11,7 +11,7 @@ public class AnchorDown : MonoBehaviour
         if (typeA && typeA.IsGrounded)
         {
             Debug.Log(other.gameObject.name);
-            other.GetComponent<Rigidbody2D>().AddForce(Vector2.down * m_downForce, ForceMode2D.Force);
+            other.GetComponent<Rigidbody2D>().AddForce(Vector2.down * _downForce, ForceMode2D.Force);
             return;
         }
 
@@ -19,7 +19,7 @@ public class AnchorDown : MonoBehaviour
         
         if (typeB && typeB.IsGrounded)
         {
-            typeB.AddVerticalVelocity(-m_downForce);
+            typeB.AddVerticalVelocity(-_downForce);
             return;
         }
     }

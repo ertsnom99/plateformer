@@ -5,10 +5,10 @@ public class GemManager : MonoBehaviour, IGemSubscriber
 {
     [Header("Text")]
     [SerializeField]
-    private Text m_text;
+    private Text _text;
 
-    private Gem[] m_gems;
-    private int m_gemCount = 0;
+    private Gem[] _gems;
+    private int _gemCount = 0;
 
     private void Start ()
     {
@@ -19,12 +19,12 @@ public class GemManager : MonoBehaviour, IGemSubscriber
 
     private void FindAllGems()
     {
-        m_gems = FindObjectsOfType<Gem>();
+        _gems = FindObjectsOfType<Gem>();
     }
 
     private void SubscribeToGems()
     {
-        foreach (Gem gem in m_gems)
+        foreach (Gem gem in _gems)
         {
             gem.Subscribe(this);
         }
@@ -32,13 +32,13 @@ public class GemManager : MonoBehaviour, IGemSubscriber
 
     private void UpdateText()
     {
-        m_text.text = m_gemCount + "/" + m_gems.Length + " Gems";
+        _text.text = _gemCount + "/" + _gems.Length + " Gems";
     }
 
     // Methods of the IGemSubscriber interface
     public void NotifyGemCollected(Gem gem)
     {
-        m_gemCount++;
+        _gemCount++;
         UpdateText();
     }
 }

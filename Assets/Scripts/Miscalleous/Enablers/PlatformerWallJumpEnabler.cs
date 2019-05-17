@@ -4,16 +4,16 @@ public class PlatformerWallJumpEnabler : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField]
-    private PlatformerMovement m_movementScript;
+    private PlatformerMovement _movementScript;
     [SerializeField]
-    private bool m_enable = true;
+    private bool _enable = true;
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag(GameManager.PlayerTag))
         {
-            m_movementScript.EnableSlideOfWall(m_enable);
-            m_movementScript.EnableWallJump(m_enable);
+            _movementScript.EnableSlideOfWall(_enable);
+            _movementScript.EnableWallJump(_enable);
         }
     }
 }

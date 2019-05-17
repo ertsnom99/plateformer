@@ -5,13 +5,13 @@ public class VirtualCameraChangeZone : MonoBehaviour
 {
     [Header("Camera")]
     [SerializeField]
-    private CinemachineVirtualCamera m_virtualCamera;
+    private CinemachineVirtualCamera _virtualCamera;
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (VirtualCameraManager.Instance && m_virtualCamera && col.CompareTag(GameManager.PlayerTag))
+        if (VirtualCameraManager.Instance && _virtualCamera && col.CompareTag(GameManager.PlayerTag))
         {
-            VirtualCameraManager.Instance.ChangeVirtualCamera(m_virtualCamera);
+            VirtualCameraManager.Instance.ChangeVirtualCamera(_virtualCamera);
         }
     }
 }

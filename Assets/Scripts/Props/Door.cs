@@ -9,39 +9,39 @@ public class Door : MonoBehaviour, IAnimatorEventSubscriber
 {
     [Header("Initialization")]
     [SerializeField]
-    private bool m_initiallyOpen = false;
+    private bool _initiallyOpen = false;
 
-    private Animator m_animator;
-    private AnimatorEventsManager m_animatorEventsManager;
-    private BoxCollider2D m_collider;
+    private Animator _animator;
+    private AnimatorEventsManager _animatorEventsManager;
+    private BoxCollider2D _collider;
 
-    protected int m_isOpenParamHashId = Animator.StringToHash(IsOpenParamNameString);
+    protected int IsOpenParamHashId = Animator.StringToHash(IsOpenParamNameString);
 
     public const string IsOpenParamNameString = "IsOpen";
 
     private void Awake()
     {
-        m_animator = GetComponent<Animator>();
-        m_animatorEventsManager = GetComponent<AnimatorEventsManager>();
-        m_collider = GetComponent<BoxCollider2D>();
+        _animator = GetComponent<Animator>();
+        _animatorEventsManager = GetComponent<AnimatorEventsManager>();
+        _collider = GetComponent<BoxCollider2D>();
         
-        m_animatorEventsManager.Subscribe(AnimatorEvents.AnimationBegin, this);
-        m_animatorEventsManager.Subscribe(AnimatorEvents.AnimationFinish, this);
+        _animatorEventsManager.Subscribe(AnimatorEvents.AnimationBegin, this);
+        _animatorEventsManager.Subscribe(AnimatorEvents.AnimationFinish, this);
     }
 
     private void Start()
     {
-        m_animator.SetBool(m_isOpenParamHashId, m_initiallyOpen);
+        _animator.SetBool(IsOpenParamHashId, _initiallyOpen);
     }
 
     public void Open()
     {
-        m_animator.SetBool(m_isOpenParamHashId, true);
+        _animator.SetBool(IsOpenParamHashId, true);
     }
 
     public void Close()
     {
-        m_animator.SetBool(m_isOpenParamHashId, false);
+        _animator.SetBool(IsOpenParamHashId, false);
     }
 
     // Methods of the IAnimatorEventSubscriber interface
@@ -51,11 +51,11 @@ public class Door : MonoBehaviour, IAnimatorEventSubscriber
         {
             // When the door start to close
             case AnimatorEvents.AnimationBegin:
-                m_collider.enabled = true;
+                _collider.enabled = true;
                 break;
             // When the door finish to open
             case AnimatorEvents.AnimationFinish:
-                m_collider.enabled = false;
+                _collider.enabled = false;
                 break;
         }
     }
