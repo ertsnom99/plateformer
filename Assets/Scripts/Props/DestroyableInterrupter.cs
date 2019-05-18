@@ -105,7 +105,9 @@ public class DestroyableInterrupter : MonoSubscribable<IDestroyableInterrupterSu
     // Methods of the IHealthSubscriber interface
     public void NotifyJustSubscribed(Health healthScript) { }
 
-    public void NotifyDamageApplied(Health healthScript, int damage) { }
+    public void NotifyDamageCalled(Health healthScript, int damage) { }
+
+    public void NotifyHealCalled(Health healthScript, int gain) { }
 
     public void NotifyHealthChange(Health healthScript, int health) { }
 

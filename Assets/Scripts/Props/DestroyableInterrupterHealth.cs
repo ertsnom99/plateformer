@@ -55,12 +55,12 @@ public class DestroyableInterrupterHealth : Health
         }
     }
 
-    protected override void OnDamageApplied()
+    protected override void OnDamageDealt()
     {
         UpdateColor();
     }
 
-    protected override void OnHealed()
+    protected override void OnHealingDone()
     {
         UpdateColor();
     }

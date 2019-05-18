@@ -291,7 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a22dc241a534b439eff05fa92180e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _useKeyboard: 0
+  UseKeyboard: 0
 --- !u!114 &114253259727586034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,31 +309,31 @@ MonoBehaviour:
   FallModifier: 1.1
   _minGroundNormalY: 0.4
   DebugVelocity: 0
-  m_maxSpeed: 9
-  m_canJump: 1
-  m_jumpTakeOffSpeed: 20
-  m_canAirborneJump: 1
-  m_airborneJumpTakeOffSpeed: 15
-  m_canSlideOfWall: 1
-  m_canSlideGoingUp: 0
-  m_canSlideDuringKnockBack: 0
-  m_slideRaycastOffset: 0.4
-  m_slideRaycastDistance: 0.6
-  m_slideGravityModifier: 1
-  m_constantSlipeSpeed: 0
-  m_debugSlideRaycast: 0
-  m_canWallJump: 1
-  m_wallJumpHorizontalVelocity: 6
-  m_wallJumpWindowTime: 0.07
-  m_WallJumpControlDelayTime: 0.1
-  m_canDash: 1
-  m_dashSpeed: 26
-  m_dashDuration: 0.2
-  m_dashCooldown: 2
-  m_flipSprite: 0
-  m_jumpSound: {fileID: 8300000, guid: d91b828e8fde9e748a781a3b50778117, type: 3}
-  m_airborneJumpSound: {fileID: 8300000, guid: 92147626dea6e614380e791a9993b396, type: 3}
-  m_dashSound: {fileID: 8300000, guid: 3ff30923badda804992d29c9342b37f5, type: 3}
+  _maxSpeed: 9
+  _canJump: 1
+  _jumpTakeOffSpeed: 20
+  _canAirborneJump: 1
+  _airborneJumpTakeOffSpeed: 15
+  _canSlideOfWall: 1
+  _canSlideGoingUp: 0
+  _canSlideDuringKnockBack: 0
+  _slideRaycastOffset: -0.4
+  _slideRaycastDistance: 0.6
+  _slideGravityModifier: 1
+  _constantSlipeSpeed: 0
+  _debugSlideRaycast: 0
+  _canWallJump: 1
+  _wallJumpHorizontalVelocity: 6
+  _wallJumpWindowTime: 0.07
+  _WallJumpControlDelayTime: 0.1
+  _canDash: 1
+  _dashSpeed: 26
+  _dashDuration: 0.2
+  _dashCooldown: 2
+  _flipSprite: 0
+  _jumpSound: {fileID: 8300000, guid: d91b828e8fde9e748a781a3b50778117, type: 3}
+  _airborneJumpSound: {fileID: 8300000, guid: 92147626dea6e614380e791a9993b396, type: 3}
+  _dashSound: {fileID: 8300000, guid: 3ff30923badda804992d29c9342b37f5, type: 3}
 --- !u!114 &114959804128495902
 MonoBehaviour:
   m_ObjectHideFlags: 0

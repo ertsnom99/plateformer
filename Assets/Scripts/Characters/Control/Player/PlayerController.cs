@@ -3,25 +3,19 @@
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(PlatformerMovement))]
 
-public class PlayerControl : CharacterControl
+public class PlayerController : CharacterController
 {
-    [Header("Controls")]
-    [SerializeField]
-    private bool _useKeyboard = false;
-
     private PlatformerMovement _movementScript;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
-
         _movementScript = GetComponent<PlatformerMovement>();
     }
 
     private void Update()
     {
         // Only update when time isn't stop
-        if (Time.deltaTime > .0f && ControlsCharacter())
+        if (Time.deltaTime > .0f && ControlsEnabled())
         {
             // Get the inputs used during this frame
             Inputs inputs = FetchInputs();
@@ -30,11 +24,11 @@ public class PlayerControl : CharacterControl
         }
     }
 
-    private Inputs FetchInputs()
+    protected override Inputs FetchInputs()
     {
         Inputs inputs = new Inputs();
 
-        if (_useKeyboard)
+        if (UseKeyboard)
         {
             // Inputs from the keyboard
             inputs.Vertical = Input.GetAxisRaw("Vertical");
@@ -57,11 +51,6 @@ public class PlayerControl : CharacterControl
         }
 
         return inputs;
-    }
-
-    public void SetKeyboardUse(bool useKeyboard)
-    {
-        _useKeyboard = useKeyboard;
     }
 
     protected override void UpdateMovement(Inputs inputs)

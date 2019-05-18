@@ -9,12 +9,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(PlatformerMovement))]
 
-public class BouncingCharacterControl : CharacterControl, IBouncingPhysicsObjectSubscriber
+public class BouncingCharacterController : CharacterController, IBouncingPhysicsObjectSubscriber
 {
-    [Header("Controls")]
-    [SerializeField]
-    private bool _useKeyboard = false;
-
     [Header("Charge")]
     [SerializeField]
     private float _maxChargeTime = 5.0f;
@@ -59,10 +55,8 @@ public class BouncingCharacterControl : CharacterControl, IBouncingPhysicsObject
     private PlatformerMovement _movementScript;
     private BouncingPhysicsObject _bouncingPhysicsObjectScript;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
-
         _arrow.SetActive(false);
 
         // Tells to use the layer settings from the Physics2D settings (the matrix)
@@ -142,7 +136,7 @@ public class BouncingCharacterControl : CharacterControl, IBouncingPhysicsObject
         // Only update when time isn't stop
         if (Time.deltaTime > .0f)
         {
-            if (ControlsCharacter())
+            if (ControlsEnabled())
             {
                 // Get the inputs used during this frame
                 Inputs inputs = FetchInputs();
@@ -218,16 +212,16 @@ public class BouncingCharacterControl : CharacterControl, IBouncingPhysicsObject
         Gizmos.DrawCube(point, size);
     }*/
 
-    protected override bool ControlsCharacter()
+    protected override bool ControlsEnabled()
     {
-        return base.ControlsCharacter() && _bouncingPhysicsObjectScript.MovementFrozen;
+        return base.ControlsEnabled() && _bouncingPhysicsObjectScript.MovementFrozen;
     }
 
-    private Inputs FetchInputs()
+    protected override Inputs FetchInputs()
     {
         Inputs inputs = new Inputs();
 
-        if (_useKeyboard)
+        if (UseKeyboard)
         {
             // Inputs from the keyboard
             inputs.Vertical = Input.GetAxisRaw("Vertical");
@@ -362,11 +356,6 @@ public class BouncingCharacterControl : CharacterControl, IBouncingPhysicsObject
     protected override void UpdateMovement(Inputs inputs)
     {
         _movementScript.SetInputs(inputs);
-    }
-
-    public void SetKeyboardUse(bool useKeyboard)
-    {
-        this._useKeyboard = useKeyboard;
     }
 
     // Methods of the IBouncingPhysicsObjectSubscriber interface

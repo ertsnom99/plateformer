@@ -12,7 +12,9 @@ public class BossFight : MonoBehaviour, IHealthSubscriber
     }
 
     // Methods of the IHealable interface
-    public void NotifyDamageApplied(Health healthScript, int damage) { }
+    public void NotifyDamageCalled(Health healthScript, int damage) { }
+
+    public void NotifyHealCalled(Health healthScript, int gain) { }
 
     public void NotifyHealthChange(Health healthScript, int health) { }
 

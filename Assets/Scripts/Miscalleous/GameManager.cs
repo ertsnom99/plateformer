@@ -13,7 +13,7 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
 
     [Header("Player")]
     [SerializeField]
-    private PlayerControl _playerControl;
+    private PlayerController _playerController;
     [SerializeField]
     private PlatformerMovement _playerMovement;
     [SerializeField]
@@ -48,8 +48,8 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
         _fade.SetOpacity(true);
         _fade.FadeIn(_fadeDuration);
 
-        _playerControl.GetComponent<Health>().Subscribe(this);
-        _playerControl.EnableControl(false);
+        _playerController.GetComponent<Health>().Subscribe(this);
+        _playerController.EnableControl(false);
         _playerMovement.SetInputs(_forcedControlsAtLevelStart);
     }
 
@@ -81,7 +81,7 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
             foreach (GameObject enemie in enemies)
             {
                 enemie.GetComponent<ProximityExplodable>().enabled = false;
-                enemie.GetComponent<AIControl>().EnableControl(false);
+                enemie.GetComponent<AIController>().EnableControl(false);
             }
 
             if (_enemieRespawner)
@@ -90,7 +90,7 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
             }
 
             // Disable player
-            _playerControl.EnableControl(false);
+            _playerController.EnableControl(false);
 
             // Show end text
             if (won)
@@ -108,7 +108,9 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
     }
 
     // Methods of the IHealable interface
-    public void NotifyDamageApplied(Health healthScript, int damage) { }
+    public void NotifyDamageCalled(Health healthScript, int damage) { }
+
+    public void NotifyHealCalled(Health healthScript, int gain) { }
 
     public void NotifyHealthChange(Health healthScript, int health) { }
 
@@ -124,7 +126,7 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
     {
         if(_enableControlAfterFadeIn)
         {
-            _playerControl.EnableControl(true);
+            _playerController.EnableControl(true);
         }
     }
 

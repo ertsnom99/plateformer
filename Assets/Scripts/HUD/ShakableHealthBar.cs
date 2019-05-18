@@ -36,7 +36,9 @@ public class ShakableHealthBar : Shakable, IHealthSubscriber
         _healthPoint = healthScript.HealthPoint;
     }
 
-    public void NotifyDamageApplied(Health healthScript, int damage) { }
+    public void NotifyDamageCalled(Health healthScript, int damage) { }
+
+    public void NotifyHealCalled(Health healthScript, int gain) { }
 
     public void NotifyHealthChange(Health healthScript, int health)
     {

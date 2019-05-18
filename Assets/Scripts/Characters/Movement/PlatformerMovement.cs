@@ -16,121 +16,121 @@ public interface IPlatformerMovementSubscriber
 public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementSubscriber>
 {
     [SerializeField]
-    private float m_maxSpeed = 6.6f;
+    private float _maxSpeed = 9.0f;
 
     public float MaxSpeed
     {
-        get { return m_maxSpeed; }
-        private set { m_maxSpeed = value; }
+        get { return _maxSpeed; }
+        private set { _maxSpeed = value; }
     }
 
     [Header("Jump")]
     [SerializeField]
-    private bool m_canJump = true;
+    private bool _canJump = true;
 
     [SerializeField]
-    private float m_jumpTakeOffSpeed = 15.0f;
+    private float _jumpTakeOffSpeed = 20.0f;
 
     public float JumpTakeOffSpeed
     {
-        get { return m_jumpTakeOffSpeed; }
-        private set { m_jumpTakeOffSpeed = value; }
+        get { return _jumpTakeOffSpeed; }
+        private set { _jumpTakeOffSpeed = value; }
     }
 
-    private bool m_triggeredJump = false;
-    private bool m_jumpCanceled = false;
+    private bool _triggeredJump = false;
+    private bool _jumpCanceled = false;
     
-    private float m_lastHorizontalVelocityDirection;
+    private float _lastHorizontalVelocityDirection;
     
     public bool IsKnockedBack { get; private set; }
 
     [Header("Airborne jump")]
     [SerializeField]
-    private bool m_canAirborneJump = false;
+    private bool _canAirborneJump = true;
     [SerializeField]
-    private float m_airborneJumpTakeOffSpeed = 10.0f;
-    private bool m_airborneJumpAvailable = true;
-    private bool m_triggeredAirborneJump = false;
+    private float _airborneJumpTakeOffSpeed = 15.0f;
+    private bool _airborneJumpAvailable = true;
+    private bool _triggeredAirborneJump = false;
 
     // NOTE: The current implementation would cause problems if m_canSlideOfWall was changed during a wall slide
     [Header("Slide of wall")]
     [SerializeField]
-    private bool m_canSlideOfWall = false;
+    private bool _canSlideOfWall = true;
     [SerializeField]
-    private bool m_canSlideGoingUp = false;
+    private bool _canSlideGoingUp = false;
     [SerializeField]
-    private bool m_canSlideDuringKnockBack = false;
+    private bool _canSlideDuringKnockBack = false;
     [SerializeField]
-    private float m_slideRaycastOffset = -.45f;
+    private float _slideRaycastOffset = -.4f;
     [SerializeField]
-    private float m_slideRaycastDistance = .6f;
+    private float _slideRaycastDistance = .6f;
     [SerializeField]
-    private float m_slideGravityModifier = .2f;
+    private float _slideGravityModifier = 1.0f;
     [SerializeField]
-    private bool m_constantSlipeSpeed = false;
+    private bool _constantSlipeSpeed = false;
 
-    private bool m_hitWall = false;
+    private bool _hitWall = false;
 
     public bool IsSlidingOfWall { get; private set; }
 
     [SerializeField]
-    private bool m_debugSlideRaycast = false;
+    private bool _debugSlideRaycast = false;
 
     // NOTE: The current implementation needs wall slide to be enable for the wall jump to be used 
     [Header("Wall jump")]
     [SerializeField]
-    private bool m_canWallJump = false;
+    private bool _canWallJump = true;
     [SerializeField]
-    private float m_wallJumpHorizontalVelocity = 6.0f;
+    private float _wallJumpHorizontalVelocity = 6.0f;
     [SerializeField]
-    private float m_wallJumpWindowTime = .05f;
-    private IEnumerator m_wallJumpWindowCoroutine;
+    private float _wallJumpWindowTime = .07f;
+    private IEnumerator _wallJumpWindowCoroutine;
     [SerializeField]
-    private float m_WallJumpControlDelayTime = .1f;
-    private IEnumerator m_horizontalControlDelayCoroutine;
+    private float _WallJumpControlDelayTime = .1f;
+    private IEnumerator _horizontalControlDelayCoroutine;
 
     [Header("Dash")]
     [SerializeField]
-    private bool m_canDash = false;
+    private bool _canDash = true;
     [SerializeField]
-    private float m_dashSpeed = 15.0f;
+    private float _dashSpeed = 26.0f;
     [SerializeField]
-    private float m_dashDuration = .5f;
+    private float _dashDuration = .2f;
     [SerializeField]
-    private float m_dashCooldown = 1.0f;
-    private IEnumerator m_dashWindowCoroutine;
-    private IEnumerator m_dashCooldownCoroutine;
-    private bool m_triggeredDash = false;
+    private float _dashCooldown = 2.0f;
+    private IEnumerator _dashWindowCoroutine;
+    private IEnumerator _dashCooldownCoroutine;
+    private bool _triggeredDash = false;
 
     public bool IsDashing { get; private set; }
 
     [Header("Animation")]
     [SerializeField]
-    private bool m_flipSprite = false;
+    private bool _flipSprite = false;
     // MAYBE: Flags used to delay animations
-    //private bool m_wasDashAnimeDelayed = false;
+    //private bool _wasDashAnimeDelayed = false;
 
     [Header("Sound")]
     [SerializeField]
-    private AudioClip m_jumpSound;
+    private AudioClip _jumpSound;
     [SerializeField]
-    private AudioClip m_airborneJumpSound;
+    private AudioClip _airborneJumpSound;
     [SerializeField]
-    private AudioClip m_dashSound;
+    private AudioClip _dashSound;
     
-    private Inputs m_currentInputs;
+    private Inputs _currentInputs;
 
-    private SpriteRenderer m_spriteRenderer;
-    private Animator m_animator;
-    private AudioSource m_audioSource;
+    private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
+    private AudioSource _audioSource;
 
-    protected int m_XVelocityParamHashId = Animator.StringToHash(XVelocityParamNameString);
-    protected int m_YVelocityParamHashId = Animator.StringToHash(YVelocityParamNameString);
-    protected int m_isGroundedParamHashId = Animator.StringToHash(IsGroundedParamNameString);
-    protected int m_isSlidingOfWallParamHashId = Animator.StringToHash(IsSlidingOfWallParamNameString);
-    protected int m_isDashingParamHashId = Animator.StringToHash(IsDashingParamNameString);
-    protected int m_airborneJumpParamHashId = Animator.StringToHash(AirborneJumpParamNameString);
-    protected int m_knockedBackParamHashId = Animator.StringToHash(KnockedBackParamNameString);
+    protected int XVelocityParamHashId = Animator.StringToHash(XVelocityParamNameString);
+    protected int YVelocityParamHashId = Animator.StringToHash(YVelocityParamNameString);
+    protected int IsGroundedParamHashId = Animator.StringToHash(IsGroundedParamNameString);
+    protected int IsSlidingOfWallParamHashId = Animator.StringToHash(IsSlidingOfWallParamNameString);
+    protected int IsDashingParamHashId = Animator.StringToHash(IsDashingParamNameString);
+    protected int AirborneJumpParamHashId = Animator.StringToHash(AirborneJumpParamNameString);
+    protected int KnockedBackParamHashId = Animator.StringToHash(KnockedBackParamNameString);
 
     public const string XVelocityParamNameString = "XVelocity";
     public const string YVelocityParamNameString = "YVelocity";
@@ -147,9 +147,9 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         IsSlidingOfWall = false;
         IsDashing = false;
 
-        m_spriteRenderer = GetComponent<SpriteRenderer>();
-        m_animator = GetComponent<Animator>();
-        m_audioSource = GetComponent<AudioSource>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     protected override void FixedUpdate()
@@ -160,11 +160,11 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         // Keep track of the direction the player intended to move in
         if (TargetHorizontalVelocity != .0f)
         {
-            m_lastHorizontalVelocityDirection = Mathf.Sign(TargetHorizontalVelocity);
+            _lastHorizontalVelocityDirection = Mathf.Sign(TargetHorizontalVelocity);
         }
 
         // Reset the Y velocity if the player is suppose to keep the same velocity while sliding of a wall
-        if (IsSlidingOfWall && m_constantSlipeSpeed && Velocity.y < .0f)
+        if (IsSlidingOfWall && _constantSlipeSpeed && Velocity.y < .0f)
         {
             Velocity = new Vector2(Velocity.x, .0f);
         }
@@ -172,7 +172,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         base.FixedUpdate();
 
         // Stop the dash window if an airborne jump was triggered during a dash
-        if (InDashWindow() && m_triggeredAirborneJump)
+        if (InDashWindow() && _triggeredAirborneJump)
         {
             EndDashWindow();
         }
@@ -181,28 +181,28 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         IsDashing = InDashWindow();
 
         // Only update wall slide if it's allowed
-        if (m_canSlideOfWall)
+        if (_canSlideOfWall)
         {
             UpdateWallSlide(Rigidbody2D.position - previousRigidbodyPosition);
         }
 
         // Cancel dash window if hitted a wall
-        if (InDashWindow() && m_hitWall)
+        if (InDashWindow() && _hitWall)
         {
             EndDashWindow();
         }
 
         // Reset flags if they are in a certain state
         // While the airborne jump isn't available, keep it unavailable has long has the character isn't grounded and isn't sliding of a wall
-        if (!m_airborneJumpAvailable)
+        if (!_airborneJumpAvailable)
         {
-            m_airborneJumpAvailable = IsGrounded || IsSlidingOfWall;
+            _airborneJumpAvailable = IsGrounded || IsSlidingOfWall;
         }
 
         // While the jump was canceled, keep it canceled has long has the character isn't grounded and isn't sliding of a wall
-        if (m_jumpCanceled)
+        if (_jumpCanceled)
         {
-            m_jumpCanceled = !IsGrounded && !IsSlidingOfWall;
+            _jumpCanceled = !IsGrounded && !IsSlidingOfWall;
         }
 
         // End the horizontal control delay if there is one, except for the knock back, and the player is grounded or sliding of a wall
@@ -215,18 +215,18 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         Animate();
         
         // Reset m_hitWall flag for next check
-        m_hitWall = false;
+        _hitWall = false;
 
         // Reset flags used in Update
-        m_triggeredJump = false;
-        m_triggeredAirborneJump = false;
-        m_triggeredDash = false;
+        _triggeredJump = false;
+        _triggeredAirborneJump = false;
+        _triggeredDash = false;
 
         // Debug
-        if (m_debugSlideRaycast)
+        if (_debugSlideRaycast)
         {
-            Vector2 slideRaycastStart = new Vector2(transform.position.x, transform.position.y + m_slideRaycastOffset);
-            Debug.DrawLine(slideRaycastStart, slideRaycastStart + m_lastHorizontalVelocityDirection * Vector2.right * m_slideRaycastDistance, Color.yellow);
+            Vector2 slideRaycastStart = new Vector2(transform.position.x, transform.position.y + _slideRaycastOffset);
+            Debug.DrawLine(slideRaycastStart, slideRaycastStart + _lastHorizontalVelocityDirection * Vector2.right * _slideRaycastDistance, Color.yellow);
         }
     }
 
@@ -235,7 +235,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         // Set flag to tell that the character hit a wall
         if (hit.normal.x != .0f && hit.normal.y == .0f)
         {
-            m_hitWall = true;
+            _hitWall = true;
 
             // Reset the target velocity when the character is knocked back because it is suppose to loose it's velocity when that happens
             if (IsKnockedBack)
@@ -256,7 +256,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
             IsSlidingOfWall = false;
         }
         // Might be starting to slide of a wall
-        else if ((m_canSlideDuringKnockBack || !IsKnockedBack) && (m_canSlideGoingUp || Velocity.y <= .0f) && m_hitWall && !IsSlidingOfWall && !IsGrounded)
+        else if ((_canSlideDuringKnockBack || !IsKnockedBack) && (_canSlideGoingUp || Velocity.y <= .0f) && _hitWall && !IsSlidingOfWall && !IsGrounded)
         {
             // Check if the player can slide of the wall
             IsSlidingOfWall = RaycastForWallSlide();
@@ -265,7 +265,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         else if (IsSlidingOfWall)
         {
             // If the player moves away from wall
-            if (!m_hitWall && movementDirection.x != .0f)
+            if (!_hitWall && movementDirection.x != .0f)
             {
                 IsSlidingOfWall = false;
             }
@@ -277,7 +277,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
                 if (!IsSlidingOfWall)
                 {
                     // Reverse direction to prevent the character from facing the wrong way
-                    m_lastHorizontalVelocityDirection = -m_lastHorizontalVelocityDirection;
+                    _lastHorizontalVelocityDirection = -_lastHorizontalVelocityDirection;
                 }
             }
         }
@@ -300,25 +300,25 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
             }
         }
         // If the player stopped to slide of a wall and not because he did a wall jump or he dashed 
-        else if (wasSliding && !IsSlidingOfWall && !m_triggeredJump && !IsDashing)
+        else if (wasSliding && !IsSlidingOfWall && !_triggeredJump && !IsDashing)
         {
-            m_wallJumpWindowCoroutine = WallJumpWindow();
-            StartCoroutine(m_wallJumpWindowCoroutine);
+            _wallJumpWindowCoroutine = WallJumpWindow();
+            StartCoroutine(_wallJumpWindowCoroutine);
         }
 
         // Update the gravity modifier when the player change his sliding state and not because he dashed
         if (wasSliding != IsSlidingOfWall && !IsDashing)
         {
-            CurrentGravityModifier = IsSlidingOfWall ? m_slideGravityModifier : GravityModifier;
+            CurrentGravityModifier = IsSlidingOfWall ? _slideGravityModifier : GravityModifier;
         }
     }
 
     private bool RaycastForWallSlide()
     {
-        Vector2 slideRaycastStart = new Vector2(Rigidbody2D.position.x, Rigidbody2D.transform.position.y + m_slideRaycastOffset);
+        Vector2 slideRaycastStart = new Vector2(Rigidbody2D.position.x, Rigidbody2D.transform.position.y + _slideRaycastOffset);
 
         RaycastHit2D[] results = new RaycastHit2D[1];
-        Physics2D.Raycast(slideRaycastStart, m_lastHorizontalVelocityDirection * Vector2.right, ContactFilter, results, m_slideRaycastDistance);
+        Physics2D.Raycast(slideRaycastStart, _lastHorizontalVelocityDirection * Vector2.right, ContactFilter, results, _slideRaycastDistance);
 
         return results[0].collider;
     }
@@ -330,30 +330,30 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         
         if (!IsSlidingOfWall && !HorizontalControlDelayed())
         {
-            flipSprite = (m_spriteRenderer.flipX == m_flipSprite ? (m_lastHorizontalVelocityDirection < .0f) : (m_lastHorizontalVelocityDirection > .0f));
+            flipSprite = (_spriteRenderer.flipX == _flipSprite ? (_lastHorizontalVelocityDirection < .0f) : (_lastHorizontalVelocityDirection > .0f));
         }
         else if (IsSlidingOfWall || IsKnockedBack)
         {
-            flipSprite = (m_spriteRenderer.flipX == m_flipSprite ? (m_lastHorizontalVelocityDirection > .0f) : (m_lastHorizontalVelocityDirection < .0f));
+            flipSprite = (_spriteRenderer.flipX == _flipSprite ? (_lastHorizontalVelocityDirection > .0f) : (_lastHorizontalVelocityDirection < .0f));
         }
         
         if (flipSprite)
         {
-            m_spriteRenderer.flipX = !m_spriteRenderer.flipX;
+            _spriteRenderer.flipX = !_spriteRenderer.flipX;
         }
 
         // Update animator parameters
-        m_animator.SetFloat(m_XVelocityParamHashId, Mathf.Abs(Velocity.x) / MaxSpeed);
-        m_animator.SetFloat(m_YVelocityParamHashId, Velocity.y);
+        _animator.SetFloat(XVelocityParamHashId, Mathf.Abs(Velocity.x) / MaxSpeed);
+        _animator.SetFloat(YVelocityParamHashId, Velocity.y);
         // TODO: Check if parameters needs delay
-        m_animator.SetBool(IsGroundedParamNameString, IsGrounded);
-        m_animator.SetBool(m_isSlidingOfWallParamHashId, IsSlidingOfWall/* && m_wasDashAnimeDelayed*/);
-        m_animator.SetBool(m_isDashingParamHashId, IsDashing);
-        m_animator.SetBool(m_knockedBackParamHashId, IsKnockedBack);
+        _animator.SetBool(IsGroundedParamNameString, IsGrounded);
+        _animator.SetBool(IsSlidingOfWallParamHashId, IsSlidingOfWall/* && m_wasDashAnimeDelayed*/);
+        _animator.SetBool(IsDashingParamHashId, IsDashing);
+        _animator.SetBool(KnockedBackParamHashId, IsKnockedBack);
 
-        if (m_triggeredAirborneJump)
+        if (_triggeredAirborneJump)
         {
-            m_animator.SetTrigger(m_airborneJumpParamHashId);
+            _animator.SetTrigger(AirborneJumpParamHashId);
         }
 
         // MAYBE: 
@@ -376,7 +376,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     {
         if (!IsKnockedBack)
         {
-            m_currentInputs = inputs;
+            _currentInputs = inputs;
         }
     }
     
@@ -388,32 +388,32 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     protected override void ComputeVelocity()
     {
         // Once a jump or a dash is triggered, neither can be triggered again until the next FixedUpdate is executed
-        if (!m_triggeredJump && !m_triggeredAirborneJump && !m_triggeredDash)
+        if (!_triggeredJump && !_triggeredAirborneJump && !_triggeredDash)
         {
             // Jump
-            if (m_canJump && IsGrounded && m_currentInputs.Jump)
+            if (_canJump && IsGrounded && _currentInputs.Jump)
             {
                 Jump();
             }
             // Wall jump
-            else if (m_canWallJump && (IsSlidingOfWall || InWallJumpWindow()) && m_currentInputs.Jump)
+            else if (_canWallJump && (IsSlidingOfWall || InWallJumpWindow()) && _currentInputs.Jump)
             {
                 WallJump();
             }
             // Airborne jump
-            else if (m_canAirborneJump && !IsGrounded && m_airborneJumpAvailable && m_currentInputs.Jump)
+            else if (_canAirborneJump && !IsGrounded && _airborneJumpAvailable && _currentInputs.Jump)
             {
                 AirborneJump();
             }
             // Dash
-            else if (m_canDash && m_currentInputs.Dash && !InDashWindow() && !DashInCooldown())
+            else if (_canDash && _currentInputs.Dash && !InDashWindow() && !DashInCooldown())
             {
                 Dash();
             }
         }
 
         // Cancel jump if release jump button while having some jump velocity remaining
-        if (!m_jumpCanceled && Velocity.y > .0f && m_currentInputs.ReleaseJump)
+        if (!_jumpCanceled && Velocity.y > .0f && _currentInputs.ReleaseJump)
         {
             CancelJump();
         }
@@ -421,7 +421,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         // Set the wanted horizontal velocity, except during the delayed controls window and the dash window
         if (!HorizontalControlDelayed() && !InDashWindow())
         {
-            TargetHorizontalVelocity = m_currentInputs.Horizontal * MaxSpeed;
+            TargetHorizontalVelocity = _currentInputs.Horizontal * MaxSpeed;
         }
     }
 
@@ -429,12 +429,12 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     public void KnockBack(Vector2 knockBackVelocity, float knockBackDelay)
     {
         // Cancel any input that was queued
-        m_currentInputs = new Inputs();
+        _currentInputs = new Inputs();
 
         // Reset variables
-        m_triggeredJump = false;
-        m_triggeredAirborneJump = false;
-        m_triggeredDash = false;
+        _triggeredJump = false;
+        _triggeredAirborneJump = false;
+        _triggeredDash = false;
 
         IsSlidingOfWall = false;
         IsDashing = false;
@@ -462,33 +462,33 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         IsKnockedBack = true;
 
         // Start delay for controls
-        m_horizontalControlDelayCoroutine = DelayHorizontalControl(knockBackDelay);
-        StartCoroutine(m_horizontalControlDelayCoroutine);
+        _horizontalControlDelayCoroutine = DelayHorizontalControl(knockBackDelay);
+        StartCoroutine(_horizontalControlDelayCoroutine);
     }
 
     // Jump related methods
     private void Jump()
     {
         AddJumpImpulse(JumpTakeOffSpeed);
-        m_triggeredJump = true;
+        _triggeredJump = true;
 
         // Play sound
-        m_audioSource.pitch = Random.Range(.9f, 1.0f);
-        m_audioSource.PlayOneShot(m_jumpSound);
+        _audioSource.pitch = Random.Range(.9f, 1.0f);
+        _audioSource.PlayOneShot(_jumpSound);
     }
     
     private void AirborneJump()
     {
-        AddJumpImpulse(m_airborneJumpTakeOffSpeed);
-        m_airborneJumpAvailable = false;
-        m_triggeredAirborneJump = true;
+        AddJumpImpulse(_airborneJumpTakeOffSpeed);
+        _airborneJumpAvailable = false;
+        _triggeredAirborneJump = true;
 
         // Reset canceled jump to allow airborne jump to be canceled
-        m_jumpCanceled = false;
+        _jumpCanceled = false;
 
         // Play sound
-        m_audioSource.pitch = Random.Range(.9f, 1.0f);
-        m_audioSource.PlayOneShot(m_airborneJumpSound);
+        _audioSource.pitch = Random.Range(.9f, 1.0f);
+        _audioSource.PlayOneShot(_airborneJumpSound);
     }
 
     private void AddJumpImpulse(float takeOffSpeed)
@@ -505,33 +505,33 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     private IEnumerator WallJumpWindow()
     {
-        yield return new WaitForSeconds(m_wallJumpWindowTime);
+        yield return new WaitForSeconds(_wallJumpWindowTime);
         EndWallJumpWindow();
     }
 
     private void EndWallJumpWindow()
     {
-        StopCoroutine(m_wallJumpWindowCoroutine);
-        m_wallJumpWindowCoroutine = null;
+        StopCoroutine(_wallJumpWindowCoroutine);
+        _wallJumpWindowCoroutine = null;
     }
     
     private bool InWallJumpWindow()
     {
-        return m_wallJumpWindowCoroutine != null;
+        return _wallJumpWindowCoroutine != null;
     }
 
     private void WallJump()
     {
         Jump();
-        TargetHorizontalVelocity = m_spriteRenderer.flipX ? -m_wallJumpHorizontalVelocity : m_wallJumpHorizontalVelocity;
+        TargetHorizontalVelocity = _spriteRenderer.flipX ? -_wallJumpHorizontalVelocity : _wallJumpHorizontalVelocity;
 
         if (InWallJumpWindow())
         {
             EndWallJumpWindow();
         }
 
-        m_horizontalControlDelayCoroutine = DelayHorizontalControl(m_WallJumpControlDelayTime);
-        StartCoroutine(m_horizontalControlDelayCoroutine);
+        _horizontalControlDelayCoroutine = DelayHorizontalControl(_WallJumpControlDelayTime);
+        StartCoroutine(_horizontalControlDelayCoroutine);
     }
 
     private IEnumerator DelayHorizontalControl(float delay)
@@ -542,8 +542,8 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     private void EndDelayedHorizontalControl()
     {
-        StopCoroutine(m_horizontalControlDelayCoroutine);
-        m_horizontalControlDelayCoroutine = null;
+        StopCoroutine(_horizontalControlDelayCoroutine);
+        _horizontalControlDelayCoroutine = null;
 
         if (IsKnockedBack == true)
         {
@@ -558,7 +558,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         // Reset the last target horizontal velocity direction to prevent the sprite from flipping to the wrong side during the next Animate() method call
         if (!IsSlidingOfWall)
         {
-            m_lastHorizontalVelocityDirection = -Mathf.Sign(TargetHorizontalVelocity);
+            _lastHorizontalVelocityDirection = -Mathf.Sign(TargetHorizontalVelocity);
         }
 
         // Reset the target horizontal velocity here, because the fixed update might be called first before the next update
@@ -567,20 +567,20 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     private bool HorizontalControlDelayed()
     {
-        return m_horizontalControlDelayCoroutine != null;
+        return _horizontalControlDelayCoroutine != null;
     }
 
     private void CancelJump()
     {
         Velocity = new Vector2(Velocity.x, Velocity.y * 0.5f);
-        m_jumpCanceled = true;
+        _jumpCanceled = true;
     }
 
     // Dash related methods
     private void Dash()
     {
         Velocity = new Vector2(Velocity.x, .0f);
-        TargetHorizontalVelocity = m_spriteRenderer.flipX ? -m_dashSpeed : m_dashSpeed;
+        TargetHorizontalVelocity = _spriteRenderer.flipX ? -_dashSpeed : _dashSpeed;
 
         // Reset ground normal because it is use for the movement along ground
         // If it's not reset, it could cause the player to move in a strange direction 
@@ -589,7 +589,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         // Update the gravity modifier
         CurrentGravityModifier = .0f;
 
-        m_triggeredDash = true;
+        _triggeredDash = true;
 
         // Cancel the other coroutines if necessary
         if (InWallJumpWindow())
@@ -602,8 +602,8 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
             EndDelayedHorizontalControl();
         }
 
-        m_dashWindowCoroutine = UseDashWindow();
-        StartCoroutine(m_dashWindowCoroutine);
+        _dashWindowCoroutine = UseDashWindow();
+        StartCoroutine(_dashWindowCoroutine);
 
         // Tell subscribers that the dash was used
         foreach (IPlatformerMovementSubscriber subscriber in Subscribers)
@@ -612,13 +612,13 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         }
 
         // Play sounds
-        m_audioSource.pitch = Random.Range(.9f, 1.0f);
-        m_audioSource.PlayOneShot(m_dashSound);
+        _audioSource.pitch = Random.Range(.9f, 1.0f);
+        _audioSource.PlayOneShot(_dashSound);
     }
 
     private IEnumerator UseDashWindow()
     {
-        yield return new WaitForSeconds(m_dashDuration);
+        yield return new WaitForSeconds(_dashDuration);
         EndDashWindow();
     }
 
@@ -626,14 +626,14 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     // and this could be called outside of one
     private void EndDashWindow()
     {
-        StopCoroutine(m_dashWindowCoroutine);
-        m_dashWindowCoroutine = null;
+        StopCoroutine(_dashWindowCoroutine);
+        _dashWindowCoroutine = null;
 
         // Update the gravity modifier
         CurrentGravityModifier = GravityModifier;
         
-        m_dashCooldownCoroutine = DashCooldown();
-        StartCoroutine(m_dashCooldownCoroutine);
+        _dashCooldownCoroutine = DashCooldown();
+        StartCoroutine(_dashCooldownCoroutine);
     }
 
     // Return dashing state base on the coroutine existence, since using the actual movement could create incorrect values!
@@ -641,7 +641,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     // use the rigidbody position
     private bool InDashWindow()
     {
-        return m_dashWindowCoroutine != null;
+        return _dashWindowCoroutine != null;
     }
 
     private IEnumerator DashCooldown()
@@ -649,7 +649,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         float elapsedTime = .0f;
         float lastUpdateTime = Time.time;
 
-        while (elapsedTime < m_dashCooldown)
+        while (elapsedTime < _dashCooldown)
         {
             yield return 0;
 
@@ -658,11 +658,11 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
             // Tell subscribers that the dash cooldown was updated
             foreach (IPlatformerMovementSubscriber subscriber in Subscribers)
             {
-                subscriber.NotifyDashCooldownUpdated(Mathf.Clamp01(elapsedTime / m_dashCooldown));
+                subscriber.NotifyDashCooldownUpdated(Mathf.Clamp01(elapsedTime / _dashCooldown));
             }
         }
 
-        m_dashCooldownCoroutine = null;
+        _dashCooldownCoroutine = null;
 
         // Tell subscribers that the dash cooldown is over
         foreach (IPlatformerMovementSubscriber subscriber in Subscribers)
@@ -673,26 +673,26 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     private bool DashInCooldown()
     {
-        return m_dashCooldownCoroutine != null;
+        return _dashCooldownCoroutine != null;
     }
 
     public void EnableAirborneJump(bool enable)
     {
-        m_canAirborneJump = enable;
+        _canAirborneJump = enable;
     }
 
     public void EnableSlideOfWall(bool enable)
     {
-        m_canSlideOfWall = enable;
+        _canSlideOfWall = enable;
     }
 
     public void EnableWallJump(bool enable)
     {
-        m_canWallJump = enable;
+        _canWallJump = enable;
     }
 
     public void EnableDash(bool enable)
     {
-        m_canDash = enable;
+        _canDash = enable;
     }
 }

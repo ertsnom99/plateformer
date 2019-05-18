@@ -6,7 +6,7 @@ public class EnableControlTrigger : MonoBehaviour
     {
         if (col.CompareTag(GameManager.PlayerTag))
         {
-            col.GetComponent<PlayerControl>().EnableControl(true);
+            col.GetComponent<PlayerController>().EnableControl(true);
         }
     }
 }

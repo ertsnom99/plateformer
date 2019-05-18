@@ -3,7 +3,8 @@
 public interface IHealthSubscriber
 {
     void NotifyJustSubscribed(Health healthScript);
-    void NotifyDamageApplied(Health healthScript, int damage);
+    void NotifyDamageCalled(Health healthScript, int damage);
+    void NotifyHealCalled(Health healthScript, int gain);
     void NotifyHealthChange(Health healthScript, int health);
     void NotifyHealthDepleted(Health healthScript);
 }
@@ -64,25 +65,25 @@ public class Health : MonoSubscribable<IHealthSubscriber>, IDamageable, IHealabl
         IsInvulnerability = false;
     }
 
-    protected virtual void OnDamageApplied() { }
+    protected virtual void OnDamageDealt() { }
 
     protected virtual void OnHealthDepleted() { }
 
-    protected virtual void OnHealed() { }
+    protected virtual void OnHealingDone() { }
 
     // Methods of the IDamageable interface
     public virtual void Damage(int damage)
     {
         foreach (IHealthSubscriber subscriber in Subscribers)
         {
-            subscriber.NotifyDamageApplied(this, damage);
+            subscriber.NotifyDamageCalled(this, damage);
         }
 
-        if (!IsInvulnerability && damage > 0)
+        if (!IsInvulnerability && damage > 0 && HealthPoint > 0)
         {
             HealthPoint = HealthPoint - damage < 0 ? 0 : HealthPoint - damage;
 
-            OnDamageApplied();
+            OnDamageDealt();
 
             if (HealthPoint == 0)
             {
@@ -104,13 +105,21 @@ public class Health : MonoSubscribable<IHealthSubscriber>, IDamageable, IHealabl
     // Methods of the IHealable interface
     public virtual void Heal(int gain)
     {
-        HealthPoint = HealthPoint + gain > MaxHealth ? MaxHealth : HealthPoint + gain;
-
-        OnHealed();
-
         foreach (IHealthSubscriber subscriber in Subscribers)
         {
-            subscriber.NotifyHealthChange(this, HealthPoint);
+            subscriber.NotifyHealCalled(this, gain);
+        }
+
+        if (gain > 0 && HealthPoint < MaxHealth)
+        {
+            HealthPoint = HealthPoint + gain > MaxHealth ? MaxHealth : HealthPoint + gain;
+
+            OnHealingDone();
+
+            foreach (IHealthSubscriber subscriber in Subscribers)
+            {
+                subscriber.NotifyHealthChange(this, HealthPoint);
+            }
         }
     }
 

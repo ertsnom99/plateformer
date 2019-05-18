@@ -20,14 +20,14 @@ public class PlayerHealth : Health
         _audioSource = GetComponent<AudioSource>();
     }
 
-    protected override void OnDamageApplied()
+    protected override void OnDamageDealt()
     {
         // Play sound
         _audioSource.pitch = Random.Range(.9f, 1.0f);
         _audioSource.PlayOneShot(_damagedSound);
     }
     
-    protected override void OnHealed()
+    protected override void OnHealingDone()
     {
         // Play sound
         _audioSource.pitch = Random.Range(.9f, 1.0f);

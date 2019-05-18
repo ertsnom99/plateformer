@@ -2,8 +2,20 @@
 using System.Collections;
 using UnityEngine;
 
-public abstract class AIControl : CharacterControl
+public abstract class AIController : CharacterController
 {
+    [Header("Possession")]
+    [SerializeField]
+    private bool _isPossessable = true;
+
+    public bool IsPossessable
+    {
+        get { return _isPossessable; }
+        private set { _isPossessable = value; }
+    }
+
+    public bool IsPossessed { get; private set; }
+
     [Header("Target")]
     [SerializeField]
     protected Transform Target;
@@ -27,15 +39,18 @@ public abstract class AIControl : CharacterControl
     [Header("Debug")]
     [SerializeField]
     private bool _drawDistance = false;
+    [SerializeField]
+    private bool _logPathFailedError = false;
 
     protected Path Path;
     protected int TargetWaypoint = 0;
     protected Seeker Seeker;
 
-    protected override void Awake()
+    protected virtual void Awake()
     {
-        base.Awake();
-        
+        IsPossessed = false;
+        HasDetectedTarget = false;
+
         Seeker = GetComponent<Seeker>();
     }
 
@@ -46,19 +61,39 @@ public abstract class AIControl : CharacterControl
             Debug.LogError("No target was set!");
             return;
         }
-
+        
         StartCoroutine(UpdatePath());
     }
 
     protected virtual void Update()
     {
-        // Enable control when the target is close enough
-        if (ControlsEnabled && !HasDetectedTarget && (transform.position - Target.position).magnitude <= _distanceToDetect)
+        // Only update when time isn't stop
+        if (Time.deltaTime > .0f && ControlsEnabled())
         {
-            EnableControl(true);
-            HasDetectedTarget = true;
+            if (IsPossessed)
+            {
+                // Get the inputs used during this frame
+                Inputs inputs = FetchInputs();
+
+                UpdateMovement(inputs);
+
+                OnUpdatePossessed();
+            }
+            else
+            {
+                if (!IsPossessed && !HasDetectedTarget && (transform.position - Target.position).magnitude <= _distanceToDetect)
+                {
+                    HasDetectedTarget = true;
+                }
+                
+                OnUpdateNotPossessed();
+            }
         }
     }
+
+    protected virtual void OnUpdatePossessed() { }
+
+    protected virtual void OnUpdateNotPossessed() { }
 
     private IEnumerator UpdatePath()
     {
@@ -69,7 +104,19 @@ public abstract class AIControl : CharacterControl
     }
 
     // Called when a new path is created
-    public abstract void OnPathComplete(Path path);
+    public virtual void OnPathComplete(Path path)
+    {
+        // We got our path back
+        if (path.error)
+        {
+            if (_logPathFailedError)
+            {
+                Debug.LogError("The path failed! " + gameObject.name);
+            }
+
+            return;
+        }
+    }
 
     protected bool IsTargetReachable()
     {
@@ -81,6 +128,25 @@ public abstract class AIControl : CharacterControl
     public void SetTarget(Transform target)
     {
         Target = target;
+    }
+
+    // Returns the possession state after calling this method
+    public bool Possess(bool possess)
+    {
+        if ((IsPossessable || IsPossessed) && IsPossessed != possess)
+        {
+            IsPossessed = possess;
+            OnPossessionChange();
+        }
+
+        return IsPossessed;
+    }
+
+    protected virtual void OnPossessionChange() { }
+
+    public void EnablePossession(bool enable)
+    {
+        IsPossessable = enable;
     }
 
     private void OnEnable()

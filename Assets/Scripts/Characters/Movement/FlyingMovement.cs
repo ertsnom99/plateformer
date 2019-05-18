@@ -8,31 +8,31 @@ public class FlyingMovement : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField]
-    private float m_speed = 5.0f;
+    private float _speed = 45.0f;
 
     [Header("Animation")]
     [SerializeField]
-    private float m_minVelocityToRotatePropellant = 4.0f;
+    private float _minVelocityToRotatePropellant = 4.0f;
     [SerializeField]
-    private float m_propellantRotationSpeed = 100.0f;
+    private float _propellantRotationSpeed = 10.0f;
     [SerializeField]
-    private bool m_flipSprite = false;
+    private bool _flipSprite = false;
 
     [Header("Sprites")]
     [SerializeField]
-    private SpriteRenderer m_propellantSprite;
+    private SpriteRenderer _propellantSprite;
 
-    private Inputs m_currentInputs;
+    private Inputs _currentInputs;
 
-    private SpriteRenderer m_bodySprite;
-    private Rigidbody2D m_rigidbody;
+    private SpriteRenderer _bodySprite;
+    private Rigidbody2D _rigidbody;
 
     private void Awake()
     {
-        m_bodySprite = GetComponent<SpriteRenderer>();
-        m_rigidbody = GetComponent<Rigidbody2D>();
+        _bodySprite = GetComponent<SpriteRenderer>();
+        _rigidbody = GetComponent<Rigidbody2D>();
 
-        if (!m_propellantSprite)
+        if (!_propellantSprite)
         {
             Debug.LogError("No sprite setted for the propellant!");
         }
@@ -40,7 +40,7 @@ public class FlyingMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        m_rigidbody.AddForce(new Vector2(m_currentInputs.Horizontal, m_currentInputs.Vertical) * m_speed - m_rigidbody.velocity);
+        _rigidbody.AddForce(new Vector2(_currentInputs.Horizontal, _currentInputs.Vertical) * _speed - _rigidbody.velocity);
 
         Animate();
     }
@@ -48,41 +48,41 @@ public class FlyingMovement : MonoBehaviour
     private void Animate()
     {
         float targetPropellantAngle = .0f;
-        Vector3 originalPropellantRotation = m_propellantSprite.transform.localRotation.eulerAngles;
+        Vector3 originalPropellantRotation = _propellantSprite.transform.localRotation.eulerAngles;
 
         // Flip the sprite if necessary
         bool flipSprite = false;
         
-        flipSprite = (m_bodySprite.flipX == m_flipSprite ? (m_rigidbody.velocity.x < -.01f) : (m_rigidbody.velocity.x > .01f));
+        flipSprite = (_bodySprite.flipX == _flipSprite ? (_rigidbody.velocity.x < -.01f) : (_rigidbody.velocity.x > .01f));
         
         if (flipSprite)
         {
             // Flip body
-            m_bodySprite.flipX = !m_bodySprite.flipX;
+            _bodySprite.flipX = !_bodySprite.flipX;
 
             // Flip propellant
-            Vector3 originalPropellantPosition = m_propellantSprite.transform.localPosition;
-            m_propellantSprite.transform.localPosition = new Vector3(-originalPropellantPosition.x, originalPropellantPosition.y, originalPropellantPosition.z);
-            m_propellantSprite.transform.rotation = Quaternion.Euler(originalPropellantRotation.x, originalPropellantRotation.y, -originalPropellantRotation.z);
-            originalPropellantRotation = m_propellantSprite.transform.localRotation.eulerAngles;
+            Vector3 originalPropellantPosition = _propellantSprite.transform.localPosition;
+            _propellantSprite.transform.localPosition = new Vector3(-originalPropellantPosition.x, originalPropellantPosition.y, originalPropellantPosition.z);
+            _propellantSprite.transform.rotation = Quaternion.Euler(originalPropellantRotation.x, originalPropellantRotation.y, -originalPropellantRotation.z);
+            originalPropellantRotation = _propellantSprite.transform.localRotation.eulerAngles;
         }
         
         // Adjust the rotation of the propellant
         // The propellant rotate only if their is enough movement
-        if (m_rigidbody.velocity.magnitude >= m_minVelocityToRotatePropellant)
+        if (_rigidbody.velocity.magnitude >= _minVelocityToRotatePropellant)
         {
-            targetPropellantAngle = Mathf.Sign(-m_rigidbody.velocity.x) * Vector2.Angle(-m_rigidbody.velocity, Vector2.down);
+            targetPropellantAngle = Mathf.Sign(-_rigidbody.velocity.x) * Vector2.Angle(-_rigidbody.velocity, Vector2.down);
         }
         
         Quaternion currentPropellantRotation = Quaternion.Euler(originalPropellantRotation);
         Quaternion targetPropellantRotation = Quaternion.Euler(originalPropellantRotation.x, originalPropellantRotation.y, targetPropellantAngle);
 
         // Rotate the propellant over time
-        m_propellantSprite.transform.rotation = Quaternion.Lerp(currentPropellantRotation, targetPropellantRotation, m_propellantRotationSpeed * Time.deltaTime);
+        _propellantSprite.transform.rotation = Quaternion.Lerp(currentPropellantRotation, targetPropellantRotation, _propellantRotationSpeed * Time.deltaTime);
     }
 
     public void SetInputs(Inputs inputs)
     {
-        m_currentInputs = inputs;
+        _currentInputs = inputs;
     }
 }

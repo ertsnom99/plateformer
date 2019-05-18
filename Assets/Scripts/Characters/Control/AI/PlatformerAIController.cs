@@ -40,11 +40,8 @@ public struct PathLink
 [RequireComponent(typeof(PlatformerMovement))]
 [RequireComponent(typeof(Seeker))]
 
-public class PlatformerAIControl : AIControl
+public class PlatformerAIController : AIController
 {
-    [SerializeField]
-    private bool _logPathFailedError = false;
-
     [Header("Vertical Movement")]
     [SerializeField]
     private bool _canJump = true;
@@ -78,24 +75,19 @@ public class PlatformerAIControl : AIControl
     // Called when a new path is created
     public override void OnPathComplete(Path path)
     {
-        if (path.error)
-        {
-            if (_logPathFailedError)
-            {
-                Debug.LogError("The path failed! " + gameObject.name);
-            }
-        }
-        else
-        {
-            Path = path;
-            
-            // Fix the path has long has it needs to be
-            while (Path.vectorPath.Count >= 3 && PathNeedsFix())
-            {
-                Path.vectorPath.RemoveAt(1);
-                Debug.Log(Time.frameCount + " Fixed");
-            }
+        base.OnPathComplete(path);
 
+        Path = path;
+            
+        // Fix the path has long has it needs to be
+        while (Path.vectorPath.Count >= 3 && PathNeedsFix())
+        {
+            Path.vectorPath.RemoveAt(1);
+            Debug.Log(Time.frameCount + " Fixed");
+        }
+
+        if (Path.vectorPath.Count > 1)
+        {
             // Normally, the first point of the path SHOULD be extremely close to the position of the AI,
             // therefore it already reached the first waypoint which mean we can skip waypoint 0
             TargetWaypoint = 1;
@@ -168,73 +160,67 @@ public class PlatformerAIControl : AIControl
         return Vector2.Angle(secondToFirstWaypoint, secondToThirdWaypoint) <= _pathFixByAngleThreshold;
     }
 
-    protected override void Update()
+    protected override void OnUpdateNotPossessed()
     {
-        base.Update();
-
-        // Only update when time isn't stop
-        if (Time.deltaTime > .0f)
+        // Wait for the delay to end, before checking if the vertical movement is in progress 
+        if (_delayedMovementProgressCheck && !_movementScript.IsGrounded && ((_currentPathLink.Link.y < .0f && _movementScript.Velocity.y < .0f) || (_currentPathLink.Link.y > .0f && _movementScript.Velocity.y > .0f)))
         {
-            // Wait for the delay to end, before checking if the vertical movement is in progress 
-            if (_delayedMovementProgressCheck && !_movementScript.IsGrounded && ((_currentPathLink.Link.y < .0f && _movementScript.Velocity.y < .0f) || (_currentPathLink.Link.y > .0f && _movementScript.Velocity.y > .0f)))
-            {
-                _delayedMovementProgressCheck = false;
-            }
-            else if (!_delayedMovementProgressCheck && _verticalMovementinProgress && _movementScript.IsGrounded)
-            {
-                _verticalMovementinProgress = false;
-            }
+            _delayedMovementProgressCheck = false;
+        }
+        else if (!_delayedMovementProgressCheck && _verticalMovementinProgress && _movementScript.IsGrounded)
+        {
+            _verticalMovementinProgress = false;
+        }
 
-            // The horizontal velocity might need to be adjusted
-            if (_movementScript.IsGrounded && Mathf.Sign(_horizontalInputForVerticalMovement) != Mathf.Sign(_currentPathLink.Link.x))
+        // The horizontal velocity might need to be adjusted
+        if (_movementScript.IsGrounded && Mathf.Sign(_horizontalInputForVerticalMovement) != Mathf.Sign(_currentPathLink.Link.x))
+        {
+            _horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
+        }
+
+        if (ControlsEnabled() && HasDetectedTarget && Path != null)
+        {
+            Inputs inputs = NoControlInputs;
+
+            bool isWaypointReached = TargetWaypoint >= Path.vectorPath.Count;
+            float distanceToTarget = Vector3.Distance(transform.position, Target.position);
+
+            // Check if the AI hasn't reach either the target or the last waypoint
+            if ((!StopWhenUnreachable || IsTargetReachable()) && !isWaypointReached && distanceToTarget > StopDistanceToTarget)
             {
-                _horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
-            }
+                Vector2 positionToTargetWaypoint = Path.vectorPath[TargetWaypoint] - transform.position;
 
-            if (ControlsCharacter() && HasDetectedTarget && Path != null)
-            {
-                Inputs inputs = NoControlInputs;
-
-                bool isWaypointReached = TargetWaypoint >= Path.vectorPath.Count;
-                float distanceToTarget = Vector3.Distance(transform.position, Target.position);
-
-                // Check if the AI hasn't reach either the target or the last waypoint
-                if ((!StopWhenUnreachable || IsTargetReachable()) && !isWaypointReached && distanceToTarget > StopDistanceToTarget)
+                // Update the target waypoint while the last one hasn't been reached and the current one has been past
+                while (!isWaypointReached && (IsJumpOrDropDownLinkOver() || IsWalkLinkOver(positionToTargetWaypoint)))
                 {
-                    Vector2 positionToTargetWaypoint = Path.vectorPath[TargetWaypoint] - transform.position;
+                    TargetWaypoint++;
 
-                    // Update the target waypoint while the last one hasn't been reached and the current one has been past
-                    while (!isWaypointReached && (IsJumpOrDropDownLinkOver() || IsWalkLinkOver(positionToTargetWaypoint)))
-                    {
-                        TargetWaypoint++;
+                    isWaypointReached = TargetWaypoint >= Path.vectorPath.Count;
 
-                        isWaypointReached = TargetWaypoint >= Path.vectorPath.Count;
-
-                        if (!isWaypointReached)
-                        {
-                            _currentPathLink = new PathLink(Path.vectorPath[TargetWaypoint - 1], Path.vectorPath[TargetWaypoint], _minHeightForVerticalMovement);
-                            positionToTargetWaypoint = Path.vectorPath[TargetWaypoint] - transform.position;
-
-                            // If a vertical movement is needed to reach the current waypoint, the horizontal input can be calculated immediatly
-                            if (_currentPathLink.Type != PathLinkType.Walk)
-                            {
-                                _horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
-                                _verticalMovementinProgress = true;
-                                _delayedMovementProgressCheck = _currentPathLink.Type == PathLinkType.Jump || _movementScript.IsGrounded;
-                            }
-                        }
-                    }
-                    
-                    // Create the inputs if the target waypoint still hasn't been reached
                     if (!isWaypointReached)
                     {
-                        inputs = CreateInputs();
+                        _currentPathLink = new PathLink(Path.vectorPath[TargetWaypoint - 1], Path.vectorPath[TargetWaypoint], _minHeightForVerticalMovement);
+                        positionToTargetWaypoint = Path.vectorPath[TargetWaypoint] - transform.position;
+
+                        // If a vertical movement is needed to reach the current waypoint, the horizontal input can be calculated immediatly
+                        if (_currentPathLink.Type != PathLinkType.Walk)
+                        {
+                            _horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
+                            _verticalMovementinProgress = true;
+                            _delayedMovementProgressCheck = _currentPathLink.Type == PathLinkType.Jump || _movementScript.IsGrounded;
+                        }
                     }
                 }
 
-                // Send the final inputs to the movement script
-                UpdateMovement(inputs);
+                // Create the inputs if the target waypoint still hasn't been reached
+                if (!isWaypointReached)
+                {
+                    inputs = CreateInputs();
+                }
             }
+
+            // Send the final inputs to the movement script
+            UpdateMovement(inputs);
         }
     }
 
@@ -278,6 +264,35 @@ public class PlatformerAIControl : AIControl
 
         // Calculate how much of the horizontal speed is necessary and save it for later use
         return Mathf.Clamp(distanceBySecond / _movementScript.MaxSpeed, -1.0f, 1.0f);
+    }
+
+    protected override Inputs FetchInputs()
+    {
+        Inputs inputs = new Inputs();
+
+        if (UseKeyboard)
+        {
+            // Inputs from the keyboard
+            //inputs.Vertical = Input.GetAxisRaw("Vertical");
+            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
+            inputs.Jump = Input.GetButtonDown("Jump");
+            inputs.ReleaseJump = Input.GetButtonUp("Jump");
+            //inputs.Dash = Input.GetButtonDown("Dash");
+            //inputs.ReleaseDash = Input.GetButtonUp("Dash");
+        }
+        else
+        {
+            // TODO: Create inputs specific to the controler
+            // Inputs from the controler
+            //inputs.Vertical = Input.GetAxisRaw("Vertical");
+            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
+            inputs.Jump = Input.GetButtonDown("Jump");
+            inputs.ReleaseJump = Input.GetButtonUp("Jump");
+            //inputs.Dash = Input.GetButtonDown("Dash");
+            //inputs.ReleaseDash = Input.GetButtonUp("Dash");
+        }
+
+        return inputs;
     }
 
     protected override Inputs CreateInputs()
@@ -333,5 +348,13 @@ public class PlatformerAIControl : AIControl
     protected override void UpdateMovement(Inputs inputs)
     {
         _movementScript.SetInputs(inputs);
+    }
+
+    protected override void OnPossessionChange()
+    {
+        base.OnPossessionChange();
+
+        _verticalMovementinProgress = false;
+        _delayedMovementProgressCheck = false;
     }
 }

@@ -32,7 +32,7 @@ public class EndSequence : MonoBehaviour, IFadeImageSubscriber
         {
             _virtualCameraManager.ActiveVirtualCamera.Follow = null;
 
-            col.GetComponent<PlayerControl>().EnableControl(false);
+            col.GetComponent<PlayerController>().EnableControl(false);
             col.GetComponent<PlatformerMovement>().SetInputs(_forcedControls);
 
             _fade.FadeOut(_fadeDuration);

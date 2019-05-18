@@ -661,6 +661,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 3}
+--- !u!114 &170617766 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114867589610096570, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 170617765}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13a22dc241a534b439eff05fa92180e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &273064801
 GameObject:
   m_ObjectHideFlags: 0
@@ -6070,18 +6082,6 @@ Transform:
   m_Father: {fileID: 1891875370}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1355763379 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114867589610096570, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
-    type: 3}
-  m_PrefabInstance: {fileID: 170617765}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13a22dc241a534b439eff05fa92180e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1368168125
 GameObject:
   m_ObjectHideFlags: 0
@@ -7354,7 +7354,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fade: {fileID: 640727726}
   _fadeDuration: 1
-  _playerControl: {fileID: 1355763379}
+  _playerController: {fileID: 170617766}
   _playerMovement: {fileID: 1082446552}
   _enableControlAfterFadeIn: 1
   _forcedControlsAtLevelStart:
