@@ -196,7 +196,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 6.5
+  orthographic size: 4
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -220,7 +220,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 56986607}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.260001, y: 5.5, z: -1.67}
+  m_LocalPosition: {x: 6.83, y: 0, z: -1.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -526,6 +526,16 @@ PrefabInstance:
       propertyPath: m_launchSound
       value: 
       objectReference: {fileID: 8300000, guid: 8029264457e8e45448b95d04e58b40f6, type: 3}
+    - target: {fileID: 5972519021654783211, guid: 0e5696e4269bcee42ac3317dddef7201,
+        type: 3}
+      propertyPath: _virtualCameraNormalForm
+      value: 
+      objectReference: {fileID: 1165611483}
+    - target: {fileID: 5972519021654783211, guid: 0e5696e4269bcee42ac3317dddef7201,
+        type: 3}
+      propertyPath: _virtualCameraBounceForm
+      value: 
+      objectReference: {fileID: 1330896525}
     - target: {fileID: 61353411224531644, guid: 0e5696e4269bcee42ac3317dddef7201,
         type: 3}
       propertyPath: m_Offset.x
@@ -535,6 +545,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.x
       value: 0.9827652
+      objectReference: {fileID: 0}
+    - target: {fileID: 114253259727586034, guid: 0e5696e4269bcee42ac3317dddef7201,
+        type: 3}
+      propertyPath: GravityModifier
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e5696e4269bcee42ac3317dddef7201, type: 3}

@@ -286,24 +286,24 @@ public class PhysicsObject : MonoBehaviour
         // If a gameObject isn't hitted anymore
         foreach (KeyValuePair<Collider2D, IPhysicsObjectCollisionListener[]> entry in PreviouslyCollidingGameObject)
         {
-            // Call OnPhysicsObjectCollisionExit on all script, of this gameobject, that implement the interface
-            PhysicsCollision2D physicsObjectCollision2D = new PhysicsCollision2D(entry.Key,
-                                                                                 Collider,
-                                                                                 entry.Key.attachedRigidbody,
-                                                                                 Rigidbody2D,
-                                                                                 entry.Key.transform,
-                                                                                 entry.Key.gameObject,
-                                                                                 Vector2.zero,
-                                                                                 true);
-
-            foreach (IPhysicsObjectCollisionListener collisionListener in _collisionListeners)
-            {
-                collisionListener.OnPhysicsObjectCollisionExit(physicsObjectCollision2D);
-            }
-
             // Call OnPhysicsObjectCollisionExit on all script, of the hitted gameobject, that implement the interface
             if (!CollidingGameObjects.ContainsKey(entry.Key))
             {
+                // Call OnPhysicsObjectCollisionExit on all script, of this gameobject, that implement the interface
+                PhysicsCollision2D physicsObjectCollision2D = new PhysicsCollision2D(entry.Key,
+                                                                                     Collider,
+                                                                                     entry.Key.attachedRigidbody,
+                                                                                     Rigidbody2D,
+                                                                                     entry.Key.transform,
+                                                                                     entry.Key.gameObject,
+                                                                                     Vector2.zero,
+                                                                                     true);
+
+                foreach (IPhysicsObjectCollisionListener collisionListener in _collisionListeners)
+                {
+                    collisionListener.OnPhysicsObjectCollisionExit(physicsObjectCollision2D);
+                }
+
                 physicsObjectCollision2D = new PhysicsCollision2D(Collider,
                                                                   entry.Key,
                                                                   Rigidbody2D,

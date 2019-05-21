@@ -50,6 +50,14 @@ public class ProximityExplodable : MonoSubscribable<IProximityExplodableSubscrib
     [SerializeField]
     private bool _drawExplosionRange = false;
 
+    private void Start()
+    {
+        if (!_target)
+        {
+            Debug.LogError("Target was set!");
+        }
+    }
+
     private void Update()
     {
         // Check if in countdown

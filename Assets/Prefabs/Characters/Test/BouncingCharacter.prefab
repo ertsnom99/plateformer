@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4a95471ee0639a4cba4a1c1baefa025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _useKeyboard: 0
+  UseKeyboard: 0
   _maxChargeTime: 5
   _chargeText: {fileID: 4761221932693649462}
   _arrow: {fileID: 4514407309020739263}
@@ -307,8 +307,8 @@ MonoBehaviour:
   _launchSound: {fileID: 8300000, guid: 8029264457e8e45448b95d04e58b40f6, type: 3}
   _returnToNormalFormSound: {fileID: 8300000, guid: 62791b2a9e903334ca9b4ff55d0db30c,
     type: 3}
-  m_virtualCameraNormalForm: {fileID: 0}
-  m_virtualCameraBounceForm: {fileID: 0}
+  _virtualCameraNormalForm: {fileID: 0}
+  _virtualCameraBounceForm: {fileID: 0}
 --- !u!114 &114253259727586034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,36 +321,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e959c4768de2674ea60d1c59356d971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_shellRadius: 0.05
-  m_gravityModifier: 5
-  m_fallModifier: 1
-  m_minGroundNormalY: 0.4
-  m_debugVelocity: 0
-  m_maxSpeed: 9
-  m_canJump: 0
-  m_jumpTakeOffSpeed: 20
-  m_canAirborneJump: 0
-  m_airborneJumpTakeOffSpeed: 15
-  m_canSlideOfWall: 0
-  m_canSlideGoingUp: 0
-  m_canSlideDuringKnockBack: 0
-  m_slideRaycastOffset: 0.4
-  m_slideRaycastDistance: 0.6
-  m_slideGravityModifier: 1
-  m_constantSlipeSpeed: 0
-  m_debugSlideRaycast: 0
-  m_canWallJump: 0
-  m_wallJumpHorizontalVelocity: 6
-  m_wallJumpWindowTime: 0.05
-  m_WallJumpControlDelayTime: 0.1
-  m_canDash: 0
-  m_dashSpeed: 26
-  m_dashDuration: 0.2
-  m_dashCooldown: 2
-  m_flipSprite: 0
-  m_jumpSound: {fileID: 8300000, guid: d91b828e8fde9e748a781a3b50778117, type: 3}
-  m_airborneJumpSound: {fileID: 8300000, guid: 92147626dea6e614380e791a9993b396, type: 3}
-  m_dashSound: {fileID: 8300000, guid: 3ff30923badda804992d29c9342b37f5, type: 3}
+  ShellRadius: 0.05
+  GravityModifier: 5
+  FallModifier: 1
+  _minGroundNormalY: 0.4
+  DebugVelocity: 0
+  _maxSpeed: 9
+  _canJump: 1
+  _jumpTakeOffSpeed: 20
+  _canAirborneJump: 1
+  _airborneJumpTakeOffSpeed: 15
+  _canSlideOfWall: 1
+  _canSlideGoingUp: 0
+  _canSlideDuringKnockBack: 0
+  _slideRaycastOffset: -0.4
+  _slideRaycastDistance: 0.6
+  _slideGravityModifier: 1
+  _constantSlipeSpeed: 0
+  _debugSlideRaycast: 0
+  _canWallJump: 1
+  _wallJumpHorizontalVelocity: 6
+  _wallJumpWindowTime: 0.07
+  _WallJumpControlDelayTime: 0.1
+  _canDash: 1
+  _dashSpeed: 26
+  _dashDuration: 0.2
+  _dashCooldown: 2
+  _flipSprite: 0
+  _jumpSound: {fileID: 0}
+  _airborneJumpSound: {fileID: 0}
+  _dashSound: {fileID: 0}
 --- !u!114 &114959804128495902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,9 +363,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf1a898fc828517458f08cdea5f0d326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxHealth: 100
-  m_damagedSound: {fileID: 8300000, guid: b743f93fe6a8c844ab8402d39d3b1b5c, type: 3}
-  m_healedSound: {fileID: 8300000, guid: 1d1c4f6964f2b584f892faea0e30cb6d, type: 3}
+  _maxHealth: 100
+  _damagedSound: {fileID: 0}
+  _healedSound: {fileID: 0}
 --- !u!1 &861831561360637805
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,14 +2,17 @@
 
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(PlatformerMovement))]
+[RequireComponent(typeof(Possession))]
 
 public class PlayerController : CharacterController
 {
     private PlatformerMovement _movementScript;
+    private Possession _possession;
 
     private void Awake()
     {
         _movementScript = GetComponent<PlatformerMovement>();
+        _possession = GetComponent<Possession>();
     }
 
     private void Update()
@@ -21,6 +24,7 @@ public class PlayerController : CharacterController
             Inputs inputs = FetchInputs();
 
             UpdateMovement(inputs);
+            UpdatePossession(inputs);
         }
     }
 
@@ -37,6 +41,7 @@ public class PlayerController : CharacterController
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
             inputs.Dash = Input.GetButtonDown("Dash");
             inputs.ReleaseDash = Input.GetButtonUp("Dash");
+            inputs.Possess = Input.GetButtonDown("Possess");
         }
         else
         {
@@ -48,6 +53,7 @@ public class PlayerController : CharacterController
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
             inputs.Dash = Input.GetButtonDown("Dash");
             inputs.ReleaseDash = Input.GetButtonUp("Dash");
+            inputs.Possess = Input.GetButtonDown("Possess");
         }
 
         return inputs;
@@ -56,5 +62,13 @@ public class PlayerController : CharacterController
     protected override void UpdateMovement(Inputs inputs)
     {
         _movementScript.SetInputs(inputs);
+    }
+
+    private void UpdatePossession(Inputs inputs)
+    {
+        if (inputs.Possess)
+        {
+            _possession.ChangePossessionMode(!_possession.InPossessionMode);
+        }
     }
 }

@@ -40,11 +40,11 @@ public class EmoteSphere : MonoBehaviour, IPhysicsObjectCollisionListener
     }
 
     // Methods of the IPhysicsObjectCollisionListener interface
-    public void OnPhysicsObjectCollisionExit(PhysicsCollision2D collision) { }
-
     public void OnPhysicsObjectCollisionEnter(PhysicsCollision2D collision)
     {
         _emoteIndex = (_emoteIndex + 1) % _emotes.Length;
         UpdateEmote();
     }
+
+    public void OnPhysicsObjectCollisionExit(PhysicsCollision2D collision) { }
 }

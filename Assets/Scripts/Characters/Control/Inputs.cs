@@ -9,6 +9,9 @@ public struct Inputs
     public bool ReleaseJump;
     public bool Dash;
     public bool ReleaseDash;
+    public bool Possess;
+
+
     public bool HeldCharge;
     public bool ReleaseCharge;
 }
