@@ -19,6 +19,8 @@ public class PhysicsObject : MonoBehaviour
     [Header("Collision")]
     [SerializeField]
     protected Collider2D Collider;
+    [SerializeField]
+    private bool _updateContactFilterLayerMask = false;
 
     [Header("Movement")]
     [SerializeField]
@@ -94,6 +96,11 @@ public class PhysicsObject : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
+        if (_updateContactFilterLayerMask)
+        {
+            ContactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+        }
+
         IsGrounded = false;
         //m_groundAngle = .0f;
 

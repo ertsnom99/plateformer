@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 114995939018924468}
   m_Layer: 10
   m_Name: JumpingPaltformerAI
-  m_TagString: Enemie
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -291,6 +291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Collider: {fileID: 61738699851560436}
+  _updateContactFilterLayerMask: 0
   ShellRadius: 0.052
   GravityModifier: 5
   FallModifier: 1

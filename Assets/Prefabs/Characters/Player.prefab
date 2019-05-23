@@ -41,7 +41,6 @@ GameObject:
   - component: {fileID: 4536785919381258}
   - component: {fileID: 212392765523624570}
   - component: {fileID: 61353411224531644}
-  - component: {fileID: 7315579344771550891}
   - component: {fileID: 50484550208919288}
   - component: {fileID: 95540619641372390}
   - component: {fileID: 82653445126395802}
@@ -145,32 +144,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.85, y: 1.1431011}
   m_EdgeRadius: 0.01
---- !u!61 &7315579344771550891
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1508018494202180}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.0013335645, y: 0.6379693}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 2.0625, y: 2}
-    newSize: {x: 2.0625, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.9905653, y: 1.2939236}
-  m_EdgeRadius: 0
 --- !u!50 &50484550208919288
 Rigidbody2D:
   serializedVersion: 4
@@ -333,6 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Collider: {fileID: 61353411224531644}
+  _updateContactFilterLayerMask: 0
   ShellRadius: 0.05
   GravityModifier: 5
   FallModifier: 1.1
@@ -375,7 +349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29202b3a3cd1f2c449086e10342b4920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _possessionArea: {fileID: 7315579344771550891}
   _enterPossessionModeSound: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922,
     type: 3}
   _exitPossessionModeSound: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a,

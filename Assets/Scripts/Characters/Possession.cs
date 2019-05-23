@@ -24,7 +24,7 @@ public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
     {
         InPossessionMode = false;
         // Change if player collides with AIs
-        Physics2D.IgnoreLayerCollision(GameManager.PlayerLayerIndex, GameManager.AILayerIndex, !InPossessionMode);
+        //Physics2D.IgnoreLayerCollision(GameManager.PlayerLayerIndex, GameManager.AILayerIndex, !InPossessionMode);
 
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
@@ -41,7 +41,7 @@ public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
             _animator.SetLayerWeight(_possessModeAnimationLayerIndex, InPossessionMode ? 1.0f : .0f);
             
             // Change if player collides with AIs
-            Physics2D.IgnoreLayerCollision(GameManager.PlayerLayerIndex, GameManager.AILayerIndex, !InPossessionMode);
+            //Physics2D.IgnoreLayerCollision(GameManager.PlayerLayerIndex, GameManager.AILayerIndex, !InPossessionMode);
 
             if (InPossessionMode)
             {
@@ -57,7 +57,11 @@ public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
     // Methods of the IPhysicsObjectCollisionListener interface
     public void OnPhysicsObjectCollisionEnter(PhysicsCollision2D collision)
     {
-        Debug.LogError(collision.GameObject.tag);
+        if (InPossessionMode && collision.GameObject.tag == GameManager.EnemyTag)
+        {
+            collision.GameObject.GetComponent<AIController>().Possess(true);
+            gameObject.SetActive(false);
+        }
     }
 
     public void OnPhysicsObjectCollisionExit(PhysicsCollision2D collision) { }

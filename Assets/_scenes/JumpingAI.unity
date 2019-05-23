@@ -4041,6 +4041,11 @@ PrefabInstance:
       propertyPath: Collider
       value: 
       objectReference: {fileID: 483392255}
+    - target: {fileID: 114253259727586034, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: _updateContactFilterLayerMask
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 212392765523624570, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
         type: 3}
       propertyPath: m_Color.r
@@ -4066,8 +4071,7 @@ PrefabInstance:
       propertyPath: _possessionArea
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7315579344771550891, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 3}
 --- !u!4 &1054409319 stripped
 Transform:
@@ -5076,6 +5080,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1222172137614980, guid: 2d83156fcd800694f8aa1d6f2243ff36, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 4557625184253204, guid: 2d83156fcd800694f8aa1d6f2243ff36, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.553
@@ -5137,6 +5145,11 @@ PrefabInstance:
         type: 3}
       propertyPath: StopDistanceToTarget
       value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114904549449585534, guid: 2d83156fcd800694f8aa1d6f2243ff36,
+        type: 3}
+      propertyPath: _distanceToDetect
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114995939018924468, guid: 2d83156fcd800694f8aa1d6f2243ff36,
         type: 3}

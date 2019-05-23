@@ -40,7 +40,7 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
 
     // Tags
     public const string PlayerTag = "Player";
-    public const string EnemieTag = "Enemie";
+    public const string EnemyTag = "Enemy";
 
     // Layers
     public const string PlayerLayer = "Player";
@@ -84,7 +84,7 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
         if (!_gameEnded)
         {
             // Disable all enemies
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag(EnemieTag);
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag(EnemyTag);
 
             foreach (GameObject enemie in enemies)
             {

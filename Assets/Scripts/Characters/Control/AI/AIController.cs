@@ -2,6 +2,9 @@
 using System.Collections;
 using UnityEngine;
 
+// This script requires thoses components and will be added if they aren't already there
+[RequireComponent(typeof(Animator))]
+
 public abstract class AIController : CharacterController
 {
     [Header("Possession")]
@@ -44,7 +47,12 @@ public abstract class AIController : CharacterController
 
     protected Path Path;
     protected int TargetWaypoint = 0;
+
+    private const string _possessedModeAnimationLayerName = "Possessed Mode";
+    private int _possessedModeAnimationLayerIndex;
+
     protected Seeker Seeker;
+    private Animator _animator;
 
     protected virtual void Awake()
     {
@@ -52,6 +60,10 @@ public abstract class AIController : CharacterController
         HasDetectedTarget = false;
 
         Seeker = GetComponent<Seeker>();
+        _animator = GetComponent<Animator>();
+
+        _possessedModeAnimationLayerIndex = _animator.GetLayerIndex(_possessedModeAnimationLayerName);
+        _animator.SetLayerWeight(_possessedModeAnimationLayerIndex, .0f);
     }
 
     protected virtual void Start()
@@ -137,6 +149,8 @@ public abstract class AIController : CharacterController
         {
             IsPossessed = possess;
             OnPossessionChange();
+
+            _animator.SetLayerWeight(_possessedModeAnimationLayerIndex, IsPossessed ? 1.0f : .0f);
         }
 
         return IsPossessed;
