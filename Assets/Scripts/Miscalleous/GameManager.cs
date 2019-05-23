@@ -42,6 +42,14 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
     public const string PlayerTag = "Player";
     public const string EnemieTag = "Enemie";
 
+    // Layers
+    public const string PlayerLayer = "Player";
+    public const string AILayer = "AI";
+
+    // Layers Index
+    public static readonly int PlayerLayerIndex = LayerMask.NameToLayer(PlayerLayer);
+    public static readonly int AILayerIndex = LayerMask.NameToLayer(AILayer);
+
     private void Start()
     {
         _fade.Subscribe(this);

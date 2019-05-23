@@ -13,10 +13,13 @@ public interface IPhysicsObjectCollisionListener
 
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(Collider2D))]
 
 public class PhysicsObject : MonoBehaviour
 {
+    [Header("Collision")]
+    [SerializeField]
+    protected Collider2D Collider;
+
     [Header("Movement")]
     [SerializeField]
     protected float ShellRadius = 0.05f;
@@ -35,7 +38,7 @@ public class PhysicsObject : MonoBehaviour
     //protected float m_groundAngle;
 
     public bool IsGrounded { get; private set; }
-
+    
     [SerializeField]
     protected bool DebugVelocity = false;
 
@@ -51,7 +54,6 @@ public class PhysicsObject : MonoBehaviour
 
     private IPhysicsObjectCollisionListener[] _collisionListeners;
 
-    protected Collider2D Collider;
     protected Rigidbody2D Rigidbody2D;
 
     protected const float MinMoveDistance = 0.001f;
@@ -69,7 +71,11 @@ public class PhysicsObject : MonoBehaviour
 
         _collisionListeners = GetComponentsInChildren<IPhysicsObjectCollisionListener>();
 
-        Collider = GetComponent<Collider2D>();
+        if (!Collider)
+        {
+            Debug.LogError("No collider was set!");
+        }
+
         Rigidbody2D = GetComponent<Rigidbody2D>();
 
         InitialiseRigidbody2D();
@@ -147,7 +153,7 @@ public class PhysicsObject : MonoBehaviour
         // Check for collision only if the object moves enough
         if (distance > MinMoveDistance)
         {
-            int count = Rigidbody2D.Cast(movement, ContactFilter, HitBuffer, distance + ShellRadius);
+            int count = Collider.Cast(movement, ContactFilter, HitBuffer, distance + ShellRadius);
             HitBufferList.Clear();
 
             // Transfer hits to m_hitBufferList

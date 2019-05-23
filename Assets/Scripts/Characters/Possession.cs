@@ -4,7 +4,7 @@
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(AudioSource))]
 
-public class Possession : MonoBehaviour
+public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
 {
     [Header("Sounds")]
     [SerializeField]
@@ -23,6 +23,8 @@ public class Possession : MonoBehaviour
     private void Awake()
     {
         InPossessionMode = false;
+        // Change if player collides with AIs
+        Physics2D.IgnoreLayerCollision(GameManager.PlayerLayerIndex, GameManager.AILayerIndex, !InPossessionMode);
 
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
@@ -37,6 +39,9 @@ public class Possession : MonoBehaviour
         {
             InPossessionMode = inPossessionMode;
             _animator.SetLayerWeight(_possessModeAnimationLayerIndex, InPossessionMode ? 1.0f : .0f);
+            
+            // Change if player collides with AIs
+            Physics2D.IgnoreLayerCollision(GameManager.PlayerLayerIndex, GameManager.AILayerIndex, !InPossessionMode);
 
             if (InPossessionMode)
             {
@@ -48,4 +53,12 @@ public class Possession : MonoBehaviour
             }
         }
     }
+
+    // Methods of the IPhysicsObjectCollisionListener interface
+    public void OnPhysicsObjectCollisionEnter(PhysicsCollision2D collision)
+    {
+        Debug.LogError(collision.GameObject.tag);
+    }
+
+    public void OnPhysicsObjectCollisionExit(PhysicsCollision2D collision) { }
 }
