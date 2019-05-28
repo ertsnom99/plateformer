@@ -279,6 +279,7 @@ public class PlatformerAIController : AIController
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
             //inputs.Dash = Input.GetButtonDown("Dash");
             //inputs.ReleaseDash = Input.GetButtonUp("Dash");
+            inputs.Possess = Input.GetButtonDown("Possess");
         }
         else
         {
@@ -290,6 +291,7 @@ public class PlatformerAIController : AIController
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
             //inputs.Dash = Input.GetButtonDown("Dash");
             //inputs.ReleaseDash = Input.GetButtonUp("Dash");
+            inputs.Possess = Input.GetButtonDown("Possess");
         }
 
         return inputs;
@@ -348,13 +350,18 @@ public class PlatformerAIController : AIController
     protected override void UpdateMovement(Inputs inputs)
     {
         _movementScript.SetInputs(inputs);
+
+        base.UpdateMovement(inputs);
     }
 
-    protected override void OnPossessionChange()
+    protected override void OnPossess()
     {
-        base.OnPossessionChange();
-
         _verticalMovementinProgress = false;
         _delayedMovementProgressCheck = false;
+    }
+
+    protected override void OnUnpossess()
+    {
+        UpdateMovement(new Inputs());
     }
 }

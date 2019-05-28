@@ -117,7 +117,8 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     private AudioClip _airborneJumpSound;
     [SerializeField]
     private AudioClip _dashSound;
-    
+
+    private Inputs _emptyInputs = new Inputs();
     private Inputs _currentInputs;
 
     private SpriteRenderer _spriteRenderer;
@@ -495,10 +496,6 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     {
         Velocity = new Vector2(Velocity.x, takeOffSpeed);
 
-        // Reset ground normal because it is use for the movement along ground
-        // If it's not reset, it could cause the player to move in a strange direction 
-        //m_groundNormal = new Vector2(.0f, 1.0f);
-
         // Update the gravity modifier
         CurrentGravityModifier = GravityModifier;
     }
@@ -511,8 +508,11 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     private void EndWallJumpWindow()
     {
-        StopCoroutine(_wallJumpWindowCoroutine);
-        _wallJumpWindowCoroutine = null;
+        if (_wallJumpWindowCoroutine != null)
+        {
+            StopCoroutine(_wallJumpWindowCoroutine);
+            _wallJumpWindowCoroutine = null;
+        }
     }
     
     private bool InWallJumpWindow()
@@ -542,12 +542,15 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     private void EndDelayedHorizontalControl()
     {
-        StopCoroutine(_horizontalControlDelayCoroutine);
-        _horizontalControlDelayCoroutine = null;
-
-        if (IsKnockedBack == true)
+        if (_horizontalControlDelayCoroutine != null)
         {
-            ResetKnockbackVariables();
+            StopCoroutine(_horizontalControlDelayCoroutine);
+            _horizontalControlDelayCoroutine = null;
+
+            if (IsKnockedBack == true)
+            {
+                ResetKnockbackVariables();
+            }
         }
     }
     
@@ -581,10 +584,6 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     {
         Velocity = new Vector2(Velocity.x, .0f);
         TargetHorizontalVelocity = _spriteRenderer.flipX ? -_dashSpeed : _dashSpeed;
-
-        // Reset ground normal because it is use for the movement along ground
-        // If it's not reset, it could cause the player to move in a strange direction 
-        //m_groundNormal = new Vector2(.0f, 1.0f);
 
         // Update the gravity modifier
         CurrentGravityModifier = .0f;
@@ -626,14 +625,17 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     // and this could be called outside of one
     private void EndDashWindow()
     {
-        StopCoroutine(_dashWindowCoroutine);
-        _dashWindowCoroutine = null;
+        if (_dashWindowCoroutine != null)
+        {
+            StopCoroutine(_dashWindowCoroutine);
+            _dashWindowCoroutine = null;
 
-        // Update the gravity modifier
-        CurrentGravityModifier = GravityModifier;
-        
-        _dashCooldownCoroutine = DashCooldown();
-        StartCoroutine(_dashCooldownCoroutine);
+            // Update the gravity modifier
+            CurrentGravityModifier = GravityModifier;
+
+            _dashCooldownCoroutine = DashCooldown();
+            StartCoroutine(_dashCooldownCoroutine);
+        }
     }
 
     // Return dashing state base on the coroutine existence, since using the actual movement could create incorrect values!
@@ -671,6 +673,22 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         }
     }
 
+    private void EndDashCooldown()
+    {
+        if (_dashCooldownCoroutine != null)
+        {
+            StopCoroutine(_dashCooldownCoroutine);
+            _dashCooldownCoroutine = null;
+
+            // Tell subscribers that the dash cooldown is over
+            foreach (IPlatformerMovementSubscriber subscriber in Subscribers)
+            {
+                subscriber.NotifyDashCooldownUpdated(1.0f);
+                subscriber.NotifyDashCooldownOver();
+            }
+        }
+    }
+
     private bool DashInCooldown()
     {
         return _dashCooldownCoroutine != null;
@@ -694,5 +712,30 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     public void EnableDash(bool enable)
     {
         _canDash = enable;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        
+        SetInputs(_emptyInputs);
+
+        EndWallJumpWindow();
+        EndDelayedHorizontalControl();
+        EndDashWindow();
+        EndDashCooldown();
+
+        CurrentGravityModifier = GravityModifier;
+        IsSlidingOfWall = false;
+        IsDashing = false;
+        IsKnockedBack = false;
+
+        _airborneJumpAvailable = true;
+        _jumpCanceled = false;
+        _hitWall = false;
+        _triggeredJump = false;
+        _triggeredAirborneJump = false;
+        _triggeredDash = false;
+        _lastHorizontalVelocityDirection = .0f;
     }
 }

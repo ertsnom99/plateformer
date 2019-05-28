@@ -1,4 +1,5 @@
-﻿using Pathfinding;
+﻿using Cinemachine;
+using Pathfinding;
 using System.Collections;
 using UnityEngine;
 
@@ -18,6 +19,11 @@ public abstract class AIController : CharacterController
     }
 
     public bool IsPossessed { get; private set; }
+
+    [SerializeField]
+    private CinemachineVirtualCamera _possessionVirtualCamera;
+
+    private Possession _possessingScript;
 
     [Header("Target")]
     [SerializeField]
@@ -136,27 +142,59 @@ public abstract class AIController : CharacterController
     }
 
     protected abstract Inputs CreateInputs();
-    
+
+    protected override void UpdateMovement(Inputs inputs)
+    {
+        if (inputs.Possess)
+        {
+            Unpossess();
+        }
+    }
+
     public void SetTarget(Transform target)
     {
         Target = target;
     }
 
     // Returns the possession state after calling this method
-    public bool Possess(bool possess)
+    public bool Possess(Possession possessingScript)
     {
-        if ((IsPossessable || IsPossessed) && IsPossessed != possess)
+        if (IsPossessable && !IsPossessed)
         {
-            IsPossessed = possess;
-            OnPossessionChange();
+            _possessingScript = possessingScript;
 
-            _animator.SetLayerWeight(_possessedModeAnimationLayerIndex, IsPossessed ? 1.0f : .0f);
+            IsPossessed = true;
+            OnPossess();
+
+            _animator.SetLayerWeight(_possessedModeAnimationLayerIndex, 1.0f);
+            VirtualCameraManager.Instance.ChangeVirtualCamera(_possessionVirtualCamera);
         }
 
         return IsPossessed;
     }
 
-    protected virtual void OnPossessionChange() { }
+    protected virtual void OnPossess() { }
+
+    // Returns the possession state after calling this method
+    public bool Unpossess()
+    {
+        if (IsPossessed && IsPossessed)
+        {
+            if (_possessingScript)
+            {
+                _possessingScript.ReleasePossession();
+            }
+
+            IsPossessed = false;
+            OnUnpossess();
+
+            _animator.SetLayerWeight(_possessedModeAnimationLayerIndex, .0f);
+        }
+
+        return IsPossessed;
+    }
+
+    protected virtual void OnUnpossess() { }
 
     public void EnablePossession(bool enable)
     {

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cinemachine;
+using UnityEngine;
 
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(Animator))]
@@ -6,6 +7,9 @@
 
 public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
 {
+    [SerializeField]
+    private CinemachineVirtualCamera _virtualCamera;
+
     [Header("Sounds")]
     [SerializeField]
     private AudioClip _enterPossessionModeSound;
@@ -54,13 +58,29 @@ public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
         }
     }
 
+    // Take possession of the given AIController
+    public void TakePossession(AIController possessedController)
+    {
+        possessedController.Possess(this);
+        ChangePossessionMode(false);
+
+        gameObject.SetActive(false);
+    }
+
+    // Release possession of the AIController it is already in possession of, if any
+    public void ReleasePossession()
+    {
+        VirtualCameraManager.Instance.ChangeVirtualCamera(_virtualCamera);
+
+        gameObject.SetActive(true);
+    }
+
     // Methods of the IPhysicsObjectCollisionListener interface
     public void OnPhysicsObjectCollisionEnter(PhysicsCollision2D collision)
     {
         if (InPossessionMode && collision.GameObject.tag == GameManager.EnemyTag)
         {
-            collision.GameObject.GetComponent<AIController>().Possess(true);
-            gameObject.SetActive(false);
+            TakePossession(collision.GameObject.GetComponent<AIController>());
         }
     }
 

@@ -340,4 +340,16 @@ public class PhysicsObject : MonoBehaviour
     {
         Velocity = new Vector2(Velocity.x, Velocity.y + addedVelocity);
     }
+
+    // Reset all movement and related variable when the script is disable
+    protected virtual void OnDisable()
+    {
+        GroundNormal = Vector2.zero;
+        IsGrounded = false;
+        Velocity = Vector2.zero;
+        TargetHorizontalVelocity = .0f;
+
+        PreviouslyCollidingGameObject.Clear();
+        CollidingGameObjects.Clear();
+    }
 }
