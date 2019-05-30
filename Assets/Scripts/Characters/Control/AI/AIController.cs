@@ -4,7 +4,9 @@ using System.Collections;
 using UnityEngine;
 
 // This script requires thoses components and will be added if they aren't already there
+[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AudioSource))]
 
 public abstract class AIController : CharacterController
 {
@@ -22,6 +24,23 @@ public abstract class AIController : CharacterController
 
     [SerializeField]
     private CinemachineVirtualCamera _possessionVirtualCamera;
+
+    [SerializeField]
+    private AudioClip _onPossessSound;
+    [SerializeField]
+    private AudioClip _onUnpossessSound;
+
+    [SerializeField]
+    private Collider2D _leftPlayerSpawn;
+    private ContactFilter2D _leftPlayerSpawnContactFilter;
+    [SerializeField]
+    private Collider2D _rightPlayerSpawn;
+    private ContactFilter2D _rightPlayerSpawnContactFilter;
+
+    private Collider2D[] _overlapResults = new Collider2D[4];
+    
+    [SerializeField]
+    private bool _flipPlayerSpawn = false;
 
     private Possession _possessingScript;
 
@@ -57,16 +76,29 @@ public abstract class AIController : CharacterController
     private const string _possessedModeAnimationLayerName = "Possessed Mode";
     private int _possessedModeAnimationLayerIndex;
 
-    protected Seeker Seeker;
+    private SpriteRenderer _spriteRenderer;
     private Animator _animator;
+    private AudioSource _audioSource;
+    protected Seeker Seeker;
 
     protected virtual void Awake()
     {
+        // Tells to use the layer settings from the Physics2D settings (the matrix)
+        _leftPlayerSpawnContactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(_leftPlayerSpawn.gameObject.layer));
+        _leftPlayerSpawnContactFilter.useLayerMask = true;
+        _leftPlayerSpawnContactFilter.useTriggers = false;
+
+        _rightPlayerSpawnContactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(_rightPlayerSpawn.gameObject.layer));
+        _rightPlayerSpawnContactFilter.useLayerMask = true;
+        _rightPlayerSpawnContactFilter.useTriggers = false;
+
         IsPossessed = false;
         HasDetectedTarget = false;
 
-        Seeker = GetComponent<Seeker>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
+        Seeker = GetComponent<Seeker>();
 
         _possessedModeAnimationLayerIndex = _animator.GetLayerIndex(_possessedModeAnimationLayerName);
         _animator.SetLayerWeight(_possessedModeAnimationLayerIndex, .0f);
@@ -94,6 +126,7 @@ public abstract class AIController : CharacterController
                 Inputs inputs = FetchInputs();
 
                 UpdateMovement(inputs);
+                UpdatePossession(inputs);
 
                 OnUpdatePossessed();
             }
@@ -143,11 +176,24 @@ public abstract class AIController : CharacterController
 
     protected abstract Inputs CreateInputs();
 
-    protected override void UpdateMovement(Inputs inputs)
+    protected override void UpdatePossession(Inputs inputs)
     {
-        if (inputs.Possess)
+        if (inputs.Possess && HasEnoughSpaceToUnpossess())
         {
             Unpossess();
+        }
+    }
+
+    // Returns if the area to respawn the player is free. The area checked is based on the facing direction of the character
+    private bool HasEnoughSpaceToUnpossess()
+    {
+        if ((_spriteRenderer.flipX && !_flipPlayerSpawn) || (!_spriteRenderer.flipX && _flipPlayerSpawn))
+        {
+            return _leftPlayerSpawn.OverlapCollider(_leftPlayerSpawnContactFilter, _overlapResults) == 0;
+        }
+        else
+        {
+            return _rightPlayerSpawn.OverlapCollider(_rightPlayerSpawnContactFilter, _overlapResults) == 0;
         }
     }
 
@@ -164,10 +210,14 @@ public abstract class AIController : CharacterController
             _possessingScript = possessingScript;
 
             IsPossessed = true;
-            OnPossess();
 
             _animator.SetLayerWeight(_possessedModeAnimationLayerIndex, 1.0f);
             VirtualCameraManager.Instance.ChangeVirtualCamera(_possessionVirtualCamera);
+
+            _audioSource.pitch = Random.Range(.9f, 1.0f);
+            _audioSource.PlayOneShot(_onPossessSound);
+
+            OnPossess();
         }
 
         return IsPossessed;
@@ -182,13 +232,33 @@ public abstract class AIController : CharacterController
         {
             if (_possessingScript)
             {
-                _possessingScript.ReleasePossession();
+                // Select the correct player spawn and respawn facing direction
+                Vector2 respawnPos;
+                Vector2 respawnFacingDirection;
+
+                if ((_spriteRenderer.flipX && !_flipPlayerSpawn) || (!_spriteRenderer.flipX && _flipPlayerSpawn))
+                {
+                    respawnPos = _leftPlayerSpawn.transform.position;
+                    respawnFacingDirection = Vector2.left;
+                }
+                else
+                {
+                    respawnPos = _rightPlayerSpawn.transform.position;
+                    respawnFacingDirection = Vector2.right;
+                }
+                
+                // Tell the possession script, that took possession of this AIController, that isn't in control anymore
+                _possessingScript.ReleasePossession(respawnPos, respawnFacingDirection);
             }
 
             IsPossessed = false;
-            OnUnpossess();
 
             _animator.SetLayerWeight(_possessedModeAnimationLayerIndex, .0f);
+
+            _audioSource.pitch = Random.Range(.9f, 1.0f);
+            _audioSource.PlayOneShot(_onUnpossessSound);
+
+            OnUnpossess();
         }
 
         return IsPossessed;

@@ -31,4 +31,5 @@ public abstract class CharacterController : MonoBehaviour
     protected abstract Inputs FetchInputs();
 
     protected abstract void UpdateMovement(Inputs inputs);
+    protected abstract void UpdatePossession(Inputs inputs);
 }

@@ -64,7 +64,7 @@ public class PlayerController : CharacterController
         _movementScript.SetInputs(inputs);
     }
 
-    private void UpdatePossession(Inputs inputs)
+    protected override void UpdatePossession(Inputs inputs)
     {
         if (inputs.Possess)
         {

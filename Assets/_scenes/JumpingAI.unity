@@ -1708,14 +1708,6 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 551576513}
     m_ColliderPaths:
-    - - X: 150000000
-        Y: 80000000
-      - X: 80000000
-        Y: 80000000
-      - X: 80000000
-        Y: 70000000
-      - X: 150000000
-        Y: 70000000
     - - X: -50000000
         Y: 80000000
       - X: -110000000
@@ -1723,6 +1715,14 @@ CompositeCollider2D:
       - X: -110000000
         Y: 70000000
       - X: -50000000
+        Y: 70000000
+    - - X: 150000000
+        Y: 80000000
+      - X: 80000000
+        Y: 80000000
+      - X: 80000000
+        Y: 70000000
+      - X: 150000000
         Y: 70000000
     - - X: 50000000
         Y: 60000000
@@ -1766,14 +1766,14 @@ CompositeCollider2D:
         Y: -10000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 15, y: 8}
-      - {x: 8, y: 8}
-      - {x: 8, y: 7}
-      - {x: 15, y: 7}
     - - {x: -5, y: 8}
       - {x: -11, y: 8}
       - {x: -11, y: 7}
       - {x: -5, y: 7}
+    - - {x: 15, y: 8}
+      - {x: 8, y: 8}
+      - {x: 8, y: 7}
+      - {x: 15, y: 7}
     - - {x: 5, y: 6}
       - {x: -1, y: 6}
       - {x: -1, y: 5}
@@ -5308,6 +5308,11 @@ PrefabInstance:
       propertyPath: _possessionVirtualCamera
       value: 
       objectReference: {fileID: 98316450}
+    - target: {fileID: 114904549449585534, guid: 2d83156fcd800694f8aa1d6f2243ff36,
+        type: 3}
+      propertyPath: _flipPlayerSpawn
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 114995939018924468, guid: 2d83156fcd800694f8aa1d6f2243ff36,
         type: 3}
       propertyPath: m_target

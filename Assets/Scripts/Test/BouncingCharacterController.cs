@@ -358,6 +358,8 @@ public class BouncingCharacterController : CharacterController, IBouncingPhysics
         _movementScript.SetInputs(inputs);
     }
 
+    protected override void UpdatePossession(Inputs inputs) { }
+
     // Methods of the IBouncingPhysicsObjectSubscriber interface
     public void NotifyBounceStarted() { }
 

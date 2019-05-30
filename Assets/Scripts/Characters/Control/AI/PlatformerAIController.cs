@@ -350,8 +350,6 @@ public class PlatformerAIController : AIController
     protected override void UpdateMovement(Inputs inputs)
     {
         _movementScript.SetInputs(inputs);
-
-        base.UpdateMovement(inputs);
     }
 
     protected override void OnPossess()

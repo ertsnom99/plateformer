@@ -2,13 +2,19 @@
 using UnityEngine;
 
 // This script requires thoses components and will be added if they aren't already there
+[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(AudioSource))]
 
 public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
 {
+    [Header("Camera")]
     [SerializeField]
     private CinemachineVirtualCamera _virtualCamera;
+
+    [Header("Sprite")]
+    [SerializeField]
+    private bool _flipSpawnedPlayer = false;
 
     [Header("Sounds")]
     [SerializeField]
@@ -21,6 +27,7 @@ public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
     private const string _possessModeAnimationLayerName = "Possess Mode";
     private int _possessModeAnimationLayerIndex;
 
+    private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private AudioSource _audioSource;
 
@@ -30,6 +37,7 @@ public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
         // Change if player collides with AIs
         //Physics2D.IgnoreLayerCollision(GameManager.PlayerLayerIndex, GameManager.AILayerIndex, !InPossessionMode);
 
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
 
@@ -61,17 +69,33 @@ public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
     // Take possession of the given AIController
     public void TakePossession(AIController possessedController)
     {
-        possessedController.Possess(this);
-        ChangePossessionMode(false);
-
-        gameObject.SetActive(false);
+        if (possessedController.Possess(this))
+        {
+            ChangePossessionMode(false);
+            gameObject.SetActive(false);
+        }
     }
 
-    // Release possession of the AIController it is already in possession of, if any
-    public void ReleasePossession()
+    // Release possession of the AIController that it is in possession of, if it's the case
+    public void ReleasePossession(Vector2 respawnPos, Vector2 respawnFacingDirection)
     {
+        // Replace the character
+        gameObject.transform.position = respawnPos;
+
+        // Make the character face the correct way
+        if (respawnFacingDirection == Vector2.left)
+        {
+            _spriteRenderer.flipX = !_flipSpawnedPlayer;
+        }
+        else if (respawnFacingDirection == Vector2.right)
+        {
+            _spriteRenderer.flipX = _flipSpawnedPlayer;
+        }
+
+        // Change the camera
         VirtualCameraManager.Instance.ChangeVirtualCamera(_virtualCamera);
 
+        // Show the character
         gameObject.SetActive(true);
     }
 
