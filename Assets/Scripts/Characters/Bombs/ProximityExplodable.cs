@@ -50,14 +50,6 @@ public class ProximityExplodable : MonoSubscribable<IProximityExplodableSubscrib
     [SerializeField]
     private bool _drawExplosionRange = false;
 
-    private void Start()
-    {
-        if (!_target)
-        {
-            Debug.LogError("Target was set!");
-        }
-    }
-
     private void Update()
     {
         // Check if in countdown
@@ -88,7 +80,7 @@ public class ProximityExplodable : MonoSubscribable<IProximityExplodableSubscrib
                 Instantiate(_explosionEffect, _explosionPosition.position, Quaternion.identity);
             }
         }
-        else
+        else if (_target)
         {
             float distanceToTarget = ((_target.position - transform.position) + _distanceOffset).magnitude;
 

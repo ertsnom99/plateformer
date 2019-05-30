@@ -26,6 +26,10 @@ public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
 
     private const string _possessModeAnimationLayerName = "Possess Mode";
     private int _possessModeAnimationLayerIndex;
+    
+    /*// Layers Index
+    private int _playerLayerIndex;
+    private int _AILayerIndex;*/
 
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
@@ -34,8 +38,11 @@ public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
     private void Awake()
     {
         InPossessionMode = false;
-        // Change if player collides with AIs
-        //Physics2D.IgnoreLayerCollision(GameManager.PlayerLayerIndex, GameManager.AILayerIndex, !InPossessionMode);
+        /*// Change if player collides with AIs
+        _playerLayerIndex = LayerMask.NameToLayer(GameManager.PlayerLayer);
+        _AILayerIndex = LayerMask.NameToLayer(GameManager.AILayer);
+
+        Physics2D.IgnoreLayerCollision(_playerLayerIndex, _AILayerIndex, !InPossessionMode);*/
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
@@ -53,7 +60,7 @@ public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
             _animator.SetLayerWeight(_possessModeAnimationLayerIndex, InPossessionMode ? 1.0f : .0f);
             
             // Change if player collides with AIs
-            //Physics2D.IgnoreLayerCollision(GameManager.PlayerLayerIndex, GameManager.AILayerIndex, !InPossessionMode);
+            //Physics2D.IgnoreLayerCollision(_playerLayerIndex, _AILayerIndex, !InPossessionMode);
 
             if (InPossessionMode)
             {

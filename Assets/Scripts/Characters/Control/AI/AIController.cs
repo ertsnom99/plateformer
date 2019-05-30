@@ -73,7 +73,7 @@ public abstract class AIController : CharacterController
     protected Path Path;
     protected int TargetWaypoint = 0;
 
-    private const string _possessedModeAnimationLayerName = "Possessed Mode";
+    protected const string _possessedModeAnimationLayerName = "Possessed Mode";
     private int _possessedModeAnimationLayerIndex;
 
     private SpriteRenderer _spriteRenderer;
@@ -106,25 +106,27 @@ public abstract class AIController : CharacterController
 
     protected virtual void Start()
     {
-        if (Target == null)
+        if (Target)
         {
-            Debug.LogError("No target was set!");
-            return;
+            StartCoroutine(UpdatePath());
         }
-        
-        StartCoroutine(UpdatePath());
     }
 
     protected virtual void Update()
     {
         // Only update when time isn't stop
-        if (Time.deltaTime > .0f && ControlsEnabled())
+        if (Time.deltaTime > .0f)
         {
             if (IsPossessed)
             {
                 // Get the inputs used during this frame
-                Inputs inputs = FetchInputs();
-
+                Inputs inputs = NoControlInputs;
+                
+                if (ControlsEnabled())
+                {
+                    inputs = FetchInputs();
+                }
+                
                 UpdateMovement(inputs);
                 UpdatePossession(inputs);
 
@@ -132,7 +134,7 @@ public abstract class AIController : CharacterController
             }
             else
             {
-                if (!IsPossessed && !HasDetectedTarget && (transform.position - Target.position).magnitude <= _distanceToDetect)
+                if (Target && ControlsEnabled() && !IsPossessed && !HasDetectedTarget && (transform.position - Target.position).magnitude <= _distanceToDetect)
                 {
                     HasDetectedTarget = true;
                 }

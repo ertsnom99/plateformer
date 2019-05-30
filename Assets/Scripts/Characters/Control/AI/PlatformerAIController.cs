@@ -178,10 +178,10 @@ public class PlatformerAIController : AIController
             _horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
         }
 
+        Inputs inputs = NoControlInputs;
+
         if (ControlsEnabled() && HasDetectedTarget && Path != null)
         {
-            Inputs inputs = NoControlInputs;
-
             bool isWaypointReached = TargetWaypoint >= Path.vectorPath.Count;
             float distanceToTarget = Vector3.Distance(transform.position, Target.position);
 
@@ -218,10 +218,10 @@ public class PlatformerAIController : AIController
                     inputs = CreateInputs();
                 }
             }
-
-            // Send the final inputs to the movement script
-            UpdateMovement(inputs);
         }
+
+        // Send the final inputs to the movement script
+        UpdateMovement(inputs);
     }
 
     private bool IsWalkLinkOver(Vector2 positionToTargetWaypoint)

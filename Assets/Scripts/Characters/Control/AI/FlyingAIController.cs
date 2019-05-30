@@ -6,11 +6,26 @@ using Pathfinding;
 
 public class FlyingAIController : AIController
 {
+    [Header("Propellant")]
+    [SerializeField]
+    private Animator _propellantAnimator;
+
+    private int _propellantPossessedModeAnimationLayerIndex;
+
     private FlyingMovement _movementScript;
 
     protected override void Awake()
     {
         base.Awake();
+
+        if (!_propellantAnimator)
+        {
+            Debug.LogError("No propellant animator was set!");
+        }
+        else
+        {
+            _propellantPossessedModeAnimationLayerIndex = _propellantAnimator.GetLayerIndex(_possessedModeAnimationLayerName);
+        }
 
         _movementScript = GetComponent<FlyingMovement>();
     }
@@ -25,10 +40,10 @@ public class FlyingAIController : AIController
 
     protected override void OnUpdateNotPossessed()
     {
-        if (HasDetectedTarget && Path != null)
-        {
-            Inputs inputs = NoControlInputs;
+        Inputs inputs = NoControlInputs;
 
+        if (ControlsEnabled() && HasDetectedTarget && Path != null)
+        {
             float distanceToTarget = Vector3.Distance(transform.position, Target.position);
             bool isWaypointReached = TargetWaypoint >= Path.vectorPath.Count;
 
@@ -57,10 +72,20 @@ public class FlyingAIController : AIController
                     inputs = CreateInputs();
                 }
             }
-
-            // Send the final inputs to the movement script
-            UpdateMovement(inputs);
         }
+
+        // Send the final inputs to the movement script
+        UpdateMovement(inputs);
+    }
+
+    protected override void OnPossess()
+    {
+        _propellantAnimator.SetLayerWeight(_propellantPossessedModeAnimationLayerIndex, 1.0f);
+    }
+
+    protected override void OnUnpossess()
+    {
+        _propellantAnimator.SetLayerWeight(_propellantPossessedModeAnimationLayerIndex, .0f);
     }
 
     protected override Inputs FetchInputs()
@@ -76,6 +101,7 @@ public class FlyingAIController : AIController
             //inputs.ReleaseJump = Input.GetButtonUp("Jump");
             //inputs.Dash = Input.GetButtonDown("Dash");
             //inputs.ReleaseDash = Input.GetButtonUp("Dash");
+            inputs.Possess = Input.GetButtonDown("Possess");
         }
         else
         {
@@ -87,6 +113,7 @@ public class FlyingAIController : AIController
             //inputs.ReleaseJump = Input.GetButtonUp("Jump");
             //inputs.Dash = Input.GetButtonDown("Dash");
             //inputs.ReleaseDash = Input.GetButtonUp("Dash");
+            inputs.Possess = Input.GetButtonDown("Possess");
         }
 
         return inputs;
