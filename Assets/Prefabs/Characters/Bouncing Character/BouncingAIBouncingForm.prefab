@@ -364,11 +364,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94df7056dde60474793dc59e22d453d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_shellRadius: 0.05
+  Collider: {fileID: 8337540354551453398}
+  _updateContactFilterLayerMask: 0
+  ShellRadius: 0.05
   GravityModifier: 0
-  m_fallModifier: 1
-  m_minGroundNormalY: 0.4
-  m_debugVelocity: 0
+  FallModifier: 1
+  _minGroundNormalY: 0.4
+  DebugVelocity: 0
   _bounciness: 1
   _bounceFreezeDuration: 0
   _bounceMaxTry: 100

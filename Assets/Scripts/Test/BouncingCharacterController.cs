@@ -4,12 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 // This script requires thoses components and will be added if they aren't already there
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(BoxCollider2D))]
-[RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(PlatformerMovement))]
 
-public class BouncingCharacterController : CharacterController, IBouncingPhysicsObjectSubscriber
+public class BouncingCharacterController : AIController, IBouncingPhysicsObjectSubscriber
 {
     [Header("Charge")]
     [SerializeField]
@@ -28,7 +25,9 @@ public class BouncingCharacterController : CharacterController, IBouncingPhysics
     private GameObject _bounceFormPrefab;
     private GameObject _bounceForm;
     [SerializeField]
-    private CircleCollider2D _bounceFormSpawnAreaCollider;
+    private Collider2D _normalFormSpawnArea;
+    [SerializeField]
+    private Collider2D _bounceFormSpawnArea;
     protected ContactFilter2D ContactFilter;
     [SerializeField]
     private float _minLaunchStrength = 50.0f;
@@ -49,14 +48,13 @@ public class BouncingCharacterController : CharacterController, IBouncingPhysics
     [SerializeField]
     private CinemachineVirtualCamera _virtualCameraBounceForm;
     
-    private SpriteRenderer _renderer;
-    private BoxCollider2D _collider;
-    private AudioSource _audioSource;
     private PlatformerMovement _movementScript;
     private BouncingPhysicsObject _bouncingPhysicsObjectScript;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         _arrow.SetActive(false);
 
         // Tells to use the layer settings from the Physics2D settings (the matrix)
@@ -65,9 +63,6 @@ public class BouncingCharacterController : CharacterController, IBouncingPhysics
         ContactFilter.useTriggers = false;
 
         // Get all component, correctly set them up and check that nothing is missing
-        _renderer = GetComponent<SpriteRenderer>();
-        _collider = GetComponent<BoxCollider2D>();
-        _audioSource = GetComponent<AudioSource>();
         _movementScript = GetComponent<PlatformerMovement>();
 
         if (!_bounceFormPrefab)
@@ -107,98 +102,106 @@ public class BouncingCharacterController : CharacterController, IBouncingPhysics
             _virtualCameraNormalForm.Follow = transform;
         }
 
-        if (!_bounceFormSpawnAreaCollider)
+        if (!_normalFormSpawnArea)
         {
-            Debug.LogError("No circle collider to check for enough space for bouncing form was set!");
+            Debug.LogError("No normal form spawn area was set!");
         }
-        else
+
+        if (!_bounceFormSpawnArea)
         {
-            _bounceFormSpawnAreaCollider.enabled = false;
+            Debug.LogError("No bounce form spawn area was set!");
         }
 
         // TEMP
         _chargeText.text = "";
     }
 
-    private void Start()
+    protected override void Start()
     {
-        // TODO: Camera should be set when the player take spossession of this character
-        if (!VirtualCameraManager.Instance)
-        {
-            Debug.LogError("Couldn't find an instance of VirtualCameraManager!");
-        }
+        base.Start();
 
         ShowNormalForm(false);
     }
 
-    private void Update()
+    protected override void OnUpdatePossessed()
     {
-        // Only update when time isn't stop
-        if (Time.deltaTime > .0f)
+        if (ControlsEnabled())
         {
-            if (ControlsEnabled())
+            // Get the inputs used during this frame
+            Inputs inputs = FetchInputs();
+
+            // Check if charge started
+            if (_movementScript.IsGrounded && !_isCharging && inputs.HeldCharge && HasEnoughSpaceForBounceForm())
             {
-                // Get the inputs used during this frame
-                Inputs inputs = FetchInputs();
+                UpdateMovement(NoControlInputs);
 
-                // Check if charge started
-                if (_movementScript.IsGrounded && !_isCharging && inputs.HeldCharge && HasEnoughSpaceForBounceForm())
+                //_bounceFormSpawnAreaCollider.enabled = true;
+                AudioSource.PlayOneShot(_chargeSound);
+
+                _chargeTime = .0f;
+                _isCharging = true;
+            }
+            else if (_isCharging && inputs.ReleaseCharge)
+            {
+                //_bounceFormSpawnAreaCollider.enabled = false;
+                _arrow.SetActive(false);
+                AudioSource.Stop();
+
+                _isCharging = false;
+
+                // Only launch of a launch direction is given
+                if (inputs.Vertical != .0f || inputs.Horizontal != .0f)
                 {
-                    UpdateMovement(new Inputs());
-
-                    _bounceFormSpawnAreaCollider.enabled = true;
-                    _audioSource.PlayOneShot(_chargeSound);
-
-                    _chargeTime = .0f;
-                    _isCharging = true;
-                }
-                else if (_isCharging && inputs.ReleaseCharge)
-                {
-                    _bounceFormSpawnAreaCollider.enabled = false;
-                    _arrow.SetActive(false);
-                    _audioSource.Stop();
-
-                    _isCharging = false;
-
-                    // Only launch of a launch direction is given
-                    if (inputs.Vertical != .0f || inputs.Horizontal != .0f)
-                    {
-                        ShowBouncingForm(true);
-                        LaunchBouncingForm(inputs);
-                    }
-                    
-                    // TEMP
-                    _chargeText.text = "";
+                    ShowBouncingForm(true);
+                    LaunchBouncingForm(inputs);
                 }
 
-                if (!_isCharging)
+                // TEMP
+                _chargeText.text = "";
+            }
+
+            if (!_isCharging)
+            {
+                UpdateMovement(inputs);
+            }
+            else
+            {
+                if (inputs.Vertical != .0f || inputs.Horizontal != .0f)
                 {
-                    UpdateMovement(inputs);
+                    _arrow.SetActive(true);
+
+                    float angle = Mathf.Atan2(inputs.Vertical, inputs.Horizontal) * Mathf.Rad2Deg;
+                    _arrow.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 }
                 else
                 {
-                    if (inputs.Vertical != .0f || inputs.Horizontal != .0f)
-                    {
-                        _arrow.SetActive(true);
+                    _arrow.SetActive(false);
+                }
 
-                        float angle = Mathf.Atan2(inputs.Vertical, inputs.Horizontal) * Mathf.Rad2Deg;
-                        _arrow.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-                    }
-                    else
-                    {
-                        _arrow.SetActive(false);
-                    }
+                if (_chargeTime < _maxChargeTime)
+                {
+                    _chargeTime = Mathf.Clamp(_chargeTime + Time.deltaTime, .0f, _maxChargeTime);
 
-                    if (_chargeTime < _maxChargeTime)
-                    {
-                        _chargeTime = Mathf.Clamp(_chargeTime + Time.deltaTime, .0f, _maxChargeTime);
-
-                        // TEMP
-                        _chargeText.text = Mathf.Lerp(_minLaunchStrength, _maxLaunchStrength, _chargeTime / _maxChargeTime).ToString();
-                    }
+                    // TEMP
+                    _chargeText.text = Mathf.Lerp(_minLaunchStrength, _maxLaunchStrength, _chargeTime / _maxChargeTime).ToString();
                 }
             }
         }
+    }
+
+    protected override void OnUpdateNotPossessed()
+    {
+        base.OnUpdateNotPossessed();
+
+        Inputs inputs = NoControlInputs;
+
+        if (ControlsEnabled() && HasDetectedTarget && Path != null)
+        {
+            // TODO: Implement AI to create the correct inputs
+        }
+
+        // Send the final inputs to the movement script
+        UpdateMovement(inputs);
     }
 
     /*void OnDrawGizmos()
@@ -228,10 +231,9 @@ public class BouncingCharacterController : CharacterController, IBouncingPhysics
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
             inputs.Jump = Input.GetButtonDown("Jump");
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
-            inputs.Dash = Input.GetButtonDown("Dash");
-            inputs.ReleaseDash = Input.GetButtonUp("Dash");
             inputs.HeldCharge = Input.GetButton("Charge");
             inputs.ReleaseCharge = Input.GetButtonUp("Charge");
+            inputs.Possess = Input.GetButtonDown("Possess");
         }
         else
         {
@@ -241,27 +243,36 @@ public class BouncingCharacterController : CharacterController, IBouncingPhysics
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
             inputs.Jump = Input.GetButtonDown("Jump");
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
-            inputs.Dash = Input.GetButtonDown("Dash");
-            inputs.ReleaseDash = Input.GetButtonUp("Dash");
             inputs.HeldCharge = Input.GetButton("Charge");
             inputs.ReleaseCharge = Input.GetButtonUp("Charge");
+            inputs.Possess = Input.GetButtonDown("Possess");
         }
 
         return inputs;
     }
 
+    protected override Inputs CreateInputs()
+    {
+        Inputs inputs = NoControlInputs;
+
+        //Vector3 positionToTargetWaypoint = Path.vectorPath[TargetWaypoint] - transform.position;
+        
+        return inputs;
+    }
+
     private bool HasEnoughSpaceForNormalForm()
     {
-        Vector2 point = (Vector2)transform.position + _collider.offset;
-        Vector2 size = _collider.size + new Vector2(2.0f, 2.0f) * _collider.edgeRadius;
+        //Vector2 point = (Vector2)transform.position + _collider.offset;
+        //Vector2 size = _collider.size + new Vector2(2.0f, 2.0f) * _collider.edgeRadius;
 
         // Check if there is a collider in the way
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(point, size, .0f);
-        _collider.OverlapCollider(ContactFilter, colliders);
+        //Collider2D[] colliders = Physics2D.OverlapBoxAll(point, size, .0f);
+        Collider2D[] hitColliders = new Collider2D[4];
+        _normalFormSpawnArea.OverlapCollider(ContactFilter, hitColliders);
 
-        foreach (Collider2D collider in colliders)
+        foreach (Collider2D collider in hitColliders)
         {
-            if (collider.gameObject != _bounceForm && !collider.isTrigger)
+            if (collider && collider.gameObject != _bounceForm && !collider.isTrigger)
             {
                 return false;
             }
@@ -281,30 +292,35 @@ public class BouncingCharacterController : CharacterController, IBouncingPhysics
             AlignNormalFormToBouncingForm();
         }
 
-        _renderer.enabled = true;
-        _collider.enabled = true;
+        SpriteRenderer.enabled = true;
+        _normalFormSpawnArea.enabled = true;
         _movementScript.enabled = true;
 
-        // Update the virtual camera to use
-        VirtualCameraManager.Instance.ChangeVirtualCamera(_virtualCameraNormalForm);
+        if (IsPossessed)
+        {
+            // Update the virtual camera to use
+            VirtualCameraManager.Instance.ChangeVirtualCamera(_virtualCameraNormalForm);
+        }
     }
 
     private void AlignNormalFormToBouncingForm()
     {
-        transform.position = _bounceForm.transform.position - _bounceFormSpawnAreaCollider.transform.localPosition - (Vector3)_bounceFormSpawnAreaCollider.offset;
+        transform.position = _bounceForm.transform.position - _bounceFormSpawnArea.transform.localPosition - (Vector3)_bounceFormSpawnArea.offset;
     }
 
     private bool HasEnoughSpaceForBounceForm()
     {
-        float overlapRadius = Mathf.Max(_bounceFormSpawnAreaCollider.transform.lossyScale.x, _bounceFormSpawnAreaCollider.transform.lossyScale.y) * _bounceFormSpawnAreaCollider.radius;
-        Vector2 overlapPoint = (Vector2)_bounceFormSpawnAreaCollider.transform.position + _bounceFormSpawnAreaCollider.offset;
+        //float overlapRadius = Mathf.Max(_bounceFormSpawnAreaCollider.transform.lossyScale.x, _bounceFormSpawnAreaCollider.transform.lossyScale.y) * _bounceFormSpawnAreaCollider.radius;
+        //Vector2 overlapPoint = (Vector2)_bounceFormSpawnAreaCollider.transform.position + _bounceFormSpawnAreaCollider.offset;
 
         // Check if there is a collider in the way
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(overlapPoint, overlapRadius);
+        //Collider2D[] hitColliders = Physics2D.OverlapCircleAll(overlapPoint, overlapRadius);
+        Collider2D[] hitColliders = new Collider2D[4];
+        _bounceFormSpawnArea.OverlapCollider(ContactFilter, hitColliders);
 
         foreach (Collider2D collider in hitColliders)
         {
-            if (collider.gameObject != gameObject && !collider.isTrigger)
+            if (collider && collider.gameObject != gameObject && !collider.isTrigger)
             {
                 return false;
             }
@@ -316,8 +332,8 @@ public class BouncingCharacterController : CharacterController, IBouncingPhysics
     private void ShowBouncingForm(bool replace)
     {
         // Hide the current character
-        _renderer.enabled = false;
-        _collider.enabled = false;
+        SpriteRenderer.enabled = false;
+        _normalFormSpawnArea.enabled = false;
         _movementScript.enabled = false;
 
         // Replace and show the bouncing form
@@ -328,13 +344,16 @@ public class BouncingCharacterController : CharacterController, IBouncingPhysics
 
         _bounceForm.SetActive(true);
 
-        // Update the virtual camera to use
-        VirtualCameraManager.Instance.ChangeVirtualCamera(_virtualCameraBounceForm);
+        if (IsPossessed)
+        {
+            // Update the virtual camera to use
+            VirtualCameraManager.Instance.ChangeVirtualCamera(_virtualCameraBounceForm);
+        }
     }
 
     private void AlignBouncingFormToNormalForm()
     {
-        _bounceForm.transform.position = (Vector2)_bounceFormSpawnAreaCollider.transform.position + _bounceFormSpawnAreaCollider.offset;
+        _bounceForm.transform.position = (Vector2)_bounceFormSpawnArea.transform.position + _bounceFormSpawnArea.offset;
     }
 
     private void LaunchBouncingForm(Inputs inputs)
@@ -349,7 +368,7 @@ public class BouncingCharacterController : CharacterController, IBouncingPhysics
             Vector2 launchForce = launchDirection * Mathf.Lerp(_minLaunchStrength, _maxLaunchStrength, _chargeTime / _maxChargeTime);
             _bouncingPhysicsObjectScript.Launch(launchForce);
 
-            _audioSource.PlayOneShot(_launchSound);
+            AudioSource.PlayOneShot(_launchSound);
         }
     }
 
@@ -371,7 +390,7 @@ public class BouncingCharacterController : CharacterController, IBouncingPhysics
         if (HasEnoughSpaceForNormalForm())
         {
             ShowNormalForm(true);
-            _audioSource.PlayOneShot(_returnToNormalFormSound);
+            AudioSource.PlayOneShot(_returnToNormalFormSound);
         }
         else
         {
@@ -389,7 +408,7 @@ public class BouncingCharacterController : CharacterController, IBouncingPhysics
             if (HasEnoughSpaceForNormalForm())
             {
                 ShowNormalForm(true);
-                _audioSource.PlayOneShot(_returnToNormalFormSound);
+                AudioSource.PlayOneShot(_returnToNormalFormSound);
                 StopAllCoroutines();
             }
 

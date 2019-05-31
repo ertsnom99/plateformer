@@ -76,9 +76,9 @@ public abstract class AIController : CharacterController
     protected const string _possessedModeAnimationLayerName = "Possessed Mode";
     private int _possessedModeAnimationLayerIndex;
 
-    private SpriteRenderer _spriteRenderer;
+    protected SpriteRenderer SpriteRenderer;
     private Animator _animator;
-    private AudioSource _audioSource;
+    protected AudioSource AudioSource;
     protected Seeker Seeker;
 
     protected virtual void Awake()
@@ -95,17 +95,32 @@ public abstract class AIController : CharacterController
         IsPossessed = false;
         HasDetectedTarget = false;
 
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        SpriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
-        _audioSource = GetComponent<AudioSource>();
+        AudioSource = GetComponent<AudioSource>();
         Seeker = GetComponent<Seeker>();
 
         _possessedModeAnimationLayerIndex = _animator.GetLayerIndex(_possessedModeAnimationLayerName);
         _animator.SetLayerWeight(_possessedModeAnimationLayerIndex, .0f);
+
+        if (!_leftPlayerSpawn)
+        {
+            Debug.LogError("No left player spawn was set!");
+        }
+
+        if (!_rightPlayerSpawn)
+        {
+            Debug.LogError("No right player spawn was set!");
+        }
     }
 
     protected virtual void Start()
     {
+        if (!VirtualCameraManager.Instance)
+        {
+            Debug.LogError("Couldn't find an instance of VirtualCameraManager!");
+        }
+
         if (Target)
         {
             StartCoroutine(UpdatePath());
@@ -119,34 +134,36 @@ public abstract class AIController : CharacterController
         {
             if (IsPossessed)
             {
-                // Get the inputs used during this frame
-                Inputs inputs = NoControlInputs;
-                
-                if (ControlsEnabled())
-                {
-                    inputs = FetchInputs();
-                }
-                
-                UpdateMovement(inputs);
-                UpdatePossession(inputs);
-
                 OnUpdatePossessed();
             }
             else
             {
-                if (Target && ControlsEnabled() && !IsPossessed && !HasDetectedTarget && (transform.position - Target.position).magnitude <= _distanceToDetect)
-                {
-                    HasDetectedTarget = true;
-                }
-                
                 OnUpdateNotPossessed();
             }
         }
     }
 
-    protected virtual void OnUpdatePossessed() { }
+    protected virtual void OnUpdatePossessed()
+    {
+        // Get the inputs used during this frame
+        Inputs inputs = NoControlInputs;
 
-    protected virtual void OnUpdateNotPossessed() { }
+        if (ControlsEnabled())
+        {
+            inputs = FetchInputs();
+        }
+
+        UpdateMovement(inputs);
+        UpdatePossession(inputs);
+    }
+
+    protected virtual void OnUpdateNotPossessed()
+    {
+        if (Target && ControlsEnabled() && !IsPossessed && !HasDetectedTarget && (transform.position - Target.position).magnitude <= _distanceToDetect)
+        {
+            HasDetectedTarget = true;
+        }
+    }
 
     private IEnumerator UpdatePath()
     {
@@ -189,7 +206,7 @@ public abstract class AIController : CharacterController
     // Returns if the area to respawn the player is free. The area checked is based on the facing direction of the character
     private bool HasEnoughSpaceToUnpossess()
     {
-        if ((_spriteRenderer.flipX && !_flipPlayerSpawn) || (!_spriteRenderer.flipX && _flipPlayerSpawn))
+        if ((SpriteRenderer.flipX && !_flipPlayerSpawn) || (!SpriteRenderer.flipX && _flipPlayerSpawn))
         {
             return _leftPlayerSpawn.OverlapCollider(_leftPlayerSpawnContactFilter, _overlapResults) == 0;
         }
@@ -216,8 +233,8 @@ public abstract class AIController : CharacterController
             _animator.SetLayerWeight(_possessedModeAnimationLayerIndex, 1.0f);
             VirtualCameraManager.Instance.ChangeVirtualCamera(_possessionVirtualCamera);
 
-            _audioSource.pitch = Random.Range(.9f, 1.0f);
-            _audioSource.PlayOneShot(_onPossessSound);
+            AudioSource.pitch = Random.Range(.9f, 1.0f);
+            AudioSource.PlayOneShot(_onPossessSound);
 
             OnPossess();
         }
@@ -238,7 +255,7 @@ public abstract class AIController : CharacterController
                 Vector2 respawnPos;
                 Vector2 respawnFacingDirection;
 
-                if ((_spriteRenderer.flipX && !_flipPlayerSpawn) || (!_spriteRenderer.flipX && _flipPlayerSpawn))
+                if ((SpriteRenderer.flipX && !_flipPlayerSpawn) || (!SpriteRenderer.flipX && _flipPlayerSpawn))
                 {
                     respawnPos = _leftPlayerSpawn.transform.position;
                     respawnFacingDirection = Vector2.left;
@@ -257,8 +274,8 @@ public abstract class AIController : CharacterController
 
             _animator.SetLayerWeight(_possessedModeAnimationLayerIndex, .0f);
 
-            _audioSource.pitch = Random.Range(.9f, 1.0f);
-            _audioSource.PlayOneShot(_onUnpossessSound);
+            AudioSource.pitch = Random.Range(.9f, 1.0f);
+            AudioSource.PlayOneShot(_onUnpossessSound);
 
             OnUnpossess();
         }

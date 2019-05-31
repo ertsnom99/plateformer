@@ -40,6 +40,8 @@ public class FlyingAIController : AIController
 
     protected override void OnUpdateNotPossessed()
     {
+        base.OnUpdateNotPossessed();
+
         Inputs inputs = NoControlInputs;
 
         if (ControlsEnabled() && HasDetectedTarget && Path != null)
@@ -109,10 +111,6 @@ public class FlyingAIController : AIController
             // Inputs from the controler
             inputs.Vertical = Input.GetAxisRaw("Vertical");
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
-            //inputs.Jump = Input.GetButtonDown("Jump");
-            //inputs.ReleaseJump = Input.GetButtonUp("Jump");
-            //inputs.Dash = Input.GetButtonDown("Dash");
-            //inputs.ReleaseDash = Input.GetButtonUp("Dash");
             inputs.Possess = Input.GetButtonDown("Possess");
         }
 
@@ -128,10 +126,6 @@ public class FlyingAIController : AIController
         // Inputs from the controler
         inputs.Vertical = DirectionToTargetWaypoint.y;
         inputs.Horizontal = DirectionToTargetWaypoint.x;
-        //inputs.jump = jump;
-        //inputs.releaseJump = releaseJump;
-        //inputs.dash = Input.GetButtonDown("Dash");
-        //inputs.releaseDash = Input.GetButtonUp("Dash");
 
         return inputs;
     }

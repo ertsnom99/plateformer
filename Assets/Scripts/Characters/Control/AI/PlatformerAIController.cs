@@ -162,6 +162,8 @@ public class PlatformerAIController : AIController
 
     protected override void OnUpdateNotPossessed()
     {
+        base.OnUpdateNotPossessed();
+
         // Wait for the delay to end, before checking if the vertical movement is in progress 
         if (_delayedMovementProgressCheck && !_movementScript.IsGrounded && ((_currentPathLink.Link.y < .0f && _movementScript.Velocity.y < .0f) || (_currentPathLink.Link.y > .0f && _movementScript.Velocity.y > .0f)))
         {
@@ -273,24 +275,18 @@ public class PlatformerAIController : AIController
         if (UseKeyboard)
         {
             // Inputs from the keyboard
-            //inputs.Vertical = Input.GetAxisRaw("Vertical");
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
             inputs.Jump = Input.GetButtonDown("Jump");
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
-            //inputs.Dash = Input.GetButtonDown("Dash");
-            //inputs.ReleaseDash = Input.GetButtonUp("Dash");
             inputs.Possess = Input.GetButtonDown("Possess");
         }
         else
         {
             // TODO: Create inputs specific to the controler
             // Inputs from the controler
-            //inputs.Vertical = Input.GetAxisRaw("Vertical");
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
             inputs.Jump = Input.GetButtonDown("Jump");
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
-            //inputs.Dash = Input.GetButtonDown("Dash");
-            //inputs.ReleaseDash = Input.GetButtonUp("Dash");
             inputs.Possess = Input.GetButtonDown("Possess");
         }
 
@@ -337,12 +333,9 @@ public class PlatformerAIController : AIController
         }
 
         // Inputs from the controler
-        //inputs.vertical = Input.GetAxisRaw("Vertical");
         inputs.Horizontal = horizontalInput;
         inputs.Jump = jump;
         inputs.ReleaseJump = releaseJump;
-        //inputs.dash = Input.GetButtonDown("Dash");
-        //inputs.releaseDash = Input.GetButtonUp("Dash");
 
         return inputs;
     }
@@ -360,6 +353,6 @@ public class PlatformerAIController : AIController
 
     protected override void OnUnpossess()
     {
-        UpdateMovement(new Inputs());
+        UpdateMovement(NoControlInputs);
     }
 }

@@ -75,7 +75,7 @@ public class PhysicsObject : MonoBehaviour
 
         if (!Collider)
         {
-            Debug.LogError("No collider was set!");
+            Debug.LogError(gameObject.name +" No collider was set!");
         }
 
         Rigidbody2D = GetComponent<Rigidbody2D>();
