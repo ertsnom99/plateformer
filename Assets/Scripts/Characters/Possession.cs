@@ -8,6 +8,11 @@ using UnityEngine;
 
 public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
 {
+    [Header("Collision")]
+    // The collider that needs to be consider when respawning from possession (if it IS considered)
+    [SerializeField]
+    private Collider2D _collider;
+
     [Header("Camera")]
     [SerializeField]
     private CinemachineVirtualCamera _virtualCamera;
@@ -44,6 +49,11 @@ public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
 
         Physics2D.IgnoreLayerCollision(_playerLayerIndex, _AILayerIndex, !InPossessionMode);*/
 
+        if (!_collider)
+        {
+            Debug.LogError("No collider was set for " + GetType() + " script of " + gameObject.name + "!");
+        }
+
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
@@ -74,9 +84,9 @@ public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
     }
 
     // Take possession of the given AIController
-    public void TakePossession(AIController possessedController)
+    public void TakePossession(IPossessable possessed)
     {
-        if (possessedController.Possess(this))
+        if (possessed.Possess(this))
         {
             ChangePossessionMode(false);
             gameObject.SetActive(false);
@@ -84,10 +94,17 @@ public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
     }
 
     // Release possession of the AIController that it is in possession of, if it's the case
-    public void ReleasePossession(Vector2 respawnPos, Vector2 respawnFacingDirection)
+    public void ReleasePossession(Vector2 respawnPos, Vector2 respawnFacingDirection, bool centerPosColliderToRespawnPos = false)
     {
         // Replace the character
-        gameObject.transform.position = respawnPos;
+        if (centerPosColliderToRespawnPos)
+        {
+            gameObject.transform.position = respawnPos - _collider.offset;
+        }
+        else
+        {
+            gameObject.transform.position = respawnPos;
+        }
 
         // Make the character face the correct way
         if (respawnFacingDirection == Vector2.left)
@@ -109,9 +126,14 @@ public class Possession : MonoBehaviour, IPhysicsObjectCollisionListener
     // Methods of the IPhysicsObjectCollisionListener interface
     public void OnPhysicsObjectCollisionEnter(PhysicsCollision2D collision)
     {
-        if (InPossessionMode && collision.GameObject.tag == GameManager.EnemyTag)
+        if (InPossessionMode)
         {
-            TakePossession(collision.GameObject.GetComponent<AIController>());
+            IPossessable possessableScript = collision.GameObject.GetComponent<IPossessable>();
+
+            if (possessableScript != null)
+            {
+                TakePossession(possessableScript);
+            }
         }
     }
 

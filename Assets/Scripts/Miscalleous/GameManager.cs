@@ -85,7 +85,7 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
             foreach (GameObject enemie in enemies)
             {
                 enemie.GetComponent<ProximityExplodable>().enabled = false;
-                enemie.GetComponent<AIController>().EnableControl(false);
+                enemie.GetComponent<PossessableCharacterController>().EnableControl(false);
             }
 
             if (_enemieRespawner)

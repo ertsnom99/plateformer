@@ -140,14 +140,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d83df3a3f3a66443965d0063170d0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_wayToDamage: 0
-  m_onlyPlayerCanRam: 0
-  m_localVectorsForAngleCalculation:
-  - {x: 0, y: 1}
+  _wayToDamage: 0
+  _onlyPlayerCanRam: 0
+  _localVectorsForAngleCalculation:
   - {x: 0, y: -1}
-  m_maxAngleToDamage: 140
-  m_minVelocityToDamage: 26
-  m_damageDealtOnHit: 15000
+  _maxAngleToDamage: 45
+  _minVelocityToDamage: 30
+  _damageDealtOnHit: 250000
 --- !u!114 &6906439695612518263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3bc415b7feeced42a8c31a9916b3bb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxHealth: 60000
-  m_healthRegenRate: 15000
-  m_intactColor: {r: 0.11764706, g: 0.7647059, b: 0.09019608, a: 1}
-  m_brokenColor: {r: 0.7647059, g: 0.09019608, b: 0.09019608, a: 1}
+  _maxHealth: 1000000
+  _healthRegenRate: 140000
+  _intactColor: {r: 0, g: 0.5754717, b: 0.045135032, a: 1}
+  _brokenColor: {r: 0.6698113, g: 0.022142658, b: 0, a: 1}

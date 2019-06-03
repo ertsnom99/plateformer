@@ -14,7 +14,7 @@ public interface IBouncingPhysicsObjectSubscriber
 public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsObjectSubscriber>, IPhysicsObjectCollisionListener
 {
     enum BounceStopCondition { BounceDurationElapsed, MaxBounceCountReached, UnderMinVelocity };
-
+    
     [Header("Bounce")]
     [SerializeField]
     private float _bounciness = 1.0f;
@@ -30,10 +30,13 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
     [Header("Sound")]
     [SerializeField]
     private AudioClip _bounceSound;
+    // Should a bounce sound be played when doing it's very last bounce
     [SerializeField]
     private bool _playBounceSoundOnLastBounce = false;
 
-    [Header("Condition")]
+    private int _lastBounceSoundPlayedFrame = -1;
+
+    [Header("Bounce Condition")]
     [SerializeField]
     private BounceStopCondition _bounceStopCondition;
     [SerializeField]
@@ -54,13 +57,13 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
 
     private int _bounceCount = 0;
 
-    private AudioSource _audioSource;
+    protected AudioSource AudioSource;
 
     protected override void Awake()
     {
         base.Awake();
-
-        _audioSource = GetComponent<AudioSource>();
+        
+        AudioSource = GetComponent<AudioSource>();
 
         FreezeMovement(true);
     }
@@ -120,6 +123,7 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
 
     protected override void FixedUpdate()
     {
+
         if (!MovementFrozen)
         {
             // Apply gravity
@@ -166,7 +170,7 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
             if (distanceToTravel > MinMoveDistance)
             {
                 // Cast and only consider the first collision
-                int count = Rigidbody2D.Cast(Velocity.normalized, ContactFilter, HitBuffer, distanceToTravel + ShellRadius);
+                int count = Collider.Cast(Velocity.normalized, ContactFilter, HitBuffer, distanceToTravel + ShellRadius);
 
                 if (count > 0 && HitBuffer[0])
                 {
@@ -210,8 +214,14 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
 
         // Increment and check the number of bounce
         _bounceCount++;
+        
+        // Avoid playing the same sound many times during the same frame
+        if (Time.frameCount != _lastBounceSoundPlayedFrame)
+        {
+            AudioSource.PlayOneShot(_bounceSound);
 
-        _audioSource.PlayOneShot(_bounceSound);
+            _lastBounceSoundPlayedFrame = Time.frameCount;
+        }
         
         if (_bounceHasStopCondition && _bounceStopCondition == BounceStopCondition.MaxBounceCountReached && _bounceCount >= _maxBounceCount)
         {
@@ -222,7 +232,7 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
 
             if (!_playBounceSoundOnLastBounce)
             {
-                _audioSource.Stop();
+                AudioSource.Stop();
             }
 
             // Tell subscribers that the bounce finished
@@ -253,8 +263,10 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
 
     protected virtual void OnFreezeEnd() { }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
+
         FreezeMovement(true);
     }
 

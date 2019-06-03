@@ -259,12 +259,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UseKeyboard: 0
   _isPossessable: 1
-  _possessionVirtualCamera: {fileID: 0}
-  _onPossessSound: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922, type: 3}
-  _onUnpossessSound: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a, type: 3}
-  _leftPlayerSpawn: {fileID: 5974873232592696110}
-  _rightPlayerSpawn: {fileID: 5434903756275433345}
-  _flipPlayerSpawn: 0
+  PossessionVirtualCamera: {fileID: 0}
+  OnPossessSound: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922, type: 3}
+  OnUnpossessSound: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a, type: 3}
+  LeftPlayerSpawn: {fileID: 5974873232592696110}
+  RightPlayerSpawn: {fileID: 5434903756275433345}
+  FlipPlayerSpawn: 0
   Target: {fileID: 0}
   _distanceToDetect: 10
   StopDistanceToTarget: 0.4

@@ -34,7 +34,7 @@ public class FlyingMovement : MonoBehaviour
 
         if (!_propellantSprite)
         {
-            Debug.LogError("No sprite setted for the propellant!");
+            Debug.LogError("No sprite setted for the propellant for " + GetType() + " script of " + gameObject.name + "!");
         }
     }
 

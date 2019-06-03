@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using Pathfinding;
+//using Pathfinding;
 
-public enum PathLinkType
+/*public enum PathLinkType
 {
     Walk = 0,
     Jump,
@@ -34,15 +34,15 @@ public struct PathLink
             Type = PathLinkType.Walk;
         }
     }
-}
+}*/
 
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(PlatformerMovement))]
-[RequireComponent(typeof(Seeker))]
+//[RequireComponent(typeof(Seeker))]
 
-public class PlatformerAIController : AIController
+public class PlatformerCharacterController : PossessableCharacterController
 {
-    [Header("Vertical Movement")]
+    /*[Header("Vertical Movement")]
     [SerializeField]
     private bool _canJump = true;
     [SerializeField]
@@ -56,14 +56,14 @@ public class PlatformerAIController : AIController
     private PathLink _currentPathLink;
     private bool _verticalMovementinProgress = false;
     private bool _delayedMovementProgressCheck = false;
-    private float _horizontalInputForVerticalMovement = .0f;
+    private float _horizontalInputForVerticalMovement = .0f;*/
 
     private PlatformerMovement _movementScript;
 
-    private const float _jumpHorizontalMovementModifier = 1.2f;
+    /*private const float _jumpHorizontalMovementModifier = 1.2f;
     private const float _dropDownHorizontalMovementModifier = 1.0f;
     private const float _pathFixByAngleThreshold = .1f;
-    private const float _minDistanceToMoveDuringVerticalMovement = 0.4f;
+    private const float _minDistanceToMoveDuringVerticalMovement = 0.4f;*/
 
     protected override void Awake()
     {
@@ -72,7 +72,7 @@ public class PlatformerAIController : AIController
         _movementScript = GetComponent<PlatformerMovement>();
     }
 
-    // Called when a new path is created
+    /*// Called when a new path is created
     public override void OnPathComplete(Path path)
     {
         base.OnPathComplete(path);
@@ -149,20 +149,59 @@ public class PlatformerAIController : AIController
                 _delayedMovementProgressCheck = false;
             }
         }
-    }
+    }*/
 
-    private bool PathNeedsFix()
+    /*private bool PathNeedsFix()
     {
         Vector2 secondToFirstWaypoint = Path.vectorPath[0] - Path.vectorPath[1];
         Vector2 secondToThirdWaypoint = Path.vectorPath[2] - Path.vectorPath[1];
 
         // Check if both vectors are along the exact same line and in the same direction
         return Vector2.Angle(secondToFirstWaypoint, secondToThirdWaypoint) <= _pathFixByAngleThreshold;
+    }*/
+
+    protected override void OnUpdatePossessed()
+    {
+        // Get the inputs used during this frame
+        Inputs inputs = NoControlInputs;
+
+        if (ControlsEnabled())
+        {
+            inputs = FetchInputs();
+        }
+
+        UpdateMovement(inputs);
+        UpdatePossession(inputs);
+    }
+
+    protected override Inputs FetchInputs()
+    {
+        Inputs inputs = new Inputs();
+
+        if (UseKeyboard)
+        {
+            // Inputs from the keyboard
+            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
+            inputs.Jump = Input.GetButtonDown("Jump");
+            inputs.ReleaseJump = Input.GetButtonUp("Jump");
+            inputs.Possess = Input.GetButtonDown("Possess");
+        }
+        else
+        {
+            // TODO: Create inputs specific to the controler
+            // Inputs from the controler
+            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
+            inputs.Jump = Input.GetButtonDown("Jump");
+            inputs.ReleaseJump = Input.GetButtonUp("Jump");
+            inputs.Possess = Input.GetButtonDown("Possess");
+        }
+
+        return inputs;
     }
 
     protected override void OnUpdateNotPossessed()
     {
-        base.OnUpdateNotPossessed();
+        /*base.OnUpdateNotPossessed();
 
         // Wait for the delay to end, before checking if the vertical movement is in progress 
         if (_delayedMovementProgressCheck && !_movementScript.IsGrounded && ((_currentPathLink.Link.y < .0f && _movementScript.Velocity.y < .0f) || (_currentPathLink.Link.y > .0f && _movementScript.Velocity.y > .0f)))
@@ -178,11 +217,11 @@ public class PlatformerAIController : AIController
         if (_movementScript.IsGrounded && Mathf.Sign(_horizontalInputForVerticalMovement) != Mathf.Sign(_currentPathLink.Link.x))
         {
             _horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
-        }
+        }*/
 
         Inputs inputs = NoControlInputs;
 
-        if (ControlsEnabled() && HasDetectedTarget && Path != null)
+        /*if (ControlsEnabled() && HasDetectedTarget && Path != null)
         {
             bool isWaypointReached = TargetWaypoint >= Path.vectorPath.Count;
             float distanceToTarget = Vector3.Distance(transform.position, Target.position);
@@ -220,25 +259,25 @@ public class PlatformerAIController : AIController
                     inputs = CreateInputs();
                 }
             }
-        }
+        }*/
 
         // Send the final inputs to the movement script
         UpdateMovement(inputs);
     }
 
-    private bool IsWalkLinkOver(Vector2 positionToTargetWaypoint)
+    /*private bool IsWalkLinkOver(Vector2 positionToTargetWaypoint)
     {
         return _currentPathLink.Type == PathLinkType.Walk && (Vector2.Angle(_currentPathLink.Link, positionToTargetWaypoint) >= 90.0f || positionToTargetWaypoint.magnitude <= MinDistanceToChangeWaypoint);
-    }
+    }*/
 
-    private bool IsJumpOrDropDownLinkOver()
+    /*private bool IsJumpOrDropDownLinkOver()
     {
         return (_currentPathLink.Type == PathLinkType.DropDown || _currentPathLink.Type == PathLinkType.Jump) && !_verticalMovementinProgress;
-    }
+    }*/
 
     // Calculate how much time will be needed to complete the horizontal movement
     // Based on h=vi*t+(g*t^2)/2 formula, but solved to isolate t
-    private float CalculateHorizontalInputForVerticalMovement()
+    /*private float CalculateHorizontalInputForVerticalMovement()
     {
         float initialVelocity;
         float gravityUsed;
@@ -266,38 +305,13 @@ public class PlatformerAIController : AIController
 
         // Calculate how much of the horizontal speed is necessary and save it for later use
         return Mathf.Clamp(distanceBySecond / _movementScript.MaxSpeed, -1.0f, 1.0f);
-    }
-
-    protected override Inputs FetchInputs()
-    {
-        Inputs inputs = new Inputs();
-
-        if (UseKeyboard)
-        {
-            // Inputs from the keyboard
-            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.Jump = Input.GetButtonDown("Jump");
-            inputs.ReleaseJump = Input.GetButtonUp("Jump");
-            inputs.Possess = Input.GetButtonDown("Possess");
-        }
-        else
-        {
-            // TODO: Create inputs specific to the controler
-            // Inputs from the controler
-            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.Jump = Input.GetButtonDown("Jump");
-            inputs.ReleaseJump = Input.GetButtonUp("Jump");
-            inputs.Possess = Input.GetButtonDown("Possess");
-        }
-
-        return inputs;
-    }
+    }*/
 
     protected override Inputs CreateInputs()
     {
         Inputs inputs = NoControlInputs;
 
-        Vector3 positionToTargetWaypoint = Path.vectorPath[TargetWaypoint] - transform.position;
+        /*Vector3 positionToTargetWaypoint = Path.vectorPath[TargetWaypoint] - transform.position;
 
         // Check jump inputs
         bool jumpNeededToReachNextWaypoint = _currentPathLink.Type == PathLinkType.Jump || (_currentPathLink.Type == PathLinkType.DropDown && Mathf.Abs(_currentPathLink.Link.x) >= _minDropDownWidthToJump);
@@ -335,21 +349,21 @@ public class PlatformerAIController : AIController
         // Inputs from the controler
         inputs.Horizontal = horizontalInput;
         inputs.Jump = jump;
-        inputs.ReleaseJump = releaseJump;
+        inputs.ReleaseJump = releaseJump;*/
 
         return inputs;
     }
 
-    protected override void UpdateMovement(Inputs inputs)
+    private void UpdateMovement(Inputs inputs)
     {
         _movementScript.SetInputs(inputs);
     }
 
-    protected override void OnPossess()
+    /*protected override void OnPossess(Possession possessingScript)
     {
         _verticalMovementinProgress = false;
         _delayedMovementProgressCheck = false;
-    }
+    }*/
 
     protected override void OnUnpossess()
     {

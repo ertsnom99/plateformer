@@ -298,21 +298,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UseKeyboard: 0
   _isPossessable: 1
-  _possessionVirtualCamera: {fileID: 0}
-  _onPossessSound: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922, type: 3}
-  _onUnpossessSound: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a, type: 3}
-  _leftPlayerSpawn: {fileID: 5796487222706351456}
-  _rightPlayerSpawn: {fileID: 2278900157534239992}
-  _flipPlayerSpawn: 0
-  Target: {fileID: 0}
-  _distanceToDetect: 10
-  StopDistanceToTarget: 0.4
-  MinDistanceForTargetReachable: 4
-  UpdateRate: 5
-  MinDistanceToChangeWaypoint: 0.5
-  StopWhenUnreachable: 1
-  _drawDistance: 0
-  _logPathFailedError: 0
+  PossessionVirtualCamera: {fileID: 0}
+  OnPossessSound: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922, type: 3}
+  OnUnpossessSound: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a, type: 3}
+  LeftPlayerSpawn: {fileID: 5796487222706351456}
+  RightPlayerSpawn: {fileID: 2278900157534239992}
+  FlipPlayerSpawn: 0
   _maxChargeTime: 5
   _chargeText: {fileID: 4761221932693649462}
   _arrow: {fileID: 4514407309020739263}
@@ -322,12 +313,11 @@ MonoBehaviour:
   _bounceFormSpawnArea: {fileID: 1031556400318552027}
   _minLaunchStrength: 50
   _maxLaunchStrength: 100
+  _virtualCameraBounceForm: {fileID: 0}
   _chargeSound: {fileID: 8300000, guid: d60980ad52a0dfc4b83c27c5d592df36, type: 3}
   _launchSound: {fileID: 8300000, guid: 8029264457e8e45448b95d04e58b40f6, type: 3}
   _returnToNormalFormSound: {fileID: 8300000, guid: 62791b2a9e903334ca9b4ff55d0db30c,
     type: 3}
-  _virtualCameraNormalForm: {fileID: 0}
-  _virtualCameraBounceForm: {fileID: 0}
 --- !u!114 &114253259727586034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -618,7 +608,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3431480344780761455}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.034, y: 0.652, z: 0}
+  m_LocalPosition: {x: -0.001, y: 0.718, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4536785919381258}

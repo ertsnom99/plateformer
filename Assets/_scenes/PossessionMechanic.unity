@@ -1259,6 +1259,11 @@ PrefabInstance:
       propertyPath: _virtualCamera
       value: 
       objectReference: {fileID: 434867101}
+    - target: {fileID: 8197806341230259179, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: _collider
+      value: 
+      objectReference: {fileID: 426297961}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 3}
 --- !u!114 &426297960 stripped
@@ -1894,6 +1899,21 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 114081227559062698, guid: 5ab9f21035ba1ff4a84d3ef5841ba5dd,
+        type: 3}
+      propertyPath: PossessionVirtualCamera
+      value: 
+      objectReference: {fileID: 293059698}
+    - target: {fileID: 114081227559062698, guid: 5ab9f21035ba1ff4a84d3ef5841ba5dd,
+        type: 3}
+      propertyPath: OnPossessSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922, type: 3}
+    - target: {fileID: 114081227559062698, guid: 5ab9f21035ba1ff4a84d3ef5841ba5dd,
+        type: 3}
+      propertyPath: OnUnpossessSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a, type: 3}
     - target: {fileID: 114671357202289926, guid: 5ab9f21035ba1ff4a84d3ef5841ba5dd,
         type: 3}
       propertyPath: graphMask.value
@@ -5100,6 +5120,26 @@ PrefabInstance:
       propertyPath: _virtualCameraNormalForm
       value: 
       objectReference: {fileID: 1937246052}
+    - target: {fileID: 5972519021654783211, guid: 0e5696e4269bcee42ac3317dddef7201,
+        type: 3}
+      propertyPath: PossessionVirtualCamera
+      value: 
+      objectReference: {fileID: 1937246052}
+    - target: {fileID: 5972519021654783211, guid: 0e5696e4269bcee42ac3317dddef7201,
+        type: 3}
+      propertyPath: OnPossessSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922, type: 3}
+    - target: {fileID: 5972519021654783211, guid: 0e5696e4269bcee42ac3317dddef7201,
+        type: 3}
+      propertyPath: OnUnpossessSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a, type: 3}
+    - target: {fileID: 5972519021654783211, guid: 0e5696e4269bcee42ac3317dddef7201,
+        type: 3}
+      propertyPath: _minLaunchStrength
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 1307409843760192964, guid: 0e5696e4269bcee42ac3317dddef7201,
         type: 3}
       propertyPath: graphMask.value
@@ -6475,6 +6515,21 @@ PrefabInstance:
       propertyPath: _flipPlayerSpawn
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114904549449585534, guid: 2d83156fcd800694f8aa1d6f2243ff36,
+        type: 3}
+      propertyPath: PossessionVirtualCamera
+      value: 
+      objectReference: {fileID: 161445196}
+    - target: {fileID: 114904549449585534, guid: 2d83156fcd800694f8aa1d6f2243ff36,
+        type: 3}
+      propertyPath: OnPossessSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922, type: 3}
+    - target: {fileID: 114904549449585534, guid: 2d83156fcd800694f8aa1d6f2243ff36,
+        type: 3}
+      propertyPath: OnUnpossessSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a, type: 3}
     - target: {fileID: 114995939018924468, guid: 2d83156fcd800694f8aa1d6f2243ff36,
         type: 3}
       propertyPath: m_target

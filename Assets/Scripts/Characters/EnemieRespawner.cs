@@ -57,7 +57,7 @@ public class EnemieRespawner : MonoBehaviour, IProximityExplodableSubscriber
     private void SpawnEnemie(int settingIndex)
     {
         GameObject instanciatedEnemie = Instantiate(_spawnSettings[settingIndex].SpawnedEnemie, _spawnSettings[settingIndex].SpawnPosition.position, Quaternion.identity);
-        instanciatedEnemie.GetComponent<AIController>().SetTarget(_enemieTarget);
+        //instanciatedEnemie.GetComponent<AIController>().SetTarget(_enemieTarget);
         instanciatedEnemie.GetComponent<ProximityExplodable>().SetTarget(_enemieTarget);
 
         _spawnSettings[settingIndex].CurrentEnemie = instanciatedEnemie.GetComponent<ProximityExplodable>();

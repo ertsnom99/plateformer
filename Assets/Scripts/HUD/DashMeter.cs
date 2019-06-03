@@ -27,15 +27,15 @@ public class DashMeter : MonoBehaviour, IPlatformerMovementSubscriber
     {
         if (!_platformerMovement)
         {
-            Debug.LogError("No PlatformerMovement script was set!");
+            Debug.LogError("No PlatformerMovement script was set for " + GetType() + " script of " + gameObject.name + "!");
         }
         else if(!_abilityIconeImage)
         {
-            Debug.LogError("No ability icone image was set!");
+            Debug.LogError("No ability icone image was set for " + GetType() + " script of " + gameObject.name + "!");
         }
         else if (!_abilityIconeAnimator)
         {
-            Debug.LogError("No ability icone animator was set!");
+            Debug.LogError("No ability icone animator was set for " + GetType() + " script of " + gameObject.name + "!");
         }
         else
         {

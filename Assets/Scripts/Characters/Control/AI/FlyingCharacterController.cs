@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
-using Pathfinding;
+//using Pathfinding;
 
-// This script requires thoses components and will be added if they aren't already there
-[RequireComponent(typeof(Seeker))]
+/*// This script requires thoses components and will be added if they aren't already there
+[RequireComponent(typeof(Seeker))]*/
 
-public class FlyingAIController : AIController
+public class FlyingCharacterController : PossessableCharacterController
 {
     [Header("Propellant")]
     [SerializeField]
@@ -20,22 +20,59 @@ public class FlyingAIController : AIController
 
         if (!_propellantAnimator)
         {
-            Debug.LogError("No propellant animator was set!");
+            Debug.LogError("No propellant animator was set for " + GetType() + " script of " + gameObject.name + "!");
         }
         else
         {
-            _propellantPossessedModeAnimationLayerIndex = _propellantAnimator.GetLayerIndex(_possessedModeAnimationLayerName);
+            _propellantPossessedModeAnimationLayerIndex = _propellantAnimator.GetLayerIndex(PossessedModeAnimationLayerName);
         }
 
         _movementScript = GetComponent<FlyingMovement>();
     }
 
-    public override void OnPathComplete(Path path)
+    /*public override void OnPathComplete(Path path)
     {
         base.OnPathComplete(path);
 
         Path = path;
         TargetWaypoint = 0;
+    }*/
+
+    protected override void OnUpdatePossessed()
+    {
+        // Get the inputs used during this frame
+        Inputs inputs = NoControlInputs;
+
+        if (ControlsEnabled())
+        {
+            inputs = FetchInputs();
+        }
+
+        UpdateMovement(inputs);
+        UpdatePossession(inputs);
+    }
+
+    protected override Inputs FetchInputs()
+    {
+        Inputs inputs = new Inputs();
+
+        if (UseKeyboard)
+        {
+            // Inputs from the keyboard
+            inputs.Vertical = Input.GetAxisRaw("Vertical");
+            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
+            inputs.Possess = Input.GetButtonDown("Possess");
+        }
+        else
+        {
+            // TODO: Create inputs specific to the controler
+            // Inputs from the controler
+            inputs.Vertical = Input.GetAxisRaw("Vertical");
+            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
+            inputs.Possess = Input.GetButtonDown("Possess");
+        }
+
+        return inputs;
     }
 
     protected override void OnUpdateNotPossessed()
@@ -44,7 +81,7 @@ public class FlyingAIController : AIController
 
         Inputs inputs = NoControlInputs;
 
-        if (ControlsEnabled() && HasDetectedTarget && Path != null)
+        /*if (ControlsEnabled() && HasDetectedTarget && Path != null)
         {
             float distanceToTarget = Vector3.Distance(transform.position, Target.position);
             bool isWaypointReached = TargetWaypoint >= Path.vectorPath.Count;
@@ -74,13 +111,31 @@ public class FlyingAIController : AIController
                     inputs = CreateInputs();
                 }
             }
-        }
+        }*/
 
         // Send the final inputs to the movement script
         UpdateMovement(inputs);
     }
 
-    protected override void OnPossess()
+    protected override Inputs CreateInputs()
+    {
+        Inputs inputs = NoControlInputs;
+
+        /*Vector3 DirectionToTargetWaypoint = (Path.vectorPath[TargetWaypoint] - transform.position).normalized;
+
+        // Inputs from the controler
+        inputs.Vertical = DirectionToTargetWaypoint.y;
+        inputs.Horizontal = DirectionToTargetWaypoint.x;*/
+
+        return inputs;
+    }
+
+    private void UpdateMovement(Inputs inputs)
+    {
+        _movementScript.SetInputs(inputs);
+    }
+
+    protected override void OnPossess(Possession possessingScript)
     {
         _propellantAnimator.SetLayerWeight(_propellantPossessedModeAnimationLayerIndex, 1.0f);
     }
@@ -88,50 +143,5 @@ public class FlyingAIController : AIController
     protected override void OnUnpossess()
     {
         _propellantAnimator.SetLayerWeight(_propellantPossessedModeAnimationLayerIndex, .0f);
-    }
-
-    protected override Inputs FetchInputs()
-    {
-        Inputs inputs = new Inputs();
-
-        if (UseKeyboard)
-        {
-            // Inputs from the keyboard
-            inputs.Vertical = Input.GetAxisRaw("Vertical");
-            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
-            //inputs.Jump = Input.GetButtonDown("Jump");
-            //inputs.ReleaseJump = Input.GetButtonUp("Jump");
-            //inputs.Dash = Input.GetButtonDown("Dash");
-            //inputs.ReleaseDash = Input.GetButtonUp("Dash");
-            inputs.Possess = Input.GetButtonDown("Possess");
-        }
-        else
-        {
-            // TODO: Create inputs specific to the controler
-            // Inputs from the controler
-            inputs.Vertical = Input.GetAxisRaw("Vertical");
-            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.Possess = Input.GetButtonDown("Possess");
-        }
-
-        return inputs;
-    }
-
-    protected override Inputs CreateInputs()
-    {
-        Inputs inputs = NoControlInputs;
-
-        Vector3 DirectionToTargetWaypoint = (Path.vectorPath[TargetWaypoint] - transform.position).normalized;
-
-        // Inputs from the controler
-        inputs.Vertical = DirectionToTargetWaypoint.y;
-        inputs.Horizontal = DirectionToTargetWaypoint.x;
-
-        return inputs;
-    }
-
-    protected override void UpdateMovement(Inputs inputs)
-    {
-        _movementScript.SetInputs(inputs);
     }
 }

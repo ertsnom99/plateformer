@@ -21,12 +21,12 @@ public class EmoteSphere : MonoBehaviour, IPhysicsObjectCollisionListener
     {
         if (!_emote)
         {
-            Debug.LogError("m_emoteSpriteRenderer isn't set!!!");
+            Debug.LogError("m_emoteSpriteRenderer isn't set for " + GetType() + " script of " + gameObject.name + "!!!");
         }
 
         if (!_colorBackground)
         {
-            Debug.LogError("m_colorBackground isn't set!!!");
+            Debug.LogError("m_colorBackground isn't set for " + GetType() + " script of " + gameObject.name + "!!!");
         }
 
         _emote.sprite = _emotes[_emoteIndex];

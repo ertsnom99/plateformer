@@ -633,8 +633,11 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
             // Update the gravity modifier
             CurrentGravityModifier = GravityModifier;
 
-            _dashCooldownCoroutine = DashCooldown();
-            StartCoroutine(_dashCooldownCoroutine);
+            if (gameObject.activeSelf)
+            {
+                _dashCooldownCoroutine = DashCooldown();
+                StartCoroutine(_dashCooldownCoroutine);
+            }
         }
     }
 

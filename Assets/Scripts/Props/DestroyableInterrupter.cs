@@ -70,7 +70,7 @@ public class DestroyableInterrupter : MonoSubscribable<IDestroyableInterrupterSu
                     foreach(Vector2 localVectorForAngleCalculation in _localVectorsForAngleCalculation)
                     {
                         float angle = Vector2.Angle(transform.TransformDirection(localVectorForAngleCalculation), relativeVelocity);
-
+                        
                         if (angle <= _maxAngleToDamage && relativeVelocity.magnitude >= _minVelocityToDamage)
                         {
                             _health.ForceDamage(_damageDealtOnHit);

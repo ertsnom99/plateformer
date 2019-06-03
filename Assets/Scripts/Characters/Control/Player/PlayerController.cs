@@ -6,6 +6,12 @@
 
 public class PlayerController : CharacterController
 {
+    [Header("Controls")]
+    [SerializeField]
+    protected bool UseKeyboard = false;
+
+    protected Inputs NoControlInputs = new Inputs();
+
     private PlatformerMovement _movementScript;
     private Possession _possession;
 
@@ -28,7 +34,7 @@ public class PlayerController : CharacterController
         }
     }
 
-    protected override Inputs FetchInputs()
+    private Inputs FetchInputs()
     {
         Inputs inputs = new Inputs();
 
@@ -59,16 +65,21 @@ public class PlayerController : CharacterController
         return inputs;
     }
 
-    protected override void UpdateMovement(Inputs inputs)
+    private void UpdateMovement(Inputs inputs)
     {
         _movementScript.SetInputs(inputs);
     }
 
-    protected override void UpdatePossession(Inputs inputs)
+    private void UpdatePossession(Inputs inputs)
     {
         if (inputs.Possess)
         {
             _possession.ChangePossessionMode(!_possession.InPossessionMode);
         }
+    }
+
+    public void SetKeyboardUse(bool useKeyboard)
+    {
+        UseKeyboard = useKeyboard;
     }
 }

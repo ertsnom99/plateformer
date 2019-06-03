@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7930964414626420464
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7125168391598071910}
+  - component: {fileID: 8589823316589347862}
+  m_Layer: 12
+  m_Name: Spawn Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7125168391598071910
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7930964414626420464}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.336, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8337540354551453396}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &8589823316589347862
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7930964414626420464}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.75
 --- !u!1 &8337540353988551106
 GameObject:
   m_ObjectHideFlags: 0
@@ -40,13 +87,15 @@ GameObject:
   m_Component:
   - component: {fileID: 8337540354551453396}
   - component: {fileID: 8337540354551453397}
+  - component: {fileID: 4296040632970446589}
   - component: {fileID: 4578451487907819197}
   - component: {fileID: 8337540354551453398}
   - component: {fileID: 8337540354551453392}
   - component: {fileID: 3023590716689418016}
-  - component: {fileID: 8337540354551453399}
+  - component: {fileID: 2975785866116692636}
+  - component: {fileID: 7821231296740222845}
   m_Layer: 12
-  m_Name: BouncingCharacterForm
+  m_Name: BouncingAIBouncingForm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,10 +109,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8337540354551453393}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26.95, y: 6.7, z: 37.078476}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8337540353988551105}
+  - {fileID: 7125168391598071910}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -115,6 +165,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &4296040632970446589
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8337540354551453393}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c7e728c5479d74f48a5abb4910a30ae3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!82 &4578451487907819197
 AudioSource:
   m_ObjectHideFlags: 0
@@ -127,7 +196,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -352,7 +421,27 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &8337540354551453399
+--- !u!114 &2975785866116692636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8337540354551453393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 250a60a268a5c5f4b9372930c94050b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseKeyboard: 0
+  _isPossessable: 1
+  PossessionVirtualCamera: {fileID: 0}
+  OnPossessSound: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922, type: 3}
+  OnUnpossessSound: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a, type: 3}
+  LeftPlayerSpawn: {fileID: 8589823316589347862}
+  RightPlayerSpawn: {fileID: 0}
+  FlipPlayerSpawn: 0
+--- !u!114 &7821231296740222845
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

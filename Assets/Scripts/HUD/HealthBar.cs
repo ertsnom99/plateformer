@@ -15,7 +15,7 @@ public class HealthBar : MonoBehaviour, IHealthSubscriber
 
         if (!_healthBar)
         {
-            Debug.LogError("No Slider component found!");
+            Debug.LogError("No Slider component found by " + GetType() + " script of " + gameObject.name + "!");
         }
     }
 

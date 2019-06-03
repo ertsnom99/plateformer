@@ -75,7 +75,7 @@ public class PhysicsObject : MonoBehaviour
 
         if (!Collider)
         {
-            Debug.LogError(gameObject.name +" No collider was set!");
+            Debug.LogError("No collider was set for " + GetType() + " script of " + gameObject.name + "!");
         }
 
         Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -348,7 +348,7 @@ public class PhysicsObject : MonoBehaviour
         IsGrounded = false;
         Velocity = Vector2.zero;
         TargetHorizontalVelocity = .0f;
-
+        
         PreviouslyCollidingGameObject.Clear();
         CollidingGameObjects.Clear();
     }
