@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 8337540354551453392}
   - component: {fileID: 3023590716689418016}
   - component: {fileID: 2975785866116692636}
-  - component: {fileID: 7821231296740222845}
+  - component: {fileID: 3057897618992837933}
   m_Layer: 12
   m_Name: BouncingAIBouncingForm
   m_TagString: Untagged
@@ -441,7 +441,7 @@ MonoBehaviour:
   LeftPlayerSpawn: {fileID: 8589823316589347862}
   RightPlayerSpawn: {fileID: 0}
   FlipPlayerSpawn: 0
---- !u!114 &7821231296740222845
+--- !u!114 &3057897618992837933
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -450,7 +450,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8337540354551453393}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94df7056dde60474793dc59e22d453d8, type: 3}
+  m_Script: {fileID: 11500000, guid: 625d55b537e031c479103a6a625c82b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Collider: {fileID: 8337540354551453398}
@@ -462,7 +462,7 @@ MonoBehaviour:
   DebugVelocity: 0
   _bounciness: 1
   _bounceFreezeDuration: 0
-  _bounceMaxTry: 100
+  BounceMaxTry: 100
   _bounceHasStopCondition: 1
   _freezeWhenStopConditionReached: 0
   _bounceSound: {fileID: 8300000, guid: 97753f95fd25e2c41a5ac7c8e9e5d310, type: 3}

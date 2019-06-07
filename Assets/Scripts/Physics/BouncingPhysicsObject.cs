@@ -21,7 +21,7 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
     [SerializeField]
     private float _bounceFreezeDuration = .0f;
     [SerializeField]
-    private int _bounceMaxTry = 100;
+    protected int BounceMaxTry = 100;
     [SerializeField]
     private bool _bounceHasStopCondition = true;
     [SerializeField]
@@ -150,7 +150,7 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
         }
     }
 
-    private void Move(Vector2 movement)
+    protected virtual void Move(Vector2 movement)
     {
         int tryCount = 0;
         float distanceToTravel = movement.magnitude;
@@ -158,7 +158,7 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
         Vector2 currentVelocityDirection = Velocity.normalized;
 
         // Keeps trying to move until the object travelled the necessary distance
-        while (!MovementFrozen && tryCount <= _bounceMaxTry && distanceToTravel > .0f)
+        while (!MovementFrozen && tryCount <= BounceMaxTry && distanceToTravel > .0f)
         {
             // Consider that the objet can travel all the remining distance without hitting anything
             distanceBeforeHit = distanceToTravel;
@@ -175,7 +175,7 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
                 if (count > 0 && HitBuffer[0])
                 {
                     // Update the velocity and the number of bounce
-                    OnHit(HitBuffer[0].normal);
+                    OnBounce(HitBuffer[0].normal);
 
                     if (!MovementFrozen)
                     {
@@ -207,10 +207,10 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
-    private void OnHit(Vector2 normal)
+    protected void OnBounce(Vector2 hitNormal)
     {
         // Reflect the direction of the velocity along the normal
-        Velocity = Velocity.magnitude * _bounciness * Vector2.Reflect(Velocity.normalized, normal).normalized;
+        Velocity = Velocity.magnitude * _bounciness * Vector2.Reflect(Velocity.normalized, hitNormal).normalized;
 
         // Increment and check the number of bounce
         _bounceCount++;
@@ -248,7 +248,7 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
         MovementFrozen = freeze;
     }
 
-    private IEnumerator FreezeMovementOnBounce()
+    protected IEnumerator FreezeMovementOnBounce()
     {
         FreezeMovement(true);
         OnFreezeStart();
@@ -277,7 +277,7 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
     {
         if (!MovementFrozen)
         {
-            OnHit(collision.Normal);
+            OnBounce(collision.Normal);
         }
     }
 }

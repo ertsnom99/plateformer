@@ -1843,7 +1843,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1223673435489594, guid: 5ab9f21035ba1ff4a84d3ef5841ba5dd, type: 3}
       propertyPath: m_Name
-      value: FlyingAI
+      value: FlyingCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 1223673435489594, guid: 5ab9f21035ba1ff4a84d3ef5841ba5dd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4730175866253544, guid: 5ab9f21035ba1ff4a84d3ef5841ba5dd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5054,7 +5058,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1508018494202180, guid: 0e5696e4269bcee42ac3317dddef7201, type: 3}
       propertyPath: m_Name
-      value: BouncingAI
+      value: BouncingCharacter
       objectReference: {fileID: 0}
     - target: {fileID: 4536785919381258, guid: 0e5696e4269bcee42ac3317dddef7201, type: 3}
       propertyPath: m_LocalPosition.x

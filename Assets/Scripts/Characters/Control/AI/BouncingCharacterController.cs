@@ -46,7 +46,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
     
     private PlatformerMovement _movementScript;
     private BouncingFormCharacterController _bouncingFormController;
-    private BouncingPhysicsObject _bouncingPhysicsObject;
+    private PossessableBouncingPhysicsObject _possessableBouncingPhysicsObject;
 
     protected override void Awake()
     {
@@ -71,7 +71,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
             _bounceForm = Instantiate(_bounceFormPrefab);
 
             _bouncingFormController = _bounceForm.GetComponent<BouncingFormCharacterController>();
-            _bouncingPhysicsObject = _bounceForm.GetComponent<BouncingPhysicsObject>();
+            _possessableBouncingPhysicsObject = _bounceForm.GetComponent<PossessableBouncingPhysicsObject>();
 
 
             if (!_bouncingFormController)
@@ -84,13 +84,13 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
                 _bouncingFormController.SetPossessionVirtualCamera(_virtualCameraBounceForm);
             }
 
-            if (!_bouncingPhysicsObject)
+            if (!_possessableBouncingPhysicsObject)
             {
-                Debug.LogError("No BouncingPhysicsObject script on the bouncing form gameobject of " + gameObject.name + "!");
+                Debug.LogError("No PossessableBouncingPhysicsObject script on the bouncing form gameobject of " + gameObject.name + "!");
             }
             else
             {
-                _bouncingPhysicsObject.Subscribe(this);
+                _possessableBouncingPhysicsObject.Subscribe(this);
             }
 
             if (!_virtualCameraBounceForm)
@@ -462,7 +462,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
         // Launch bouncing form
         Vector2 launchDirection = new Vector2(inputs.Horizontal, inputs.Vertical).normalized;
         Vector2 launchForce = launchDirection * Mathf.Lerp(_minLaunchStrength, _maxLaunchStrength, _chargeTime / _maxChargeTime);
-        _bouncingPhysicsObject.Launch(launchForce);
+        _possessableBouncingPhysicsObject.Launch(launchForce);
 
         AudioSource.PlayOneShot(_launchSound);
     }
@@ -487,7 +487,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
 
     protected override bool ControlsEnabled()
     {
-        return base.ControlsEnabled() && _bouncingPhysicsObject.MovementFrozen;
+        return base.ControlsEnabled() && _possessableBouncingPhysicsObject.MovementFrozen;
     }
 
     // Methods of the IBouncingFormControllerSubscriber interface
