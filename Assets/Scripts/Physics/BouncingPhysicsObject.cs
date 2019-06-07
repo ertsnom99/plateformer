@@ -30,9 +30,6 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
     [Header("Sound")]
     [SerializeField]
     private AudioClip _bounceSound;
-    // Should a bounce sound be played when doing it's very last bounce
-    [SerializeField]
-    private bool _playBounceSoundOnLastBounce = false;
 
     private int _lastBounceSoundPlayedFrame = -1;
 
@@ -214,7 +211,7 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
 
         // Increment and check the number of bounce
         _bounceCount++;
-        
+
         // Avoid playing the same sound many times during the same frame
         if (Time.frameCount != _lastBounceSoundPlayedFrame)
         {
@@ -228,11 +225,6 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
             if (_freezeWhenStopConditionReached)
             {
                 FreezeMovement(true);
-            }
-
-            if (!_playBounceSoundOnLastBounce)
-            {
-                AudioSource.Stop();
             }
 
             // Tell subscribers that the bounce finished

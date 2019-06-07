@@ -5,6 +5,7 @@ public interface IBouncingFormControllerSubscriber
 {
     void NotifyPossessed(Possession possessingScript);
     void NotifyUnpossessed();
+    void NotifyCanceledBounce();
 }
 
 // This script requires thoses components and will be added if they aren't already there
@@ -40,6 +41,27 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
         _bouncingPhysics = GetComponent<BouncingPhysicsObject>();
     }
 
+    protected override void OnUpdatePossessed()
+    {
+        // Get the inputs used during this frame
+        Inputs inputs = NoControlInputs;
+
+        if (ControlsEnabled())
+        {
+            inputs = FetchInputs();
+        }
+
+        if (inputs.ReleaseCharge)
+        {
+            foreach (IBouncingFormControllerSubscriber subscriber in Subscribers)
+            {
+                subscriber.NotifyCanceledBounce();
+            }
+        }
+        
+        UpdatePossession(inputs);
+    }
+
     protected override Inputs FetchInputs()
     {
         Inputs inputs = new Inputs();
@@ -47,12 +69,14 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
         if (UseKeyboard)
         {
             // Inputs from the keyboard
+            inputs.ReleaseCharge = Input.GetButtonUp("Charge");
             inputs.Possess = Input.GetButtonDown("Possess");
         }
         else
         {
             // TODO: Create inputs specific to the controler
             // Inputs from the controler
+            inputs.ReleaseCharge = Input.GetButtonUp("Charge");
             inputs.Possess = Input.GetButtonDown("Possess");
         }
 

@@ -5144,11 +5144,6 @@ PrefabInstance:
       propertyPath: _minLaunchStrength
       value: 50
       objectReference: {fileID: 0}
-    - target: {fileID: 1307409843760192964, guid: 0e5696e4269bcee42ac3317dddef7201,
-        type: 3}
-      propertyPath: graphMask.value
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e5696e4269bcee42ac3317dddef7201, type: 3}
 --- !u!4 &1302403230 stripped

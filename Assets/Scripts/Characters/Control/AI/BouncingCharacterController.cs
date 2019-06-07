@@ -8,6 +8,10 @@ using UnityEngine.UI;
 
 public class BouncingCharacterController : PossessableCharacterController, IBouncingPhysicsObjectSubscriber, IBouncingFormControllerSubscriber
 {
+    // Collider that is use for collision during movement (it will be enable and disable when changing form)
+    [SerializeField]
+    private Collider2D _movementCollider;
+
     [Header("Charge")]
     [SerializeField]
     private float _maxChargeTime = 5.0f;
@@ -61,6 +65,11 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
 
         // Get all component, correctly set them up and check that nothing is missing
         _movementScript = GetComponent<PlatformerMovement>();
+
+        if (!_movementCollider)
+        {
+            Debug.LogError("No movement collider was set for " + GetType() + " script of " + gameObject.name + "!");
+        }
 
         if (!_bounceFormPrefab)
         {
@@ -126,52 +135,54 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
 
     protected override void OnUpdatePossessed()
     {
+        Inputs inputs = NoControlInputs;
+
         if (ControlsEnabled())
         {
             // Get the inputs used during this frame
-            Inputs inputs = FetchInputs();
+            inputs = FetchInputs();
+        }
 
-            // Check if charge started
-            if (_movementScript.IsGrounded && !_isCharging && inputs.HeldCharge/* && HasEnoughSpaceForBounceForm()*/)
-            {
-                StartCharge();
-            }
-            else if (_isCharging && inputs.ReleaseCharge)
-            {
-                StopCharge(inputs);
-            }
+        // Check if charge started
+        if (_movementScript.IsGrounded && !_isCharging && inputs.HeldCharge/* && HasEnoughSpaceForBounceForm()*/)
+        {
+            StartCharge();
+        }
+        else if (_isCharging && inputs.ReleaseCharge)
+        {
+            StopCharge(inputs);
+        }
 
-            if (!_isCharging)
+        if (!_isCharging)
+        {
+            UpdateMovement(inputs);
+        }
+        else
+        {
+            // Update the charge arrow
+            if (inputs.Vertical != .0f || inputs.Horizontal != .0f)
             {
-                UpdateMovement(inputs);
+                _arrow.SetActive(true);
+
+                float angle = Mathf.Atan2(inputs.Vertical, inputs.Horizontal) * Mathf.Rad2Deg;
+                _arrow.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             }
             else
             {
-                // Update the charge arrow
-                if (inputs.Vertical != .0f || inputs.Horizontal != .0f)
-                {
-                    _arrow.SetActive(true);
-
-                    float angle = Mathf.Atan2(inputs.Vertical, inputs.Horizontal) * Mathf.Rad2Deg;
-                    _arrow.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-                }
-                else
-                {
-                    _arrow.SetActive(false);
-                }
-
-                // Update charge time
-                if (_chargeTime < _maxChargeTime)
-                {
-                    _chargeTime = Mathf.Clamp(_chargeTime + Time.deltaTime, .0f, _maxChargeTime);
-
-                    // TEMP
-                    _chargeText.text = Mathf.Lerp(_minLaunchStrength, _maxLaunchStrength, _chargeTime / _maxChargeTime).ToString();
-                }
+                _arrow.SetActive(false);
             }
-            
-            UpdatePossession(inputs);
+
+            // Update charge time
+            if (_chargeTime < _maxChargeTime)
+            {
+                _chargeTime = Mathf.Clamp(_chargeTime + Time.deltaTime, .0f, _maxChargeTime);
+
+                // TEMP
+                _chargeText.text = Mathf.Lerp(_minLaunchStrength, _maxLaunchStrength, _chargeTime / _maxChargeTime).ToString();
+            }
         }
+
+        UpdatePossession(inputs);
     }
 
     protected override Inputs FetchInputs()
@@ -211,28 +222,9 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
 
         Inputs inputs = NoControlInputs;
 
-        if (ControlsEnabled()/* && HasDetectedTarget && Path != null*/)
+        if (ControlsEnabled())
         {
-            // TODO: Implement AI to create the correct inputs
-            // TEST CODE
-            /*inputs.Horizontal = -1.0f;
-            inputs.HeldCharge = Input.GetKey(KeyCode.X);
-            inputs.ReleaseCharge = Input.GetKeyUp(KeyCode.X);
-
-            if (_movementScript.IsGrounded && !_isCharging && inputs.HeldCharge)
-            {
-                StartCharge();
-            }
-            else if (_isCharging && inputs.ReleaseCharge)
-            {
-                StopCharge(inputs);
-            }
-
-            if (!_isCharging)
-            {
-                // Send the final inputs to the movement script
-                UpdateMovement(inputs);
-            }*/
+            CreateInputs();
         }
 
         // Send the final inputs to the movement script
@@ -329,11 +321,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
 
     private bool HasEnoughSpaceForNormalForm()
     {
-        //Vector2 point = (Vector2)transform.position + _collider.offset;
-        //Vector2 size = _collider.size + new Vector2(2.0f, 2.0f) * _collider.edgeRadius;
-
         // Check if there is a collider in the way
-        //Collider2D[] colliders = Physics2D.OverlapBoxAll(point, size, .0f);
         Collider2D[] hitColliders = new Collider2D[8];
         _normalFormSpawnArea.OverlapCollider(ContactFilter, hitColliders);
 
@@ -344,7 +332,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
                 return false;
             }
         }
-
+        
         return true;
     }
 
@@ -352,7 +340,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
     {
         // Hide the bouncing form
         _bounceForm.SetActive(false);
-
+        
         // Replace and show the current character
         if (replace)
         {
@@ -360,7 +348,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
         }
 
         SpriteRenderer.enabled = true;
-        _normalFormSpawnArea.enabled = true;
+        _movementCollider.enabled = true;
         _movementScript.enabled = true;
 
         EnableControl(true);
@@ -402,7 +390,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
     {
         // Hide the current character
         SpriteRenderer.enabled = false;
-        _normalFormSpawnArea.enabled = false;
+        _movementCollider.enabled = false;
         _movementScript.enabled = false;
 
         EnableControl(false);
@@ -440,7 +428,6 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
 
     private void StopCharge(Inputs inputs)
     {
-        //_bounceFormSpawnAreaCollider.enabled = false;
         _arrow.SetActive(false);
         AudioSource.Stop();
 
@@ -485,9 +472,59 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
         }
     }
 
-    protected override bool ControlsEnabled()
+    private void ChangeToNormalForm()
+    {
+        // Replace the character to make sure that the correct area is tested
+        AlignNormalFormToBouncingForm();
+
+        if (HasEnoughSpaceForNormalForm())
+        {
+            ShowNormalForm(false);
+            AudioSource.PlayOneShot(_returnToNormalFormSound);
+        }
+        else
+        {
+            StartCoroutine(WaitForEnoughSpaceForNormalForm());
+        }
+    }
+
+    private IEnumerator WaitForEnoughSpaceForNormalForm()
+    {
+        while (true)
+        {
+            yield return new WaitForFixedUpdate();
+
+            // Replace the character to make sure that the correct area is tested for collision
+            AlignNormalFormToBouncingForm();
+
+            if (HasEnoughSpaceForNormalForm())
+            {
+                ShowNormalForm(true);
+                AudioSource.PlayOneShot(_returnToNormalFormSound);
+                StopAllCoroutines();
+            }
+        }
+    }
+
+    public override bool ControlsEnabled()
     {
         return base.ControlsEnabled() && _possessableBouncingPhysicsObject.MovementFrozen;
+    }
+
+    public override void EnableControl(bool enable)
+    {
+        base.EnableControl(enable);
+
+        if (!enable && _isCharging)
+        {
+            _arrow.SetActive(false);
+            AudioSource.Stop();
+
+            _isCharging = false;
+
+            // TEMP
+            _chargeText.text = "";
+        }
     }
 
     // Methods of the IBouncingFormControllerSubscriber interface
@@ -501,40 +538,16 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
         Unpossess();
     }
 
+    public void NotifyCanceledBounce()
+    {
+        ChangeToNormalForm();
+    }
+
     // Methods of the IBouncingPhysicsObjectSubscriber interface
     public void NotifyBounceStarted() { }
 
     public void NotifyBounceFinished()
     {
-        // Replace the character to make sure that the correct area is tested
-        AlignNormalFormToBouncingForm();
-        
-        if (HasEnoughSpaceForNormalForm())
-        {
-            ShowNormalForm(true);
-            AudioSource.PlayOneShot(_returnToNormalFormSound);
-        }
-        else
-        {
-            StartCoroutine(WaitForEnoughSpaceForNormalForm());
-        }
-    }
-
-    private IEnumerator WaitForEnoughSpaceForNormalForm()
-    {
-        while (true)
-        {
-            // Replace the character to make sure that the correct area is tested for collision
-            AlignNormalFormToBouncingForm();
-
-            if (HasEnoughSpaceForNormalForm())
-            {
-                ShowNormalForm(true);
-                AudioSource.PlayOneShot(_returnToNormalFormSound);
-                StopAllCoroutines();
-            }
-
-            yield return new WaitForFixedUpdate();
-        }
+        ChangeToNormalForm();
     }
 }
