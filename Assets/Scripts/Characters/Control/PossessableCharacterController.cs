@@ -286,7 +286,7 @@ public abstract class PossessableCharacterController : CharacterController, IPos
 
     protected virtual void OnPossess(Possession possessingScript) { }
 
-    public virtual bool Unpossess()
+    public virtual bool Unpossess(bool centerColliderToPos = false, Vector2? forceRespawnPos = null)
     {
         if (IsPossessed && IsPossessed)
         {
@@ -307,8 +307,13 @@ public abstract class PossessableCharacterController : CharacterController, IPos
                     respawnFacingDirection = Vector2.right;
                 }
 
+                if (forceRespawnPos != null)
+                {
+                    respawnPos = (Vector2)forceRespawnPos;
+                }
+
                 // Tell the possession script, that took possession of this AIController, that isn't in control anymore
-                PossessingScript.ReleasePossession(respawnPos, respawnFacingDirection);
+                PossessingScript.ReleasePossession(respawnPos, respawnFacingDirection, centerColliderToPos);
             }
 
             IsPossessed = false;

@@ -38,9 +38,10 @@ public struct PathLink
 
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(PlatformerMovement))]
+[RequireComponent(typeof(Explodable))]
 //[RequireComponent(typeof(Seeker))]
 
-public class PlatformerCharacterController : PossessableCharacterController
+public class PlatformerCharacterController : PossessableCharacterController, IProximityExplodableSubscriber
 {
     /*[Header("Vertical Movement")]
     [SerializeField]
@@ -59,6 +60,7 @@ public class PlatformerCharacterController : PossessableCharacterController
     private float _horizontalInputForVerticalMovement = .0f;*/
 
     private PlatformerMovement _movementScript;
+    private Explodable _explodableScript;
 
     /*private const float _jumpHorizontalMovementModifier = 1.2f;
     private const float _dropDownHorizontalMovementModifier = 1.0f;
@@ -70,6 +72,9 @@ public class PlatformerCharacterController : PossessableCharacterController
         base.Awake();
 
         _movementScript = GetComponent<PlatformerMovement>();
+        _explodableScript = GetComponent<Explodable>();
+
+        _explodableScript.Subscribe(this);
     }
 
     /*// Called when a new path is created
@@ -171,6 +176,7 @@ public class PlatformerCharacterController : PossessableCharacterController
         }
 
         UpdateMovement(inputs);
+        UpdateExplosion(inputs);
         UpdatePossession(inputs);
     }
 
@@ -184,6 +190,7 @@ public class PlatformerCharacterController : PossessableCharacterController
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
             inputs.Jump = Input.GetButtonDown("Jump");
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
+            inputs.Power = Input.GetButton("Power");
             inputs.Possess = Input.GetButtonDown("Possess");
         }
         else
@@ -193,6 +200,7 @@ public class PlatformerCharacterController : PossessableCharacterController
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
             inputs.Jump = Input.GetButtonDown("Jump");
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
+            inputs.Power = Input.GetButton("Power");
             inputs.Possess = Input.GetButtonDown("Possess");
         }
 
@@ -359,6 +367,14 @@ public class PlatformerCharacterController : PossessableCharacterController
         _movementScript.SetInputs(inputs);
     }
 
+    private void UpdateExplosion(Inputs inputs)
+    {
+        if (inputs.Power && !_explodableScript.CountdownStarted)
+        {
+            _explodableScript.StartCountdown();
+        }
+    }
+
     /*protected override void OnPossess(Possession possessingScript)
     {
         _verticalMovementinProgress = false;
@@ -368,5 +384,15 @@ public class PlatformerCharacterController : PossessableCharacterController
     protected override void OnUnpossess()
     {
         UpdateMovement(NoControlInputs);
+    }
+    
+    // Methods of the IProximityExplodableSubscriber interface
+    public void NotifyCountdownStarted(GameObject explodableGameObject, float timeRemaining) { }
+
+    public void NotifyCountdownUpdated(GameObject explodableGameObject, float timeRemaining) { }
+
+    public void NotifyCountdownFinished(GameObject explodableGameObject)
+    {
+        Unpossess(false, transform.position);
     }
 }

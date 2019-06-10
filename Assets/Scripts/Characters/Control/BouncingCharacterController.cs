@@ -144,11 +144,11 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
         }
 
         // Check if charge started
-        if (_movementScript.IsGrounded && !_isCharging && inputs.HeldCharge/* && HasEnoughSpaceForBounceForm()*/)
+        if (_movementScript.IsGrounded && !_isCharging && inputs.HeldPower/* && HasEnoughSpaceForBounceForm()*/)
         {
             StartCharge();
         }
-        else if (_isCharging && inputs.ReleaseCharge)
+        else if (_isCharging && inputs.ReleasePower)
         {
             StopCharge(inputs);
         }
@@ -196,8 +196,8 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
             inputs.Jump = Input.GetButtonDown("Jump");
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
-            inputs.HeldCharge = Input.GetButton("Charge");
-            inputs.ReleaseCharge = Input.GetButtonUp("Charge");
+            inputs.HeldPower = Input.GetButton("Power");
+            inputs.ReleasePower = Input.GetButtonUp("Power");
             inputs.Possess = Input.GetButtonDown("Possess");
         }
         else
@@ -208,8 +208,8 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
             inputs.Jump = Input.GetButtonDown("Jump");
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
-            inputs.HeldCharge = Input.GetButton("Charge");
-            inputs.ReleaseCharge = Input.GetButtonUp("Charge");
+            inputs.HeldPower = Input.GetButton("Power");
+            inputs.ReleasePower = Input.GetButtonUp("Power");
             inputs.Possess = Input.GetButtonDown("Possess");
         }
 
@@ -265,7 +265,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
         return IsPossessed;
     }
 
-    public override bool Unpossess()
+    public override bool Unpossess(bool centerColliderToPos = false, Vector2? forceRespawnPos = null)
     {
         if (IsPossessed && IsPossessed)
         {
@@ -293,7 +293,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
                     }
 
                     // Tell the possession script, that took possession of this AIController, that isn't in control anymore
-                    PossessingScript.ReleasePossession(respawnPos, respawnFacingDirection);
+                    PossessingScript.ReleasePossession(respawnPos, respawnFacingDirection, centerColliderToPos);
 
                     PossessingScript = null;
                 }

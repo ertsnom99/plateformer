@@ -10,8 +10,7 @@ public struct Inputs
     public bool Dash;
     public bool ReleaseDash;
     public bool Possess;
-
-
-    public bool HeldCharge;
-    public bool ReleaseCharge;
+    public bool Power;
+    public bool HeldPower;
+    public bool ReleasePower;
 }

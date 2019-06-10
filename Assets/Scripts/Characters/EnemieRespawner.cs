@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public struct EnemieSpawnSetting
 {
-    public ProximityExplodable CurrentEnemie;
+    public Explodable CurrentEnemie;
     public GameObject SpawnedEnemie;
     public Transform SpawnPosition;
 }
@@ -58,9 +58,9 @@ public class EnemieRespawner : MonoBehaviour, IProximityExplodableSubscriber
     {
         GameObject instanciatedEnemie = Instantiate(_spawnSettings[settingIndex].SpawnedEnemie, _spawnSettings[settingIndex].SpawnPosition.position, Quaternion.identity);
         //instanciatedEnemie.GetComponent<AIController>().SetTarget(_enemieTarget);
-        instanciatedEnemie.GetComponent<ProximityExplodable>().SetTarget(_enemieTarget);
+        //instanciatedEnemie.GetComponent<Explodable>().SetTarget(_enemieTarget);
 
-        _spawnSettings[settingIndex].CurrentEnemie = instanciatedEnemie.GetComponent<ProximityExplodable>();
+        _spawnSettings[settingIndex].CurrentEnemie = instanciatedEnemie.GetComponent<Explodable>();
         _spawnSettings[settingIndex].CurrentEnemie.Subscribe(this);
     }
 

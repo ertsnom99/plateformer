@@ -8,7 +8,7 @@ public class CountdownText : MonoBehaviour, IProximityExplodableSubscriber
 {
     [Header("Explodable")]
     [SerializeField]
-    private ProximityExplodable _proximityExplodable;
+    private Explodable _proximityExplodable;
 
     private Text _text;
 

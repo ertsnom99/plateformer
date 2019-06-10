@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 114671357202289926}
   - component: {fileID: 114755130958357190}
   m_Layer: 10
-  m_Name: FlyingAI
+  m_Name: FlyingCharacter
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,7 +108,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.54
+  m_Radius: 0.7298397
 --- !u!50 &50947607977860052
 Rigidbody2D:
   serializedVersion: 4
@@ -265,15 +265,6 @@ MonoBehaviour:
   LeftPlayerSpawn: {fileID: 5974873232592696110}
   RightPlayerSpawn: {fileID: 5434903756275433345}
   FlipPlayerSpawn: 0
-  Target: {fileID: 0}
-  _distanceToDetect: 10
-  StopDistanceToTarget: 0.4
-  MinDistanceForTargetReachable: 4
-  UpdateRate: 5
-  MinDistanceToChangeWaypoint: 0.5
-  StopWhenUnreachable: 1
-  _drawDistance: 0
-  _logPathFailedError: 0
   _propellantAnimator: {fileID: 95907456829324252}
 --- !u!114 &114265350433793756
 MonoBehaviour:
@@ -332,10 +323,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 885933a14e001d647847769cb86ade1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _target: {fileID: 0}
-  _distanceToCountdown: 6
-  _distanceOffset: {x: 0, y: 0, z: 0}
-  _countdownTime: 3
+  DistanceOffset: {x: 0, y: 0, z: 0}
+  CountdownTime: 3
   _damagedLayers:
     serializedVersion: 2
     m_Bits: 2304
@@ -347,7 +336,6 @@ MonoBehaviour:
   _knockBackDirection: {x: 1, y: 1, z: 0}
   _knockBackStrength: 12
   _knockBackDuration: 0.3
-  _drawDistanceToCountdown: 0
   _drawExplosionRange: 0
 --- !u!1 &1299243050682006
 GameObject:

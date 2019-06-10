@@ -51,7 +51,7 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
             inputs = FetchInputs();
         }
 
-        if (inputs.ReleaseCharge)
+        if (inputs.ReleasePower)
         {
             foreach (IBouncingFormControllerSubscriber subscriber in Subscribers)
             {
@@ -69,14 +69,14 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
         if (UseKeyboard)
         {
             // Inputs from the keyboard
-            inputs.ReleaseCharge = Input.GetButtonUp("Charge");
+            inputs.ReleasePower = Input.GetButtonUp("Power");
             inputs.Possess = Input.GetButtonDown("Possess");
         }
         else
         {
             // TODO: Create inputs specific to the controler
             // Inputs from the controler
-            inputs.ReleaseCharge = Input.GetButtonUp("Charge");
+            inputs.ReleasePower = Input.GetButtonUp("Power");
             inputs.Possess = Input.GetButtonDown("Possess");
         }
 
@@ -130,7 +130,7 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
         return IsPossessed;
     }
 
-    public override bool Unpossess()
+    public override bool Unpossess(bool centerColliderToPos = false, Vector2? forceRespawnPos = null)
     {
         if (IsPossessed && IsPossessed)
         {
