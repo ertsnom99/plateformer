@@ -300,7 +300,7 @@ public class PhysicsObject : MonoBehaviour
         foreach (KeyValuePair<Collider2D, IPhysicsObjectCollisionListener[]> entry in PreviouslyCollidingGameObject)
         {
             // Call OnPhysicsObjectCollisionExit on all script, of the hitted gameobject, that implement the interface
-            if (!CollidingGameObjects.ContainsKey(entry.Key))
+            if (entry.Key && !CollidingGameObjects.ContainsKey(entry.Key))
             {
                 // Call OnPhysicsObjectCollisionExit on all script, of this gameobject, that implement the interface
                 PhysicsCollision2D physicsObjectCollision2D = new PhysicsCollision2D(entry.Key,
@@ -341,14 +341,22 @@ public class PhysicsObject : MonoBehaviour
         Velocity = new Vector2(Velocity.x, Velocity.y + addedVelocity);
     }
 
-    // Reset all movement and related variable when the script is disable
+    // Check collision exit when the script is disable
     protected virtual void OnDisable()
+    {
+        CollidingGameObjects.Clear();
+
+        CheckCollisionExit();
+    }
+
+    // Reset all movement and related variable when the script is enable
+    protected virtual void OnEnable()
     {
         GroundNormal = Vector2.zero;
         IsGrounded = false;
         Velocity = Vector2.zero;
         TargetHorizontalVelocity = .0f;
-        
+
         PreviouslyCollidingGameObject.Clear();
         CollidingGameObjects.Clear();
     }
