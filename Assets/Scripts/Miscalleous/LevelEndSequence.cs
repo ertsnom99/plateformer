@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EndSequence : MonoBehaviour, IFadeImageSubscriber
+public class LevelEndSequence : MonoBehaviour, IFadeImageSubscriber
 {
     [Header("Camera")]
     [SerializeField]

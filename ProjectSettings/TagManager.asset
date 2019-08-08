@@ -52,20 +52,20 @@ TagManager:
   - name: Platforms
     uniqueID: 1011929847
     locked: 0
-  - name: InFrontPlatformes
-    uniqueID: 854317771
-    locked: 0
   - name: Texts
     uniqueID: 926022953
+    locked: 0
+  - name: Player
+    uniqueID: 4144600267
+    locked: 0
+  - name: InFrontPlatformes
+    uniqueID: 854317771
     locked: 0
   - name: Gems
     uniqueID: 1520962181
     locked: 0
   - name: AI
     uniqueID: 4234718813
-    locked: 0
-  - name: Player
-    uniqueID: 4144600267
     locked: 0
   - name: Foreground
     uniqueID: 3661822639

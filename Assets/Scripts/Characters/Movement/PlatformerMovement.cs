@@ -222,12 +222,34 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         _triggeredJump = false;
         _triggeredAirborneJump = false;
         _triggeredDash = false;
+        
+        DebugMovement();
+    }
 
-        // Debug
+    private void DebugMovement()
+    {
         if (_debugSlideRaycast)
         {
             Vector2 slideRaycastStart = new Vector2(transform.position.x, transform.position.y + _slideRaycastOffset);
-            Debug.DrawLine(slideRaycastStart, slideRaycastStart + _lastHorizontalVelocityDirection * Vector2.right * _slideRaycastDistance, Color.yellow);
+            float lineDirection;
+
+            if (_lastHorizontalVelocityDirection == .0f)
+            {
+                if (_spriteRenderer.flipX)
+                {
+                    lineDirection = _flipSprite ? 1 : -1;
+                }
+                else
+                {
+                    lineDirection = _flipSprite ? -1 : 1;
+                }
+            }
+            else
+            {
+                lineDirection = _lastHorizontalVelocityDirection;
+            }
+
+            Debug.DrawLine(slideRaycastStart, slideRaycastStart + lineDirection * Vector2.right * _slideRaycastDistance, Color.yellow);
         }
     }
 

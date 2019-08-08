@@ -1,26 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeImageSubscriber
+public class DevGameManager : GameManager, IHealthSubscriber
 {
-    [Header("Fade out")]
-    [SerializeField]
-    private FadeImage _fade;
-    [SerializeField]
-    private float _fadeDuration;
-
     private bool _fading = false;
 
-    [Header("Player")]
-    [SerializeField]
-    private PlayerController _playerController;
-    [SerializeField]
-    private PlatformerMovement _playerMovement;
-    [SerializeField]
-    private bool _enableControlAfterFadeIn = true;
-    [SerializeField]
-    private Inputs _forcedControlsAtLevelStart;
-    
     [Header("Enemies")]
     [SerializeField]
     private EnemieRespawner _enemieRespawner;
@@ -38,40 +22,20 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
     private bool _gameEnded = false;
     private bool _gameWon = false;
 
-    // Tags
-    public const string PlayerTag = "Player";
-    public const string EnemyTag = "Enemy";
-
-    // Layers
-    public const string PlayerLayer = "Player";
-    public const string AILayer = "AI";
-
-    private void Start()
+    protected override void Start()
     {
-        _fade.Subscribe(this);
-        _fade.SetOpacity(true);
+        base.Start();
 
-        _playerController.GetComponent<Health>().Subscribe(this);
-        _playerController.EnableControl(false);
-        _playerMovement.SetInputs(_forcedControlsAtLevelStart);
-
-        _fade.FadeIn(_fadeDuration);
+        PlayerController.GetComponent<Health>().Subscribe(this);
     }
 
-    private void Update()
+    protected override void Update()
     {
-        /*if (Input.GetButtonDown("Fire2"))
-        {
-            EndGame(false);
-        }*/
+        base.Update();
 
-        if (Input.GetButtonDown("Quit"))
+        if (_gameEnded && !_fading && Input.GetButtonDown("Restart"))
         {
-            Application.Quit();
-        }
-        else if (_gameEnded && !_fading && Input.GetButtonDown("Restart"))
-        {
-            _fade.FadeOut(_fadeDuration);
+            Fade.FadeOut(FadeDuration);
             _fading = true;
         }
     }
@@ -95,7 +59,7 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
             }
 
             // Disable player
-            _playerController.EnableControl(false);
+            PlayerController.EnableControl(false);
 
             // Show end text
             if (won)
@@ -127,15 +91,7 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
     public void NotifyJustSubscribed(Health healthScript) { }
 
     // Methods of the IFadeImageSubscriber interface
-    public void NotifyFadeInFinished()
-    {
-        if(_enableControlAfterFadeIn)
-        {
-            _playerController.EnableControl(true);
-        }
-    }
-
-    public void NotifyFadeOutFinished()
+    public override void NotifyFadeOutFinished()
     {
         if (_gameEnded)
         {

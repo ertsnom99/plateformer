@@ -320,7 +320,7 @@ MonoBehaviour:
   _canSlideOfWall: 1
   _canSlideGoingUp: 0
   _canSlideDuringKnockBack: 0
-  _slideRaycastOffset: -0.4
+  _slideRaycastOffset: 0.4
   _slideRaycastDistance: 0.6
   _slideGravityModifier: 1
   _constantSlipeSpeed: 0

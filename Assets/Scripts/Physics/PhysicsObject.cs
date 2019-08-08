@@ -32,6 +32,8 @@ public class PhysicsObject : MonoBehaviour
     public float CurrentGravityModifier { get; protected set; }
 
     [SerializeField]
+    protected float MaxFallVelocity = 44.0f;
+    [SerializeField]
     protected float FallModifier = 1.0f;
 
     [SerializeField]
@@ -113,8 +115,16 @@ public class PhysicsObject : MonoBehaviour
         }
 
         Velocity += yVelocityAdded;
-        Velocity = new Vector2 (TargetHorizontalVelocity, Velocity.y);
 
+        if (Velocity.y < -MaxFallVelocity)
+        {
+            Velocity = new Vector2(TargetHorizontalVelocity, -MaxFallVelocity);
+        }
+        else
+        {
+            Velocity = new Vector2(TargetHorizontalVelocity, Velocity.y);
+        }
+        
         // Create a Vector prependicular to the normal
         Vector2 movementAlongGround = new Vector2(GroundNormal.y, -GroundNormal.x);
 

@@ -8,10 +8,16 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/_scenes/BouncingMechanic.unity
     guid: 2dd84a93954ab5644b1fc5f6a8ce7492
-  - enabled: 1
+  - enabled: 0
     path: Assets/_scenes/DevDemo/Tutorial.unity
     guid: cb3c3c1028cc8fc4990daeb78afe9c21
-  - enabled: 1
+  - enabled: 0
     path: Assets/_scenes/DevDemo/Boss.unity
     guid: 3b7d9eedf07bb374eb5599c89a3619e0
+  - enabled: 1
+    path: Assets/_scenes/Prototype/Level01.unity
+    guid: be85cfc70c581f949835e4c1c7924601
+  - enabled: 1
+    path: Assets/_scenes/Prototype/Level02.unity
+    guid: d776953feda58ac49b0a9f6e18ac1fe0
   m_configObjects: {}

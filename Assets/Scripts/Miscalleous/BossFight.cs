@@ -20,7 +20,7 @@ public class BossFight : MonoBehaviour, IHealthSubscriber
 
     public void NotifyHealthDepleted(Health healthScript)
     {
-        GameManager.Instance.EndGame(true);
+        ((DevGameManager)DevGameManager.Instance).EndGame(true);
     }
 
     public void NotifyJustSubscribed(Health healthScript) { }
