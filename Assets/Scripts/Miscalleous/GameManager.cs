@@ -50,11 +50,12 @@ public class GameManager : MonoSingleton<GameManager>, IHealthSubscriber, IFadeI
     {
         _fade.Subscribe(this);
         _fade.SetOpacity(true);
-        _fade.FadeIn(_fadeDuration);
 
         _playerController.GetComponent<Health>().Subscribe(this);
         _playerController.EnableControl(false);
         _playerMovement.SetInputs(_forcedControlsAtLevelStart);
+
+        _fade.FadeIn(_fadeDuration);
     }
 
     private void Update()

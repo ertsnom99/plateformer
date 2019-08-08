@@ -349,6 +349,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29202b3a3cd1f2c449086e10342b4920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 61353411224531644}
+  _virtualCamera: {fileID: 0}
+  _flipSpawnedPlayer: 0
   _enterPossessionModeSound: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922,
     type: 3}
   _exitPossessionModeSound: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a,

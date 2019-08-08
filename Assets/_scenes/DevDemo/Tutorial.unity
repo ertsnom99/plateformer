@@ -855,6 +855,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1404846944}
     m_Modifications:
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.data[0].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.data[1].y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _minVelocityToDamage
+      value: 26
+      objectReference: {fileID: 0}
     - target: {fileID: 4003219327101588, guid: 0fbb6621fc7a49744a3126b9c4a82d3e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -50.5
@@ -894,26 +914,6 @@ PrefabInstance:
     - target: {fileID: 4003219327101588, guid: 0fbb6621fc7a49744a3126b9c4a82d3e, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.0000005
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.data[0].y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.data[1].y
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _minVelocityToDamage
-      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 6906439695612518263, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
         type: 3}
@@ -21111,6 +21111,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1404846944}
     m_Modifications:
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.data[0].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.data[1].y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _minVelocityToDamage
+      value: 26
+      objectReference: {fileID: 0}
     - target: {fileID: 4003219327101588, guid: 0fbb6621fc7a49744a3126b9c4a82d3e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -36.5
@@ -21150,26 +21170,6 @@ PrefabInstance:
     - target: {fileID: 4003219327101588, guid: 0fbb6621fc7a49744a3126b9c4a82d3e, type: 3}
       propertyPath: m_LocalScale.y
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.data[0].y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.data[1].y
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _minVelocityToDamage
-      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 6906439695612518263, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
         type: 3}
@@ -21701,16 +21701,6 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114060924192825970, guid: fc22fadd0dece544c8639ddaa8d4cf9f,
-        type: 3}
-      propertyPath: m_initiallyOpen
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114060924192825970, guid: fc22fadd0dece544c8639ddaa8d4cf9f,
-        type: 3}
-      propertyPath: _initiallyOpen
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 212859307665078612, guid: fc22fadd0dece544c8639ddaa8d4cf9f,
         type: 3}
       propertyPath: m_Sprite
@@ -21720,6 +21710,16 @@ PrefabInstance:
     - target: {fileID: 212859307665078612, guid: fc22fadd0dece544c8639ddaa8d4cf9f,
         type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114060924192825970, guid: fc22fadd0dece544c8639ddaa8d4cf9f,
+        type: 3}
+      propertyPath: m_initiallyOpen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114060924192825970, guid: fc22fadd0dece544c8639ddaa8d4cf9f,
+        type: 3}
+      propertyPath: _initiallyOpen
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -21749,6 +21749,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1404846944}
     m_Modifications:
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.data[0].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.data[1].y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _minVelocityToDamage
+      value: 26
+      objectReference: {fileID: 0}
     - target: {fileID: 4003219327101588, guid: 0fbb6621fc7a49744a3126b9c4a82d3e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -11.5
@@ -21780,26 +21800,6 @@ PrefabInstance:
     - target: {fileID: 4003219327101588, guid: 0fbb6621fc7a49744a3126b9c4a82d3e, type: 3}
       propertyPath: m_RootOrder
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.data[0].y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.data[1].y
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _minVelocityToDamage
-      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 6906439695612518263, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
         type: 3}
@@ -22487,6 +22487,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1404846944}
     m_Modifications:
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.data[0].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.data[1].y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _minVelocityToDamage
+      value: 26
+      objectReference: {fileID: 0}
     - target: {fileID: 4003219327101588, guid: 0fbb6621fc7a49744a3126b9c4a82d3e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -39.5
@@ -22526,26 +22546,6 @@ PrefabInstance:
     - target: {fileID: 4003219327101588, guid: 0fbb6621fc7a49744a3126b9c4a82d3e, type: 3}
       propertyPath: m_LocalScale.y
       value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.data[0].y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.data[1].y
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _minVelocityToDamage
-      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 6906439695612518263, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
         type: 3}
@@ -26421,8 +26421,10 @@ MonoBehaviour:
     ReleaseJump: 0
     Dash: 0
     ReleaseDash: 0
-    HeldCharge: 0
-    ReleaseCharge: 0
+    Possess: 0
+    Power: 0
+    HeldPower: 0
+    ReleasePower: 0
   _enemieRespawner: {fileID: 0}
   _endGameWonText: {fileID: 1619944387}
   _endGameLoseText: {fileID: 436463833}
@@ -28786,6 +28788,11 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 0.65
       objectReference: {fileID: 0}
+    - target: {fileID: 8197806341230259179, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: _collider
+      value: 
+      objectReference: {fileID: 1638727460}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 3}
 --- !u!114 &1638727459 stripped
@@ -28800,6 +28807,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a22dc241a534b439eff05fa92180e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &1638727460 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 61353411224531644, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1638727458}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1654604160
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29166,6 +29179,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1404846944}
     m_Modifications:
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.data[0].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.data[1].y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _minVelocityToDamage
+      value: 26
+      objectReference: {fileID: 0}
     - target: {fileID: 4003219327101588, guid: 0fbb6621fc7a49744a3126b9c4a82d3e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -39.5
@@ -29205,26 +29238,6 @@ PrefabInstance:
     - target: {fileID: 4003219327101588, guid: 0fbb6621fc7a49744a3126b9c4a82d3e, type: 3}
       propertyPath: m_LocalScale.y
       value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.data[0].y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.data[1].y
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _minVelocityToDamage
-      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 6906439695612518263, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
         type: 3}
@@ -30296,6 +30309,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1404846944}
     m_Modifications:
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.data[0].y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _localVectorsForAngleCalculation.Array.data[1].y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
+        type: 3}
+      propertyPath: _minVelocityToDamage
+      value: 26
+      objectReference: {fileID: 0}
     - target: {fileID: 4003219327101588, guid: 0fbb6621fc7a49744a3126b9c4a82d3e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -50.5
@@ -30335,26 +30368,6 @@ PrefabInstance:
     - target: {fileID: 4003219327101588, guid: 0fbb6621fc7a49744a3126b9c4a82d3e, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.0000005
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.data[0].y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _localVectorsForAngleCalculation.Array.data[1].y
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114915350709145786, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
-        type: 3}
-      propertyPath: _minVelocityToDamage
-      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 6906439695612518263, guid: 0fbb6621fc7a49744a3126b9c4a82d3e,
         type: 3}
@@ -31817,8 +31830,10 @@ MonoBehaviour:
     ReleaseJump: 0
     Dash: 0
     ReleaseDash: 0
-    HeldCharge: 0
-    ReleaseCharge: 0
+    Possess: 0
+    Power: 0
+    HeldPower: 0
+    ReleasePower: 0
   _fade: {fileID: 261130841}
   _fadeDuration: 1
   _sceneToLoad: 1

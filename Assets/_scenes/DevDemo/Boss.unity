@@ -659,6 +659,11 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 8197806341230259179, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: _collider
+      value: 
+      objectReference: {fileID: 170617767}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 3}
 --- !u!114 &170617766 stripped
@@ -673,6 +678,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a22dc241a534b439eff05fa92180e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &170617767 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 61353411224531644, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 170617765}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &273064801
 GameObject:
   m_ObjectHideFlags: 0
@@ -3672,7 +3683,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 801289750}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.2000003, z: -1.67}
+  m_LocalPosition: {x: -95.666664, y: -6, z: -1.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7364,8 +7375,10 @@ MonoBehaviour:
     ReleaseJump: 0
     Dash: 0
     ReleaseDash: 0
-    HeldCharge: 0
-    ReleaseCharge: 0
+    Possess: 0
+    Power: 0
+    HeldPower: 0
+    ReleasePower: 0
   _enemieRespawner: {fileID: 1334690396}
   _endGameWonText: {fileID: 1959395547}
   _endGameLoseText: {fileID: 1329509283}
