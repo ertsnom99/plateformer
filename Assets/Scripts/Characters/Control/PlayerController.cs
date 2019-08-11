@@ -2,7 +2,7 @@
 
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(PlatformerMovement))]
-[RequireComponent(typeof(Possession))]
+[RequireComponent(typeof(PossessionPower))]
 
 public class PlayerController : CharacterController
 {
@@ -12,13 +12,17 @@ public class PlayerController : CharacterController
 
     protected Inputs NoControlInputs = new Inputs();
 
+    [Header("Possession")]
+    [SerializeField]
+    private bool _canUsePossession = false;
+
     private PlatformerMovement _movementScript;
-    private Possession _possession;
+    private PossessionPower _possession;
 
     private void Awake()
     {
         _movementScript = GetComponent<PlatformerMovement>();
-        _possession = GetComponent<Possession>();
+        _possession = GetComponent<PossessionPower>();
     }
 
     private void Update()
@@ -41,8 +45,8 @@ public class PlayerController : CharacterController
         if (UseKeyboard)
         {
             // Inputs from the keyboard
-            inputs.Vertical = Input.GetAxisRaw("Vertical");
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
+            inputs.Vertical = Input.GetAxisRaw("Vertical");
             inputs.Jump = Input.GetButtonDown("Jump");
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
             inputs.Dash = Input.GetButtonDown("Dash");
@@ -51,10 +55,9 @@ public class PlayerController : CharacterController
         }
         else
         {
-            // TODO: Create inputs specific to the controler
             // Inputs from the controler
-            inputs.Vertical = Input.GetAxisRaw("Vertical");
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
+            inputs.Vertical = Input.GetAxisRaw("Vertical");
             inputs.Jump = Input.GetButtonDown("Jump");
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
             inputs.Dash = Input.GetButtonDown("Dash");
@@ -74,12 +77,17 @@ public class PlayerController : CharacterController
     {
         if (inputs.Possess)
         {
-            _possession.ChangePossessionMode(!_possession.InPossessionMode);
+            _possession.ChangePossessionMode(_canUsePossession && !_possession.InPossessionMode);
         }
     }
 
     public void SetKeyboardUse(bool useKeyboard)
     {
         UseKeyboard = useKeyboard;
+    }
+
+    public void SetCanUsePossession(bool canUsePossession)
+    {
+        _canUsePossession = canUsePossession;
     }
 }

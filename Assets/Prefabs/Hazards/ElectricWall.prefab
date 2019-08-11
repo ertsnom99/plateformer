@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4432390887433355504}
   - component: {fileID: 4432390887433355511}
   m_Layer: 0
-  m_Name: Visual
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,5 +153,4 @@ MonoBehaviour:
   _firstActiveDelay: 3
   _activeDuration: 2
   _inactiveDuration: 1
-  _respawnPos: {fileID: 0}
-  _visual: {fileID: 4432390887433355505}
+  _sprite: {fileID: 4432390887433355505}

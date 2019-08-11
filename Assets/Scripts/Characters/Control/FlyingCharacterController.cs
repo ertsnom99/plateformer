@@ -1,12 +1,11 @@
-﻿using UnityEngine;
+﻿using Pathfinding;
+using UnityEngine;
 //using Pathfinding;
 
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(FlyingMovement))]
-[RequireComponent(typeof(Explodable))]
-//[RequireComponent(typeof(Seeker))]
 
-public class FlyingCharacterController : PossessableCharacterController, IProximityExplodableSubscriber
+public class FlyingCharacterController : PossessableCharacterController
 {
     [Header("Propellant")]
     [SerializeField]
@@ -15,7 +14,6 @@ public class FlyingCharacterController : PossessableCharacterController, IProxim
     private int _propellantPossessedModeAnimationLayerIndex;
 
     private FlyingMovement _movementScript;
-    private Explodable _explodableScript;
 
     protected override void Awake()
     {
@@ -31,18 +29,7 @@ public class FlyingCharacterController : PossessableCharacterController, IProxim
         }
 
         _movementScript = GetComponent<FlyingMovement>();
-        _explodableScript = GetComponent<Explodable>();
-
-        _explodableScript.Subscribe(this);
     }
-
-    /*public override void OnPathComplete(Path path)
-    {
-        base.OnPathComplete(path);
-
-        Path = path;
-        TargetWaypoint = 0;
-    }*/
 
     protected override void OnUpdatePossessed()
     {
@@ -54,8 +41,8 @@ public class FlyingCharacterController : PossessableCharacterController, IProxim
             inputs = FetchInputs();
         }
 
+        UpdateDisplayInfo(inputs);
         UpdateMovement(inputs);
-        UpdateExplosion(inputs);
         UpdatePossession(inputs);
     }
 
@@ -66,19 +53,18 @@ public class FlyingCharacterController : PossessableCharacterController, IProxim
         if (UseKeyboard)
         {
             // Inputs from the keyboard
-            inputs.Vertical = Input.GetAxisRaw("Vertical");
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.Power = Input.GetButton("Power");
+            inputs.Vertical = Input.GetAxisRaw("Vertical");
             inputs.Possess = Input.GetButtonDown("Possess");
+            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
         }
         else
         {
-            // TODO: Create inputs specific to the controler
             // Inputs from the controler
-            inputs.Vertical = Input.GetAxisRaw("Vertical");
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.Power = Input.GetButton("Power");
+            inputs.Vertical = Input.GetAxisRaw("Vertical");
             inputs.Possess = Input.GetButtonDown("Possess");
+            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
         }
 
         return inputs;
@@ -90,7 +76,7 @@ public class FlyingCharacterController : PossessableCharacterController, IProxim
 
         Inputs inputs = NoControlInputs;
 
-        /*if (ControlsEnabled() && HasDetectedTarget && Path != null)
+        if (ControlsEnabled() && HasDetectedTarget && Path != null)
         {
             float distanceToTarget = Vector3.Distance(transform.position, Target.position);
             bool isWaypointReached = TargetWaypoint >= Path.vectorPath.Count;
@@ -120,7 +106,7 @@ public class FlyingCharacterController : PossessableCharacterController, IProxim
                     inputs = CreateInputs();
                 }
             }
-        }*/
+        }
 
         // Send the final inputs to the movement script
         UpdateMovement(inputs);
@@ -130,11 +116,11 @@ public class FlyingCharacterController : PossessableCharacterController, IProxim
     {
         Inputs inputs = NoControlInputs;
 
-        /*Vector3 DirectionToTargetWaypoint = (Path.vectorPath[TargetWaypoint] - transform.position).normalized;
+        Vector3 DirectionToTargetWaypoint = (Path.vectorPath[TargetWaypoint] - transform.position).normalized;
 
         // Inputs from the controler
+        inputs.Horizontal = DirectionToTargetWaypoint.x;
         inputs.Vertical = DirectionToTargetWaypoint.y;
-        inputs.Horizontal = DirectionToTargetWaypoint.x;*/
 
         return inputs;
     }
@@ -144,15 +130,7 @@ public class FlyingCharacterController : PossessableCharacterController, IProxim
         _movementScript.SetInputs(inputs);
     }
 
-    private void UpdateExplosion(Inputs inputs)
-    {
-        if (inputs.Power && !_explodableScript.CountdownStarted)
-        {
-            _explodableScript.StartCountdown();
-        }
-    }
-
-    protected override void OnPossess(Possession possessingScript)
+    protected override void OnPossess(PossessionPower possessingScript)
     {
         _propellantAnimator.SetLayerWeight(_propellantPossessedModeAnimationLayerIndex, 1.0f);
     }
@@ -160,15 +138,5 @@ public class FlyingCharacterController : PossessableCharacterController, IProxim
     protected override void OnUnpossess()
     {
         _propellantAnimator.SetLayerWeight(_propellantPossessedModeAnimationLayerIndex, .0f);
-    }
-
-    // Methods of the IProximityExplodableSubscriber interface
-    public void NotifyCountdownStarted(GameObject explodableGameObject, float timeRemaining) { }
-
-    public void NotifyCountdownUpdated(GameObject explodableGameObject, float timeRemaining) { }
-
-    public void NotifyCountdownFinished(GameObject explodableGameObject)
-    {
-        Unpossess(true, transform.position);
     }
 }

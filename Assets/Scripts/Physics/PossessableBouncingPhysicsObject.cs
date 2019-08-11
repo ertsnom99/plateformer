@@ -27,7 +27,7 @@ public class PossessableBouncingPhysicsObject : BouncingPhysicsObject
 
                 while (index < count && HitBuffer[index])
                 {
-                    Possession possessionScript = HitBuffer[index].collider.GetComponent<Possession>();
+                    PossessionPower possessionScript = HitBuffer[index].collider.GetComponent<PossessionPower>();
 
                     if (possessionScript && possessionScript.InPossessionMode)
                     {

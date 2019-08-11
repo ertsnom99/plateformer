@@ -5,12 +5,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IPhysicsObjectCollisionListener
-{
-    void OnPhysicsObjectCollisionEnter(PhysicsCollision2D collision);
-    void OnPhysicsObjectCollisionExit(PhysicsCollision2D collision);
-}
-
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(Rigidbody2D))]
 
@@ -38,7 +32,7 @@ public class PhysicsObject : MonoBehaviour
 
     [SerializeField]
     private float _minGroundNormalY = .4f;
-    protected Vector2 GroundNormal;
+    protected Vector2 GroundNormal = Vector2.up;
     //protected float m_groundAngle;
 
     public bool IsGrounded { get; private set; }
@@ -53,10 +47,10 @@ public class PhysicsObject : MonoBehaviour
     protected RaycastHit2D[] HitBuffer = new RaycastHit2D[16];
     protected List<RaycastHit2D> HitBufferList = new List<RaycastHit2D>(16);
 
-    protected Dictionary<Collider2D, IPhysicsObjectCollisionListener[]> PreviouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsObjectCollisionListener[]>();
-    protected Dictionary<Collider2D, IPhysicsObjectCollisionListener[]> CollidingGameObjects = new Dictionary<Collider2D, IPhysicsObjectCollisionListener[]>();
+    protected Dictionary<Collider2D, IPhysicsCollision2DListener[]> PreviouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsCollision2DListener[]>();
+    protected Dictionary<Collider2D, IPhysicsCollision2DListener[]> CollidingGameObjects = new Dictionary<Collider2D, IPhysicsCollision2DListener[]>();
 
-    private IPhysicsObjectCollisionListener[] _collisionListeners;
+    private IPhysicsCollision2DListener[] _collisionListeners;
 
     protected Rigidbody2D Rigidbody2D;
 
@@ -73,7 +67,7 @@ public class PhysicsObject : MonoBehaviour
 
         IsGrounded = false;
 
-        _collisionListeners = GetComponentsInChildren<IPhysicsObjectCollisionListener>();
+        _collisionListeners = GetComponentsInChildren<IPhysicsCollision2DListener>();
 
         if (!Collider)
         {
@@ -129,7 +123,7 @@ public class PhysicsObject : MonoBehaviour
         Vector2 movementAlongGround = new Vector2(GroundNormal.y, -GroundNormal.x);
 
         // Backup the list of gameObjects that used to collide and clear the original
-        PreviouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsObjectCollisionListener[]>(CollidingGameObjects);
+        PreviouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsCollision2DListener[]>(CollidingGameObjects);
         CollidingGameObjects.Clear();
 
         // The X movement is executed first, then the Y movement is executed. This allows a better control of each type of movement and helps to avoid
@@ -189,7 +183,7 @@ public class PhysicsObject : MonoBehaviour
                 CheckCollisionEnter(hit);
 
                 // Check if the object is grounded
-                if (currentNormal.y > _minGroundNormalY)
+                if (currentNormal.y >= _minGroundNormalY)
                 {
                     IsGrounded = true;
 
@@ -244,7 +238,7 @@ public class PhysicsObject : MonoBehaviour
 
     protected void CheckCollisionEnter(RaycastHit2D hit)
     {
-        IPhysicsObjectCollisionListener[] collisionListeners;
+        IPhysicsCollision2DListener[] collisionListeners;
         
         // If the hitted gameObject wasn't previously hitted
         if (!PreviouslyCollidingGameObject.ContainsKey(hit.collider))
@@ -263,13 +257,13 @@ public class PhysicsObject : MonoBehaviour
                                                                                  hit.point,
                                                                                  hit.normal);
 
-            foreach (IPhysicsObjectCollisionListener collisionListener in _collisionListeners)
+            foreach (IPhysicsCollision2DListener collisionListener in _collisionListeners)
             {
-                collisionListener.OnPhysicsObjectCollisionEnter(physicsObjectCollision2D);
+                collisionListener.OnPhysicsCollision2DEnter(physicsObjectCollision2D);
             }
 
             // Call OnPhysicsObjectCollisionEnter on all script, of the hitted gameobject, that implement the interface
-            collisionListeners = hit.collider.GetComponents<IPhysicsObjectCollisionListener>();
+            collisionListeners = hit.collider.GetComponents<IPhysicsCollision2DListener>();
 
             if (collisionListeners.Length > 0)
             {
@@ -286,9 +280,9 @@ public class PhysicsObject : MonoBehaviour
                                                                   hit.point,
                                                                   -hit.normal);
 
-                foreach (IPhysicsObjectCollisionListener listener in collisionListeners)
+                foreach (IPhysicsCollision2DListener listener in collisionListeners)
                 {
-                    listener.OnPhysicsObjectCollisionEnter(physicsObjectCollision2D);
+                    listener.OnPhysicsCollision2DEnter(physicsObjectCollision2D);
                 }
             }
         }
@@ -307,7 +301,7 @@ public class PhysicsObject : MonoBehaviour
     protected void CheckCollisionExit()
     {
         // If a gameObject isn't hitted anymore
-        foreach (KeyValuePair<Collider2D, IPhysicsObjectCollisionListener[]> entry in PreviouslyCollidingGameObject)
+        foreach (KeyValuePair<Collider2D, IPhysicsCollision2DListener[]> entry in PreviouslyCollidingGameObject)
         {
             // Call OnPhysicsObjectCollisionExit on all script, of the hitted gameobject, that implement the interface
             if (entry.Key && !CollidingGameObjects.ContainsKey(entry.Key))
@@ -322,9 +316,9 @@ public class PhysicsObject : MonoBehaviour
                                                                                      Vector2.zero,
                                                                                      true);
 
-                foreach (IPhysicsObjectCollisionListener collisionListener in _collisionListeners)
+                foreach (IPhysicsCollision2DListener collisionListener in _collisionListeners)
                 {
-                    collisionListener.OnPhysicsObjectCollisionExit(physicsObjectCollision2D);
+                    collisionListener.OnPhysicsCollision2DExit(physicsObjectCollision2D);
                 }
 
                 physicsObjectCollision2D = new PhysicsCollision2D(Collider,
@@ -336,9 +330,9 @@ public class PhysicsObject : MonoBehaviour
                                                                   Vector2.zero,
                                                                   true);
 
-                foreach (IPhysicsObjectCollisionListener listener in entry.Value)
+                foreach (IPhysicsCollision2DListener listener in entry.Value)
                 {
-                    listener.OnPhysicsObjectCollisionExit(physicsObjectCollision2D);
+                    listener.OnPhysicsCollision2DExit(physicsObjectCollision2D);
                 }
             }
         }
@@ -362,11 +356,11 @@ public class PhysicsObject : MonoBehaviour
     // Reset all movement and related variable when the script is enable
     protected virtual void OnEnable()
     {
-        GroundNormal = Vector2.zero;
+        GroundNormal = Vector2.up;
         IsGrounded = false;
         Velocity = Vector2.zero;
         TargetHorizontalVelocity = .0f;
-
+        
         PreviouslyCollidingGameObject.Clear();
         CollidingGameObjects.Clear();
     }

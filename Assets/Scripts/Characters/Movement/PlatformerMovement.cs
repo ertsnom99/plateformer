@@ -39,9 +39,9 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     private bool _triggeredJump = false;
     private bool _jumpCanceled = false;
-    
+
     private float _lastHorizontalVelocityDirection;
-    
+
     public bool IsKnockedBack { get; private set; }
 
     [Header("Airborne jump")]
@@ -56,6 +56,8 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     [Header("Slide of wall")]
     [SerializeField]
     private bool _canSlideOfWall = true;
+    [SerializeField]
+    private LayerMask _wallLayers;
     [SerializeField]
     private bool _canSlideGoingUp = false;
     [SerializeField]
@@ -104,12 +106,6 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     public bool IsDashing { get; private set; }
 
-    [Header("Animation")]
-    [SerializeField]
-    private bool _flipSprite = false;
-    // MAYBE: Flags used to delay animations
-    //private bool _wasDashAnimeDelayed = false;
-
     [Header("Sound")]
     [SerializeField]
     private AudioClip _jumpSound;
@@ -120,6 +116,9 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     private Inputs _emptyInputs = new Inputs();
     private Inputs _currentInputs;
+
+    // MAYBE: Flags used to delay animations
+    //private bool _wasDashAnimeDelayed = false;
 
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
@@ -214,7 +213,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
         // Animate before resetting flags, since some of those flags are necessary for Animate()
         Animate();
-        
+
         // Reset m_hitWall flag for next check
         _hitWall = false;
 
@@ -222,7 +221,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         _triggeredJump = false;
         _triggeredAirborneJump = false;
         _triggeredDash = false;
-        
+
         DebugMovement();
     }
 
@@ -235,14 +234,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
             if (_lastHorizontalVelocityDirection == .0f)
             {
-                if (_spriteRenderer.flipX)
-                {
-                    lineDirection = _flipSprite ? 1 : -1;
-                }
-                else
-                {
-                    lineDirection = _flipSprite ? -1 : 1;
-                }
+                lineDirection = _spriteRenderer.flipX ? -1 : 1;
             }
             else
             {
@@ -256,7 +248,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     protected override void OnColliderHitCheck(RaycastHit2D hit)
     {
         // Set flag to tell that the character hit a wall
-        if (hit.normal.x != .0f && hit.normal.y == .0f)
+        if (IsLayerInWallLayers(hit.collider.gameObject.layer) && hit.normal.x != .0f && hit.normal.y == .0f)
         {
             _hitWall = true;
 
@@ -267,7 +259,18 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
             }
         }
     }
-    
+
+    private bool IsLayerInWallLayers(int layer)
+    {
+        // See C# - Bitwise Operators (https://www.tutorialspoint.com/csharp/csharp_bitwise_operators.htm)
+        // From Unity forum (https://forum.unity.com/threads/howto-if-layermask-contains-layer.30162/):
+        /*What this does is shift the bit that you want to test into the rightmost bit (ie, the digit that
+         * represents the value of 1). The bitwise-and operator then sets all bits except this one to zero.
+         * The value in the integer is then the value of the specific bit you want to test - it will be zero
+         * if false and one if true.*/
+        return ((_wallLayers >> layer) & 1) == 1;
+    }
+
     private void UpdateWallSlide(Vector2 movementDirection)
     {
         // Flag to check later if the player started to slide of a wall
@@ -304,7 +307,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
                 }
             }
         }
-        
+
         // If the player started to slide of a new wall
         if (!wasSliding && IsSlidingOfWall)
         {
@@ -316,7 +319,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
                 EndDashWindow();
                 IsDashing = false;
             }
-            
+
             if (InWallJumpWindow())
             {
                 EndWallJumpWindow();
@@ -343,32 +346,16 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         RaycastHit2D[] results = new RaycastHit2D[1];
         Physics2D.Raycast(slideRaycastStart, _lastHorizontalVelocityDirection * Vector2.right, ContactFilter, results, _slideRaycastDistance);
 
-        return results[0].collider;
+        return results[0].collider && IsLayerInWallLayers(results[0].collider.gameObject.layer);
     }
 
     private void Animate()
     {
-        // Flip the sprite if necessary
-        bool flipSprite = false;
-        
-        if (!IsSlidingOfWall && !HorizontalControlDelayed())
-        {
-            flipSprite = (_spriteRenderer.flipX == _flipSprite ? (_lastHorizontalVelocityDirection < .0f) : (_lastHorizontalVelocityDirection > .0f));
-        }
-        else if (IsSlidingOfWall || IsKnockedBack)
-        {
-            flipSprite = (_spriteRenderer.flipX == _flipSprite ? (_lastHorizontalVelocityDirection > .0f) : (_lastHorizontalVelocityDirection < .0f));
-        }
-        
-        if (flipSprite)
-        {
-            _spriteRenderer.flipX = !_spriteRenderer.flipX;
-        }
+        AdjustSpriteOrientation();
 
         // Update animator parameters
         _animator.SetFloat(XVelocityParamHashId, Mathf.Abs(Velocity.x) / MaxSpeed);
         _animator.SetFloat(YVelocityParamHashId, Velocity.y);
-        // TODO: Check if parameters needs delay
         _animator.SetBool(IsGroundedParamNameString, IsGrounded);
         _animator.SetBool(IsSlidingOfWallParamHashId, IsSlidingOfWall/* && m_wasDashAnimeDelayed*/);
         _animator.SetBool(IsDashingParamHashId, IsDashing);
@@ -395,6 +382,26 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         }*/
     }
 
+    private void AdjustSpriteOrientation()
+    {
+        // Flip the sprite if necessary
+        bool flipSprite = false;
+
+        if (!IsSlidingOfWall && !HorizontalControlDelayed())
+        {
+            flipSprite = (_spriteRenderer.flipX == _lastHorizontalVelocityDirection > .0f);
+        }
+        else if (IsSlidingOfWall || IsKnockedBack)
+        {
+            flipSprite = (_spriteRenderer.flipX == _lastHorizontalVelocityDirection < .0f);
+        }
+
+        if (flipSprite)
+        {
+            _spriteRenderer.flipX = !_spriteRenderer.flipX;
+        }
+    }
+
     public void SetInputs(Inputs inputs)
     {
         if (!IsKnockedBack)
@@ -402,7 +409,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
             _currentInputs = inputs;
         }
     }
-    
+
     protected override void Update()
     {
         ComputeVelocity();
@@ -448,6 +455,13 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         }
     }
 
+    public void ChangeFacingDirection(Vector2 facingDirection)
+    {
+        _lastHorizontalVelocityDirection = facingDirection.x;
+
+        AdjustSpriteOrientation();
+    }
+
     // Used to push away. Used in, for exemple, explosion 
     public void KnockBack(Vector2 knockBackVelocity, float knockBackDelay)
     {
@@ -483,7 +497,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         AddJumpImpulse(knockBackVelocity.y);
 
         IsKnockedBack = true;
-
+        
         // Start delay for controls
         _horizontalControlDelayCoroutine = DelayHorizontalControl(knockBackDelay);
         StartCoroutine(_horizontalControlDelayCoroutine);

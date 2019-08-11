@@ -32,7 +32,7 @@ public class Shakable : MonoBehaviour
         if (_remainingDuration > 0)
         {
             float shakeProgress = _remainingDuration / _duration;
-
+            
             transform.localPosition = _initPos + new Vector3(_direction.x, _direction.y, 0);
 
             if (_useRotation)

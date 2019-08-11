@@ -1,5 +1,11 @@
 ﻿using UnityEngine;
 
+public interface IPhysicsCollision2DListener
+{
+    void OnPhysicsCollision2DEnter(PhysicsCollision2D collision);
+    void OnPhysicsCollision2DExit(PhysicsCollision2D collision);
+}
+
 public class PhysicsCollision2D
 {
     public PhysicsCollision2D(Collider2D collider, Collider2D otherCollider, Rigidbody2D rigidbody, Rigidbody2D otherRigidbody, Transform transform, GameObject gameObject, Vector2 relativeVelocity, bool enabled, Vector2? contactPoint = null, Vector2? normal = null)

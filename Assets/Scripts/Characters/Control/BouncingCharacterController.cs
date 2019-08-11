@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using Pathfinding;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -65,6 +66,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
 
         // Get all component, correctly set them up and check that nothing is missing
         _movementScript = GetComponent<PlatformerMovement>();
+        Seeker = GetComponent<Seeker>();
 
         if (!_movementCollider)
         {
@@ -89,8 +91,10 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
             }
             else
             {
-                _bouncingFormController.Subscribe(this);
+                _bouncingFormController.SetInfoUI(InfoUI);
                 _bouncingFormController.SetPossessionVirtualCamera(_virtualCameraBounceForm);
+
+                _bouncingFormController.Subscribe(this);
             }
 
             if (!_possessableBouncingPhysicsObject)
@@ -142,6 +146,8 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
             // Get the inputs used during this frame
             inputs = FetchInputs();
         }
+        
+        UpdateDisplayInfo(inputs);
 
         // Check if charge started
         if (_movementScript.IsGrounded && !_isCharging && inputs.HeldPower/* && HasEnoughSpaceForBounceForm()*/)
@@ -192,25 +198,26 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
         if (UseKeyboard)
         {
             // Inputs from the keyboard
-            inputs.Vertical = Input.GetAxisRaw("Vertical");
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
+            inputs.Vertical = Input.GetAxisRaw("Vertical");
             inputs.Jump = Input.GetButtonDown("Jump");
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
+            inputs.Possess = Input.GetButtonDown("Possess");
+            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
             inputs.HeldPower = Input.GetButton("Power");
             inputs.ReleasePower = Input.GetButtonUp("Power");
-            inputs.Possess = Input.GetButtonDown("Possess");
         }
         else
         {
-            // TODO: Create inputs specific to the controler
             // Inputs from the controler
-            inputs.Vertical = Input.GetAxisRaw("Vertical");
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
+            inputs.Vertical = Input.GetAxisRaw("Vertical");
             inputs.Jump = Input.GetButtonDown("Jump");
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
+            inputs.Possess = Input.GetButtonDown("Possess");
+            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
             inputs.HeldPower = Input.GetButton("Power");
             inputs.ReleasePower = Input.GetButtonUp("Power");
-            inputs.Possess = Input.GetButtonDown("Possess");
         }
 
         return inputs;
@@ -240,7 +247,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
         return inputs;
     }
 
-    public override bool Possess(Possession possessingScript)
+    public override bool Possess(PossessionPower possessingScript)
     {
         if (IsPossessable && !IsPossessed)
         {
@@ -259,20 +266,20 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
                 AudioSource.PlayOneShot(OnPossessSound);
 
                 _bouncingFormController.Possess(possessingScript);
+
+                OnPossess(possessingScript);
             }
         }
 
         return IsPossessed;
     }
 
-    public override bool Unpossess(bool centerColliderToPos = false, Vector2? forceRespawnPos = null)
+    public override GameObject Unpossess(bool centerColliderToPos = false, Vector2? forceRespawnPos = null)
     {
-        if (IsPossessed && IsPossessed)
+        GameObject spawnedCharacter = null;
+
+        if (IsPossessable && IsPossessed)
         {
-            IsPossessed = false;
-
-            Animator.SetLayerWeight(PossessedModeAnimationLayerIndex, .0f);
-
             if (SpriteRenderer.enabled)
             {
                 if (PossessingScript)
@@ -281,7 +288,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
                     Vector2 respawnPos;
                     Vector2 respawnFacingDirection;
 
-                    if ((SpriteRenderer.flipX && !FlipPlayerSpawn) || (!SpriteRenderer.flipX && FlipPlayerSpawn))
+                    if (SpriteRenderer.flipX)
                     {
                         respawnPos = LeftPlayerSpawn.transform.position;
                         respawnFacingDirection = Vector2.left;
@@ -294,6 +301,8 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
 
                     // Tell the possession script, that took possession of this AIController, that isn't in control anymore
                     PossessingScript.ReleasePossession(respawnPos, respawnFacingDirection, centerColliderToPos);
+                    
+                    spawnedCharacter = PossessingScript.gameObject;
 
                     PossessingScript = null;
                 }
@@ -302,10 +311,18 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
                 AudioSource.PlayOneShot(OnUnpossessSound);
 
                 _bouncingFormController.Unpossess();
+
+                OnUnpossess();
             }
+
+            InfoUI.SetActive(false);
+
+            IsPossessed = false;
+
+            Animator.SetLayerWeight(PossessedModeAnimationLayerIndex, .0f);
         }
 
-        return IsPossessed;
+        return spawnedCharacter;
     }
 
     /*void OnDrawGizmos()
@@ -528,12 +545,12 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
     }
 
     // Methods of the IBouncingFormControllerSubscriber interface
-    public void NotifyPossessed(Possession possessingScript)
+    public void NotifyPossessed(BouncingFormCharacterController possessedScript, PossessionPower possessingScript)
     {
         Possess(possessingScript);
     }
 
-    public void NotifyUnpossessed()
+    public void NotifyUnpossessed(BouncingFormCharacterController possessedScript)
     {
         Unpossess();
     }

@@ -190,6 +190,7 @@ MonoBehaviour:
     Dash: 0
     ReleaseDash: 0
     Possess: 0
+    DisplayInfo: 0
     Power: 0
     HeldPower: 0
     ReleasePower: 0
@@ -240,7 +241,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2724,7 +2725,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &235854584
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2837,9 +2838,9 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'To airborne jump:
 
-    Space Bar While in the Air (with keyboard)
+    A While in the Air (with controller)
 
-    A While in the Air (with controller)'
+    Space Bar While in the Air (with keyboard)'
 --- !u!222 &243873109
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3781,9 +3782,9 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'To dash (has a cooldown):
 
-    Left Shift (with keyboard)
+    X (with controller)
 
-    X (with controller)'
+    Left Shift (with keyboard)'
 --- !u!222 &542069401
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3935,6 +3936,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3913048148771940383, guid: c799adfbbc0ee8c43a0aa56fdaf452ed,
+        type: 3}
+      propertyPath: _spawnLocation
+      value: 
+      objectReference: {fileID: 177916365}
     - target: {fileID: 3913048148771940380, guid: c799adfbbc0ee8c43a0aa56fdaf452ed,
         type: 3}
       propertyPath: m_Offset.y
@@ -3945,11 +3951,6 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 3913048148771940383, guid: c799adfbbc0ee8c43a0aa56fdaf452ed,
-        type: 3}
-      propertyPath: _spawnLocation
-      value: 
-      objectReference: {fileID: 177916365}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c799adfbbc0ee8c43a0aa56fdaf452ed, type: 3}
 --- !u!4 &607875992 stripped
@@ -4030,9 +4031,9 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'To move:
 
-    A/D or Left/Right (with keyboard)
+    Left Stick (with controller)
 
-    Left Stick (with controller)'
+    A/D or Left/Right (with keyboard)'
 --- !u!222 &631462437
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4114,6 +4115,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3913048148771940383, guid: c799adfbbc0ee8c43a0aa56fdaf452ed,
+        type: 3}
+      propertyPath: _spawnLocation
+      value: 
+      objectReference: {fileID: 24360330}
     - target: {fileID: 3913048148771940380, guid: c799adfbbc0ee8c43a0aa56fdaf452ed,
         type: 3}
       propertyPath: m_Offset.y
@@ -4124,11 +4130,6 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 3913048148771940383, guid: c799adfbbc0ee8c43a0aa56fdaf452ed,
-        type: 3}
-      propertyPath: _spawnLocation
-      value: 
-      objectReference: {fileID: 24360330}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c799adfbbc0ee8c43a0aa56fdaf452ed, type: 3}
 --- !u!4 &673239491 stripped
@@ -13526,6 +13527,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3913048148771940383, guid: c799adfbbc0ee8c43a0aa56fdaf452ed,
+        type: 3}
+      propertyPath: _spawnLocation
+      value: 
+      objectReference: {fileID: 202238552}
     - target: {fileID: 3913048148771940380, guid: c799adfbbc0ee8c43a0aa56fdaf452ed,
         type: 3}
       propertyPath: m_Offset.y
@@ -13536,11 +13542,6 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 3913048148771940383, guid: c799adfbbc0ee8c43a0aa56fdaf452ed,
-        type: 3}
-      propertyPath: _spawnLocation
-      value: 
-      objectReference: {fileID: 202238552}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c799adfbbc0ee8c43a0aa56fdaf452ed, type: 3}
 --- !u!4 &873699627 stripped
@@ -14114,9 +14115,9 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'While sliding, you can wall jump with:
 
-    Space Bar (with keyboard)
+    A (with controller)
 
-    A (with controller)'
+    Space Bar (with keyboard)'
 --- !u!222 &1100082885
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14778,9 +14779,9 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'To jump:
 
-    Space Bar (with keyboard)
-
     A (with controller)
+
+    Space Bar (with keyboard)
 
 
     The quicker the jump button is released, the smaller the jumps will be'
@@ -15084,6 +15085,21 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 82653445126395802, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197806341230259179, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: _virtualCamera
+      value: 
+      objectReference: {fileID: 546428051}
+    - target: {fileID: 212392765523624570, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 114253259727586034, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
         type: 3}
       propertyPath: m_fallModifier
@@ -15118,21 +15134,6 @@ PrefabInstance:
         type: 3}
       propertyPath: MaxFallVelocity
       value: 44
-      objectReference: {fileID: 0}
-    - target: {fileID: 82653445126395802, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
-        type: 3}
-      propertyPath: m_Volume
-      value: 0.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 8197806341230259179, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
-        type: 3}
-      propertyPath: _virtualCamera
-      value: 
-      objectReference: {fileID: 546428051}
-    - target: {fileID: 212392765523624570, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
-        type: 3}
-      propertyPath: m_FlipX
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 3}
@@ -15985,7 +15986,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 145a735b28c968741be3ac4fe7b48ca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _virtualCameraManager: {fileID: 358475823}
   _forcedControls:
     Vertical: 0
     Horizontal: 1
@@ -15994,6 +15994,7 @@ MonoBehaviour:
     Dash: 0
     ReleaseDash: 0
     Possess: 0
+    DisplayInfo: 0
     Power: 0
     HeldPower: 0
     ReleasePower: 0
@@ -16461,6 +16462,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3913048148771940383, guid: c799adfbbc0ee8c43a0aa56fdaf452ed,
+        type: 3}
+      propertyPath: _spawnLocation
+      value: 
+      objectReference: {fileID: 465900626}
     - target: {fileID: 3913048148771940380, guid: c799adfbbc0ee8c43a0aa56fdaf452ed,
         type: 3}
       propertyPath: m_Offset.y
@@ -16471,11 +16477,6 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 3913048148771940383, guid: c799adfbbc0ee8c43a0aa56fdaf452ed,
-        type: 3}
-      propertyPath: _spawnLocation
-      value: 
-      objectReference: {fileID: 465900626}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c799adfbbc0ee8c43a0aa56fdaf452ed, type: 3}
 --- !u!4 &2006851702 stripped

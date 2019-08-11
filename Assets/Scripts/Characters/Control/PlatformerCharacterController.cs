@@ -38,8 +38,7 @@ public struct PathLink
 
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(PlatformerMovement))]
-[RequireComponent(typeof(Explodable))]
-//[RequireComponent(typeof(Seeker))]
+[RequireComponent(typeof(ExplodableCharacter))]
 
 public class PlatformerCharacterController : PossessableCharacterController, IProximityExplodableSubscriber
 {
@@ -60,7 +59,7 @@ public class PlatformerCharacterController : PossessableCharacterController, IPr
     private float _horizontalInputForVerticalMovement = .0f;*/
 
     private PlatformerMovement _movementScript;
-    private Explodable _explodableScript;
+    private ExplodableCharacter _explodableCharacterScript;
 
     /*private const float _jumpHorizontalMovementModifier = 1.2f;
     private const float _dropDownHorizontalMovementModifier = 1.0f;
@@ -72,9 +71,9 @@ public class PlatformerCharacterController : PossessableCharacterController, IPr
         base.Awake();
 
         _movementScript = GetComponent<PlatformerMovement>();
-        _explodableScript = GetComponent<Explodable>();
+        _explodableCharacterScript = GetComponent<ExplodableCharacter>();
 
-        _explodableScript.Subscribe(this);
+        _explodableCharacterScript.Subscribe(this);
     }
 
     /*// Called when a new path is created
@@ -128,7 +127,6 @@ public class PlatformerCharacterController : PossessableCharacterController, IPr
                 // Check if the PathLinkType pass from a drop down to a jump
                 if (previousPathLink.Type == PathLinkType.DropDown)
                 {
-                    // TODO: Addapt calculation
                     _horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
                     _delayedMovementProgressCheck = true;
                 }
@@ -175,6 +173,7 @@ public class PlatformerCharacterController : PossessableCharacterController, IPr
             inputs = FetchInputs();
         }
 
+        UpdateDisplayInfo(inputs);
         UpdateMovement(inputs);
         UpdateExplosion(inputs);
         UpdatePossession(inputs);
@@ -190,18 +189,19 @@ public class PlatformerCharacterController : PossessableCharacterController, IPr
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
             inputs.Jump = Input.GetButtonDown("Jump");
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
-            inputs.Power = Input.GetButton("Power");
             inputs.Possess = Input.GetButtonDown("Possess");
+            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
+            inputs.Power = Input.GetButton("Power");
         }
         else
         {
-            // TODO: Create inputs specific to the controler
             // Inputs from the controler
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
             inputs.Jump = Input.GetButtonDown("Jump");
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
-            inputs.Power = Input.GetButton("Power");
             inputs.Possess = Input.GetButtonDown("Possess");
+            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
+            inputs.Power = Input.GetButton("Power");
         }
 
         return inputs;
@@ -369,9 +369,9 @@ public class PlatformerCharacterController : PossessableCharacterController, IPr
 
     private void UpdateExplosion(Inputs inputs)
     {
-        if (inputs.Power && !_explodableScript.CountdownStarted)
+        if (inputs.Power && !_explodableCharacterScript.CountdownStarted)
         {
-            _explodableScript.StartCountdown();
+            _explodableCharacterScript.StartCountdown();
         }
     }
 
@@ -391,7 +391,9 @@ public class PlatformerCharacterController : PossessableCharacterController, IPr
 
     public void NotifyCountdownUpdated(GameObject explodableGameObject, float timeRemaining) { }
 
-    public void NotifyCountdownFinished(GameObject explodableGameObject)
+    public void NotifyCountdownFinished(GameObject explodableGameObject) { }
+
+    public void NotifyExploded(GameObject explodableGameObject)
     {
         Unpossess(false, transform.position);
     }

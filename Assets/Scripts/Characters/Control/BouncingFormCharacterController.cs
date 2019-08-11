@@ -1,10 +1,10 @@
-﻿using Cinemachine;
+﻿using Pathfinding;
 using UnityEngine;
 
 public interface IBouncingFormControllerSubscriber
 {
-    void NotifyPossessed(Possession possessingScript);
-    void NotifyUnpossessed();
+    void NotifyPossessed(BouncingFormCharacterController possessedScript, PossessionPower possessingScript);
+    void NotifyUnpossessed(BouncingFormCharacterController possessedScript);
     void NotifyCanceledBounce();
 }
 
@@ -13,8 +13,6 @@ public interface IBouncingFormControllerSubscriber
 
 public class BouncingFormCharacterController : SubscribablePossessableCharacterController<IBouncingFormControllerSubscriber>
 {
-    private Possession _possessingScript;
-
     private BouncingPhysicsObject _bouncingPhysics;
 
     protected override void Awake()
@@ -25,10 +23,10 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
         LeftPlayerSpawnContactFilter.useTriggers = false;
 
         IsPossessed = false;
-
-        SpriteRenderer = GetComponent<SpriteRenderer>();
+        
         Animator = GetComponent<Animator>();
         AudioSource = GetComponent<AudioSource>();
+        Seeker = GetComponent<Seeker>();
 
         PossessedModeAnimationLayerIndex = Animator.GetLayerIndex(PossessedModeAnimationLayerName);
         Animator.SetLayerWeight(PossessedModeAnimationLayerIndex, .0f);
@@ -58,7 +56,8 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
                 subscriber.NotifyCanceledBounce();
             }
         }
-        
+
+        UpdateDisplayInfo(inputs);
         UpdatePossession(inputs);
     }
 
@@ -71,13 +70,14 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
             // Inputs from the keyboard
             inputs.ReleasePower = Input.GetButtonUp("Power");
             inputs.Possess = Input.GetButtonDown("Possess");
+            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
         }
         else
         {
-            // TODO: Create inputs specific to the controler
             // Inputs from the controler
             inputs.ReleasePower = Input.GetButtonUp("Power");
             inputs.Possess = Input.GetButtonDown("Possess");
+            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
         }
 
         return inputs;
@@ -89,24 +89,17 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
     {
         return NoControlInputs;
     }
-
-    // Returns if the area to respawn the player is free. The area checked is based on the facing direction of the character
+    
     protected override bool HasEnoughSpaceToUnpossess()
     {
         return LeftPlayerSpawn.OverlapCollider(LeftPlayerSpawnContactFilter, OverlapResults) == 0;
     }
-
-    public void SetPossessionVirtualCamera(CinemachineVirtualCamera possessionVirtualCamera)
-    {
-        PossessionVirtualCamera = possessionVirtualCamera;
-    }
-
-    // Methods of the IPossessable interface
-    public override bool Possess(Possession possessingScript)
+    
+    public override bool Possess(PossessionPower possessingScript)
     {
         if (IsPossessable && !IsPossessed)
         {
-            _possessingScript = possessingScript;
+            PossessingScript = possessingScript;
 
             IsPossessed = true;
 
@@ -122,25 +115,25 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
 
                 foreach (IBouncingFormControllerSubscriber subscriber in Subscribers)
                 {
-                    subscriber.NotifyPossessed(possessingScript);
+                    subscriber.NotifyPossessed(this, possessingScript);
                 }
+
+                OnPossess(possessingScript);
             }
         }
 
         return IsPossessed;
     }
 
-    public override bool Unpossess(bool centerColliderToPos = false, Vector2? forceRespawnPos = null)
+    public override GameObject Unpossess(bool centerColliderToPos = false, Vector2? forceRespawnPos = null)
     {
-        if (IsPossessed && IsPossessed)
+        GameObject spawnedCharacter = null;
+
+        if (IsPossessable && IsPossessed)
         {
-            IsPossessed = false;
-
-            Animator.SetLayerWeight(PossessedModeAnimationLayerIndex, .0f);
-
             if (gameObject.activeSelf)
             {
-                if (_possessingScript)
+                if (PossessingScript)
                 {
                     // Select the correct player spawn and respawn facing direction
                     Vector2 respawnPos = LeftPlayerSpawn.transform.position;
@@ -156,9 +149,11 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
                      }
 
                     // Tell the possession script, that took possession of this AIController, that isn't in control anymore
-                    _possessingScript.ReleasePossession(respawnPos, respawnFacingDirection, true);
-                    
-                    _possessingScript = null;
+                    PossessingScript.ReleasePossession(respawnPos, respawnFacingDirection, true);
+
+                    spawnedCharacter = PossessingScript.gameObject;
+
+                    PossessingScript = null;
                 }
 
                 AudioSource.pitch = Random.Range(.9f, 1.0f);
@@ -166,12 +161,20 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
 
                 foreach (IBouncingFormControllerSubscriber subscriber in Subscribers)
                 {
-                    subscriber.NotifyUnpossessed();
+                    subscriber.NotifyUnpossessed(this);
                 }
+
+                OnUnpossess();
             }
+
+            InfoUI.SetActive(false);
+
+            IsPossessed = false;
+
+            Animator.SetLayerWeight(PossessedModeAnimationLayerIndex, .0f);
         }
 
-        return IsPossessed;
+        return spawnedCharacter;
     }
 
     private void OnEnable()

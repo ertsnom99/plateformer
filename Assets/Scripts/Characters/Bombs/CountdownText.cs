@@ -35,4 +35,6 @@ public class CountdownText : MonoBehaviour, IProximityExplodableSubscriber
     }
 
     public void NotifyCountdownFinished(GameObject explodableGameObject) { }
+
+    public void NotifyExploded(GameObject explodableGameObject) { }
 }

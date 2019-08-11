@@ -7,7 +7,7 @@ public class DevGameManager : GameManager, IHealthSubscriber
 
     [Header("Enemies")]
     [SerializeField]
-    private EnemieRespawner _enemieRespawner;
+    private EnemySpawnManager _enemySpawnManager;
 
     [Header("End Game")]
     [SerializeField]
@@ -53,9 +53,9 @@ public class DevGameManager : GameManager, IHealthSubscriber
                 enemie.GetComponent<PossessableCharacterController>().EnableControl(false);
             }
 
-            if (_enemieRespawner)
+            if (_enemySpawnManager)
             {
-                _enemieRespawner.EnableEnemieSpawn(false);
+                _enemySpawnManager.EnableEnemieSpawn(false);
             }
 
             // Disable player

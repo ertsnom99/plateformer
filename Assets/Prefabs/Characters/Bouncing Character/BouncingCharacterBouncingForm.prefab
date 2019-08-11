@@ -93,9 +93,10 @@ GameObject:
   - component: {fileID: 8337540354551453392}
   - component: {fileID: 3023590716689418016}
   - component: {fileID: 2975785866116692636}
+  - component: {fileID: 914704710232293002}
   - component: {fileID: 3057897618992837933}
   m_Layer: 12
-  m_Name: BouncingAIBouncingForm
+  m_Name: BouncingCharacterBouncingForm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +153,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -60248483
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a8795ca0f4ea8d845bc799e6c4d254a0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -353,7 +354,7 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -60248483
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: -1
   m_Time: 0.12
   m_Parameters:
@@ -435,12 +436,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UseKeyboard: 0
   _isPossessable: 1
+  InfoUI: {fileID: 0}
   PossessionVirtualCamera: {fileID: 0}
   OnPossessSound: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922, type: 3}
   OnUnpossessSound: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a, type: 3}
   LeftPlayerSpawn: {fileID: 8589823316589347862}
   RightPlayerSpawn: {fileID: 0}
-  FlipPlayerSpawn: 0
+  Target: {fileID: 0}
+  _distanceToDetect: 10
+  StopDistanceToTarget: 0.4
+  MinDistanceForTargetReachable: 4
+  UpdateRate: 5
+  MinDistanceToChangeWaypoint: 0.5
+  StopWhenUnreachable: 1
+  _drawDistanceToDetect: 0
+  _logPathFailedError: 0
+--- !u!114 &914704710232293002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8337540354551453393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
 --- !u!114 &3057897618992837933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,6 +495,7 @@ MonoBehaviour:
   _updateContactFilterLayerMask: 0
   ShellRadius: 0.05
   GravityModifier: 0
+  MaxFallVelocity: 44
   FallModifier: 1
   _minGroundNormalY: 0.4
   DebugVelocity: 0
@@ -466,7 +505,6 @@ MonoBehaviour:
   _bounceHasStopCondition: 1
   _freezeWhenStopConditionReached: 0
   _bounceSound: {fileID: 8300000, guid: 97753f95fd25e2c41a5ac7c8e9e5d310, type: 3}
-  _playBounceSoundOnLastBounce: 0
   _bounceStopCondition: 1
   _bounceDuration: 10
   _maxBounceCount: 40

@@ -32,6 +32,7 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         Fade.SetOpacity(true);
         
         PlayerController.EnableControl(false);
+        _playerMovement.SetInputs(_forcedControlsAtLevelStart);
 
         Fade.FadeIn(FadeDuration);
     }
@@ -40,6 +41,7 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     {
         if (Input.GetButtonDown("Quit"))
         {
+            Debug.Log("QUIT");
             Application.Quit();
         }
     }
@@ -50,7 +52,6 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         if (_enableControlAfterFadeIn)
         {
             PlayerController.EnableControl(true);
-            _playerMovement.SetInputs(_forcedControlsAtLevelStart);
         }
     }
 

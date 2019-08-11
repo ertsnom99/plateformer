@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(Seeker))]
 
 public abstract class PossessableCharacterController : CharacterController, IPossessable
 {
@@ -27,6 +28,9 @@ public abstract class PossessableCharacterController : CharacterController, IPos
     }
 
     public bool IsPossessed { get; protected set; }
+    
+    [SerializeField]
+    protected GameObject InfoUI;
 
     [SerializeField]
     protected CinemachineVirtualCamera PossessionVirtualCamera;
@@ -45,13 +49,10 @@ public abstract class PossessableCharacterController : CharacterController, IPos
 
     // Used to store result of overlap test
     protected Collider2D[] OverlapResults = new Collider2D[4];
-    
-    [SerializeField]
-    protected bool FlipPlayerSpawn = false;
 
-    protected Possession PossessingScript;
+    protected PossessionPower PossessingScript;
 
-    /*[Header("Target")]
+    [Header("AI Target")]
     [SerializeField]
     protected Transform Target;
     [SerializeField]
@@ -63,7 +64,7 @@ public abstract class PossessableCharacterController : CharacterController, IPos
 
     public bool HasDetectedTarget { get; private set; }
 
-    [Header("Update")]
+    [Header("AI Update")]
     [SerializeField]
     protected int UpdateRate = 5;
     [SerializeField]
@@ -73,12 +74,12 @@ public abstract class PossessableCharacterController : CharacterController, IPos
 
     [Header("Debug")]
     [SerializeField]
-    private bool _drawDistance = false;
+    private bool _drawDistanceToDetect = false;
     [SerializeField]
     private bool _logPathFailedError = false;
 
     protected Path Path;
-    protected int TargetWaypoint = 0;*/
+    protected int TargetWaypoint = 0;
 
     protected const string PossessedModeAnimationLayerName = "Possessed Mode";
     protected int PossessedModeAnimationLayerIndex;
@@ -86,7 +87,7 @@ public abstract class PossessableCharacterController : CharacterController, IPos
     protected SpriteRenderer SpriteRenderer;
     protected Animator Animator;
     protected AudioSource AudioSource;
-    //protected Seeker Seeker;
+    protected Seeker Seeker;
 
     protected virtual void Awake()
     {
@@ -100,12 +101,12 @@ public abstract class PossessableCharacterController : CharacterController, IPos
         RightPlayerSpawnContactFilter.useTriggers = false;
 
         IsPossessed = false;
-        //HasDetectedTarget = false;
+        HasDetectedTarget = false;
 
         SpriteRenderer = GetComponent<SpriteRenderer>();
         Animator = GetComponent<Animator>();
         AudioSource = GetComponent<AudioSource>();
-        //Seeker = GetComponent<Seeker>();
+        Seeker = GetComponent<Seeker>();
 
         PossessedModeAnimationLayerIndex = Animator.GetLayerIndex(PossessedModeAnimationLayerName);
         Animator.SetLayerWeight(PossessedModeAnimationLayerIndex, .0f);
@@ -132,11 +133,6 @@ public abstract class PossessableCharacterController : CharacterController, IPos
         {
             Debug.LogError("No virtual camera was set for " + GetType() + " script of " + gameObject.name + "!");
         }
-
-        /*if (Target)
-        {
-            StartCoroutine(UpdatePath());
-        }*/
     }
 
     protected virtual void Update()
@@ -154,21 +150,25 @@ public abstract class PossessableCharacterController : CharacterController, IPos
             }
         }
     }
-
-    protected virtual void OnUpdatePossessed()
-    {
-        // Get the inputs used during this frame
-        Inputs inputs = NoControlInputs;
-
-        if (ControlsEnabled())
-        {
-            inputs = FetchInputs();
-        }
-
-        UpdatePossession(inputs);
-    }
+    
+    protected abstract void OnUpdatePossessed();
 
     protected abstract Inputs FetchInputs();
+
+    protected virtual void UpdateDisplayInfo(Inputs inputs)
+    {
+        if (inputs.DisplayInfo)
+        {
+            if (InfoUI)
+            {
+                InfoUI.SetActive(!InfoUI.activeSelf);
+            }
+            else
+            {
+                Debug.LogError("No info UI was set for " + GetType() + " script of " + gameObject.name + "!");
+            }
+        }
+    }
 
     protected virtual void UpdatePossession(Inputs inputs)
     {
@@ -178,48 +178,10 @@ public abstract class PossessableCharacterController : CharacterController, IPos
         }
     }
 
-    protected virtual void OnUpdateNotPossessed()
-    {
-        /*if (Target && ControlsEnabled() && !IsPossessed && !HasDetectedTarget && (transform.position - Target.position).magnitude <= _distanceToDetect)
-        {
-            HasDetectedTarget = true;
-        }*/
-    }
-
-    /*private IEnumerator UpdatePath()
-    {
-        Seeker.StartPath(transform.position, Target.position);
-
-        yield return new WaitForSeconds(1.0f / UpdateRate);
-        StartCoroutine(UpdatePath());
-    }*/
-
-    // Called when a new path is created
-    /*public virtual void OnPathComplete(Path path)
-    {
-        // We got our path back
-        if (path.error)
-        {
-            if (_logPathFailedError)
-            {
-                Debug.LogError("The path failed for " + gameobject.name + "!");
-            }
-
-            return;
-        }
-    }*/
-
-    /*protected bool IsTargetReachable()
-    {
-        return (Target.position - Path.vectorPath[Path.vectorPath.Count - 1]).magnitude < MinDistanceForTargetReachable;
-    }*/
-
-    protected abstract Inputs CreateInputs();
-
     // Returns if the area to respawn the player is free. The area checked is based on the facing direction of the character
     protected virtual bool HasEnoughSpaceToUnpossess()
     {
-        if ((SpriteRenderer.flipX && !FlipPlayerSpawn) || (!SpriteRenderer.flipX && FlipPlayerSpawn))
+        if (SpriteRenderer.flipX)
         {
             return LeftPlayerSpawn.OverlapCollider(LeftPlayerSpawnContactFilter, OverlapResults) == 0;
         }
@@ -229,42 +191,120 @@ public abstract class PossessableCharacterController : CharacterController, IPos
         }
     }
 
-    /*public void SetTarget(Transform target)
+    protected virtual void OnUpdateNotPossessed()
     {
-        Target = target;
-    }*/
-    
-    public void EnablePossession(bool enable)
-    {
-        IsPossessable = enable;
+        if (Target && ControlsEnabled() && !IsPossessed && !HasDetectedTarget && (transform.position - Target.position).magnitude <= _distanceToDetect)
+        {
+            HasDetectedTarget = true;
+            StartCoroutine(UpdatePath());
+        }
     }
 
-    /*private void OnEnable()
+    private IEnumerator UpdatePath()
     {
-        Seeker.pathCallback += OnPathComplete;
-    }*/
+        Seeker.StartPath(transform.position, Target.position);
 
-    /*private void OnDisable()
-    {
-        Seeker.pathCallback -= OnPathComplete;
-    }*/
+        yield return new WaitForSeconds(1.0f / UpdateRate);
+        StartCoroutine(UpdatePath());
+    }
 
-    /*private void OnDrawGizmosSelected()
+    // Called when a new path is created
+    public virtual void OnPathComplete(Path path)
     {
-        if (_drawDistance)
+        // We got our path back
+        if (path.error)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawSphere(transform.position, _distanceToDetect);
+            if (_logPathFailedError)
+            {
+                Debug.LogError("The path failed for " + gameObject.name + "!");
+            }
+
+            return;
         }
-    }*/
+
+        Path = path;
+        TargetWaypoint = 0;
+    }
+
+    protected bool IsTargetReachable()
+    {
+        return Target != null &&
+               Path != null &&
+               (Target.position - Path.vectorPath[Path.vectorPath.Count - 1]).magnitude < MinDistanceForTargetReachable;
+    }
+
+    protected virtual void OnPossess(PossessionPower possessingScript) { }
+    
+    protected void TransferPossession(PossessableCharacterController controller)
+    {
+        Animator.SetLayerWeight(PossessedModeAnimationLayerIndex, .0f);
+        IsPossessed = false;
+
+        PossessingScript.TakePossession(controller);
+    }
+
+    protected virtual void OnUnpossess() { }
+
+    protected abstract Inputs CreateInputs();
 
     public void SetKeyboardUse(bool useKeyboard)
     {
         UseKeyboard = useKeyboard;
     }
 
+    public void EnablePossession(bool enable)
+    {
+        IsPossessable = enable;
+    }
+
+    public void SetInfoUI(GameObject infoUI)
+    {
+        InfoUI = infoUI;
+    }
+
+    public void SetPossessionVirtualCamera(CinemachineVirtualCamera possessionVirtualCamera)
+    {
+        PossessionVirtualCamera = possessionVirtualCamera;
+    }
+
+    public void SetTarget(Transform target)
+    {
+        if (target != Target)
+        {
+            StopAllCoroutines();
+            HasDetectedTarget = false;
+            Path = null;
+
+            Target = target;
+        }
+    }
+     // HACK: For prototype
+    public void SetDistanceToDetect(float distanceToDetect)
+    {
+        _distanceToDetect = distanceToDetect;
+    }
+
+    private void OnEnable()
+    {
+        Seeker.pathCallback += OnPathComplete;
+    }
+
+    private void OnDisable()
+    {
+        Seeker.pathCallback -= OnPathComplete;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (_drawDistanceToDetect)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(transform.position, _distanceToDetect);
+        }
+    }
+
     // Methods of the IPossessable interface
-    public virtual bool Possess(Possession possessingScript)
+    public virtual bool Possess(PossessionPower possessingScript)
     {
         if (IsPossessable && !IsPossessed)
         {
@@ -273,6 +313,7 @@ public abstract class PossessableCharacterController : CharacterController, IPos
             IsPossessed = true;
 
             Animator.SetLayerWeight(PossessedModeAnimationLayerIndex, 1.0f);
+
             VirtualCameraManager.Instance.ChangeVirtualCamera(PossessionVirtualCamera);
 
             AudioSource.pitch = Random.Range(.9f, 1.0f);
@@ -284,11 +325,11 @@ public abstract class PossessableCharacterController : CharacterController, IPos
         return IsPossessed;
     }
 
-    protected virtual void OnPossess(Possession possessingScript) { }
-
-    public virtual bool Unpossess(bool centerColliderToPos = false, Vector2? forceRespawnPos = null)
+    public virtual GameObject Unpossess(bool centerColliderToPos = false, Vector2? forceRespawnPos = null)
     {
-        if (IsPossessed && IsPossessed)
+        GameObject spawnedCharacter = null;
+
+        if (IsPossessable && IsPossessed)
         {
             if (PossessingScript)
             {
@@ -296,7 +337,7 @@ public abstract class PossessableCharacterController : CharacterController, IPos
                 Vector2 respawnPos;
                 Vector2 respawnFacingDirection;
 
-                if ((SpriteRenderer.flipX && !FlipPlayerSpawn) || (!SpriteRenderer.flipX && FlipPlayerSpawn))
+                if (SpriteRenderer.flipX)
                 {
                     respawnPos = LeftPlayerSpawn.transform.position;
                     respawnFacingDirection = Vector2.left;
@@ -314,7 +355,13 @@ public abstract class PossessableCharacterController : CharacterController, IPos
 
                 // Tell the possession script, that took possession of this AIController, that isn't in control anymore
                 PossessingScript.ReleasePossession(respawnPos, respawnFacingDirection, centerColliderToPos);
+                
+                spawnedCharacter = PossessingScript.gameObject;
+
+                PossessingScript = null;
             }
+
+            InfoUI.SetActive(false);
 
             IsPossessed = false;
 
@@ -326,8 +373,7 @@ public abstract class PossessableCharacterController : CharacterController, IPos
             OnUnpossess();
         }
 
-        return IsPossessed;
+        // HACK: Not sure if this method should just return if "IsPossessed"
+        return spawnedCharacter;
     }
-
-    protected virtual void OnUnpossess() { }
 }

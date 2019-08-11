@@ -16,7 +16,7 @@ public class ElectricWall : MonoBehaviour
 
     [Header("Visual")]
     [SerializeField]
-    private GameObject _visual;
+    private GameObject _sprite;
 
     private BoxCollider2D _dangerZone;
 
@@ -30,7 +30,7 @@ public class ElectricWall : MonoBehaviour
     private void Start()
     {
         _dangerZone.enabled = false;
-        _visual.SetActive(false);
+        _sprite.SetActive(false);
 
         StartCoroutine(ChangeActivation(_firstActiveDelay, true));
     }
@@ -40,7 +40,7 @@ public class ElectricWall : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         _dangerZone.enabled = activate;
-        _visual.SetActive(activate);
+        _sprite.SetActive(activate);
 
         if (activate)
         {

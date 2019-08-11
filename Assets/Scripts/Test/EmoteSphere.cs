@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class EmoteSphere : MonoBehaviour, IPhysicsObjectCollisionListener
+public class EmoteSphere : MonoBehaviour, IPhysicsCollision2DListener
 {
     [Header("Emote")]
     [SerializeField]
@@ -40,11 +40,11 @@ public class EmoteSphere : MonoBehaviour, IPhysicsObjectCollisionListener
     }
 
     // Methods of the IPhysicsObjectCollisionListener interface
-    public void OnPhysicsObjectCollisionEnter(PhysicsCollision2D collision)
+    public void OnPhysicsCollision2DEnter(PhysicsCollision2D collision)
     {
         _emoteIndex = (_emoteIndex + 1) % _emotes.Length;
         UpdateEmote();
     }
 
-    public void OnPhysicsObjectCollisionExit(PhysicsCollision2D collision) { }
+    public void OnPhysicsCollision2DExit(PhysicsCollision2D collision) { }
 }

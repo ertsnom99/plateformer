@@ -3,11 +3,11 @@
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(Health))]
 
-public class Boss : MonoBehaviour, IDestroyableInterrupterSubscriber
+public class Boss : MonoBehaviour, IDestroyableGameObjectSubscriber
 {
     [Header("Damage")]
     [SerializeField]
-    private DestroyableInterrupter[] _interrupters;
+    private DestroyableGameObject[] _destroyableGameObjects;
     [SerializeField]
     private int _interrupterBreakableDamage = 10;
 
@@ -20,14 +20,14 @@ public class Boss : MonoBehaviour, IDestroyableInterrupterSubscriber
 
     private void Start()
     {
-        foreach (DestroyableInterrupter interrupter in _interrupters)
+        foreach (DestroyableGameObject interrupter in _destroyableGameObjects)
         {
             interrupter.Subscribe(this);
         }
     }
 
-    // Methods of the IInterrupterBreakable interface
-    public void NotifyInterrupterDestroyed(DestroyableInterrupter destroyableInterrupter)
+    // Methods of the IDestroyableGameObjectSubscriber interface
+    public void NotifyGameObjectDestroyed(DestroyableGameObject destroyableInterrupter)
     {
         _health.Damage(_interrupterBreakableDamage);
     }

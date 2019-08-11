@@ -105,7 +105,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -150367029
-  m_SortingLayer: 8
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 72de0c64f2c6a498096698322c976a67, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -293,6 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UseKeyboard: 0
+  _canUsePossession: 0
 --- !u!114 &114253259727586034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,6 +310,7 @@ MonoBehaviour:
   _updateContactFilterLayerMask: 0
   ShellRadius: 0.05
   GravityModifier: 5
+  MaxFallVelocity: 44
   FallModifier: 1.1
   _minGroundNormalY: 0.4
   DebugVelocity: 0
@@ -318,6 +320,9 @@ MonoBehaviour:
   _canAirborneJump: 1
   _airborneJumpTakeOffSpeed: 15
   _canSlideOfWall: 1
+  _wallLayers:
+    serializedVersion: 2
+    m_Bits: 18945
   _canSlideGoingUp: 0
   _canSlideDuringKnockBack: 0
   _slideRaycastOffset: 0.4
@@ -333,7 +338,6 @@ MonoBehaviour:
   _dashSpeed: 26
   _dashDuration: 0.2
   _dashCooldown: 2
-  _flipSprite: 0
   _jumpSound: {fileID: 8300000, guid: d91b828e8fde9e748a781a3b50778117, type: 3}
   _airborneJumpSound: {fileID: 8300000, guid: 92147626dea6e614380e791a9993b396, type: 3}
   _dashSound: {fileID: 8300000, guid: 3ff30923badda804992d29c9342b37f5, type: 3}

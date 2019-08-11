@@ -3,10 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelEndSequence : MonoBehaviour, IFadeImageSubscriber
 {
-    [Header("Camera")]
-    [SerializeField]
-    private VirtualCameraManager _virtualCameraManager;
-
     [Header("Player Movement")]
     [SerializeField]
     private Inputs _forcedControls;
@@ -28,15 +24,29 @@ public class LevelEndSequence : MonoBehaviour, IFadeImageSubscriber
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (_virtualCameraManager.ActiveVirtualCamera && col.CompareTag(GameManager.PlayerTag))
+        if (col.CompareTag(GameManager.PlayerTag))
         {
-            _virtualCameraManager.ActiveVirtualCamera.Follow = null;
-
-            col.GetComponent<PlayerController>().EnableControl(false);
-            col.GetComponent<PlatformerMovement>().SetInputs(_forcedControls);
-
-            _fade.FadeOut(_fadeDuration);
+            PlayEndSequence(col.gameObject);
         }
+        else if (col.CompareTag(GameManager.EnemyTag))
+        {
+            PossessableCharacterController controller = col.GetComponent<PossessableCharacterController>();
+
+            if (controller.IsPossessed)
+            {
+                GameObject player = controller.Unpossess();
+
+                PlayEndSequence(player);
+            }
+        }
+    }
+
+    private void PlayEndSequence(GameObject player)
+    {
+        player.GetComponent<PlayerController>().EnableControl(false);
+        player.GetComponent<PlatformerMovement>().SetInputs(_forcedControls);
+
+        _fade.FadeOut(_fadeDuration);
     }
 
     // Methods of the IFadeImageSubscriber interface

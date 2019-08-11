@@ -11,7 +11,7 @@ public interface IBouncingPhysicsObjectSubscriber
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(AudioSource))]
 
-public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsObjectSubscriber>, IPhysicsObjectCollisionListener
+public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsObjectSubscriber>, IPhysicsCollision2DListener
 {
     enum BounceStopCondition { BounceDurationElapsed, MaxBounceCountReached, UnderMinVelocity };
     
@@ -127,7 +127,7 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
             Velocity += CurrentGravityModifier * Physics2D.gravity * Time.fixedDeltaTime;
 
             // Backup the list of gameObjects that used to collide and clear the original
-            PreviouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsObjectCollisionListener[]>(CollidingGameObjects);
+            PreviouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsCollision2DListener[]>(CollidingGameObjects);
             CollidingGameObjects.Clear();
 
             // Move the object
@@ -263,9 +263,9 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
     }
 
     // Methods of the IPhysicsObjectCollisionListener interface
-    public void OnPhysicsObjectCollisionExit(PhysicsCollision2D collision) { }
+    public void OnPhysicsCollision2DExit(PhysicsCollision2D collision) { }
 
-    public void OnPhysicsObjectCollisionEnter(PhysicsCollision2D collision)
+    public void OnPhysicsCollision2DEnter(PhysicsCollision2D collision)
     {
         if (!MovementFrozen)
         {

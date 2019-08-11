@@ -17,9 +17,9 @@ GameObject:
   - component: {fileID: 114904549449585534}
   - component: {fileID: 114107880563175574}
   - component: {fileID: 114420989141734892}
-  - component: {fileID: 114995939018924468}
+  - component: {fileID: 4017218770949239046}
   m_Layer: 10
-  m_Name: JumpingPaltformerAI
+  m_Name: JumpingPaltformerCharacter
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -60248483
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 60828feaa4d55fb43979c4858852bfdf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -281,12 +281,8 @@ MonoBehaviour:
   UpdateRate: 5
   MinDistanceToChangeWaypoint: 0.5
   StopWhenUnreachable: 1
-  _drawDistance: 0
+  _drawDistanceToDetect: 0
   _logPathFailedError: 0
-  _canJump: 1
-  _minHeightForVerticalMovement: 1
-  _minDropDownWidthToJump: 3
-  _minHeightToReleaseJump: 0.9
 --- !u!114 &114107880563175574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,6 +299,7 @@ MonoBehaviour:
   _updateContactFilterLayerMask: 0
   ShellRadius: 0.052
   GravityModifier: 5
+  MaxFallVelocity: 44
   FallModifier: 1
   _minGroundNormalY: 0.4
   DebugVelocity: 0
@@ -312,6 +309,9 @@ MonoBehaviour:
   _canAirborneJump: 0
   _airborneJumpTakeOffSpeed: 10
   _canSlideOfWall: 0
+  _wallLayers:
+    serializedVersion: 2
+    m_Bits: 0
   _canSlideGoingUp: 0
   _canSlideDuringKnockBack: 0
   _slideRaycastOffset: -0.45
@@ -327,7 +327,6 @@ MonoBehaviour:
   _dashSpeed: 26
   _dashDuration: 0.2
   _dashCooldown: 1
-  _flipSprite: 0
   _jumpSound: {fileID: 8300000, guid: d91b828e8fde9e748a781a3b50778117, type: 3}
   _airborneJumpSound: {fileID: 0}
   _dashSound: {fileID: 0}
@@ -344,7 +343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  drawGizmos: 1
+  drawGizmos: 0
   detailedGizmos: 0
   startEndModifier:
     addPoints: 0
@@ -358,8 +357,8 @@ MonoBehaviour:
   traversableTags: -1
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
-    value: 1
---- !u!114 &114995939018924468
+    value: 0
+--- !u!114 &4017218770949239046
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -368,13 +367,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1222172137614980}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 885933a14e001d647847769cb86ade1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e46f5142c87c344e95e5f15738b74d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _target: {fileID: 0}
-  _distanceToCountdown: 6
-  _distanceOffset: {x: -0.06, y: 0.685, z: 0}
-  _countdownTime: 3
+  DistanceOffset: {x: 0, y: 0, z: 0}
+  CountdownTime: 3
   _damagedLayers:
     serializedVersion: 2
     m_Bits: 2304
@@ -382,12 +379,12 @@ MonoBehaviour:
   _damage: 10
   _explosionEffect: {fileID: 1956474484916810, guid: 72d1de47a8b359a42b83f65433efe6c4,
     type: 3}
-  _explosionPosition: {fileID: 4922587187688684}
+  ExplosionPosition: {fileID: 4922587187688684}
   _knockBackDirection: {x: 1, y: 1, z: 0}
   _knockBackStrength: 12
   _knockBackDuration: 0.3
-  _drawDistanceToCountdown: 0
   _drawExplosionRange: 0
+  _maxDifMagWhenClose: 0.1
 --- !u!1 &1507818175623092
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,7 +606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bed99cceded38d40a01728d108e8c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _proximityExplodable: {fileID: 114995939018924468}
+  _proximityExplodable: {fileID: 4017218770949239046}
 --- !u!1 &512855212432571598
 GameObject:
   m_ObjectHideFlags: 0
