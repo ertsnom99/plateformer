@@ -85,12 +85,7 @@ public class BulletMovement : MonoBehaviour
     {
         // Apply the rotation
         float angle = Mathf.Atan2(_aimingDirection.y, _aimingDirection.x) * Mathf.Rad2Deg;
-
-        Quaternion currentRotation = Quaternion.Euler(transform.rotation.eulerAngles);
-        Quaternion targetRotation = Quaternion.Euler(.0f, .0f, angle);
-
-        // Rotate the canon over time
-        transform.rotation = Quaternion.Lerp(currentRotation, targetRotation, _rotationSpeed * Time.deltaTime);
+        _rigidbody2D.rotation = Mathf.LerpAngle(transform.rotation.eulerAngles.z, angle, _rotationSpeed * Time.fixedDeltaTime);
     }
 
     private void UpdateMovement()

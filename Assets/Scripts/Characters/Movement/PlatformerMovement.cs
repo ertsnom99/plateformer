@@ -389,7 +389,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
         if (!IsSlidingOfWall && !HorizontalControlDelayed())
         {
-            flipSprite = (_spriteRenderer.flipX == _lastHorizontalVelocityDirection > .0f);
+            flipSprite = (_spriteRenderer.flipX == _lastHorizontalVelocityDirection >= .0f);
         }
         else if (IsSlidingOfWall || IsKnockedBack)
         {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Respawn : MonoBehaviour
+public class TriggerRespawn : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D col)
     {

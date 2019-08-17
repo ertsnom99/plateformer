@@ -15,16 +15,17 @@ public class ExplodableCharacter : Explodable
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
-
-    protected override float CalculateHorizontalDirection(Collider2D damagedCollider)
+    
+    protected override Vector2 CalculateKnockBackDirection(Collider2D damagedCollider)
     {
         if ((damagedCollider.bounds.center - ExplosionPosition.position).magnitude <= _maxDifMagWhenClose)
         {
-            return _spriteRenderer.flipX ? -1.0f : 1.0f;
+            float horizontalDirection = _spriteRenderer.flipX ? -1.0f : 1.0f;
+            return new Vector2(horizontalDirection * Mathf.Abs(KockBackAxis.x), Mathf.Abs(KockBackAxis.y)).normalized;
         }
         else
         {
-            return base.CalculateHorizontalDirection(damagedCollider);
+            return base.CalculateKnockBackDirection(damagedCollider);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cinemachine;
+using UnityEngine;
 
 public class TurretController : PossessableCharacterController
 {
@@ -7,6 +8,10 @@ public class TurretController : PossessableCharacterController
     Canon _canonScript;
     [SerializeField]
     float _minMagnitudeToAim = .8f;
+
+    /*[Header("Bullet")]
+    [SerializeField]
+    private float _bulletVCamOrthographicSize = 8.0f;*/
 
     protected override void Awake()
     {
@@ -59,12 +64,12 @@ public class TurretController : PossessableCharacterController
         return inputs;
     }
 
-    protected override void OnUpdateNotPossessed() { }
-
-    protected override void OnPossess(PossessionPower possessingScript)
+    protected override bool UseLeftSpawn()
     {
-        PossessionVirtualCamera.Follow = transform;
+        return _canonScript.transform.right.x < .0f;
     }
+
+    protected override void OnUpdateNotPossessed() { }
 
     protected override Inputs CreateInputs()
     {
@@ -88,8 +93,17 @@ public class TurretController : PossessableCharacterController
 
             if (bulletController)
             {
+                CinemachineVirtualCamera bulletVirtualCamera = Instantiate(PossessionVirtualCamera.gameObject, PossessionVirtualCamera.transform.parent).GetComponent<CinemachineVirtualCamera>();
+                VirtualCameraManager.Instance.RegisterVirtualCamera(bulletVirtualCamera);
+
+                /*LensSettings lensSettings = LensSettings.Default;
+                lensSettings.OrthographicSize = _bulletVCamOrthographicSize;*/
+
+                bulletVirtualCamera.Follow = bullet.transform;
+                //bulletVirtualCamera.m_Lens = lensSettings;
+
                 bulletController.SetInfoUI(InfoUI);
-                bulletController.SetPossessionVirtualCamera(PossessionVirtualCamera);
+                bulletController.SetPossessionVirtualCamera(bulletVirtualCamera);
 
                 TransferPossession(bulletController);
             }

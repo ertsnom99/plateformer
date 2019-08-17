@@ -41,4 +41,6 @@ public class DoorAndButtonLink : MonoBehaviour, IButtonSubscriber
             }
         }
     }
+
+    public void NotifyButtonUnpressed(Button button) { }
 }

@@ -41,7 +41,6 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     {
         if (Input.GetButtonDown("Quit"))
         {
-            Debug.Log("QUIT");
             Application.Quit();
         }
     }

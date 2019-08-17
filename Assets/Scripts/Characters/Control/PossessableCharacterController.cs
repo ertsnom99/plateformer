@@ -181,7 +181,7 @@ public abstract class PossessableCharacterController : CharacterController, IPos
     // Returns if the area to respawn the player is free. The area checked is based on the facing direction of the character
     protected virtual bool HasEnoughSpaceToUnpossess()
     {
-        if (SpriteRenderer.flipX)
+        if (UseLeftSpawn())
         {
             return LeftPlayerSpawn.OverlapCollider(LeftPlayerSpawnContactFilter, OverlapResults) == 0;
         }
@@ -189,6 +189,12 @@ public abstract class PossessableCharacterController : CharacterController, IPos
         {
             return RightPlayerSpawn.OverlapCollider(RightPlayerSpawnContactFilter, OverlapResults) == 0;
         }
+    }
+
+    // Used to determine if the left spawn must be use when ever a choice needs to be made between the left and right spawn
+    protected virtual bool UseLeftSpawn()
+    {
+        return SpriteRenderer.flipX;
     }
 
     protected virtual void OnUpdateNotPossessed()
@@ -337,7 +343,7 @@ public abstract class PossessableCharacterController : CharacterController, IPos
                 Vector2 respawnPos;
                 Vector2 respawnFacingDirection;
 
-                if (SpriteRenderer.flipX)
+                if (UseLeftSpawn())
                 {
                     respawnPos = LeftPlayerSpawn.transform.position;
                     respawnFacingDirection = Vector2.left;

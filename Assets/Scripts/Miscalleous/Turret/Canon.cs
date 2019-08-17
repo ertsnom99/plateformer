@@ -7,7 +7,9 @@ public class Canon : MonoBehaviour
     private Vector2 _initialAimingDirection = new Vector2(1.0f, 0.01f);
     [SerializeField]
     private float _canonRotationSpeed = 2.0f;
-    
+    [SerializeField]
+    private float _rotationThreshold = 0.01f;
+
     private Vector2 _aimingDirection;
 
     [Header("Bullet")]
@@ -18,6 +20,11 @@ public class Canon : MonoBehaviour
 
     private void Awake()
     {
+        if (_rotationThreshold <= .0f)
+        {
+            Debug.LogError("The rotation threshold should be bigger than 0. If not, the canon could rotate in the wrong direction.");
+        }
+
         if (!_bulletSpawnPosition)
         {
             Debug.LogError("No bullet spawn position was set for " + GetType() + " script of " + gameObject.name + "!");
@@ -40,6 +47,7 @@ public class Canon : MonoBehaviour
     private void Update()
     {
         float angle = Mathf.Atan2(_aimingDirection.y, _aimingDirection.x) * Mathf.Rad2Deg;
+        angle = Mathf.Clamp(angle, 0.01f, 179.99f);
 
         Quaternion currentRotation = Quaternion.Euler(transform.rotation.eulerAngles);
         Quaternion targetRotation = Quaternion.Euler(.0f, .0f, angle);

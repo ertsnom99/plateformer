@@ -3,6 +3,7 @@
 public interface IButtonSubscriber
 {
     void NotifyButtonPressed(Button button);
+    void NotifyButtonUnpressed(Button button);
 }
 
 // This script requires thoses components and will be added if they aren't already there
@@ -22,7 +23,7 @@ public class Button : MonoSubscribable<IButtonSubscriber>
 
     public const string IsPressedParamNameString = "IsPressed";
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _animator = GetComponent<Animator>();
 
@@ -30,26 +31,31 @@ public class Button : MonoSubscribable<IButtonSubscriber>
         IsPressed = _initiallyPressed;
     }
 
-    private void Press()
+    protected virtual void Press()
     {
+        _animator.SetBool(IsPressedParamHashId, true);
+        IsPressed = true;
+
         foreach (IButtonSubscriber subscriber in Subscribers)
         {
             subscriber.NotifyButtonPressed(this);
         }
-
-        _animator.SetBool(IsPressedParamHashId, true);
-        IsPressed = true;
     }
 
-    private void Unpress()
+    protected virtual void Unpress()
     {
         _animator.SetBool(IsPressedParamHashId, false);
         IsPressed = false;
+
+        foreach (IButtonSubscriber subscriber in Subscribers)
+        {
+            subscriber.NotifyButtonUnpressed(this);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (!IsPressed && col.CompareTag(GameManager.PlayerTag))
+        if (!IsPressed && (col.CompareTag(GameManager.PlayerTag) || col.CompareTag(GameManager.EnemyTag)))
         {
             Press();
         }

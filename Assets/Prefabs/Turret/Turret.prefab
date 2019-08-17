@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4722981874034594145}
   m_Layer: 0
   m_Name: Turret
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,6 +36,7 @@ Transform:
   - {fileID: 4722981874494835771}
   - {fileID: 4722981875080199727}
   - {fileID: 4722981875236819279}
+  - {fileID: 5088185198645016109}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -258,6 +259,7 @@ MonoBehaviour:
   _drawDistanceToDetect: 0
   _logPathFailedError: 0
   _canonScript: {fileID: 4722981874494835773}
+  _minMagnitudeToAim: 0.8
 --- !u!114 &4722981874034594145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,6 +413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _initialAimingDirection: {x: 1, y: 0.5}
   _canonRotationSpeed: 2
+  _rotationThreshold: 0.01
   _bulletSpawnPosition: {fileID: 4722981874204538155}
   _bulletPrefab: {fileID: 325158076011708272, guid: ea503c4f25a66ea4f9c1f1e0b8ef6c99,
     type: 3}
@@ -528,3 +531,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.21, y: 1.153101}
   m_EdgeRadius: 0
+--- !u!1 &7620863872425191220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5088185198645016109}
+  m_Layer: 0
+  m_Name: Camera Follow Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5088185198645016109
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7620863872425191220}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4722981874034594170}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -37,7 +37,7 @@ public class Explodable : MonoSubscribable<IProximityExplodableSubscriber>
 
     [Header("Knock Back")]
     [SerializeField]
-    private Vector3 _knockBackDirection = new Vector3 (1.0f, 1.0f, .0f);
+    protected Vector3 KockBackAxis = new Vector3 (1.0f, 1.0f, .0f);
     [SerializeField]
     private float _knockBackStrength = 12.0f;
     [SerializeField]
@@ -120,17 +120,17 @@ public class Explodable : MonoSubscribable<IProximityExplodableSubscriber>
             {
                 case GameManager.PlayerTag:
                     // Knock back
-                    float horizontalDirection = CalculateHorizontalDirection(collider);
-                    Vector2 knockBackForce = new Vector2(horizontalDirection * Mathf.Abs(_knockBackDirection.x), Mathf.Abs(_knockBackDirection.y)).normalized * _knockBackStrength;
+                    Vector2 knockBackForce = CalculateKnockBackDirection(collider) * _knockBackStrength;
                     collider.GetComponent<PlatformerMovement>().KnockBack(knockBackForce, _knockBackDuration);
                     break;
             }
         }
     }
 
-    protected virtual float CalculateHorizontalDirection(Collider2D damagedCollider)
+    protected virtual Vector2 CalculateKnockBackDirection(Collider2D damagedCollider)
     {
-        return Mathf.Sign((damagedCollider.bounds.center - ExplosionPosition.position).x);
+        float horizontalDirection = Mathf.Sign((damagedCollider.bounds.center - ExplosionPosition.position).x);
+        return new Vector2(horizontalDirection * Mathf.Abs(KockBackAxis.x), Mathf.Abs(KockBackAxis.y)).normalized;
     }
 
     protected virtual void OnDrawGizmosSelected()

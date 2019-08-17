@@ -50,6 +50,7 @@ public class BulletController : PossessableCharacterController, IPhysicsCollisio
             inputs = FetchInputs();
         }
 
+        UpdateDisplayInfo(inputs);
         UpdateMovement(inputs);
         UpdatePossession(inputs);
     }
@@ -88,11 +89,6 @@ public class BulletController : PossessableCharacterController, IPhysicsCollisio
         return LeftPlayerSpawn.OverlapCollider(LeftPlayerSpawnContactFilter, OverlapResults) == 0;
     }
 
-    protected override void OnPossess(PossessionPower possessingScript)
-    {
-        PossessionVirtualCamera.Follow = transform;
-    }
-
     public override GameObject Unpossess(bool centerColliderToPos = false, Vector2? forceRespawnPos = null)
     {
         GameObject spawnedCharacter = null;
@@ -126,6 +122,8 @@ public class BulletController : PossessableCharacterController, IPhysicsCollisio
 
                 PossessingScript = null;
             }
+
+            InfoUI.SetActive(false);
 
             IsPossessed = false;
 
@@ -173,5 +171,8 @@ public class BulletController : PossessableCharacterController, IPhysicsCollisio
     public void NotifyExploded(GameObject explodableGameObject)
     {
         Unpossess(false, transform.position);
+
+        VirtualCameraManager.Instance.RemoveVirtualCamera(PossessionVirtualCamera);
+        Destroy(PossessionVirtualCamera.gameObject);
     }
 }
