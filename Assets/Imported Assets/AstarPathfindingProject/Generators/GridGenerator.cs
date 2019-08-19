@@ -130,7 +130,7 @@ namespace Pathfinding {
 		}
 
 		public override int CountNodes () {
-			return nodes.Length;
+			return nodes != null ? nodes.Length : 0;
 		}
 
 		public override void GetNodes (System.Action<GraphNode> action) {
@@ -1311,7 +1311,13 @@ namespace Pathfinding {
 			for (int i = 0; i < 8; i++) {
 				int nx = x + neighbourXOffsets[i];
 				int nz = z + neighbourZOffsets[i];
-				CalculateConnections(nx, nz);
+
+				// Check if the new position is inside the grid
+				// Bitwise AND (&) is measurably faster than &&
+				// (not much, but this code is hot)
+				if (nx >= 0 & nz >= 0 & nx < width & nz < depth) {
+					CalculateConnections(nx, nz);
+				}
 			}
 		}
 

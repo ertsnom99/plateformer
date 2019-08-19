@@ -339,7 +339,7 @@ namespace Pathfinding {
 
 		/// <summary>Returns penalty for the given tag.</summary>
 		/// <param name="tag">A value between 0 (inclusive) and 32 (exclusive).</param>
-		internal uint GetTagPenalty (int tag) {
+		public uint GetTagPenalty (int tag) {
 			return (uint)internalTagPenalties[tag];
 		}
 

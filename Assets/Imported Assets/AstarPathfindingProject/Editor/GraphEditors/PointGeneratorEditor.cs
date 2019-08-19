@@ -4,6 +4,11 @@ using UnityEditor;
 namespace Pathfinding {
 	[CustomGraphEditor(typeof(PointGraph), "Point Graph")]
 	public class PointGraphEditor : GraphEditor {
+		static readonly GUIContent[] nearestNodeDistanceModeLabels = {
+			new GUIContent("Node"),
+			new GUIContent("Connection (pro version only)"),
+		};
+
 		public override void OnInspectorGUI (NavGraph target) {
 			var graph = target as PointGraph;
 
@@ -39,6 +44,8 @@ namespace Pathfinding {
 				graph.mask = EditorGUILayoutx.LayerMaskField("Mask", graph.mask);
 				EditorGUI.indentLevel--;
 			}
+
+			EditorGUILayout.Popup(new GUIContent("Nearest node queries find closest"), 0, nearestNodeDistanceModeLabels);
 		}
 	}
 }

@@ -22,7 +22,7 @@ namespace Pathfinding {
 	/// See: http://docs.unity3d.com/Manual/Tags.html
 	///
 	/// For larger graphs, it can take quite some time to scan the graph with the default settings.
-	/// If you have the pro version you can enable 'optimizeForSparseGraph' which will in most cases reduce the calculation times
+	/// If you have the pro version you can enable <see cref="optimizeForSparseGraph"/> which will in most cases reduce the calculation times
 	/// drastically.
 	///
 	/// Note: Does not support linecast because of obvious reasons.
@@ -89,8 +89,45 @@ namespace Pathfinding {
 		/// </summary>
 		public PointNode[] nodes;
 
+		/// <summary>
+		/// \copydoc Pathfinding::PointGraph::NodeDistanceMode
+		///
+		/// See: <see cref="NodeDistanceMode"/>
+		///
+		/// If you enable this during runtime, you will need to call <see cref="RebuildConnectionDistanceLookup"/> to make sure some cache data is properly recalculated.
+		/// If the graph doesn't have any nodes yet or if you are going to scan the graph afterwards then you do not need to do this.
+		/// </summary>
+		[JsonMember]
+		public NodeDistanceMode nearestNodeDistanceMode;
+
 		/// <summary>Number of nodes in this graph</summary>
 		public int nodeCount { get; protected set; }
+
+		/// <summary>
+		/// Distance query mode.
+		/// [Open online documentation to see images]
+		///
+		/// In the image above there are a few red nodes. Assume the agent is the orange circle. Using the Node mode the closest point on the graph that would be found would be the node at the bottom center which
+		/// may not be what you want. Using the %Connection mode it will find the closest point on the connection between the two nodes in the top half of the image.
+		///
+		/// When using the %Connection option you may also want to use the %Connection option for the Seeker's Start End Modifier snapping options.
+		/// This is not strictly necessary, but it most cases it is what you want.
+		///
+		/// See: <see cref="Pathfinding.StartEndModifier.exactEndPoint"/>
+		/// </summary>
+		public enum NodeDistanceMode {
+			/// <summary>
+			/// All nearest node queries find the closest node center.
+			/// This is the fastest option but it may not be what you want if you have long connections.
+			/// </summary>
+			Node,
+			/// <summary>
+			/// All nearest node queries find the closest point on edges between nodes.
+			/// This is useful if you have long connections where the agent might be closer to some unrelated node if it is standing on a long connection between two nodes.
+			/// This mode is however slower than the Node mode.
+			/// </summary>
+			Connection,
+		}
 
 		public override int CountNodes () {
 			return nodeCount;
@@ -143,6 +180,30 @@ namespace Pathfinding {
 			return nnInfo;
 		}
 
+		NNInfoInternal FindClosestConnectionPoint (PointNode node, Vector3 position) {
+			var closestConnectionPoint = (Vector3)node.position;
+			var conns = node.connections;
+			var nodePos = (Vector3)node.position;
+			var bestDist = float.PositiveInfinity;
+
+			if (conns != null) {
+				for (int i = 0; i < conns.Length; i++) {
+					var connectionMidpoint = ((UnityEngine.Vector3)conns[i].node.position + nodePos) * 0.5f;
+					var closestPoint = VectorMath.ClosestPointOnSegment(nodePos, connectionMidpoint, position);
+					var dist = (closestPoint - position).sqrMagnitude;
+					if (dist < bestDist) {
+						bestDist = dist;
+						closestConnectionPoint = closestPoint;
+					}
+				}
+			}
+
+			var result = new NNInfoInternal();
+			result.node = node;
+			result.clampedPosition = closestConnectionPoint;
+			return result;
+		}
+
 		/// <summary>
 		/// Add a node to the graph at the specified position.
 		/// Note: Vector3 can be casted to Int3 using (Int3)myVector.
@@ -163,6 +224,8 @@ namespace Pathfinding {
 		///     node2.AddConnection(node1, cost);
 		/// }));
 		/// </code>
+		///
+		/// See: runtime-graphs (view in online documentation for working links)
 		/// </summary>
 		public PointNode AddNode (Int3 position) {
 			return AddNode(new PointNode(active), position);
@@ -178,7 +241,8 @@ namespace Pathfinding {
 		/// - during a graph update
 		/// - inside a callback registered using AstarPath.AddWorkItem
 		///
-		/// See: AstarPath.AddWorkItem
+		/// See: <see cref="AstarPath.AddWorkItem"/>
+		/// See: runtime-graphs (view in online documentation for working links)
 		/// </summary>
 		/// <param name="node">This must be a node created using T(AstarPath.active) right before the call to this method.
 		/// The node parameter is only there because there is no new(AstarPath) constraint on
@@ -247,7 +311,25 @@ namespace Pathfinding {
 			// A* Pathfinding Project Pro Only
 		}
 
+		/// <summary>Rebuilds a cache used when <see cref="nearestNodeDistanceMode"/> = <see cref="NodeDistanceMode.ToConnection"/></summary>
+		public void RebuildConnectionDistanceLookup () {
+		}
+
 		void AddToLookup (PointNode node) {
+			// A* Pathfinding Project Pro Only
+		}
+
+		/// <summary>
+		/// Ensures the graph knows that there is a connection with this length.
+		/// This is used when the nearest node distance mode is set to ToConnection.
+		/// If you are modifying node connections yourself (i.e. manipulating the PointNode.connections array) then you must call this function
+		/// when you add any connections.
+		///
+		/// When using PointNode.AddConnection this is done automatically.
+		/// It is also done for all nodes when <see cref="RebuildNodeLookup"/> is called.
+		/// </summary>
+		/// <param name="sqrLength">The length of the connection in squared Int3 units. This can be calculated using (node1.position - node2.position).sqrMagnitudeLong.</param>
+		public void RegisterConnectionLength (long sqrLength) {
 			// A* Pathfinding Project Pro Only
 		}
 
@@ -305,7 +387,7 @@ namespace Pathfinding {
 			}
 
 
-			foreach (var progress in ConnectNodesAsync()) yield return progress.MapTo(0.16f, 1.0f);
+			foreach (var progress in ConnectNodesAsync()) yield return progress.MapTo(0.15f, 0.95f);
 		}
 
 		/// <summary>
@@ -315,7 +397,9 @@ namespace Pathfinding {
 		public void ConnectNodes () {
 			var ie = ConnectNodesAsync().GetEnumerator();
 
-			while (ie.MoveNext()) ;
+			while (ie.MoveNext()) {}
+
+			RebuildConnectionDistanceLookup();
 		}
 
 		/// <summary>
@@ -343,7 +427,7 @@ namespace Pathfinding {
 				// Loop through all nodes and add connections to other nodes
 				for (int i = 0; i < nodeCount; i++) {
 					if (i % YieldEveryNNodes == 0) {
-						yield return new Progress(i/(float)nodes.Length, "Connecting nodes");
+						yield return new Progress(i/(float)nodeCount, "Connecting nodes");
 					}
 
 					connections.Clear();

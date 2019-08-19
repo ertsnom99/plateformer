@@ -380,14 +380,81 @@ namespace Pathfinding {
 		/// </summary>
 		public abstract void GetConnections (System.Action<GraphNode> action);
 
+		/// <summary>
+		/// Add a connection from this node to the specified node.
+		/// If the connection already exists, the cost will simply be updated and
+		/// no extra connection added.
+		///
+		/// Note: Only adds a one-way connection. Consider calling the same function on the other node
+		/// to get a two-way connection.
+		///
+		/// <code>
+		/// AstarPath.active.AddWorkItem(new AstarWorkItem(ctx => {
+		///     // Connect two nodes
+		///     var node1 = AstarPath.active.GetNearest(transform.position, NNConstraint.None).node;
+		///     var node2 = AstarPath.active.GetNearest(transform.position + Vector3.right, NNConstraint.None).node;
+		///     var cost = (uint)(node2.position - node1.position).costMagnitude;
+		///     node1.AddConnection(node2, cost);
+		///     node2.AddConnection(node1, cost);
+		///
+		///     node1.ContainsConnection(node2); // True
+		///
+		///     node1.RemoveConnection(node2);
+		///     node2.RemoveConnection(node1);
+		/// }));
+		/// </code>
+		/// </summary>
 		public abstract void AddConnection (GraphNode node, uint cost);
+
+		/// <summary>
+		/// Removes any connection from this node to the specified node.
+		/// If no such connection exists, nothing will be done.
+		///
+		/// Note: This only removes the connection from this node to the other node.
+		/// You may want to call the same function on the other node to remove its possible connection
+		/// to this node.
+		///
+		/// <code>
+		/// AstarPath.active.AddWorkItem(new AstarWorkItem(ctx => {
+		///     // Connect two nodes
+		///     var node1 = AstarPath.active.GetNearest(transform.position, NNConstraint.None).node;
+		///     var node2 = AstarPath.active.GetNearest(transform.position + Vector3.right, NNConstraint.None).node;
+		///     var cost = (uint)(node2.position - node1.position).costMagnitude;
+		///     node1.AddConnection(node2, cost);
+		///     node2.AddConnection(node1, cost);
+		///
+		///     node1.ContainsConnection(node2); // True
+		///
+		///     node1.RemoveConnection(node2);
+		///     node2.RemoveConnection(node1);
+		/// }));
+		/// </code>
+		/// </summary>
 		public abstract void RemoveConnection (GraphNode node);
 
 		/// <summary>Remove all connections from this node.</summary>
 		/// <param name="alsoReverse">if true, neighbours will be requested to remove connections to this node.</param>
 		public abstract void ClearConnections (bool alsoReverse);
 
-		/// <summary>Checks if this node has a connection to the specified node</summary>
+		/// <summary>
+		/// Checks if this node has a connection to the specified node.
+		///
+		/// <code>
+		/// AstarPath.active.AddWorkItem(new AstarWorkItem(ctx => {
+		///     // Connect two nodes
+		///     var node1 = AstarPath.active.GetNearest(transform.position, NNConstraint.None).node;
+		///     var node2 = AstarPath.active.GetNearest(transform.position + Vector3.right, NNConstraint.None).node;
+		///     var cost = (uint)(node2.position - node1.position).costMagnitude;
+		///     node1.AddConnection(node2, cost);
+		///     node2.AddConnection(node1, cost);
+		///
+		///     node1.ContainsConnection(node2); // True
+		///
+		///     node1.RemoveConnection(node2);
+		///     node2.RemoveConnection(node1);
+		/// }));
+		/// </code>
+		/// </summary>
 		public virtual bool ContainsConnection (GraphNode node) {
 			// Simple but slow default implementation
 			bool contains = false;
