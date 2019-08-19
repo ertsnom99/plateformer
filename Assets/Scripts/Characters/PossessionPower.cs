@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using System.Collections.Generic;
 using UnityEngine;
 
 // This script requires thoses components and will be added if they aren't already there
@@ -64,9 +65,6 @@ public class PossessionPower : MonoBehaviour, IPhysicsCollision2DListener
         {
             InPossessionMode = inPossessionMode;
             _animator.SetLayerWeight(_possessModeAnimationLayerIndex, InPossessionMode ? 1.0f : .0f);
-            
-            // Change if player collides with AIs
-            //Physics2D.IgnoreLayerCollision(_playerLayerIndex, _AILayerIndex, !InPossessionMode);
 
             if (InPossessionMode)
             {
@@ -112,7 +110,9 @@ public class PossessionPower : MonoBehaviour, IPhysicsCollision2DListener
     }
 
     // Methods of the IPhysicsObjectCollisionListener interface
-    public void OnPhysicsCollision2DEnter(PhysicsCollision2D collision)
+    public void OnPhysicsCollision2DEnter(PhysicsCollision2D collision) { }
+
+    public void OnPhysicsCollision2DStay(PhysicsCollision2D collision)
     {
         if (InPossessionMode)
         {

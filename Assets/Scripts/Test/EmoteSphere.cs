@@ -46,5 +46,7 @@ public class EmoteSphere : MonoBehaviour, IPhysicsCollision2DListener
         UpdateEmote();
     }
 
+    public void OnPhysicsCollision2DStay(PhysicsCollision2D collision) { }
+
     public void OnPhysicsCollision2DExit(PhysicsCollision2D collision) { }
 }

@@ -159,6 +159,8 @@ public class BulletController : PossessableCharacterController, IPhysicsCollisio
         }
     }
 
+    public void OnPhysicsCollision2DStay(PhysicsCollision2D collision) { }
+
     public void OnPhysicsCollision2DExit(PhysicsCollision2D collision) { }
 
     // Methods of the IProximityExplodableSubscriber interface

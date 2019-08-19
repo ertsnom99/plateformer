@@ -19,5 +19,7 @@ public class CollisionRespawn : MonoBehaviour, IPhysicsCollision2DListener
         }
     }
 
+    public void OnPhysicsCollision2DStay(PhysicsCollision2D collision) { }
+
     public void OnPhysicsCollision2DExit(PhysicsCollision2D collision) { }
 }

@@ -3,6 +3,7 @@
 public interface IPhysicsCollision2DListener
 {
     void OnPhysicsCollision2DEnter(PhysicsCollision2D collision);
+    void OnPhysicsCollision2DStay(PhysicsCollision2D collision);
     void OnPhysicsCollision2DExit(PhysicsCollision2D collision);
 }
 

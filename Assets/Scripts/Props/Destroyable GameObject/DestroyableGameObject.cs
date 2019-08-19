@@ -95,12 +95,14 @@ public class DestroyableGameObject : MonoSubscribable<IDestroyableGameObjectSubs
     }
 
     // Methods of the IPhysicsObjectCollisionListener interface
-    public void OnPhysicsCollision2DExit(PhysicsCollision2D collision) { }
-
     public void OnPhysicsCollision2DEnter(PhysicsCollision2D collision)
     {
         OnImpact(collision.RelativeVelocity, collision.Collider.gameObject);
     }
+
+    public void OnPhysicsCollision2DStay(PhysicsCollision2D collision) { }
+
+    public void OnPhysicsCollision2DExit(PhysicsCollision2D collision) { }
 
     // Methods of the IHealthSubscriber interface
     public void NotifyJustSubscribed(Health healthScript) { }

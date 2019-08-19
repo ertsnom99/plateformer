@@ -32,7 +32,7 @@ public class PossessableBouncingPhysicsObject : BouncingPhysicsObject
                     if (possessionScript && possessionScript.InPossessionMode)
                     {
                         // Check and call collision enter methods
-                        CheckCollisionEnter(HitBuffer[index]);
+                        CheckCollisionEnterAndStay(HitBuffer[index]);
 
                         // Will allow inheriting classes to add logic during the hit checks
                         OnColliderHitCheck(HitBuffer[index]);
@@ -49,7 +49,7 @@ public class PossessableBouncingPhysicsObject : BouncingPhysicsObject
                         }
 
                         // Check and call collision enter methods
-                        CheckCollisionEnter(HitBuffer[index]);
+                        CheckCollisionEnterAndStay(HitBuffer[index]);
 
                         // Update how much distance can be done before hitting something  
                         distanceBeforeHit = HitBuffer[index].distance - ShellRadius;

@@ -160,7 +160,7 @@ public class PhysicsObject : MonoBehaviour
     private void Move(Vector2 movement, bool yMovement)
     {
         float distance = movement.magnitude;
-
+        
         // Check for collision only if the object moves enough
         if (distance > MinMoveDistance)
         {
@@ -180,7 +180,7 @@ public class PhysicsObject : MonoBehaviour
                 Vector2 currentNormal = hit.normal;
 
                 // Check and call collision enter methods
-                CheckCollisionEnter(hit);
+                CheckCollisionEnterAndStay(hit);
 
                 // Check if the object is grounded
                 if (currentNormal.y >= _minGroundNormalY)
@@ -236,57 +236,65 @@ public class PhysicsObject : MonoBehaviour
         //transform.position = m_rigidbody2D.position;
     }
 
-    protected void CheckCollisionEnter(RaycastHit2D hit)
+    protected void CheckCollisionEnterAndStay(RaycastHit2D hit)
     {
-        IPhysicsCollision2DListener[] collisionListeners;
-        
-        // If the hitted gameObject wasn't previously hitted
-        if (!PreviouslyCollidingGameObject.ContainsKey(hit.collider))
+        Vector2 relativeVelocity = hit.rigidbody ? hit.rigidbody.velocity - Velocity : -Velocity;
+
+        PhysicsCollision2D physicsObjectCollision2D = new PhysicsCollision2D(hit.collider,
+                                                                             Collider,
+                                                                             hit.rigidbody,
+                                                                             Rigidbody2D,
+                                                                             hit.transform,
+                                                                             hit.collider.gameObject,
+                                                                             relativeVelocity,
+                                                                             true,
+                                                                             hit.point,
+                                                                             hit.normal);
+
+        // Call OnPhysicsObjectCollisionEnter on all script, of this gameobject, that implement the interface
+        foreach (IPhysicsCollision2DListener collisionListener in _collisionListeners)
         {
-            // Call OnPhysicsObjectCollisionEnter on all script, of this gameobject, that implement the interface
-            Vector2 relativeVelocity = hit.rigidbody ? hit.rigidbody.velocity - Velocity : -Velocity;
-
-            PhysicsCollision2D physicsObjectCollision2D = new PhysicsCollision2D(hit.collider,
-                                                                                 Collider,
-                                                                                 hit.rigidbody,
-                                                                                 Rigidbody2D,
-                                                                                 hit.transform,
-                                                                                 hit.collider.gameObject,
-                                                                                 relativeVelocity,
-                                                                                 true,
-                                                                                 hit.point,
-                                                                                 hit.normal);
-
-            foreach (IPhysicsCollision2DListener collisionListener in _collisionListeners)
+            // If the hitted gameObject wasn't previously hitted
+            if (!PreviouslyCollidingGameObject.ContainsKey(hit.collider))
             {
                 collisionListener.OnPhysicsCollision2DEnter(physicsObjectCollision2D);
             }
 
-            // Call OnPhysicsObjectCollisionEnter on all script, of the hitted gameobject, that implement the interface
-            collisionListeners = hit.collider.GetComponents<IPhysicsCollision2DListener>();
+            collisionListener.OnPhysicsCollision2DStay(physicsObjectCollision2D);
+        }
 
-            if (collisionListeners.Length > 0)
+        // Call OnPhysicsObjectCollisionEnter on all script, of the hitted gameobject, that implement the interface
+        IPhysicsCollision2DListener[] collisionListeners = hit.collider.GetComponents<IPhysicsCollision2DListener>();
+
+        if (collisionListeners.Length > 0)
+        {
+            relativeVelocity = hit.rigidbody ? Velocity - hit.rigidbody.velocity : Velocity;
+
+            physicsObjectCollision2D = new PhysicsCollision2D(Collider,
+                                                              hit.collider,
+                                                              Rigidbody2D,
+                                                              hit.rigidbody,
+                                                              transform,
+                                                              gameObject,
+                                                              relativeVelocity,
+                                                              true,
+                                                              hit.point,
+                                                              -hit.normal);
+
+            foreach (IPhysicsCollision2DListener listener in collisionListeners)
             {
-                relativeVelocity = hit.rigidbody ? Velocity - hit.rigidbody.velocity : Velocity;
-
-                physicsObjectCollision2D = new PhysicsCollision2D(Collider,
-                                                                  hit.collider,
-                                                                  Rigidbody2D,
-                                                                  hit.rigidbody,
-                                                                  transform,
-                                                                  gameObject,
-                                                                  relativeVelocity,
-                                                                  true,
-                                                                  hit.point,
-                                                                  -hit.normal);
-
-                foreach (IPhysicsCollision2DListener listener in collisionListeners)
+                // If the hitted gameObject wasn't previously hitted
+                if (!PreviouslyCollidingGameObject.ContainsKey(hit.collider))
                 {
                     listener.OnPhysicsCollision2DEnter(physicsObjectCollision2D);
                 }
+
+                listener.OnPhysicsCollision2DStay(physicsObjectCollision2D);
             }
         }
-        else
+        
+        // If the hitted gameObject was previously hitted
+        if (PreviouslyCollidingGameObject.ContainsKey(hit.collider))
         {
             collisionListeners = PreviouslyCollidingGameObject[hit.collider];
         }

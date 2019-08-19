@@ -181,7 +181,7 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
                     }
 
                     // Check and call collision enter methods
-                    CheckCollisionEnter(HitBuffer[0]);
+                    CheckCollisionEnterAndStay(HitBuffer[0]);
 
                     // Update how much distance can be done before hitting something  
                     distanceBeforeHit = HitBuffer[0].distance - ShellRadius;
@@ -263,8 +263,6 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
     }
 
     // Methods of the IPhysicsObjectCollisionListener interface
-    public void OnPhysicsCollision2DExit(PhysicsCollision2D collision) { }
-
     public void OnPhysicsCollision2DEnter(PhysicsCollision2D collision)
     {
         if (!MovementFrozen)
@@ -272,4 +270,8 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
             OnBounce(collision.Normal);
         }
     }
+
+    public void OnPhysicsCollision2DStay(PhysicsCollision2D collision) { }
+
+    public void OnPhysicsCollision2DExit(PhysicsCollision2D collision) { }
 }
