@@ -339,10 +339,10 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
     private bool HasEnoughSpaceForNormalForm()
     {
         // Check if there is a collider in the way
-        Collider2D[] hitColliders = new Collider2D[8];
-        _normalFormSpawnArea.OverlapCollider(ContactFilter, hitColliders);
+        Collider2D[] overlapResults = new Collider2D[8];
+        _normalFormSpawnArea.OverlapCollider(ContactFilter, overlapResults);
 
-        foreach (Collider2D collider in hitColliders)
+        foreach (Collider2D collider in overlapResults)
         {
             if (collider && collider.gameObject != _bounceForm && !collider.isTrigger)
             {

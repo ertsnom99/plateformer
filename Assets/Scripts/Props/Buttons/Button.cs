@@ -55,9 +55,14 @@ public class Button : MonoSubscribable<IButtonSubscriber>
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (!IsPressed && (col.CompareTag(GameManager.PlayerTag) || col.CompareTag(GameManager.EnemyTag)))
+        if (!IsPressed && CanPressButton(col))
         {
             Press();
         }
+    }
+
+    protected bool CanPressButton(Collider2D collider)
+    {
+        return collider.CompareTag(GameManager.PlayerTag) || collider.CompareTag(GameManager.EnemyTag);
     }
 }
