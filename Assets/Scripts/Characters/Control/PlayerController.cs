@@ -2,6 +2,7 @@
 
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(PlatformerMovement))]
+[RequireComponent(typeof(Interaction))]
 [RequireComponent(typeof(PossessionPower))]
 
 public class PlayerController : CharacterController
@@ -17,11 +18,13 @@ public class PlayerController : CharacterController
     private bool _canUsePossession = false;
 
     private PlatformerMovement _movementScript;
+    private Interaction _interaction;
     private PossessionPower _possession;
 
     private void Awake()
     {
         _movementScript = GetComponent<PlatformerMovement>();
+        _interaction = GetComponent<Interaction>();
         _possession = GetComponent<PossessionPower>();
     }
 
@@ -34,6 +37,7 @@ public class PlayerController : CharacterController
             Inputs inputs = FetchInputs();
 
             UpdateMovement(inputs);
+            UpdateInteraction(inputs);
             UpdatePossession(inputs);
         }
     }
@@ -51,6 +55,8 @@ public class PlayerController : CharacterController
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
             inputs.Dash = Input.GetButtonDown("Dash");
             inputs.ReleaseDash = Input.GetButtonUp("Dash");
+            inputs.Interact = Input.GetButtonDown("Interact");
+            inputs.ReleaseInteract = Input.GetButtonUp("Interact");
             inputs.Possess = Input.GetButtonDown("Possess");
         }
         else
@@ -62,6 +68,8 @@ public class PlayerController : CharacterController
             inputs.ReleaseJump = Input.GetButtonUp("Jump");
             inputs.Dash = Input.GetButtonDown("Dash");
             inputs.ReleaseDash = Input.GetButtonUp("Dash");
+            inputs.Interact = Input.GetButtonDown("Interact");
+            inputs.ReleaseInteract = Input.GetButtonUp("Interact");
             inputs.Possess = Input.GetButtonDown("Possess");
         }
 
@@ -70,12 +78,31 @@ public class PlayerController : CharacterController
 
     private void UpdateMovement(Inputs inputs)
     {
-        _movementScript.SetInputs(inputs);
+        if (!_interaction.Interacting)
+        {
+            _movementScript.SetInputs(inputs);
+        }
+        else
+        {
+            _movementScript.SetInputs(NoControlInputs);
+        }
+    }
+
+    private void UpdateInteraction(Inputs inputs)
+    {
+        if (inputs.Interact)
+        {
+            _interaction.BeginInteraction();
+        }
+        else if (inputs.ReleaseInteract && _interaction.Interacting)
+        {
+            _interaction.StopInteraction();
+        }
     }
 
     private void UpdatePossession(Inputs inputs)
     {
-        if (inputs.Possess)
+        if (inputs.Possess && !_interaction.Interacting)
         {
             _possession.ChangePossessionMode(_canUsePossession && !_possession.InPossessionMode);
         }

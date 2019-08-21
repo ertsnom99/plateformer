@@ -2,6 +2,7 @@
 using UnityEngine;
 
 // This script requires thoses components and will be added if they aren't already there
+[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(BoxCollider2D))]
 
 public class ElectricWall : MonoBehaviour
@@ -14,15 +15,17 @@ public class ElectricWall : MonoBehaviour
     [SerializeField]
     private float _inactiveDuration = 0.75f;
 
-    [Header("Visual")]
-    [SerializeField]
-    private GameObject _sprite;
-
     private BoxCollider2D _dangerZone;
+    private Animator _animator;
+
+    protected int IsRetractedParamHashId = Animator.StringToHash(IsRetractedParamNameString);
+
+    public const string IsRetractedParamNameString = "IsRetracted";
 
     private void Awake()
     {
         _dangerZone = GetComponent<BoxCollider2D>();
+        _animator = GetComponent<Animator>();
 
         _dangerZone.isTrigger = true;
     }
@@ -30,7 +33,7 @@ public class ElectricWall : MonoBehaviour
     private void Start()
     {
         _dangerZone.enabled = false;
-        _sprite.SetActive(false);
+        _animator.SetBool(IsRetractedParamHashId, true);
 
         StartCoroutine(ChangeActivation(_firstActiveDelay, true));
     }
@@ -40,7 +43,7 @@ public class ElectricWall : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         _dangerZone.enabled = activate;
-        _sprite.SetActive(activate);
+        _animator.SetBool(IsRetractedParamHashId, !activate);
 
         if (activate)
         {

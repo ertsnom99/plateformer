@@ -21,6 +21,7 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     // Tags
     public const string PlayerTag = "Player";
     public const string EnemyTag = "Enemy";
+    public const string InteractableTag = "Interactable";
 
     // Layers
     public const string PlayerLayer = "Player";

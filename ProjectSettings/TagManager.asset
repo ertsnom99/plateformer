@@ -6,6 +6,7 @@ TagManager:
   tags:
   - AmbiantSound
   - Enemy
+  - Interactable
   layers:
   - Default
   - TransparentFX

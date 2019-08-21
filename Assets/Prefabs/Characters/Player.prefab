@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 82653445126395802}
   - component: {fileID: 114867589610096570}
   - component: {fileID: 114253259727586034}
+  - component: {fileID: 2790183897355854456}
   - component: {fileID: 8197806341230259179}
   - component: {fileID: 114959804128495902}
   m_Layer: 8
@@ -95,6 +96,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -134,7 +136,7 @@ BoxCollider2D:
   m_Offset: {x: -0.0013335645, y: 0.6379693}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.4848485, y: 0}
     oldSize: {x: 2.0625, y: 2}
     newSize: {x: 2.0625, y: 2}
     adaptiveTilingThreshold: 0.5
@@ -341,6 +343,18 @@ MonoBehaviour:
   _jumpSound: {fileID: 8300000, guid: d91b828e8fde9e748a781a3b50778117, type: 3}
   _airborneJumpSound: {fileID: 8300000, guid: 92147626dea6e614380e791a9993b396, type: 3}
   _dashSound: {fileID: 8300000, guid: 3ff30923badda804992d29c9342b37f5, type: 3}
+--- !u!114 &2790183897355854456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1508018494202180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e18a0a7392a23e4fb8e04b46fa7c2c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8197806341230259179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,7 +369,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collider: {fileID: 61353411224531644}
   _virtualCamera: {fileID: 0}
-  _flipSpawnedPlayer: 0
   _enterPossessionModeSound: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922,
     type: 3}
   _exitPossessionModeSound: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a,
