@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UI
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 512
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 5bebbe3201024a04fa1fcd1c353c5a2a, type: 3}
+    - {fileID: 102900000, guid: 30927499f073ef645a661dd18aa7e28b, type: 3}
+    - {fileID: 102900000, guid: c6c526df5322c1a429adbc6ea253741f, type: 3}
+    totalSpriteSurfaceArea: 45690
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: e69348b0783c2434095fb4965738d442, type: 3}
+  - {fileID: 21300000, guid: 8d2bf07190059b04cb42d770aa6a6e23, type: 3}
+  - {fileID: 21300000, guid: a3e50765f31c038419127946f55ee67d, type: 3}
+  - {fileID: 21300000, guid: 9a800727c22902c49aff75a6d6de6668, type: 3}
+  - {fileID: 21300000, guid: 44839368579d5064d805c17bd100ea8f, type: 3}
+  - {fileID: 21300002, guid: 44839368579d5064d805c17bd100ea8f, type: 3}
+  - {fileID: 21300006, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
+  - {fileID: 21300004, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
+  - {fileID: 21300002, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
+  - {fileID: 21300000, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
+  - {fileID: 21300008, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - slash
+  - health_bar
+  - 360_RB
+  - Keyboard_White_E
+  - ability_frame_0
+  - ability_frame_1
+  - Dash Ready_3
+  - Dash Ready_2
+  - Dash Ready_1
+  - Dash Ready_0
+  - Dash Ready_4
+  m_Tag: UI
+  m_IsVariant: 0

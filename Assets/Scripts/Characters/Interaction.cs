@@ -38,7 +38,10 @@ public class Interaction : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        _interactable.ShowInteractable(false);
-        _interactable = null;
+        if (_interactable != null)
+        {
+            _interactable.ShowInteractable(false);
+            _interactable = null;
+        }
     }
 }

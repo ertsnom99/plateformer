@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SunnylandCharacter
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 256
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 568a44ad60821451c8f1c519a34666ef, type: 3}
+    - {fileID: 102900000, guid: a6784c39dc28a4834b763f55ec9d0408, type: 3}
+    - {fileID: 102900000, guid: 731f9b2c4592c4e36bf859ade76b4d66, type: 3}
+    - {fileID: 102900000, guid: 36eea592e53a047d6be03259ef1ee568, type: 3}
+    - {fileID: 102900000, guid: e09af67f02cee6847823c1d0ba6ed58d, type: 3}
+    - {fileID: 102900000, guid: 5fefa841a6cb848418973ade536f0ff4, type: 3}
+    totalSpriteSurfaceArea: 35904
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: a01c6291f0da0c341896860d462e0b27, type: 3}
+  - {fileID: 21300000, guid: c8a742c1f2ebb43b9afe34a47304c051, type: 3}
+  - {fileID: 21300000, guid: d152ffa2b0a595a43b98f36aeb2b51af, type: 3}
+  - {fileID: 21300000, guid: 8afd73b29f8e34c70b0db80184b8cc7f, type: 3}
+  - {fileID: 21300000, guid: 8bc3c2c2a565342aab778fd8e874313a, type: 3}
+  - {fileID: 21300000, guid: af314424f59d946469a97f398e8de53f, type: 3}
+  - {fileID: 21300000, guid: a85f3724632254a6cb24066dc54cbf60, type: 3}
+  - {fileID: 21300000, guid: 72de0c64f2c6a498096698322c976a67, type: 3}
+  - {fileID: 21300006, guid: a82497b45ab6def40947578a8ca352d0, type: 3}
+  - {fileID: 21300004, guid: a82497b45ab6def40947578a8ca352d0, type: 3}
+  - {fileID: 21300002, guid: a82497b45ab6def40947578a8ca352d0, type: 3}
+  - {fileID: 21300000, guid: a82497b45ab6def40947578a8ca352d0, type: 3}
+  - {fileID: 21300000, guid: 598fb1767626f42e992bb9c2769d86ea, type: 3}
+  - {fileID: 21300000, guid: f58cc0961cc9146ca9780a0cb1327e5d, type: 3}
+  - {fileID: 21300000, guid: 05a54bb67325c584c87f91164590164a, type: 3}
+  - {fileID: 21300000, guid: aec86ee617ece7c43bd7cedc7e0996a3, type: 3}
+  - {fileID: 21300000, guid: 5d956e2763699304199558ce60e05f81, type: 3}
+  - {fileID: 21300000, guid: c123c318507c6405a869f2f89068cf06, type: 3}
+  - {fileID: 21300000, guid: e2976d09b53264ffbbb9210a1ae1dcc0, type: 3}
+  - {fileID: 21300000, guid: 077f0469c420a4365bc67943783293df, type: 3}
+  - {fileID: 21300000, guid: efd1c64ae2d409b4280d25a6548b610d, type: 3}
+  - {fileID: 21300000, guid: d094cf6ac3d8a4d0bbbef5d6d6ad3eed, type: 3}
+  - {fileID: 21300002, guid: 015efadadf4443b4b9bd66e282e67978, type: 3}
+  - {fileID: 21300000, guid: 015efadadf4443b4b9bd66e282e67978, type: 3}
+  - {fileID: 21300000, guid: bc3fcf1d561104bea933686de6bade4b, type: 3}
+  - {fileID: 21300000, guid: 3f59d4fdf4fe04ab79f11dadde82fe8c, type: 3}
+  - {fileID: 21300000, guid: 3898cc5ec94b6f340a3952df2fc649e2, type: 3}
+  - {fileID: 21300002, guid: 3898cc5ec94b6f340a3952df2fc649e2, type: 3}
+  - {fileID: 21300004, guid: d59dc6ce424ebfb488a84f26c7e696f3, type: 3}
+  - {fileID: 21300006, guid: d59dc6ce424ebfb488a84f26c7e696f3, type: 3}
+  - {fileID: 21300000, guid: d59dc6ce424ebfb488a84f26c7e696f3, type: 3}
+  - {fileID: 21300002, guid: d59dc6ce424ebfb488a84f26c7e696f3, type: 3}
+  - {fileID: 21300008, guid: d59dc6ce424ebfb488a84f26c7e696f3, type: 3}
+  - {fileID: 21300010, guid: d59dc6ce424ebfb488a84f26c7e696f3, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - player_airborne_jump_possess_mode
+  - player-idle-2
+  - player-airborne-jump-1
+  - player-run-1
+  - player-idle-4
+  - player-run-6
+  - player-hurt-2
+  - player-idle-1
+  - player_idle_possess_mode_3
+  - player_idle_possess_mode_2
+  - player_idle_possess_mode_1
+  - player_idle_possess_mode_0
+  - player-jump-2
+  - player-run-5
+  - player-wall-slide-1
+  - player_dash_possess_mode
+  - player_wall_slide_possess_mode
+  - player-hurt-1
+  - player-jump-1
+  - player-idle-3
+  - player-dash-1
+  - player-run-2
+  - player_jump_possess_mode_1
+  - player_jump_possess_mode_0
+  - player-run-4
+  - player-run-3
+  - player_hurt_possess_mode_0
+  - player_hurt_possess_mode_1
+  - player_run_possess_mode_2
+  - player_run_possess_mode_3
+  - player_run_possess_mode_0
+  - player_run_possess_mode_1
+  - player_run_possess_mode_4
+  - player_run_possess_mode_5
+  m_Tag: SunnylandCharacter
+  m_IsVariant: 0
