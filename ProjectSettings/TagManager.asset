@@ -50,14 +50,11 @@ TagManager:
   - name: BehindPlatformes
     uniqueID: 1411272273
     locked: 0
-  - name: Platforms
-    uniqueID: 1011929847
-    locked: 0
-  - name: Texts
-    uniqueID: 926022953
-    locked: 0
   - name: Player
     uniqueID: 4144600267
+    locked: 0
+  - name: Platforms
+    uniqueID: 1011929847
     locked: 0
   - name: InFrontPlatformes
     uniqueID: 854317771

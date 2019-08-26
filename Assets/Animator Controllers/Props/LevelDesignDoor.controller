@@ -6,7 +6,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Door
+  m_Name: LevelDesignDoor
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: IsOpen
@@ -167,7 +167,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: af27194b1f1b1564990c9230fade46cb, type: 2}
+  m_Motion: {fileID: 7400000, guid: 91174a4ff70c30b4ba18dd1d10e5d531, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -195,7 +195,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: a16097c2a6311564682506e3aadac7f1, type: 2}
+  m_Motion: {fileID: 7400000, guid: 0387c953b7c50eb45aaaf7c92c74afa6, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -222,7 +222,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 1c4e2befb6eefa0408cc504fb51022a0, type: 2}
+  m_Motion: {fileID: 7400000, guid: 59973791f1763424bbdc7f8560e9b97a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -250,7 +250,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 8309408a5f02f9741987372e4094f67f, type: 2}
+  m_Motion: {fileID: 7400000, guid: 86072b783e6353f49928e1960853ed95, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

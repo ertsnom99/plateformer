@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Destroyed
+  m_Name: SunnylandIntactWall
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -22,7 +22,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 3.197423
+        value: 1.5
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -41,7 +41,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.60515404
+        value: 4
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -58,7 +58,8 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300002, guid: 025f50378813d2741990a9e6ff8b840a, type: 3}
+      value: {fileID: 8050503788446984493, guid: c818aa4551b3c4a44bb64c4d0be31eda,
+        type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -92,7 +93,7 @@ AnimationClip:
       customType: 0
       isPPtrCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300002, guid: 025f50378813d2741990a9e6ff8b840a, type: 3}
+    - {fileID: 8050503788446984493, guid: c818aa4551b3c4a44bb64c4d0be31eda, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -119,7 +120,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 3.197423
+        value: 1.5
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -138,7 +139,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.60515404
+        value: 4
         inSlope: 0
         outSlope: 0
         tangentMode: 136
