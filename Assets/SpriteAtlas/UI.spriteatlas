@@ -45,7 +45,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 5bebbe3201024a04fa1fcd1c353c5a2a, type: 3}
     - {fileID: 102900000, guid: 30927499f073ef645a661dd18aa7e28b, type: 3}
     - {fileID: 102900000, guid: c6c526df5322c1a429adbc6ea253741f, type: 3}
-    totalSpriteSurfaceArea: 45690
+    totalSpriteSurfaceArea: 65690
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -60,6 +60,7 @@ SpriteAtlas:
   - {fileID: 21300002, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
   - {fileID: 21300000, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
   - {fileID: 21300008, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
+  - {fileID: 21300000, guid: a779095e94ae49043aa68b131a241559, type: 3}
   m_PackedSpriteNamesToIndex:
   - slash
   - health_bar
@@ -72,5 +73,6 @@ SpriteAtlas:
   - Dash Ready_1
   - Dash Ready_0
   - Dash Ready_4
+  - info_window
   m_Tag: UI
   m_IsVariant: 0

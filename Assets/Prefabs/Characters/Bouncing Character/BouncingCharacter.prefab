@@ -100,6 +100,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -110,7 +111,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -60248483
-  m_SortingLayer: 8
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 60828feaa4d55fb43979c4858852bfdf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -299,13 +300,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UseKeyboard: 0
   _isPossessable: 1
-  _infoUI: {fileID: 0}
+  InfoUI: {fileID: 0}
   PossessionVirtualCamera: {fileID: 0}
   OnPossessSound: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922, type: 3}
   OnUnpossessSound: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a, type: 3}
   LeftPlayerSpawn: {fileID: 5796487222706351456}
   RightPlayerSpawn: {fileID: 2278900157534239992}
-  FlipPlayerSpawn: 0
   Target: {fileID: 0}
   _distanceToDetect: 10
   StopDistanceToTarget: 0.4
@@ -516,7 +516,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 861831561360637805}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -732,6 +732,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -742,7 +743,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -60248483
-  m_SortingLayer: 8
+  m_SortingLayer: 7
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: daa861275464b114ea5819d7a71eb0fd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -881,7 +882,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8972457179208426314}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
@@ -903,7 +904,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8972457179208426314}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1

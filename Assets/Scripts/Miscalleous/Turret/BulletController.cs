@@ -65,6 +65,7 @@ public class BulletController : PossessableCharacterController, IPhysicsCollisio
             inputs.Vertical = Input.GetAxisRaw("Vertical");
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
             inputs.Possess = Input.GetButtonDown("Possess");
+            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
         }
         else
         {
@@ -72,6 +73,7 @@ public class BulletController : PossessableCharacterController, IPhysicsCollisio
             inputs.Vertical = Input.GetAxisRaw("Vertical");
             inputs.Horizontal = Input.GetAxisRaw("Horizontal");
             inputs.Possess = Input.GetButtonDown("Possess");
+            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
         }
 
         return inputs;
