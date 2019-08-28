@@ -143,6 +143,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -153,7 +154,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -60248483
-  m_SortingLayer: 8
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a8795ca0f4ea8d845bc799e6c4d254a0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -344,6 +345,7 @@ TrailRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -354,7 +356,7 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -60248483
-  m_SortingLayer: 8
+  m_SortingLayer: 7
   m_SortingOrder: -1
   m_Time: 0.12
   m_Parameters:
@@ -502,7 +504,7 @@ MonoBehaviour:
   _bounciness: 1
   _bounceFreezeDuration: 0
   BounceMaxTry: 100
-  _bounceHasStopCondition: 1
+  _bounceHasStopCondition: 0
   _freezeWhenStopConditionReached: 0
   _bounceSound: {fileID: 8300000, guid: 97753f95fd25e2c41a5ac7c8e9e5d310, type: 3}
   _bounceStopCondition: 1

@@ -1,0 +1,124 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AICharacter
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 512
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: b300280444f95ec4fa2c7623298ad008, type: 3}
+    - {fileID: 102900000, guid: f0e2de7722bd37e43bb441e9bef320b0, type: 3}
+    - {fileID: 102900000, guid: 8892ad7dec35ad4449675b886f122ed4, type: 3}
+    totalSpriteSurfaceArea: 18464
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300008, guid: 65196e40664e2a54ea6f3754e2497bf7, type: 3}
+  - {fileID: 21300010, guid: 65196e40664e2a54ea6f3754e2497bf7, type: 3}
+  - {fileID: 21300012, guid: 65196e40664e2a54ea6f3754e2497bf7, type: 3}
+  - {fileID: 21300014, guid: 65196e40664e2a54ea6f3754e2497bf7, type: 3}
+  - {fileID: 21300000, guid: 65196e40664e2a54ea6f3754e2497bf7, type: 3}
+  - {fileID: 21300002, guid: 65196e40664e2a54ea6f3754e2497bf7, type: 3}
+  - {fileID: 21300004, guid: 65196e40664e2a54ea6f3754e2497bf7, type: 3}
+  - {fileID: 21300006, guid: 65196e40664e2a54ea6f3754e2497bf7, type: 3}
+  - {fileID: 21300002, guid: 44ba89c13c21c7148a352d0853cb7da7, type: 3}
+  - {fileID: 21300000, guid: 44ba89c13c21c7148a352d0853cb7da7, type: 3}
+  - {fileID: 21300004, guid: ae451942192c3064786fe787f6d44c21, type: 3}
+  - {fileID: 21300006, guid: ae451942192c3064786fe787f6d44c21, type: 3}
+  - {fileID: 21300000, guid: ae451942192c3064786fe787f6d44c21, type: 3}
+  - {fileID: 21300002, guid: ae451942192c3064786fe787f6d44c21, type: 3}
+  - {fileID: 21300002, guid: 89222915e9ed3ed44bbb794ec430535e, type: 3}
+  - {fileID: 21300000, guid: 89222915e9ed3ed44bbb794ec430535e, type: 3}
+  - {fileID: 21300002, guid: 6d1f641683f37ea4983051a19b7c240f, type: 3}
+  - {fileID: 21300000, guid: 6d1f641683f37ea4983051a19b7c240f, type: 3}
+  - {fileID: 21300002, guid: f02e855997e9a814bb7749bd47954558, type: 3}
+  - {fileID: 21300000, guid: f02e855997e9a814bb7749bd47954558, type: 3}
+  - {fileID: 21300000, guid: a3ed4b8941c8783459a36cbbeafd5462, type: 3}
+  - {fileID: 21300002, guid: a3ed4b8941c8783459a36cbbeafd5462, type: 3}
+  - {fileID: 21300004, guid: a3ed4b8941c8783459a36cbbeafd5462, type: 3}
+  - {fileID: 21300006, guid: a3ed4b8941c8783459a36cbbeafd5462, type: 3}
+  - {fileID: 21300012, guid: b84a5acab4402ce459c9d4e17708ade8, type: 3}
+  - {fileID: 21300014, guid: b84a5acab4402ce459c9d4e17708ade8, type: 3}
+  - {fileID: 21300008, guid: b84a5acab4402ce459c9d4e17708ade8, type: 3}
+  - {fileID: 21300010, guid: b84a5acab4402ce459c9d4e17708ade8, type: 3}
+  - {fileID: 21300004, guid: b84a5acab4402ce459c9d4e17708ade8, type: 3}
+  - {fileID: 21300006, guid: b84a5acab4402ce459c9d4e17708ade8, type: 3}
+  - {fileID: 21300000, guid: b84a5acab4402ce459c9d4e17708ade8, type: 3}
+  - {fileID: 21300002, guid: b84a5acab4402ce459c9d4e17708ade8, type: 3}
+  - {fileID: 21300002, guid: 60828feaa4d55fb43979c4858852bfdf, type: 3}
+  - {fileID: 21300000, guid: 60828feaa4d55fb43979c4858852bfdf, type: 3}
+  - {fileID: 21300000, guid: 3e8b0dab49d7c9149a83c4ba7db834bf, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - bomb_walk_4
+  - bomb_walk_5
+  - bomb_walk_6
+  - bomb_walk_7
+  - bomb_walk_0
+  - bomb_walk_1
+  - bomb_walk_2
+  - bomb_walk_3
+  - bomb_airborne_1
+  - bomb_airborne_0
+  - bomb_fly_possessed_mode_2
+  - bomb_fly_possessed_mode_3
+  - bomb_fly_possessed_mode_0
+  - bomb_fly_possessed_mode_1
+  - bomb_airborne_possessed_mode_1
+  - bomb_airborne_possessed_mode_0
+  - Canon_1
+  - Canon_0
+  - bomb_idle_possessed_mode_1
+  - bomb_idle_possessed_mode_0
+  - bomb_fly_0
+  - bomb_fly_1
+  - bomb_fly_2
+  - bomb_fly_3
+  - bomb_walk_possessed_mode_6
+  - bomb_walk_possessed_mode_7
+  - bomb_walk_possessed_mode_4
+  - bomb_walk_possessed_mode_5
+  - bomb_walk_possessed_mode_2
+  - bomb_walk_possessed_mode_3
+  - bomb_walk_possessed_mode_0
+  - bomb_walk_possessed_mode_1
+  - bomb_idle_1
+  - bomb_idle_0
+  - Bullet
+  m_Tag: AICharacter
+  m_IsVariant: 0

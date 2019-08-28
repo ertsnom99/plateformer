@@ -43,50 +43,95 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 15e7312e0607f4e84aeacdc44a70744c, type: 3}
-    totalSpriteSurfaceArea: 27900
+    - {fileID: 102900000, guid: 1adcdfae01120e844877b81e969af867, type: 3}
+    totalSpriteSurfaceArea: 47612
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 15fdc3c0ac15e4a62b3f968392db8b58, type: 3}
   - {fileID: 21300000, guid: 42820af2772f24bda991ed7de294c2fd, type: 3}
   - {fileID: 21300000, guid: a86fabb3151544d25b4310ff397f732a, type: 3}
+  - {fileID: 21300000, guid: ec57b01467f41a848a2b78e3485aaf70, type: 3}
   - {fileID: 21300000, guid: d3240c946631a4966b1bcab3db999126, type: 3}
   - {fileID: 21300000, guid: 3fc2bbd409bf34ab6af1637bab569da1, type: 3}
+  - {fileID: 8050503788446984493, guid: c818aa4551b3c4a44bb64c4d0be31eda, type: 3}
+  - {fileID: 9149016416072358212, guid: c818aa4551b3c4a44bb64c4d0be31eda, type: 3}
   - {fileID: 21300000, guid: f7187675ec12e4aacaeb0e97ad31230a, type: 3}
   - {fileID: 21300000, guid: f34e83b5f0fe1432cb87276148dc6341, type: 3}
   - {fileID: 21300000, guid: 8a8849b7b8b964564b9e89cb1ded0658, type: 3}
+  - {fileID: -6071069297032702116, guid: 2a880f8869e78c448bc49e968228d5a2, type: 3}
+  - {fileID: -3807129804340516234, guid: 2a880f8869e78c448bc49e968228d5a2, type: 3}
+  - {fileID: -8552459177450350272, guid: 2a880f8869e78c448bc49e968228d5a2, type: 3}
+  - {fileID: -4678196849941243566, guid: 2a880f8869e78c448bc49e968228d5a2, type: 3}
   - {fileID: 21300000, guid: ecc204495234d40f091d828790c56287, type: 3}
   - {fileID: 21300000, guid: 3604a08945c65491a9ffb90ad9a8ff57, type: 3}
   - {fileID: 21300000, guid: 441a2d89600064d4d9ced045b19d0ae6, type: 3}
   - {fileID: 21300000, guid: 0049772a1acaf4a49b69bb504ffe2669, type: 3}
   - {fileID: 21300000, guid: c6803a2a3fe7f45e786b788e8ddb6771, type: 3}
+  - {fileID: 6120828302021355006, guid: 784a9a2acc006fc41a644fb54d3fd960, type: 3}
+  - {fileID: -1645343904410133727, guid: 784a9a2acc006fc41a644fb54d3fd960, type: 3}
   - {fileID: 21300000, guid: 52422ada2db954026a3ae1f1ba6b4486, type: 3}
+  - {fileID: -7071591918560520063, guid: 05be12ebbebcf374cb5933a42016a701, type: 3}
+  - {fileID: 2077007443631081825, guid: 05be12ebbebcf374cb5933a42016a701, type: 3}
+  - {fileID: -586145302859610062, guid: 05be12ebbebcf374cb5933a42016a701, type: 3}
+  - {fileID: -4556502707646377933, guid: 05be12ebbebcf374cb5933a42016a701, type: 3}
+  - {fileID: -8152419144668868570, guid: 05be12ebbebcf374cb5933a42016a701, type: 3}
+  - {fileID: 186326400620141583, guid: 05be12ebbebcf374cb5933a42016a701, type: 3}
+  - {fileID: 7164076784303596291, guid: 05be12ebbebcf374cb5933a42016a701, type: 3}
+  - {fileID: -3281766924027595374, guid: 05be12ebbebcf374cb5933a42016a701, type: 3}
+  - {fileID: 9047154144006741232, guid: 05be12ebbebcf374cb5933a42016a701, type: 3}
   - {fileID: 21300000, guid: 5bccf13ce09bd43e39c1c3416d5de92c, type: 3}
   - {fileID: 21300000, guid: d3ae29bc873704d6197af9ad030f1b1c, type: 3}
   - {fileID: 21300000, guid: 794aa25d484d140d89ea9601c122ece0, type: 3}
   - {fileID: 21300000, guid: a225befe4953547da8c4133e5d585029, type: 3}
   - {fileID: 21300000, guid: 8a26d60fb45014bcd9bb392106f7c98b, type: 3}
   - {fileID: 21300000, guid: f106f73fc33df4c4d9a3e8a5cb54db28, type: 3}
+  - {fileID: -559138120215411996, guid: a552ecafcbacffd44bdae8897e501ce6, type: 3}
+  - {fileID: 4850348480277163552, guid: a552ecafcbacffd44bdae8897e501ce6, type: 3}
+  - {fileID: -6864231125433406560, guid: a552ecafcbacffd44bdae8897e501ce6, type: 3}
+  - {fileID: -1439347449851068971, guid: a552ecafcbacffd44bdae8897e501ce6, type: 3}
   m_PackedSpriteNamesToIndex:
   - platform-long
   - sign
   - skulls
+  - sunnyland_spiked_block
   - crank-down
   - big-crate
+  - sunnyland_destroyable_wall_0
+  - sunnyland_destroyable_wall_1
   - tree
   - face-block
   - block
+  - spikes_extra_0
+  - spikes_extra_1
+  - spikes_extra_2
+  - spikes_extra_3
   - bush
   - rock
   - crank-up
   - spikes
   - spikes-top
+  - sunnyland_button_1
+  - sunnyland_button_0
   - house
+  - sunnyland_door_3
+  - sunnyland_door_2
+  - sunnyland_door_1
+  - sunnyland_door_0
+  - sunnyland_door_7
+  - sunnyland_door_6
+  - sunnyland_door_5
+  - sunnyland_door_4
+  - sunnyland_door_8
   - block-big
   - small-platform
   - crate
   - spike-skull
   - door
   - shrooms
+  - retractable_spikes_1
+  - retractable_spikes_0
+  - retractable_spikes_3
+  - retractable_spikes_2
   m_Tag: SunnylandProps
   m_IsVariant: 0
