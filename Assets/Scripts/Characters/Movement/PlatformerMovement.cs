@@ -494,6 +494,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
         // Set the movement
         TargetHorizontalVelocity = knockBackVelocity.x;
+        
         AddJumpImpulse(knockBackVelocity.y);
 
         IsKnockedBack = true;
@@ -501,6 +502,11 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         // Start delay for controls
         _horizontalControlDelayCoroutine = DelayHorizontalControl(knockBackDelay);
         StartCoroutine(_horizontalControlDelayCoroutine);
+    }
+
+    public void EndKnockBack()
+    {
+        EndDelayedHorizontalControl();
     }
 
     // Jump related methods

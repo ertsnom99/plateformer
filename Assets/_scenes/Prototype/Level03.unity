@@ -11375,6 +11375,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 195482035452227958, guid: deff25f3c76ab9f4f94d81e3843d32cb,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1894905376}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deff25f3c76ab9f4f94d81e3843d32cb, type: 3}
 --- !u!4 &55522406 stripped
@@ -11617,6 +11622,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 195482035452227958, guid: deff25f3c76ab9f4f94d81e3843d32cb,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1894905376}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deff25f3c76ab9f4f94d81e3843d32cb, type: 3}
 --- !u!4 &146989053 stripped
@@ -11854,6 +11864,21 @@ PrefabInstance:
       propertyPath: _respawnPos
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 114936160791709362, guid: 250db4e204db7034882f5afdb4e24eb5,
+        type: 3}
+      propertyPath: _kockBackDirection.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114936160791709362, guid: 250db4e204db7034882f5afdb4e24eb5,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1894905376}
+    - target: {fileID: 114936160791709362, guid: 250db4e204db7034882f5afdb4e24eb5,
+        type: 3}
+      propertyPath: FadeDuration
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 61718644529703044, guid: 250db4e204db7034882f5afdb4e24eb5,
         type: 3}
       propertyPath: m_Offset.x
@@ -11945,8 +11970,6 @@ MonoBehaviour:
     Power: 0
     HeldPower: 0
     ReleasePower: 0
-  _fade: {fileID: 1894905376}
-  _fadeDuration: 1
   _sceneToLoad: 2
 --- !u!61 &321131363
 BoxCollider2D:
@@ -12047,6 +12070,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 195482035452227958, guid: deff25f3c76ab9f4f94d81e3843d32cb,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1894905376}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deff25f3c76ab9f4f94d81e3843d32cb, type: 3}
 --- !u!4 &337149822 stripped
@@ -12359,7 +12387,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1725299948315160, guid: 250db4e204db7034882f5afdb4e24eb5, type: 3}
       propertyPath: m_Name
-      value: Respawner
+      value: SpikeRespawner
       objectReference: {fileID: 0}
     - target: {fileID: 4457389696715334, guid: 250db4e204db7034882f5afdb4e24eb5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12414,6 +12442,16 @@ PrefabInstance:
         type: 3}
       propertyPath: _respawnPos
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114936160791709362, guid: 250db4e204db7034882f5afdb4e24eb5,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1894905376}
+    - target: {fileID: 114936160791709362, guid: 250db4e204db7034882f5afdb4e24eb5,
+        type: 3}
+      propertyPath: FadeDuration
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 61718644529703044, guid: 250db4e204db7034882f5afdb4e24eb5,
         type: 3}
@@ -13112,6 +13150,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 195482035452227958, guid: deff25f3c76ab9f4f94d81e3843d32cb,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1894905376}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deff25f3c76ab9f4f94d81e3843d32cb, type: 3}
 --- !u!4 &492224997 stripped
@@ -13262,7 +13305,7 @@ GameObject:
   m_Component:
   - component: {fileID: 563494974}
   m_Layer: 0
-  m_Name: Obstacles
+  m_Name: Spiked Blocks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14608,6 +14651,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 195482035452227958, guid: deff25f3c76ab9f4f94d81e3843d32cb,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1894905376}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deff25f3c76ab9f4f94d81e3843d32cb, type: 3}
 --- !u!4 &871836698 stripped
@@ -23955,7 +24003,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1725299948315160, guid: 250db4e204db7034882f5afdb4e24eb5, type: 3}
       propertyPath: m_Name
-      value: Respawner
+      value: SpikeRespawner
       objectReference: {fileID: 0}
     - target: {fileID: 4457389696715334, guid: 250db4e204db7034882f5afdb4e24eb5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24010,6 +24058,21 @@ PrefabInstance:
         type: 3}
       propertyPath: _respawnPos
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114936160791709362, guid: 250db4e204db7034882f5afdb4e24eb5,
+        type: 3}
+      propertyPath: _kockBackDirection.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114936160791709362, guid: 250db4e204db7034882f5afdb4e24eb5,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1894905376}
+    - target: {fileID: 114936160791709362, guid: 250db4e204db7034882f5afdb4e24eb5,
+        type: 3}
+      propertyPath: FadeDuration
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 61718644529703044, guid: 250db4e204db7034882f5afdb4e24eb5,
         type: 3}
@@ -24370,6 +24433,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 195482035452227958, guid: deff25f3c76ab9f4f94d81e3843d32cb,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1894905376}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deff25f3c76ab9f4f94d81e3843d32cb, type: 3}
 --- !u!4 &1072664405 stripped
@@ -24548,7 +24616,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1725299948315160, guid: 250db4e204db7034882f5afdb4e24eb5, type: 3}
       propertyPath: m_Name
-      value: Respawner
+      value: SpikeRespawner
       objectReference: {fileID: 0}
     - target: {fileID: 4457389696715334, guid: 250db4e204db7034882f5afdb4e24eb5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24603,6 +24671,21 @@ PrefabInstance:
         type: 3}
       propertyPath: _respawnPos
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114936160791709362, guid: 250db4e204db7034882f5afdb4e24eb5,
+        type: 3}
+      propertyPath: _kockBackDirection.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114936160791709362, guid: 250db4e204db7034882f5afdb4e24eb5,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1894905376}
+    - target: {fileID: 114936160791709362, guid: 250db4e204db7034882f5afdb4e24eb5,
+        type: 3}
+      propertyPath: FadeDuration
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 61718644529703044, guid: 250db4e204db7034882f5afdb4e24eb5,
         type: 3}
@@ -24956,6 +25039,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 195482035452227958, guid: deff25f3c76ab9f4f94d81e3843d32cb,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1894905376}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deff25f3c76ab9f4f94d81e3843d32cb, type: 3}
 --- !u!4 &1171479066 stripped
@@ -25031,6 +25119,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 195482035452227958, guid: deff25f3c76ab9f4f94d81e3843d32cb,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1894905376}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deff25f3c76ab9f4f94d81e3843d32cb, type: 3}
 --- !u!4 &1186359611 stripped
@@ -25568,6 +25661,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 195482035452227958, guid: deff25f3c76ab9f4f94d81e3843d32cb,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1894905376}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deff25f3c76ab9f4f94d81e3843d32cb, type: 3}
 --- !u!4 &1309899229 stripped
@@ -26541,6 +26639,7 @@ MonoBehaviour:
     Power: 0
     HeldPower: 0
     ReleasePower: 0
+  _nextLevelFadeDuration: 0
 --- !u!4 &1588201105
 Transform:
   m_ObjectHideFlags: 0
@@ -26639,7 +26738,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1707887533}
   m_Layer: 0
-  m_Name: Respawners
+  m_Name: Spike Respawners
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27998,6 +28097,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 195482035452227958, guid: deff25f3c76ab9f4f94d81e3843d32cb,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1894905376}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deff25f3c76ab9f4f94d81e3843d32cb, type: 3}
 --- !u!4 &2084019578 stripped
@@ -28259,6 +28363,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 195482035452227958, guid: deff25f3c76ab9f4f94d81e3843d32cb,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1894905376}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deff25f3c76ab9f4f94d81e3843d32cb, type: 3}
 --- !u!1001 &4722981874735391377
