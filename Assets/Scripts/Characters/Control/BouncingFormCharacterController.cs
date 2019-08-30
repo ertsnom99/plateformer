@@ -51,10 +51,7 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
 
         if (inputs.ReleasePower)
         {
-            foreach (IBouncingFormControllerSubscriber subscriber in Subscribers)
-            {
-                subscriber.NotifyCanceledBounce();
-            }
+            CancelBounce();
         }
 
         UpdateDisplayInfo(inputs);
@@ -81,6 +78,14 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
         }
 
         return inputs;
+    }
+
+    public void CancelBounce()
+    {
+        foreach (IBouncingFormControllerSubscriber subscriber in Subscribers)
+        {
+            subscriber.NotifyCanceledBounce();
+        }
     }
 
     protected override void OnUpdateNotPossessed() { }

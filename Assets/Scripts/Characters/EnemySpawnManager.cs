@@ -14,9 +14,10 @@ public struct EnemySpawnSetting
     public float DistanceToDetect;
     public GameObject InfoUI;
     public float SpawnDelay;
+    public bool Respawn;
 }
 
-public class EnemySpawnManager : MonoBehaviour, IProximityExplodableSubscriber
+public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>, IProximityExplodableSubscriber
 {
     [Header("Spawn")]
     [SerializeField]
@@ -32,7 +33,7 @@ public class EnemySpawnManager : MonoBehaviour, IProximityExplodableSubscriber
             {
                 _spawnSettings[i].CurrentEnemie.Subscribe(this);
             }
-            else
+            else if (_spawnSettings[i].Respawn)
             {
                 StartCoroutine(SpawnEnemie(i));
             }
@@ -62,6 +63,21 @@ public class EnemySpawnManager : MonoBehaviour, IProximityExplodableSubscriber
         _spawnEnemies = spawnEnemie;
     }
 
+    public Vector3 GetSpawnPosition(GameObject enemie)
+    {
+        Vector3 spawnPosition = Vector3.zero;
+
+        foreach(EnemySpawnSetting spawnSetting in _spawnSettings)
+        {
+            if (spawnSetting.SpawnedEnemie == enemie)
+            {
+                spawnPosition = spawnSetting.SpawnPosition.position;
+            }
+        }
+
+        return spawnPosition;
+    }
+
     // Methods of the IProximityExplodableSubscriber interface
     public void NotifyCountdownStarted(GameObject explodableGameObject, float timeRemaining) { }
 
@@ -75,7 +91,7 @@ public class EnemySpawnManager : MonoBehaviour, IProximityExplodableSubscriber
         {
             for (int i = 0; i < _spawnSettings.Length; i++)
             {
-                if (_spawnSettings[i].CurrentEnemie.gameObject == explodableGameObject)
+                if (_spawnSettings[i].CurrentEnemie.gameObject == explodableGameObject && _spawnSettings[i].Respawn)
                 {
                     StartCoroutine(SpawnEnemie(i));
                     break;

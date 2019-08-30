@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SpikeRespawner : KnockedBackRespawner
+public class SpikeRespawner : KnockBackRespawner
 {
     [SerializeField]
     private Vector3 _kockBackDirection = new Vector3(.0f, 1.0f, .0f);

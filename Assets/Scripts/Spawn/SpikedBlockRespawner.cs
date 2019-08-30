@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SpikedBlockRespawner : KnockedBackRespawner
+public class SpikedBlockRespawner : KnockBackRespawner
 {
     protected override Vector3 CalculateKnockedBackDirection(Collider2D col)
     {
