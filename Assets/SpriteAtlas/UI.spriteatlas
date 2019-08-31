@@ -45,34 +45,42 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 5bebbe3201024a04fa1fcd1c353c5a2a, type: 3}
     - {fileID: 102900000, guid: 30927499f073ef645a661dd18aa7e28b, type: 3}
     - {fileID: 102900000, guid: c6c526df5322c1a429adbc6ea253741f, type: 3}
-    totalSpriteSurfaceArea: 65690
+    totalSpriteSurfaceArea: 105690
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: e69348b0783c2434095fb4965738d442, type: 3}
   - {fileID: 21300000, guid: 8d2bf07190059b04cb42d770aa6a6e23, type: 3}
+  - {fileID: 21300000, guid: f642d0b2c300b2943b11d44b1c9cf3f3, type: 3}
   - {fileID: 21300000, guid: a3e50765f31c038419127946f55ee67d, type: 3}
+  - {fileID: 21300000, guid: 055826d5442f9574cbd6712dde32d023, type: 3}
   - {fileID: 21300000, guid: 9a800727c22902c49aff75a6d6de6668, type: 3}
   - {fileID: 21300000, guid: 44839368579d5064d805c17bd100ea8f, type: 3}
   - {fileID: 21300002, guid: 44839368579d5064d805c17bd100ea8f, type: 3}
+  - {fileID: 21300000, guid: 0fbe1f89b66cd054ca1b3bfc73d0d4c1, type: 3}
   - {fileID: 21300006, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
   - {fileID: 21300004, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
   - {fileID: 21300002, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
   - {fileID: 21300000, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
   - {fileID: 21300008, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
   - {fileID: 21300000, guid: a779095e94ae49043aa68b131a241559, type: 3}
+  - {fileID: 21300000, guid: 7d66af5f4baa7ef43b2f623c84b79eb2, type: 3}
   m_PackedSpriteNamesToIndex:
   - slash
   - health_bar
+  - Keyboard_White_1
   - 360_RB
+  - Keyboard_White_2
   - Keyboard_White_E
   - ability_frame_0
   - ability_frame_1
+  - Keyboard_White_3
   - Dash Ready_3
   - Dash Ready_2
   - Dash Ready_1
   - Dash Ready_0
   - Dash Ready_4
   - info_window
+  - Keyboard_White_Esc
   m_Tag: UI
   m_IsVariant: 0

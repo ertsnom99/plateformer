@@ -67,15 +67,18 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
                         _platformerMovement = col.GetComponent<PlatformerMovement>();
                     }
 
-                    _platformerMovement.KnockBack(knockBackForce, _knockBackDuration);
-
-                    if (!_characterController)
+                    if (_platformerMovement)
                     {
-                        _characterController = characterController;
+                        _platformerMovement.KnockBack(knockBackForce, _knockBackDuration);
 
-                        _characterController.EnableControl(false);
+                        if (!_characterController)
+                        {
+                            _characterController = characterController;
 
-                        Fade.FadeOut(FadeDuration);
+                            _characterController.EnableControl(false);
+
+                            Fade.FadeOut(FadeDuration);
+                        }
                     }
                 }
             }

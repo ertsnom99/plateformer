@@ -21,7 +21,7 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
 
     [Header("Level Change")]
     [SerializeField]
-    private float _nextLevelFadeDuration;
+    private float _nextLevelFadeDuration = 1.0f;
 
     private int _sceneToLoad = -1;
 
@@ -60,7 +60,7 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
 
     protected virtual void Update()
     {
-        if (Input.GetButtonDown("Quit"))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
         }
