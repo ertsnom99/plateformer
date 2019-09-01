@@ -44,12 +44,13 @@ SpriteAtlas:
     packables:
     - {fileID: 102900000, guid: 15e7312e0607f4e84aeacdc44a70744c, type: 3}
     - {fileID: 102900000, guid: 1adcdfae01120e844877b81e969af867, type: 3}
-    totalSpriteSurfaceArea: 47612
+    totalSpriteSurfaceArea: 47972
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 15fdc3c0ac15e4a62b3f968392db8b58, type: 3}
   - {fileID: 21300000, guid: 42820af2772f24bda991ed7de294c2fd, type: 3}
+  - {fileID: 21300000, guid: 61c6a973ae13f784ab232f36e541414f, type: 3}
   - {fileID: 21300000, guid: a86fabb3151544d25b4310ff397f732a, type: 3}
   - {fileID: 21300000, guid: ec57b01467f41a848a2b78e3485aaf70, type: 3}
   - {fileID: 21300000, guid: d3240c946631a4966b1bcab3db999126, type: 3}
@@ -93,6 +94,7 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex:
   - platform-long
   - sign
+  - sunnyland_sign
   - skulls
   - sunnyland_spiked_block
   - crank-down

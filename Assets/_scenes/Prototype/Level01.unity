@@ -386,7 +386,7 @@ MonoBehaviour:
     Power: 0
     HeldPower: 0
     ReleasePower: 0
-  _nextLevelFadeDuration: 0
+  _nextLevelFadeDuration: 1
 --- !u!4 &110130728
 Transform:
   m_ObjectHideFlags: 0
@@ -2813,7 +2813,7 @@ PrefabInstance:
     - target: {fileID: 4432390887977920290, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: m_Name
-      value: ElectricWall
+      value: RetractableSpike
       objectReference: {fileID: 0}
     - target: {fileID: 4432390887977920289, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
@@ -2890,6 +2890,16 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
+    - target: {fileID: 5929399464396104294, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7eecb3b94dea7074a8a5f99601e04dce, type: 3}
 --- !u!4 &477462663 stripped
@@ -3776,7 +3786,7 @@ PrefabInstance:
     - target: {fileID: 4432390887977920290, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: m_Name
-      value: ElectricWall
+      value: RetractableSpike
       objectReference: {fileID: 0}
     - target: {fileID: 4432390887977920289, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
@@ -3853,6 +3863,16 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
+    - target: {fileID: 5929399464396104294, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7eecb3b94dea7074a8a5f99601e04dce, type: 3}
 --- !u!1 &677146363
@@ -56470,7 +56490,7 @@ PrefabInstance:
     - target: {fileID: 4432390887977920290, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: m_Name
-      value: ElectricWall
+      value: RetractableSpike
       objectReference: {fileID: 0}
     - target: {fileID: 4432390887977920289, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
@@ -56547,6 +56567,16 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
+    - target: {fileID: 5929399464396104294, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7eecb3b94dea7074a8a5f99601e04dce, type: 3}
 --- !u!1 &783214985
@@ -56840,7 +56870,7 @@ PrefabInstance:
     - target: {fileID: 4432390887977920290, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: m_Name
-      value: ElectricWall
+      value: RetractableSpike
       objectReference: {fileID: 0}
     - target: {fileID: 4432390887977920289, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
@@ -56917,6 +56947,16 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
+    - target: {fileID: 5929399464396104294, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7eecb3b94dea7074a8a5f99601e04dce, type: 3}
 --- !u!1001 &835134378
@@ -57275,7 +57315,7 @@ PrefabInstance:
     - target: {fileID: 4432390887977920290, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: m_Name
-      value: ElectricWall
+      value: RetractableSpike
       objectReference: {fileID: 0}
     - target: {fileID: 4432390887977920289, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
@@ -57352,6 +57392,16 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
+    - target: {fileID: 5929399464396104294, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7eecb3b94dea7074a8a5f99601e04dce, type: 3}
 --- !u!1 &896763038
@@ -102200,7 +102250,7 @@ PrefabInstance:
     - target: {fileID: 4432390887977920290, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: m_Name
-      value: ElectricWall
+      value: RetractableSpike
       objectReference: {fileID: 0}
     - target: {fileID: 4432390887977920289, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
@@ -102277,6 +102327,16 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
+    - target: {fileID: 5929399464396104294, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7eecb3b94dea7074a8a5f99601e04dce, type: 3}
 --- !u!4 &1138441075 stripped
@@ -146972,7 +147032,7 @@ PrefabInstance:
     - target: {fileID: 4432390887977920290, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: m_Name
-      value: ElectricWall
+      value: RetractableSpike
       objectReference: {fileID: 0}
     - target: {fileID: 4432390887977920289, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
@@ -147053,7 +147113,7 @@ PrefabInstance:
     - target: {fileID: 2045393266634905610, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: m_SortingLayer
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
@@ -147075,6 +147135,16 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
+    - target: {fileID: 5929399464396104294, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7eecb3b94dea7074a8a5f99601e04dce, type: 3}
 --- !u!4 &1314902004 stripped
@@ -147829,7 +147899,7 @@ PrefabInstance:
     - target: {fileID: 4432390887977920290, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: m_Name
-      value: ElectricWall
+      value: RetractableSpike
       objectReference: {fileID: 0}
     - target: {fileID: 4432390887977920289, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
@@ -147906,6 +147976,16 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
+    - target: {fileID: 5929399464396104294, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7eecb3b94dea7074a8a5f99601e04dce, type: 3}
 --- !u!4 &1421520546 stripped
@@ -149072,7 +149152,7 @@ PrefabInstance:
     - target: {fileID: 4432390887977920290, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: m_Name
-      value: ElectricWall
+      value: RetractableSpike
       objectReference: {fileID: 0}
     - target: {fileID: 4432390887977920289, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
@@ -149149,6 +149229,16 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
+    - target: {fileID: 5929399464396104294, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7eecb3b94dea7074a8a5f99601e04dce, type: 3}
 --- !u!1 &1663670580
@@ -149806,7 +149896,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1836525570}
   m_Layer: 0
-  m_Name: Hazard Walls
+  m_Name: RetractableSpikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149932,7 +150022,7 @@ PrefabInstance:
     - target: {fileID: 4432390887977920290, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: m_Name
-      value: ElectricWall
+      value: RetractableSpike
       objectReference: {fileID: 0}
     - target: {fileID: 4432390887977920289, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
@@ -150009,6 +150099,16 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
+    - target: {fileID: 5929399464396104294, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7eecb3b94dea7074a8a5f99601e04dce, type: 3}
 --- !u!1 &1921815074

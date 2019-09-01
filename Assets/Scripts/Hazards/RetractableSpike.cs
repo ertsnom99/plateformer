@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(BoxCollider2D))]
 
-public class ElectricWall : MonoBehaviour
+public class RetractableSpike : MonoBehaviour
 {
     [Header("Activation")]
     [SerializeField]
@@ -52,14 +52,6 @@ public class ElectricWall : MonoBehaviour
         else
         {
             StartCoroutine(ChangeActivation(_inactiveDuration, true));
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.CompareTag(GameManager.PlayerTag))
-        {
-            col.transform.position = SpawnManager.Instance.SpawnPosition;
         }
     }
 }

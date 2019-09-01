@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 2045393266634905610}
   - component: {fileID: 4432390887977920288}
   - component: {fileID: 4432390887977920295}
+  - component: {fileID: 7416170687768596087}
   m_Layer: 0
-  m_Name: RetractableSpikes
+  m_Name: RetractableSpike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,7 +90,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 854317771
-  m_SortingLayer: 6
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -6864231125433406560, guid: a552ecafcbacffd44bdae8897e501ce6,
     type: 3}
@@ -144,3 +145,19 @@ MonoBehaviour:
   _firstActiveDelay: 3
   _activeDuration: 2
   _inactiveDuration: 1
+--- !u!114 &7416170687768596087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4432390887977920290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ce9b4abee5cf8b47be83aabaa3b54d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Fade: {fileID: 0}
+  FadeDuration: 0.25
+  _knockBackStrength: 12
+  _knockBackDuration: 0.3

@@ -26877,7 +26877,7 @@ MonoBehaviour:
     Power: 0
     HeldPower: 0
     ReleasePower: 0
-  _nextLevelFadeDuration: 0
+  _nextLevelFadeDuration: 1
 --- !u!4 &1588201105
 Transform:
   m_ObjectHideFlags: 0
