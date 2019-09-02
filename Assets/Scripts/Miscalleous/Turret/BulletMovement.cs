@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 // This script requires thoses components and will be added if they aren't already there
@@ -22,7 +23,7 @@ public class BulletMovement : MonoBehaviour
 
     [Header("Collision")]
     [SerializeField]
-    protected Collider2D Collider;
+    private Collider2D _collider;
     [SerializeField]
     private bool _updateContactFilterLayerMask = false;
 
@@ -46,7 +47,7 @@ public class BulletMovement : MonoBehaviour
 
         _collisionListeners = GetComponentsInChildren<IPhysicsCollision2DListener>();
 
-        if (!Collider)
+        if (!_collider)
         {
             Debug.LogError("No collider was set for " + GetType() + " script of " + gameObject.name + "!");
         }
@@ -95,6 +96,8 @@ public class BulletMovement : MonoBehaviour
             ContactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
         }
 
+        HitBufferList.Clear();
+
         // Calculate Velocity
         _velocity = (Vector2)transform.right.normalized * _speed;
 
@@ -103,13 +106,8 @@ public class BulletMovement : MonoBehaviour
 
         float distance = movement.magnitude;
 
-        // Backup the list of gameObjects that used to collide and clear the original
-        PreviouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsCollision2DListener[]>(CollidingGameObjects);
-        CollidingGameObjects.Clear();
-
         // Test collision
-        int count = Collider.Cast(movement, ContactFilter, HitBuffer, distance + ShellRadius);
-        HitBufferList.Clear();
+        int count = _collider.Cast(movement, ContactFilter, HitBuffer, distance + ShellRadius);
 
         // Transfer hits to m_hitBufferList
         // m_hitBuffer has always the same number of elements in it, but some might be null.
@@ -121,9 +119,6 @@ public class BulletMovement : MonoBehaviour
 
         foreach (RaycastHit2D hit in HitBufferList)
         {
-            // Check and call collision enter methods
-            CheckCollisionEnter(hit);
-            
             // Calculate how much movement can be done, before hitting something, considering the ShellRadius  
             float modifiedDistance = hit.distance - ShellRadius;
 
@@ -133,64 +128,84 @@ public class BulletMovement : MonoBehaviour
         
         // Apply the movement
         _rigidbody2D.position = _rigidbody2D.position + movement.normalized * distance;
+        
+        StartCoroutine(CallCollisionEvents());
+    }
+
+    protected IEnumerator CallCollisionEvents()
+    {
+        // Make sure to call collision events after the OnCollisionXXX event functions of Unity
+        yield return new WaitForFixedUpdate();
+
+        // Backup the list of gameObjects that used to collide and clear the original
+        PreviouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsCollision2DListener[]>(CollidingGameObjects);
+        CollidingGameObjects.Clear();
+
+        // Check and call collision enter methods
+        foreach (RaycastHit2D hit in HitBufferList)
+        {
+            CheckCollisionEnterAndStay(hit);
+        }
 
         // Check and call collision exit methods
         CheckCollisionExit();
     }
-
-    private void CheckCollisionEnter(RaycastHit2D hit)
+    
+    protected void CheckCollisionEnterAndStay(RaycastHit2D hit)
     {
-        IPhysicsCollision2DListener[] collisionListeners;
+        // Call OnPhysicsObjectCollisionEnter on all script, of this gameobject, that implement the interface
+        Vector2 relativeVelocity = hit.rigidbody ? hit.rigidbody.velocity - _velocity : -_velocity;
 
-        // If the hitted gameObject wasn't previously hitted
-        if (!PreviouslyCollidingGameObject.ContainsKey(hit.collider))
+        PhysicsCollision2D physicsObjectCollision2D = new PhysicsCollision2D(hit.collider,
+                                                                             _collider,
+                                                                             hit.rigidbody,
+                                                                             _rigidbody2D,
+                                                                             hit.transform,
+                                                                             hit.collider.gameObject,
+                                                                             relativeVelocity,
+                                                                             true,
+                                                                             hit.point,
+                                                                             hit.normal);
+
+        foreach (IPhysicsCollision2DListener collisionListener in _collisionListeners)
         {
-            // Call OnBulletMovementCollisionEnter on all script, of this gameobject, that implement the interface
-            Vector2 relativeVelocity = hit.rigidbody ? hit.rigidbody.velocity - _velocity : -_velocity;
-
-            PhysicsCollision2D bulletMovementCollision2D = new PhysicsCollision2D(hit.collider,
-                                                                                 Collider,
-                                                                                 hit.rigidbody,
-                                                                                 _rigidbody2D,
-                                                                                 hit.transform,
-                                                                                 hit.collider.gameObject,
-                                                                                 relativeVelocity,
-                                                                                 true,
-                                                                                 hit.point,
-                                                                                 hit.normal);
-
-            foreach (IPhysicsCollision2DListener collisionListener in _collisionListeners)
+            // If the hitted gameObject wasn't previously hitted
+            if (!PreviouslyCollidingGameObject.ContainsKey(hit.collider))
             {
-                collisionListener.OnPhysicsCollision2DEnter(bulletMovementCollision2D);
+                collisionListener.OnPhysicsCollision2DEnter(physicsObjectCollision2D);
             }
 
-            // Call OnPhysicsObjectCollisionEnter on all script, of the hitted gameobject, that implement the interface
-            collisionListeners = hit.collider.GetComponents<IPhysicsCollision2DListener>();
-
-            if (collisionListeners.Length > 0)
-            {
-                relativeVelocity = hit.rigidbody ? _velocity - hit.rigidbody.velocity : _velocity;
-
-                bulletMovementCollision2D = new PhysicsCollision2D(Collider,
-                                                                  hit.collider,
-                                                                  _rigidbody2D,
-                                                                  hit.rigidbody,
-                                                                  transform,
-                                                                  gameObject,
-                                                                  relativeVelocity,
-                                                                  true,
-                                                                  hit.point,
-                                                                  -hit.normal);
-
-                foreach (IPhysicsCollision2DListener listener in collisionListeners)
-                {
-                    listener.OnPhysicsCollision2DEnter(bulletMovementCollision2D);
-                }
-            }
+            collisionListener.OnPhysicsCollision2DStay(physicsObjectCollision2D);
         }
-        else
+
+        // Call OnPhysicsObjectCollisionEnter on all script, of the hitted gameobject, that implement the interface
+        IPhysicsCollision2DListener[] collisionListeners = hit.collider.GetComponents<IPhysicsCollision2DListener>();
+
+        if (collisionListeners.Length > 0)
         {
-            collisionListeners = PreviouslyCollidingGameObject[hit.collider];
+            relativeVelocity = hit.rigidbody ? _velocity - hit.rigidbody.velocity : _velocity;
+
+            physicsObjectCollision2D = new PhysicsCollision2D(_collider,
+                                                              hit.collider,
+                                                              _rigidbody2D,
+                                                              hit.rigidbody,
+                                                              transform,
+                                                              gameObject,
+                                                              relativeVelocity,
+                                                              true,
+                                                              hit.point,
+                                                              -hit.normal);
+
+            foreach (IPhysicsCollision2DListener listener in collisionListeners)
+            {
+                // If the hitted gameObject wasn't previously hitted
+                if (!PreviouslyCollidingGameObject.ContainsKey(hit.collider))
+                {
+                    listener.OnPhysicsCollision2DEnter(physicsObjectCollision2D);
+                }
+
+                listener.OnPhysicsCollision2DStay(physicsObjectCollision2D);
+            }
         }
 
         // Update the list of currently colliding gameObject
@@ -210,7 +225,7 @@ public class BulletMovement : MonoBehaviour
             {
                 // Call OnPhysicsObjectCollisionExit on all script, of this gameobject, that implement the interface
                 PhysicsCollision2D bulletMovementCollision2D = new PhysicsCollision2D(entry.Key,
-                                                                                     Collider,
+                                                                                     _collider,
                                                                                      entry.Key.attachedRigidbody,
                                                                                      _rigidbody2D,
                                                                                      entry.Key.transform,
@@ -223,7 +238,7 @@ public class BulletMovement : MonoBehaviour
                     collisionListener.OnPhysicsCollision2DExit(bulletMovementCollision2D);
                 }
 
-                bulletMovementCollision2D = new PhysicsCollision2D(Collider,
+                bulletMovementCollision2D = new PhysicsCollision2D(_collider,
                                                                   entry.Key,
                                                                   _rigidbody2D,
                                                                   entry.Key.attachedRigidbody,

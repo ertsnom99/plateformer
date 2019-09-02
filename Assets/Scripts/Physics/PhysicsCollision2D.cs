@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+// Will be called after the OnCollisionXXX event functions of Unity
 public interface IPhysicsCollision2DListener
 {
     void OnPhysicsCollision2DEnter(PhysicsCollision2D collision);

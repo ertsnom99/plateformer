@@ -286,7 +286,7 @@ MonoBehaviour:
   ShellRadius: 0.05
   _rotationSpeed: 2.8
   _speed: 8
-  Collider: {fileID: 3493992365322654141}
+  _collider: {fileID: 3493992365322654141}
   _updateContactFilterLayerMask: 0
 --- !u!114 &325158076011708277
 MonoBehaviour:

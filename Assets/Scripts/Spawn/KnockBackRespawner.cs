@@ -15,7 +15,6 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
     private float _knockBackDuration = .3f;
 
     private CharacterController _characterController;
-    private BouncingFormCharacterController _bouncingFormCharacterController;
     private PlatformerMovement _platformerMovement;
 
     protected virtual void Start()
@@ -49,9 +48,8 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
         {
             BouncingFormCharacterController bouncingFormCharacterController = col.GetComponent<BouncingFormCharacterController>();
 
-            if (bouncingFormCharacterController && bouncingFormCharacterController != _bouncingFormCharacterController)
+            if (bouncingFormCharacterController)
             {
-                _bouncingFormCharacterController = bouncingFormCharacterController;
                 bouncingFormCharacterController.CancelBounce();
             }
             else if (!bouncingFormCharacterController)

@@ -31,14 +31,21 @@ public class PossessableBouncingPhysicsObject : BouncingPhysicsObject
 
                     if (possessionScript && possessionScript.InPossessionMode)
                     {
-                        // Check and call collision enter methods
-                        CheckCollisionEnterAndStay(HitBuffer[index]);
+                        if (!AllHitBufferList.Contains(HitBuffer[0]))
+                        {
+                            AllHitBufferList.Add(HitBuffer[0]);
+                        }
 
                         // Will allow inheriting classes to add logic during the hit checks
                         OnColliderHitCheck(HitBuffer[index]);
                     }
                     else
                     {
+                        if (!AllHitBufferList.Contains(HitBuffer[0]))
+                        {
+                            AllHitBufferList.Add(HitBuffer[0]);
+                        }
+
                         // Update the velocity and the number of bounce
                         OnBounce(HitBuffer[index].normal);
 
@@ -47,9 +54,6 @@ public class PossessableBouncingPhysicsObject : BouncingPhysicsObject
                             // Stop all movement for a moment
                             StartCoroutine(FreezeMovementOnBounce());
                         }
-
-                        // Check and call collision enter methods
-                        CheckCollisionEnterAndStay(HitBuffer[index]);
 
                         // Update how much distance can be done before hitting something  
                         distanceBeforeHit = HitBuffer[index].distance - ShellRadius;

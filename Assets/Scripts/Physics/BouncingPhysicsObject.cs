@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public interface IBouncingPhysicsObjectSubscriber
@@ -120,22 +119,18 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
 
     protected override void FixedUpdate()
     {
-
         if (!MovementFrozen)
         {
+            AllHitBufferList.Clear();
+
             // Apply gravity
             Velocity += CurrentGravityModifier * Physics2D.gravity * Time.fixedDeltaTime;
-
-            // Backup the list of gameObjects that used to collide and clear the original
-            PreviouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsCollision2DListener[]>(CollidingGameObjects);
-            CollidingGameObjects.Clear();
 
             // Move the object
             Vector2 movement = Velocity * Time.fixedDeltaTime;
             Move(movement);
 
-            // Check and call collision exit methods
-            CheckCollisionExit();
+            StartCoroutine(CallCollisionEvents());
 
             if (DebugVelocity)
             {
@@ -171,6 +166,11 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
 
                 if (count > 0 && HitBuffer[0])
                 {
+                    if (!AllHitBufferList.Contains(HitBuffer[0]))
+                    {
+                        AllHitBufferList.Add(HitBuffer[0]);
+                    }
+
                     // Update the velocity and the number of bounce
                     OnBounce(HitBuffer[0].normal);
 
@@ -179,9 +179,6 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
                         // Stop all movement for a moment
                         StartCoroutine(FreezeMovementOnBounce());
                     }
-
-                    // Check and call collision enter methods
-                    CheckCollisionEnterAndStay(HitBuffer[0]);
 
                     // Update how much distance can be done before hitting something  
                     distanceBeforeHit = HitBuffer[0].distance - ShellRadius;

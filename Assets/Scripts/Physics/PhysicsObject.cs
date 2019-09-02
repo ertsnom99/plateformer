@@ -2,6 +2,7 @@
  * Based on: https://unity3d.com/fr/learn/tutorials/topics/2d-game-creation/player-controller-script 
  **/
 
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,7 +46,8 @@ public class PhysicsObject : MonoBehaviour
     protected float TargetHorizontalVelocity;
     protected ContactFilter2D ContactFilter;
     protected RaycastHit2D[] HitBuffer = new RaycastHit2D[16];
-    protected List<RaycastHit2D> HitBufferList = new List<RaycastHit2D>(16);
+    protected List<RaycastHit2D> MoveHitBufferList = new List<RaycastHit2D>(16);
+    protected List<RaycastHit2D> AllHitBufferList = new List<RaycastHit2D>(16);
 
     protected Dictionary<Collider2D, IPhysicsCollision2DListener[]> PreviouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsCollision2DListener[]>();
     protected Dictionary<Collider2D, IPhysicsCollision2DListener[]> CollidingGameObjects = new Dictionary<Collider2D, IPhysicsCollision2DListener[]>();
@@ -98,7 +100,7 @@ public class PhysicsObject : MonoBehaviour
         }
 
         IsGrounded = false;
-        //m_groundAngle = .0f;
+        AllHitBufferList.Clear();
 
         // Update velocity
         Vector2 yVelocityAdded = CurrentGravityModifier * Physics2D.gravity * Time.fixedDeltaTime;
@@ -121,11 +123,7 @@ public class PhysicsObject : MonoBehaviour
         
         // Create a Vector prependicular to the normal
         Vector2 movementAlongGround = new Vector2(GroundNormal.y, -GroundNormal.x);
-
-        // Backup the list of gameObjects that used to collide and clear the original
-        PreviouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsCollision2DListener[]>(CollidingGameObjects);
-        CollidingGameObjects.Clear();
-
+        
         // The X movement is executed first, then the Y movement is executed. This allows a better control of each type of movement and helps to avoid
         // corner cases. This technic was used in the 16 bit era.
         Vector2 deltaPosition = Velocity * Time.fixedDeltaTime;
@@ -136,8 +134,7 @@ public class PhysicsObject : MonoBehaviour
         movement = Vector2.up * deltaPosition.y;
         Move(movement, true);
 
-        // Check and call collision exit methods
-        CheckCollisionExit();
+        StartCoroutine(CallCollisionEvents());
 
         if (DebugVelocity)
         {
@@ -165,22 +162,24 @@ public class PhysicsObject : MonoBehaviour
         if (distance > MinMoveDistance)
         {
             int count = Collider.Cast(movement, ContactFilter, HitBuffer, distance + ShellRadius);
-            HitBufferList.Clear();
+            MoveHitBufferList.Clear();
 
-            // Transfer hits to m_hitBufferList
+            // Transfer hits to MoveHitBufferList
             // m_hitBuffer has always the same number of elements in it, but some might be null.
             // The purpose of the transfer is to only keep the actual result of the cast
             for (int i = 0; i < count; i++)
             {
-                HitBufferList.Add(HitBuffer[i]);
+                MoveHitBufferList.Add(HitBuffer[i]);
+
+                if (!AllHitBufferList.Contains(HitBuffer[i]))
+                {
+                    AllHitBufferList.Add(HitBuffer[i]);
+                }
             }
 
-            foreach (RaycastHit2D hit in HitBufferList)
+            foreach (RaycastHit2D hit in MoveHitBufferList)
             {
                 Vector2 currentNormal = hit.normal;
-
-                // Check and call collision enter methods
-                CheckCollisionEnterAndStay(hit);
 
                 // Check if the object is grounded
                 if (currentNormal.y >= _minGroundNormalY)
@@ -236,8 +235,28 @@ public class PhysicsObject : MonoBehaviour
         //transform.position = m_rigidbody2D.position;
     }
 
+    protected IEnumerator CallCollisionEvents()
+    {
+        // Make sure to call collision events after the OnCollisionXXX event functions of Unity
+        yield return new WaitForFixedUpdate();
+        
+        // Backup the list of gameObjects that used to collide and clear the original
+        PreviouslyCollidingGameObject = new Dictionary<Collider2D, IPhysicsCollision2DListener[]>(CollidingGameObjects);
+        CollidingGameObjects.Clear();
+
+        // Check and call collision enter methods
+        foreach (RaycastHit2D hit in AllHitBufferList)
+        {
+            CheckCollisionEnterAndStay(hit);
+        }
+        
+        // Check and call collision exit methods
+        CheckCollisionExit();
+    }
+
     protected void CheckCollisionEnterAndStay(RaycastHit2D hit)
     {
+        // Call OnPhysicsObjectCollisionEnter on all script, of this gameobject, that implement the interface
         Vector2 relativeVelocity = hit.rigidbody ? hit.rigidbody.velocity - Velocity : -Velocity;
 
         PhysicsCollision2D physicsObjectCollision2D = new PhysicsCollision2D(hit.collider,
@@ -250,8 +269,7 @@ public class PhysicsObject : MonoBehaviour
                                                                              true,
                                                                              hit.point,
                                                                              hit.normal);
-
-        // Call OnPhysicsObjectCollisionEnter on all script, of this gameobject, that implement the interface
+        
         foreach (IPhysicsCollision2DListener collisionListener in _collisionListeners)
         {
             // If the hitted gameObject wasn't previously hitted
@@ -291,12 +309,6 @@ public class PhysicsObject : MonoBehaviour
 
                 listener.OnPhysicsCollision2DStay(physicsObjectCollision2D);
             }
-        }
-        
-        // If the hitted gameObject was previously hitted
-        if (PreviouslyCollidingGameObject.ContainsKey(hit.collider))
-        {
-            collisionListeners = PreviouslyCollidingGameObject[hit.collider];
         }
 
         // Update the list of currently colliding gameObject

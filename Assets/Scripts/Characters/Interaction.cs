@@ -4,6 +4,7 @@ public class Interaction : MonoBehaviour
 {
     public bool Interacting { get; private set; }
 
+    private bool _inRange = false;
     private IInteractable _interactable;
 
     private void Awake()
@@ -24,6 +25,11 @@ public class Interaction : MonoBehaviour
         if (_interactable != null)
         {
             Interacting = _interactable.StopInteraction();
+
+            if (!Interacting && !_inRange)
+            {
+                _interactable = null;
+            }
         }
     }
 
@@ -31,6 +37,7 @@ public class Interaction : MonoBehaviour
     {
         if (collision.CompareTag(GameManager.InteractableTag))
         {
+            _inRange = true;
             _interactable = collision.GetComponent<IInteractable>();
             _interactable.ShowInteractable(true);
         }
@@ -40,8 +47,13 @@ public class Interaction : MonoBehaviour
     {
         if (_interactable != null)
         {
+            _inRange = false;
             _interactable.ShowInteractable(false);
-            _interactable = null;
+
+            if (!Interacting)
+            {
+                _interactable = null;
+            }
         }
     }
 }

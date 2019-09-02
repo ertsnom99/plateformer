@@ -26,8 +26,6 @@ public class RetractableSpike : MonoBehaviour
     {
         _dangerZone = GetComponent<BoxCollider2D>();
         _animator = GetComponent<Animator>();
-
-        _dangerZone.isTrigger = true;
     }
 
     private void Start()

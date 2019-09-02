@@ -9,9 +9,8 @@ public class RetractableSpikeRespawner : KnockBackRespawner
 
         return knockedBackDirection;
     }
-
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        OnTouchSpike(col);
+        OnTouchSpike(collision);
     }
 }
