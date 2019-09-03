@@ -80,11 +80,11 @@ public class PlayerController : CharacterController
     {
         if (!_interaction.Interacting)
         {
-            _movementScript.SetInputs(inputs);
+            _movementScript.UpdateInputs(inputs);
         }
         else
         {
-            _movementScript.SetInputs(NoControlInputs);
+            _movementScript.UpdateInputs(NoControlInputs);
         }
     }
 

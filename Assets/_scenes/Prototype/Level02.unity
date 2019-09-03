@@ -71358,6 +71358,36 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 0.65
       objectReference: {fileID: 0}
+    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: IsJumping
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: IsSlidingOfWall
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: IsWallJumping
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: IsAirborneJumping
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: IsDashing
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: IsKnockedBack
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 3}
 --- !u!114 &2120995268 stripped

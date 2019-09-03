@@ -123,7 +123,7 @@ public class PhysicsObject : MonoBehaviour
         
         // Create a Vector prependicular to the normal
         Vector2 movementAlongGround = new Vector2(GroundNormal.y, -GroundNormal.x);
-        
+
         // The X movement is executed first, then the Y movement is executed. This allows a better control of each type of movement and helps to avoid
         // corner cases. This technic was used in the 16 bit era.
         Vector2 deltaPosition = Velocity * Time.fixedDeltaTime;
@@ -154,7 +154,7 @@ public class PhysicsObject : MonoBehaviour
 
     protected virtual void ComputeVelocity() { }
 
-    private void Move(Vector2 movement, bool yMovement)
+    protected void Move(Vector2 movement, bool yMovement)
     {
         float distance = movement.magnitude;
         
@@ -191,9 +191,6 @@ public class PhysicsObject : MonoBehaviour
                         // Update ground normal
                         GroundNormal = currentNormal;
                         currentNormal.x = 0;
-
-                        // update ground angle
-                        //m_groundAngle = m_groundNormal.x != .0f ? Vector2.Angle(m_groundNormal, new Vector2 (m_groundNormal.x, .0f)) : 90.0f;
                     }
                 }
                 

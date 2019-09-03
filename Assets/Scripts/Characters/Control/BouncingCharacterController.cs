@@ -473,7 +473,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
 
     private void UpdateMovement(Inputs inputs)
     {
-        _movementScript.SetInputs(inputs);
+        _movementScript.UpdateInputs(inputs);
     }
 
     protected override void UpdatePossession(Inputs inputs)

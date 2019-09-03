@@ -53,7 +53,7 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         InLevelStartSequence = true;
 
         PlayerController.EnableControl(false);
-        _playerMovement.SetInputs(_forcedControlsAtLevelStart);
+        _playerMovement.UpdateInputs(_forcedControlsAtLevelStart);
 
         Fade.FadeIn(FadeDuration);
     }
@@ -69,7 +69,7 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     public void LoadNextLevel(Inputs forcedControls, int sceneToLoad)
     {
         PlayerController.EnableControl(false);
-        _playerMovement.GetComponent<PlatformerMovement>().SetInputs(forcedControls);
+        _playerMovement.GetComponent<PlatformerMovement>().UpdateInputs(forcedControls);
 
         _sceneToLoad = sceneToLoad;
         InLevelEndSequence = true;

@@ -364,7 +364,7 @@ public class PlatformerCharacterController : PossessableCharacterController, IPr
 
     private void UpdateMovement(Inputs inputs)
     {
-        _movementScript.SetInputs(inputs);
+        _movementScript.UpdateInputs(inputs);
     }
 
     private void UpdateExplosion(Inputs inputs)
