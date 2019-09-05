@@ -26,7 +26,7 @@ SpriteAtlas:
       m_MaxTextureSize: 512
       m_ResizeAlgorithm: 0
       m_TextureFormat: -1
-      m_TextureCompression: 1
+      m_TextureCompression: 0
       m_CompressionQuality: 50
       m_CrunchedCompression: 0
       m_AllowsAlphaSplitting: 0
@@ -45,7 +45,8 @@ SpriteAtlas:
     - {fileID: 102900000, guid: b300280444f95ec4fa2c7623298ad008, type: 3}
     - {fileID: 102900000, guid: f0e2de7722bd37e43bb441e9bef320b0, type: 3}
     - {fileID: 102900000, guid: 8892ad7dec35ad4449675b886f122ed4, type: 3}
-    totalSpriteSurfaceArea: 18464
+    - {fileID: 102900000, guid: 727bc990d35bcf6478b1013a4c23206b, type: 3}
+    totalSpriteSurfaceArea: 19112
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -67,6 +68,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 89222915e9ed3ed44bbb794ec430535e, type: 3}
   - {fileID: 21300002, guid: 6d1f641683f37ea4983051a19b7c240f, type: 3}
   - {fileID: 21300000, guid: 6d1f641683f37ea4983051a19b7c240f, type: 3}
+  - {fileID: -4342607601354519641, guid: 2ed21336bb618854fb7c0f24debbf63f, type: 3}
+  - {fileID: 2093158072890024274, guid: 2ed21336bb618854fb7c0f24debbf63f, type: 3}
   - {fileID: 21300002, guid: f02e855997e9a814bb7749bd47954558, type: 3}
   - {fileID: 21300000, guid: f02e855997e9a814bb7749bd47954558, type: 3}
   - {fileID: 21300000, guid: a3ed4b8941c8783459a36cbbeafd5462, type: 3}
@@ -103,6 +106,8 @@ SpriteAtlas:
   - bomb_airborne_possessed_mode_0
   - Canon_1
   - Canon_0
+  - flying_skull_1
+  - flying_skull_0
   - bomb_idle_possessed_mode_1
   - bomb_idle_possessed_mode_0
   - bomb_fly_0

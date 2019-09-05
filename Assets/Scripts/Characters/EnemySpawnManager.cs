@@ -6,7 +6,8 @@ using UnityEngine;
 [Serializable]
 public struct EnemySpawnSetting
 {
-    public Explodable CurrentEnemie;
+    public GameObject CurrentEnemie;
+    public Explodable ExplodableScript;
     public GameObject SpawnedEnemie;
     public Transform SpawnPosition;
     public CinemachineVirtualCamera VirtualCamera;
@@ -29,9 +30,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>, IProximityExp
     {
         for (int i = 0; i < _spawnSettings.Length; i++)
         {
-            if (_spawnSettings[i].CurrentEnemie != null)
+            if (_spawnSettings[i].ExplodableScript != null)
             {
-                _spawnSettings[i].CurrentEnemie.Subscribe(this);
+                _spawnSettings[i].ExplodableScript.Subscribe(this);
             }
             else if (_spawnSettings[i].Respawn)
             {
@@ -54,8 +55,13 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>, IProximityExp
 
         _spawnSettings[settingIndex].VirtualCamera.Follow = instanciatedEnemie.transform;
 
-        _spawnSettings[settingIndex].CurrentEnemie = instanciatedEnemie.GetComponent<Explodable>();
-        _spawnSettings[settingIndex].CurrentEnemie.Subscribe(this);
+        _spawnSettings[settingIndex].CurrentEnemie = instanciatedEnemie;
+        _spawnSettings[settingIndex].ExplodableScript = instanciatedEnemie.GetComponent<Explodable>();
+
+        if (_spawnSettings[settingIndex].ExplodableScript)
+        {
+            _spawnSettings[settingIndex].ExplodableScript.Subscribe(this);
+        }
     }
 
     public void EnableEnemieSpawn(bool spawnEnemie)
@@ -91,7 +97,7 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>, IProximityExp
         {
             for (int i = 0; i < _spawnSettings.Length; i++)
             {
-                if (_spawnSettings[i].CurrentEnemie.gameObject == explodableGameObject && _spawnSettings[i].Respawn)
+                if (_spawnSettings[i].CurrentEnemie == explodableGameObject && _spawnSettings[i].Respawn)
                 {
                     StartCoroutine(SpawnEnemie(i));
                     break;

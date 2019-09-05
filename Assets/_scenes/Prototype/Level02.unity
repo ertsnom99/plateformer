@@ -70866,7 +70866,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnSettings:
   - CurrentEnemie: {fileID: 0}
-    SpawnedEnemie: {fileID: 1223673435489594, guid: 5ab9f21035ba1ff4a84d3ef5841ba5dd,
+    ExplodableScript: {fileID: 0}
+    SpawnedEnemie: {fileID: 1223673435489594, guid: 97be01b961e043d46a57700a07f89cb5,
       type: 3}
     SpawnPosition: {fileID: 310018832}
     VirtualCamera: {fileID: 1847802918}
@@ -70876,6 +70877,7 @@ MonoBehaviour:
     SpawnDelay: 1
     Respawn: 1
   - CurrentEnemie: {fileID: 0}
+    ExplodableScript: {fileID: 0}
     SpawnedEnemie: {fileID: 1222172137614980, guid: 2d83156fcd800694f8aa1d6f2243ff36,
       type: 3}
     SpawnPosition: {fileID: 995666311}

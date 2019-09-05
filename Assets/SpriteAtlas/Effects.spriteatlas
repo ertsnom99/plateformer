@@ -1,0 +1,122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Effects
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 512
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 4bc9bf0326e05a74fa17f94060999071, type: 3}
+    totalSpriteSurfaceArea: 201216
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: -6832602532032306642, guid: 76082735c4c5dd841b22ecfe1e615243, type: 3}
+  - {fileID: 7994900527690212366, guid: 76082735c4c5dd841b22ecfe1e615243, type: 3}
+  - {fileID: -661229833699065222, guid: 76082735c4c5dd841b22ecfe1e615243, type: 3}
+  - {fileID: 2772505579824889003, guid: 76082735c4c5dd841b22ecfe1e615243, type: 3}
+  - {fileID: 6952255750235482898, guid: 76082735c4c5dd841b22ecfe1e615243, type: 3}
+  - {fileID: -8580444318367042149, guid: 76082735c4c5dd841b22ecfe1e615243, type: 3}
+  - {fileID: -6738484449771190276, guid: 76082735c4c5dd841b22ecfe1e615243, type: 3}
+  - {fileID: -1458028252658277242, guid: 76082735c4c5dd841b22ecfe1e615243, type: 3}
+  - {fileID: 600887082413955451, guid: 76082735c4c5dd841b22ecfe1e615243, type: 3}
+  - {fileID: -4230088027204851832, guid: 76082735c4c5dd841b22ecfe1e615243, type: 3}
+  - {fileID: -877488970987550498, guid: 76082735c4c5dd841b22ecfe1e615243, type: 3}
+  - {fileID: -1430040862508568551, guid: 76082735c4c5dd841b22ecfe1e615243, type: 3}
+  - {fileID: 21300028, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300030, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300032, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300034, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300020, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300022, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300024, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300026, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300036, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300038, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300018, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300016, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300010, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300008, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300014, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300012, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300002, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300000, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300006, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: 21300004, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
+  - {fileID: -5582339626885402108, guid: 0f3c426d14089024fb5f9d017970bb60, type: 3}
+  - {fileID: 517917471463901485, guid: 0f3c426d14089024fb5f9d017970bb60, type: 3}
+  - {fileID: -2631514934714656382, guid: 0f3c426d14089024fb5f9d017970bb60, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - flames_11
+  - flames_10
+  - flames_2
+  - flames_3
+  - flames_0
+  - flames_1
+  - flames_6
+  - flames_7
+  - flames_4
+  - flames_5
+  - flames_8
+  - flames_9
+  - Explosion_14
+  - Explosion_15
+  - Explosion_16
+  - Explosion_17
+  - Explosion_10
+  - Explosion_11
+  - Explosion_12
+  - Explosion_13
+  - Explosion_18
+  - Explosion_19
+  - Explosion_9
+  - Explosion_8
+  - Explosion_5
+  - Explosion_4
+  - Explosion_7
+  - Explosion_6
+  - Explosion_1
+  - Explosion_0
+  - Explosion_3
+  - Explosion_2
+  - smoke_particules_0
+  - smoke_particules_1
+  - smoke_particules_2
+  m_Tag: Effects
+  m_IsVariant: 0

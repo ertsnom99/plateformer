@@ -7,26 +7,11 @@ using UnityEngine;
 
 public class FlyingCharacterController : PossessableCharacterController
 {
-    [Header("Propellant")]
-    [SerializeField]
-    private Animator _propellantAnimator;
-
-    private int _propellantPossessedModeAnimationLayerIndex;
-
     private FlyingMovement _movementScript;
 
     protected override void Awake()
     {
         base.Awake();
-
-        if (!_propellantAnimator)
-        {
-            Debug.LogError("No propellant animator was set for " + GetType() + " script of " + gameObject.name + "!");
-        }
-        else
-        {
-            _propellantPossessedModeAnimationLayerIndex = _propellantAnimator.GetLayerIndex(PossessedModeAnimationLayerName);
-        }
 
         _movementScript = GetComponent<FlyingMovement>();
     }
@@ -40,7 +25,7 @@ public class FlyingCharacterController : PossessableCharacterController
         {
             inputs = FetchInputs();
         }
-
+        
         UpdateDisplayInfo(inputs);
         UpdateMovement(inputs);
         UpdatePossession(inputs);
@@ -128,15 +113,5 @@ public class FlyingCharacterController : PossessableCharacterController
     private void UpdateMovement(Inputs inputs)
     {
         _movementScript.SetInputs(inputs);
-    }
-
-    protected override void OnPossess(PossessionPower possessingScript)
-    {
-        _propellantAnimator.SetLayerWeight(_propellantPossessedModeAnimationLayerIndex, 1.0f);
-    }
-
-    protected override void OnUnpossess()
-    {
-        _propellantAnimator.SetLayerWeight(_propellantPossessedModeAnimationLayerIndex, .0f);
     }
 }

@@ -14,10 +14,9 @@ GameObject:
   - component: {fileID: 50947607977860052}
   - component: {fileID: 95314765945920930}
   - component: {fileID: 6749087909132388633}
-  - component: {fileID: 114081227559062698}
-  - component: {fileID: 114265350433793756}
+  - component: {fileID: 4208820249501803803}
+  - component: {fileID: 7684617137239305518}
   - component: {fileID: 114671357202289926}
-  - component: {fileID: 139340018718529196}
   m_Layer: 10
   m_Name: FlyingCharacter
   m_TagString: Enemy
@@ -68,6 +67,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -60248483
-  m_SortingLayer: 8
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a3ed4b8941c8783459a36cbbeafd5462, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -243,7 +243,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &114081227559062698
+--- !u!114 &4208820249501803803
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -252,17 +252,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1223673435489594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72ca65efc1d797c4abde012efd5b2f29, type: 3}
+  m_Script: {fileID: 11500000, guid: 26b3c444cf18d054b840ea690813b62c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UseKeyboard: 0
   _isPossessable: 1
+  InfoUI: {fileID: 0}
   PossessionVirtualCamera: {fileID: 0}
   OnPossessSound: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922, type: 3}
   OnUnpossessSound: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a, type: 3}
   LeftPlayerSpawn: {fileID: 5974873232592696110}
   RightPlayerSpawn: {fileID: 5434903756275433345}
-  FlipPlayerSpawn: 0
   Target: {fileID: 0}
   _distanceToDetect: 10
   StopDistanceToTarget: 0.4
@@ -272,8 +272,8 @@ MonoBehaviour:
   StopWhenUnreachable: 1
   _drawDistanceToDetect: 0
   _logPathFailedError: 0
-  _propellantAnimator: {fileID: 95907456829324252}
---- !u!114 &114265350433793756
+  _propellantAnimator: {fileID: 95314765945920930}
+--- !u!114 &7684617137239305518
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -282,13 +282,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1223673435489594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b20946ec515654d4196144b5cdcf475d, type: 3}
+  m_Script: {fileID: 11500000, guid: 598e364bf550d304aaa6755c6e6c5fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 65
   _minVelocityToRotatePropellant: 4
   _propellantRotationSpeed: 10
-  _flipSprite: 0
   _propellantSprite: {fileID: 212940772010136382}
 --- !u!114 &114671357202289926
 MonoBehaviour:
@@ -318,33 +317,6 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: 3
---- !u!114 &139340018718529196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1223673435489594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e46f5142c87c344e95e5f15738b74d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DistanceOffset: {x: 0, y: 0, z: 0}
-  CountdownTime: 3
-  _damagedLayers:
-    serializedVersion: 2
-    m_Bits: 2304
-  _explosionRange: 1.7
-  _damage: 10
-  _explosionEffect: {fileID: 1956474484916810, guid: 72d1de47a8b359a42b83f65433efe6c4,
-    type: 3}
-  ExplosionPosition: {fileID: 0}
-  _knockBackDirection: {x: 1, y: 1, z: 0}
-  _knockBackStrength: 12
-  _knockBackDuration: 0.3
-  _drawExplosionRange: 0
-  _maxDifMagWhenClose: 0.1
 --- !u!1 &1299243050682006
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,6 +374,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -412,7 +385,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -60248483
-  m_SortingLayer: 8
+  m_SortingLayer: 7
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300002, guid: a3ed4b8941c8783459a36cbbeafd5462, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
