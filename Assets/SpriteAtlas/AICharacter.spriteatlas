@@ -46,7 +46,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: f0e2de7722bd37e43bb441e9bef320b0, type: 3}
     - {fileID: 102900000, guid: 8892ad7dec35ad4449675b886f122ed4, type: 3}
     - {fileID: 102900000, guid: 727bc990d35bcf6478b1013a4c23206b, type: 3}
-    totalSpriteSurfaceArea: 19112
+    totalSpriteSurfaceArea: 31208
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -60,16 +60,38 @@ SpriteAtlas:
   - {fileID: 21300006, guid: 65196e40664e2a54ea6f3754e2497bf7, type: 3}
   - {fileID: 21300002, guid: 44ba89c13c21c7148a352d0853cb7da7, type: 3}
   - {fileID: 21300000, guid: 44ba89c13c21c7148a352d0853cb7da7, type: 3}
+  - {fileID: -7631234414864551355, guid: 7fec7e1286b2f814ba0622efd804a0d0, type: 3}
+  - {fileID: -4346160882243149124, guid: 7fec7e1286b2f814ba0622efd804a0d0, type: 3}
   - {fileID: 21300004, guid: ae451942192c3064786fe787f6d44c21, type: 3}
   - {fileID: 21300006, guid: ae451942192c3064786fe787f6d44c21, type: 3}
   - {fileID: 21300000, guid: ae451942192c3064786fe787f6d44c21, type: 3}
   - {fileID: 21300002, guid: ae451942192c3064786fe787f6d44c21, type: 3}
+  - {fileID: -3443481911926497472, guid: 278a87c2653fdd84aafb9bced0197480, type: 3}
+  - {fileID: 753042419988129342, guid: 278a87c2653fdd84aafb9bced0197480, type: 3}
+  - {fileID: -2650484541380680940, guid: 278a87c2653fdd84aafb9bced0197480, type: 3}
+  - {fileID: 3696355356135930751, guid: 278a87c2653fdd84aafb9bced0197480, type: 3}
+  - {fileID: -6114452552543913884, guid: 278a87c2653fdd84aafb9bced0197480, type: 3}
+  - {fileID: -4811119207704041504, guid: 278a87c2653fdd84aafb9bced0197480, type: 3}
+  - {fileID: 8493065339544913975, guid: 278a87c2653fdd84aafb9bced0197480, type: 3}
+  - {fileID: -634193032061694528, guid: 278a87c2653fdd84aafb9bced0197480, type: 3}
+  - {fileID: 4939218162610643914, guid: 38f53f33cb36c11469f7db2142901bb9, type: 3}
+  - {fileID: 4527548013809998800, guid: 38f53f33cb36c11469f7db2142901bb9, type: 3}
+  - {fileID: 1853647344204008570, guid: 38f53f33cb36c11469f7db2142901bb9, type: 3}
+  - {fileID: 5346324123590069988, guid: 38f53f33cb36c11469f7db2142901bb9, type: 3}
+  - {fileID: -1584946697933759644, guid: 38f53f33cb36c11469f7db2142901bb9, type: 3}
+  - {fileID: 1121890328361060977, guid: 38f53f33cb36c11469f7db2142901bb9, type: 3}
+  - {fileID: -3333357380709723047, guid: 38f53f33cb36c11469f7db2142901bb9, type: 3}
+  - {fileID: 8722250543951173061, guid: 38f53f33cb36c11469f7db2142901bb9, type: 3}
+  - {fileID: -5630942429512782502, guid: 01da2b83b70f22b4e83fa799d936ce6e, type: 3}
+  - {fileID: -205580482558944619, guid: 01da2b83b70f22b4e83fa799d936ce6e, type: 3}
   - {fileID: 21300002, guid: 89222915e9ed3ed44bbb794ec430535e, type: 3}
   - {fileID: 21300000, guid: 89222915e9ed3ed44bbb794ec430535e, type: 3}
   - {fileID: 21300002, guid: 6d1f641683f37ea4983051a19b7c240f, type: 3}
   - {fileID: 21300000, guid: 6d1f641683f37ea4983051a19b7c240f, type: 3}
   - {fileID: -4342607601354519641, guid: 2ed21336bb618854fb7c0f24debbf63f, type: 3}
   - {fileID: 2093158072890024274, guid: 2ed21336bb618854fb7c0f24debbf63f, type: 3}
+  - {fileID: 7519212647357953115, guid: 2cab21d8af9dee64bbcf434ddfa976dd, type: 3}
+  - {fileID: 3089979512351126831, guid: 2cab21d8af9dee64bbcf434ddfa976dd, type: 3}
   - {fileID: 21300002, guid: f02e855997e9a814bb7749bd47954558, type: 3}
   - {fileID: 21300000, guid: f02e855997e9a814bb7749bd47954558, type: 3}
   - {fileID: 21300000, guid: a3ed4b8941c8783459a36cbbeafd5462, type: 3}
@@ -87,6 +109,8 @@ SpriteAtlas:
   - {fileID: 21300002, guid: 60828feaa4d55fb43979c4858852bfdf, type: 3}
   - {fileID: 21300000, guid: 60828feaa4d55fb43979c4858852bfdf, type: 3}
   - {fileID: 21300000, guid: 3e8b0dab49d7c9149a83c4ba7db834bf, type: 3}
+  - {fileID: -1503163159765656418, guid: 927d982c86dd99b46bc670fc4a60f0dd, type: 3}
+  - {fileID: -6604162276147909810, guid: 927d982c86dd99b46bc670fc4a60f0dd, type: 3}
   m_PackedSpriteNamesToIndex:
   - bomb_walk_4
   - bomb_walk_5
@@ -98,16 +122,38 @@ SpriteAtlas:
   - bomb_walk_3
   - bomb_airborne_1
   - bomb_airborne_0
+  - bomb_airborne_02_0
+  - bomb_airborne_02_1
   - bomb_fly_possessed_mode_2
   - bomb_fly_possessed_mode_3
   - bomb_fly_possessed_mode_0
   - bomb_fly_possessed_mode_1
+  - bomb_walk_02_7
+  - bomb_walk_02_6
+  - bomb_walk_02_5
+  - bomb_walk_02_4
+  - bomb_walk_02_3
+  - bomb_walk_02_2
+  - bomb_walk_02_1
+  - bomb_walk_02_0
+  - bomb_walk_possessed_mode_02_5
+  - bomb_walk_possessed_mode_02_4
+  - bomb_walk_possessed_mode_02_7
+  - bomb_walk_possessed_mode_02_6
+  - bomb_walk_possessed_mode_02_1
+  - bomb_walk_possessed_mode_02_0
+  - bomb_walk_possessed_mode_02_3
+  - bomb_walk_possessed_mode_02_2
+  - bomb_idle_possessed_mode_02_0
+  - bomb_idle_possessed_mode_02_1
   - bomb_airborne_possessed_mode_1
   - bomb_airborne_possessed_mode_0
   - Canon_1
   - Canon_0
   - flying_skull_1
   - flying_skull_0
+  - bomb_idle_02_0
+  - bomb_idle_02_1
   - bomb_idle_possessed_mode_1
   - bomb_idle_possessed_mode_0
   - bomb_fly_0
@@ -125,5 +171,7 @@ SpriteAtlas:
   - bomb_idle_1
   - bomb_idle_0
   - Bullet
+  - bomb_airborne_possessed_mode_02_0
+  - bomb_airborne_possessed_mode_02_1
   m_Tag: AICharacter
   m_IsVariant: 0

@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 44ba89c13c21c7148a352d0853cb7da7
+guid: 7fec7e1286b2f814ba0622efd804a0d0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 21300000
-    second: bomb_airborne_0
+      213: -7631234414864551355
+    second: bomb_airborne_02_0
   - first:
-      213: 21300002
-    second: bomb_airborne_1
+      213: -4346160882243149124
+    second: bomb_airborne_02_1
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -66,7 +66,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -75,10 +75,10 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 1
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -87,24 +87,12 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 1
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 1
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bomb_airborne_0
+      name: bomb_airborne_02_0
       rect:
         serializedVersion: 2
         x: 0
@@ -118,14 +106,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 782b87595c0694745b84b83274817004
-      internalID: 21300000
+      spriteID: 198a81e7c09f5924fba2126746fba73a
+      internalID: -7631234414864551355
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bomb_airborne_1
+      name: bomb_airborne_02_1
       rect:
         serializedVersion: 2
         x: 0
@@ -139,8 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c90688205e373634982f61cc4c34b166
-      internalID: 21300002
+      spriteID: 477bb32bcf16d8541a03e580af03690f
+      internalID: -4346160882243149124
       vertices: []
       indices: 
       edges: []
@@ -148,7 +136,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 6555170dc2fec64479fc0aa170cc56ec
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
