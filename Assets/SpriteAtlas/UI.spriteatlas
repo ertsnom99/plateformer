@@ -23,7 +23,7 @@ SpriteAtlas:
     platformSettings:
     - serializedVersion: 3
       m_BuildTarget: DefaultTexturePlatform
-      m_MaxTextureSize: 512
+      m_MaxTextureSize: 128
       m_ResizeAlgorithm: 0
       m_TextureFormat: -1
       m_TextureCompression: 0
@@ -45,7 +45,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 5bebbe3201024a04fa1fcd1c353c5a2a, type: 3}
     - {fileID: 102900000, guid: 30927499f073ef645a661dd18aa7e28b, type: 3}
     - {fileID: 102900000, guid: c6c526df5322c1a429adbc6ea253741f, type: 3}
-    totalSpriteSurfaceArea: 105690
+    totalSpriteSurfaceArea: 130690
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -63,6 +63,7 @@ SpriteAtlas:
   - {fileID: 21300002, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
   - {fileID: 21300000, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
   - {fileID: 21300008, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
+  - {fileID: 21300000, guid: db5f3f2d08a7c704eb85533692399dd3, type: 3}
   - {fileID: 21300000, guid: a779095e94ae49043aa68b131a241559, type: 3}
   - {fileID: 21300000, guid: 7d66af5f4baa7ef43b2f623c84b79eb2, type: 3}
   m_PackedSpriteNamesToIndex:
@@ -80,6 +81,7 @@ SpriteAtlas:
   - Dash Ready_1
   - Dash Ready_0
   - Dash Ready_4
+  - charge_bar
   - info_window
   - Keyboard_White_Esc
   m_Tag: UI

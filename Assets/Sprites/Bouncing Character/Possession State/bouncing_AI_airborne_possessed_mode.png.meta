@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 60828feaa4d55fb43979c4858852bfdf
+guid: 44207eba7fb9e4e48add4c31e3409ce1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 21300000
-    second: bomb_idle_0
+      213: 5996595321691717779
+    second: bouncing_AI_airborne_possessed_mode_0
   - first:
-      213: 21300002
-    second: bomb_idle_1
+      213: 3917820638010283800
+    second: bouncing_AI_airborne_possessed_mode_1
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -66,7 +66,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -75,10 +75,10 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 1
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -87,60 +87,48 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 1
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 1
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bomb_idle_0
+      name: bouncing_AI_airborne_possessed_mode_0
       rect:
         serializedVersion: 2
         x: 0
         y: 21
-        width: 24
+        width: 20
         height: 21
       alignment: 9
-      pivot: {x: 0.5833333, y: 0}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9c7490fbd790e084e9343c985975b3cc
-      internalID: 21300000
+      spriteID: f6f84897697f2844cb43f8de643eef76
+      internalID: 5996595321691717779
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bomb_idle_1
+      name: bouncing_AI_airborne_possessed_mode_1
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 24
+        width: 20
         height: 21
       alignment: 9
-      pivot: {x: 0.5833333, y: 0}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ae4aea10744576c45a996ca4431ab417
-      internalID: 21300002
+      spriteID: 1f35249a29b541745ade42ef0979e3ae
+      internalID: 3917820638010283800
       vertices: []
       indices: 
       edges: []
@@ -148,7 +136,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: c6e6b9b9595e6af4c916d1e5469028c3
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 

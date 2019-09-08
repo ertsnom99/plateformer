@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: 65196e40664e2a54ea6f3754e2497bf7
+guid: db224d7a9d37e104f9840dcd2a05e807
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 21300000
-    second: bomb_walk_0
+      213: -5344667409520570024
+    second: bouncing_AI_walk_0
   - first:
-      213: 21300002
-    second: bomb_walk_1
+      213: -3307715520289167007
+    second: bouncing_AI_walk_1
   - first:
-      213: 21300004
-    second: bomb_walk_2
+      213: -1230971581982396282
+    second: bouncing_AI_walk_2
   - first:
-      213: 21300006
-    second: bomb_walk_3
+      213: -6771492652560242658
+    second: bouncing_AI_walk_3
   - first:
-      213: 21300008
-    second: bomb_walk_4
+      213: 2413821093395804159
+    second: bouncing_AI_walk_4
   - first:
-      213: 21300010
-    second: bomb_walk_5
+      213: -7348670608627784901
+    second: bouncing_AI_walk_5
   - first:
-      213: 21300012
-    second: bomb_walk_6
+      213: 6907015685936958191
+    second: bouncing_AI_walk_6
   - first:
-      213: 21300014
-    second: bomb_walk_7
+      213: 8950636278876958273
+    second: bouncing_AI_walk_7
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -84,7 +84,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -93,10 +93,10 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 1
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -105,186 +105,174 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 1
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 1
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bomb_walk_0
+      name: bouncing_AI_walk_0
       rect:
         serializedVersion: 2
         x: 0
         y: 42
-        width: 24
+        width: 20
         height: 21
       alignment: 9
-      pivot: {x: 0.5833333, y: 0}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 56a2f3c32e170194aa211157796fd73a
-      internalID: 21300000
+      spriteID: f459eb1fd8d4c8947b8e74bfa8311838
+      internalID: -5344667409520570024
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bomb_walk_1
+      name: bouncing_AI_walk_1
       rect:
         serializedVersion: 2
-        x: 24
+        x: 20
         y: 42
-        width: 24
+        width: 20
         height: 21
       alignment: 9
-      pivot: {x: 0.5833333, y: 0}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2448689fbc46d1847b498ec6e8755c63
-      internalID: 21300002
+      spriteID: 4679ff304e2360147bd8fad48276058c
+      internalID: -3307715520289167007
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bomb_walk_2
+      name: bouncing_AI_walk_2
       rect:
         serializedVersion: 2
-        x: 48
+        x: 40
         y: 42
-        width: 24
+        width: 20
         height: 21
       alignment: 9
-      pivot: {x: 0.5833333, y: 0}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ce061efaf443aa4bae0750502f904ca
-      internalID: 21300004
+      spriteID: ea7070e4578edd449b537c365551d0c9
+      internalID: -1230971581982396282
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bomb_walk_3
+      name: bouncing_AI_walk_3
       rect:
         serializedVersion: 2
         x: 0
         y: 21
-        width: 24
+        width: 20
         height: 21
       alignment: 9
-      pivot: {x: 0.5833333, y: 0}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a09fba4b30fc5b34dbaf343720f454ee
-      internalID: 21300006
+      spriteID: a237df5cf5f5b1940a707afe88806fc2
+      internalID: -6771492652560242658
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bomb_walk_4
+      name: bouncing_AI_walk_4
       rect:
         serializedVersion: 2
-        x: 24
+        x: 20
         y: 21
-        width: 24
+        width: 20
         height: 21
       alignment: 9
-      pivot: {x: 0.5833333, y: 0}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 735e5d0ec41d7c14f80dd33114e216b2
-      internalID: 21300008
+      spriteID: 0095bba60538f7b4aa00aa82018e8e56
+      internalID: 2413821093395804159
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bomb_walk_5
+      name: bouncing_AI_walk_5
       rect:
         serializedVersion: 2
-        x: 48
+        x: 40
         y: 21
-        width: 24
+        width: 20
         height: 21
       alignment: 9
-      pivot: {x: 0.5833333, y: 0}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 795adb98f0645364f89adb9b98fd20db
-      internalID: 21300010
+      spriteID: f28941fe2f2e66b43bf95b236bd1b0c0
+      internalID: -7348670608627784901
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bomb_walk_6
+      name: bouncing_AI_walk_6
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 24
+        width: 20
         height: 21
       alignment: 9
-      pivot: {x: 0.5833333, y: 0}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a3730b4c531d5214cb56fabc8c1b5bfa
-      internalID: 21300012
+      spriteID: 642d2a06f80a36f45a5386fdaf8409f5
+      internalID: 6907015685936958191
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bomb_walk_7
+      name: bouncing_AI_walk_7
       rect:
         serializedVersion: 2
-        x: 24
+        x: 20
         y: 0
-        width: 24
+        width: 20
         height: 21
       alignment: 9
-      pivot: {x: 0.5833333, y: 0}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9022265efa96fa144a8113b77a00c05b
-      internalID: 21300014
+      spriteID: 7151781d4c29ab841b8d4ed3c1290659
+      internalID: 8950636278876958273
       vertices: []
       indices: 
       edges: []
@@ -292,7 +280,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 2a16e00df2f7fa5428f2afb4ca1b9f8e
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 

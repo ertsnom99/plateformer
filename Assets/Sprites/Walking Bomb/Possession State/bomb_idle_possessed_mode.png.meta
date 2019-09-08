@@ -1,11 +1,15 @@
 fileFormatVersion: 2
 guid: f02e855997e9a814bb7749bd47954558
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: bomb_idle_possessed_mode_0
-    21300002: bomb_idle_possessed_mode_1
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: bomb_idle_possessed_mode_0
+  - first:
+      213: 21300002
+    second: bomb_idle_possessed_mode_1
   externalObjects: {}
-  serializedVersion: 9
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -60,7 +64,7 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -71,7 +75,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -82,6 +87,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -94,13 +100,14 @@ TextureImporter:
         width: 24
         height: 21
       alignment: 9
-      pivot: {x: 0.563, y: 0}
+      pivot: {x: 0.5833333, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 568736174ca096f45b2d4ffd3e6ff9b6
+      spriteID: 918e92c610b97bc4ea7a1380866c256c
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -114,13 +121,14 @@ TextureImporter:
         width: 24
         height: 21
       alignment: 9
-      pivot: {x: 0.563, y: 0}
+      pivot: {x: 0.5833333, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a285a5efe1c5ed499eb3a6941241dcf
+      spriteID: 360aebf2922596e469517703531e6dab
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -129,10 +137,12 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 81266e503b9b41c4aa7774c97befb415
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

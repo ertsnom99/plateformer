@@ -164,7 +164,7 @@ SpriteRenderer:
   m_Size: {x: 0.94, y: 0.94}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &4296040632970446589
@@ -388,8 +388,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0, g: 0, b: 0, a: 1}
-      key1: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 0.40392157, g: 0.13725491, b: 0.19607843, a: 1}
+      key1: {r: 0.40392157, g: 0.13725491, b: 0.19607843, a: 0}
       key2: {r: 0, g: 0.3253188, b: 1, a: 0}
       key3: {r: 0, g: 0.3253188, b: 1, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}

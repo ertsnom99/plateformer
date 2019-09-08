@@ -16,12 +16,16 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
     [Header("Charge")]
     [SerializeField]
     private float _maxChargeTime = 5.0f;
+    [SerializeField]
+    private Slider _chargeBar;
+    [SerializeField]
+    private Image _fillBar;
+    [SerializeField]
+    private Color _minChargeColor;
+    [SerializeField]
+    private Color _maxChargeColor;
     private bool _isCharging = false;
     private float _chargeTime = .0f;
-
-    // TEMP
-    [SerializeField]
-    private Text _chargeText;
 
     [Header("Bounce")]
     [SerializeField]
@@ -71,6 +75,25 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
         if (!_movementCollider)
         {
             Debug.LogError("No movement collider was set for " + GetType() + " script of " + gameObject.name + "!");
+        }
+
+        if (!_chargeBar)
+        {
+            Debug.LogError("No charger slider was set for " + GetType() + " script of " + gameObject.name + "!");
+        }
+        else
+        {
+            _chargeBar.value = .0f;
+            _chargeBar.gameObject.SetActive(false);
+        }
+
+        if (!_fillBar)
+        {
+            Debug.LogError("No charger slider fill was set for " + GetType() + " script of " + gameObject.name + "!");
+        }
+        else
+        {
+            _fillBar.color = _minChargeColor;
         }
 
         if (!_bounceFormPrefab)
@@ -125,9 +148,6 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
         {
             Debug.LogError("No bounce form spawn area was set for " + GetType() + " script of " + gameObject.name + "!");
         }
-
-        // TEMP
-        _chargeText.text = "";
     }
 
     protected override void Start()
@@ -182,9 +202,9 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
             if (_chargeTime < _maxChargeTime)
             {
                 _chargeTime = Mathf.Clamp(_chargeTime + Time.deltaTime, .0f, _maxChargeTime);
+                _chargeBar.value = _chargeTime / _maxChargeTime;
 
-                // TEMP
-                _chargeText.text = Mathf.Lerp(_minLaunchStrength, _maxLaunchStrength, _chargeTime / _maxChargeTime).ToString();
+                _fillBar.color = Color.Lerp(_minChargeColor, _maxChargeColor, _chargeTime / _maxChargeTime);
             }
         }
 
@@ -439,8 +459,9 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
         //_bounceFormSpawnAreaCollider.enabled = true;
         AudioSource.PlayOneShot(_chargeSound);
 
-        _chargeTime = .0f;
         _isCharging = true;
+        _chargeTime = .0f;
+        _chargeBar.gameObject.SetActive(true);
     }
 
     private void StopCharge(Inputs inputs)
@@ -449,6 +470,10 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
         AudioSource.Stop();
 
         _isCharging = false;
+        _chargeBar.value = .0f;
+        _chargeBar.gameObject.SetActive(false);
+
+        _fillBar.color = _minChargeColor;
 
         // Only launch of a launch direction is given
         if (inputs.Vertical != .0f || inputs.Horizontal != .0f)
@@ -456,9 +481,6 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
             ShowBouncingForm(true);
             Launch(inputs);
         }
-
-        // TEMP
-        _chargeText.text = "";
     }
 
     private void Launch(Inputs inputs)
@@ -539,8 +561,10 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
 
             _isCharging = false;
 
-            // TEMP
-            _chargeText.text = "";
+            _chargeBar.value = .0f;
+            _chargeBar.gameObject.SetActive(false);
+
+            _fillBar.color = _minChargeColor;
         }
     }
 
