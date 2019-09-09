@@ -1,11 +1,15 @@
 fileFormatVersion: 2
-guid: 6d1f641683f37ea4983051a19b7c240f
+guid: a70f298841f4efa4a89b3724e02b4344
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Canon_0
-    21300002: Canon_1
+  internalIDToNameTable:
+  - first:
+      213: -3433086533103732013
+    second: sunnyland_canon_0
+  - first:
+      213: 432278829663230261
+    second: sunnyland_canon_1
   externalObjects: {}
-  serializedVersion: 9
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -60,9 +64,9 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -71,9 +75,10 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 64
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -82,31 +87,33 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Canon_0
+      name: sunnyland_canon_0
       rect:
         serializedVersion: 2
         x: 0
         y: 32
         width: 32
         height: 32
-      alignment: 7
+      alignment: 9
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b8647d3910b21ce4fa8dd192d8c4685c
+      spriteID: 23f53648eae46ce48903c64c3278e50c
+      internalID: -3433086533103732013
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Canon_1
+      name: sunnyland_canon_1
       rect:
         serializedVersion: 2
         x: 0
@@ -120,7 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6fcd954ea51890446954cd0afe21e983
+      spriteID: e978187b363c092458a5de8876f3b5ca
+      internalID: 432278829663230261
       vertices: []
       indices: 
       edges: []
@@ -128,11 +136,13 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 213316c5b4bd4404dac0ef1002c705e3
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

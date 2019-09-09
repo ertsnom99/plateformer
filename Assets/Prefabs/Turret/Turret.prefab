@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 4722981874034594170}
   - component: {fileID: 4722981874034594172}
   - component: {fileID: 4722981874034594144}
-  - component: {fileID: 4722981874034594173}
+  - component: {fileID: 8330456214704243439}
   - component: {fileID: 4722981874034594175}
   - component: {fileID: 4722981874034594174}
   - component: {fileID: 4722981874034594145}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Turret
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4722981874034594171}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4722981874494835771}
@@ -78,7 +78,8 @@ SpriteRenderer:
   m_SortingLayerID: -60248483
   m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6d1f641683f37ea4983051a19b7c240f, type: 3}
+  m_Sprite: {fileID: -3433086533103732013, guid: a70f298841f4efa4a89b3724e02b4344,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -108,7 +109,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &4722981874034594173
+--- !u!61 &8330456214704243439
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,7 +133,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 1.1557405, y: 2}
   m_EdgeRadius: 0
 --- !u!82 &4722981874034594175
 AudioSource:
@@ -390,7 +391,7 @@ SpriteRenderer:
   m_SortingLayerID: -60248483
   m_SortingLayer: 7
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300002, guid: 6d1f641683f37ea4983051a19b7c240f, type: 3}
+  m_Sprite: {fileID: 432278829663230261, guid: a70f298841f4efa4a89b3724e02b4344, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
