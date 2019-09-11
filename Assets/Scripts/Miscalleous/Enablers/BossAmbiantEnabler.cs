@@ -9,7 +9,8 @@ public class BossAmbiantEnabler : MonoBehaviour
         if (!_triggered && col.CompareTag(GameManager.PlayerTag))
         {
             _triggered = true;
-            AmbiantManager.Instance.StartBossAmbiant();
+            // TODO : Start transition to boss ambiant
+            //AmbiantManager.Instance.StartBossAmbiant();
         }
     }
 }

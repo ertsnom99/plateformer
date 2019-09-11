@@ -71049,12 +71049,12 @@ GameObject:
   - component: {fileID: 1999746024}
   - component: {fileID: 1999746023}
   m_Layer: 0
-  m_Name: AmbiantManager
+  m_Name: AmbientManager
   m_TagString: AmbiantSound
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1999746023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71067,10 +71067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17e54f7e3e5133d4ba1ba480475d3d20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _generalAmbiant: {fileID: 8300000, guid: a5e73b3519436104c8ace56f5667733d, type: 3}
-  _generalAmbiantVolume: 0.8
-  _bossAmbiant: {fileID: 8300000, guid: 3f83ca454d0da4845ac556d1416c078d, type: 3}
-  _bossAmbiantVolume: 0.5
+  _generalAmbient: {fileID: 8300000, guid: 2fb94caa491e82e41b63fdb714817836, type: 3}
 --- !u!82 &1999746024
 AudioSource:
   m_ObjectHideFlags: 0
@@ -71083,7 +71080,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -71354,11 +71351,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FlipX
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 82653445126395802, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
-        type: 3}
-      propertyPath: m_Volume
-      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
         type: 3}

@@ -96,7 +96,7 @@ public class DevGameManager : GameManager, IHealthSubscriber
         if (_gameEnded)
         {
             // Destroy the ambiant since the game is restarting
-            Destroy(AmbiantManager.Instance.gameObject);
+            Destroy(AmbientManager.Instance.gameObject);
         }
 
         if (_gameWon)
