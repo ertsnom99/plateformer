@@ -573,12 +573,17 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     protected override void Update() { }
 
-    public void UpdateInputs(Inputs inputs)
+    // Used to set the inputs to be used when UpdateMovement() is called
+    public void SetInputs(Inputs inputs)
+    {
+        _currentInputs = inputs;
+    }
+
+    // Apply the inputs that were set (should be call during each update!!!)
+    public void UpdateMovement()
     {
         if (!_triggeredKnockBack && !IsKnockedBack)
         {
-            _currentInputs = inputs;
-
             // Once a jump, wall jump, airborne jump or a dash is triggered, nothing can be triggered again until the next FixedUpdate is executed
             if (!_triggeredJump && !_triggeredWallJump && !_triggeredAirborneJump && !_triggeredDash)
             {
@@ -867,7 +872,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     {
         base.OnDisable();
         
-        UpdateInputs(_emptyInputs);
+        SetInputs(_emptyInputs);
 
         EndWallJumpWindow();
         EndDelayedHorizontalControl();

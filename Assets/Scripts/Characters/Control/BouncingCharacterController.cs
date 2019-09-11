@@ -159,56 +159,63 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
 
     protected override void OnUpdatePossessed()
     {
-        Inputs inputs = NoControlInputs;
-
         if (ControlsEnabled())
         {
             // Get the inputs used during this frame
-            inputs = FetchInputs();
-        }
-        
-        UpdateDisplayInfo(inputs);
+            Inputs inputs = FetchInputs();
 
-        // Check if charge started
-        if (_movementScript.IsGrounded && !_isCharging && inputs.HeldPower/* && HasEnoughSpaceForBounceForm()*/)
-        {
-            StartCharge();
-        }
-        else if (_isCharging && inputs.ReleasePower)
-        {
-            StopCharge(inputs);
-        }
+            UpdateDisplayInfo(inputs);
 
-        if (!_isCharging)
-        {
-            UpdateMovement(inputs);
-        }
-        else
-        {
-            // Update the charge arrow
-            if (inputs.Vertical != .0f || inputs.Horizontal != .0f)
+            // Check if charge started
+            if (_movementScript.IsGrounded && !_isCharging && inputs.HeldPower/* && HasEnoughSpaceForBounceForm()*/)
             {
-                _arrow.SetActive(true);
+                StartCharge();
+            }
+            else if (_isCharging && inputs.ReleasePower)
+            {
+                StopCharge(inputs);
+            }
 
-                float angle = Mathf.Atan2(inputs.Vertical, inputs.Horizontal) * Mathf.Rad2Deg;
-                _arrow.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            if (!_isCharging)
+            {
+                UpdateMovement(inputs);
             }
             else
             {
-                _arrow.SetActive(false);
+                // Update the charge arrow
+                if (inputs.Vertical != .0f || inputs.Horizontal != .0f)
+                {
+                    _arrow.SetActive(true);
+
+                    float angle = Mathf.Atan2(inputs.Vertical, inputs.Horizontal) * Mathf.Rad2Deg;
+                    _arrow.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                }
+                else
+                {
+                    _arrow.SetActive(false);
+                }
+
+                // Update charge time
+                if (_chargeTime < _maxChargeTime)
+                {
+                    _chargeTime = Mathf.Clamp(_chargeTime + Time.deltaTime, .0f, _maxChargeTime);
+                    _chargeBar.value = _chargeTime / _maxChargeTime;
+
+                    _fillBar.color = Color.Lerp(_minChargeColor, _maxChargeColor, _chargeTime / _maxChargeTime);
+                }
             }
 
-            // Update charge time
-            if (_chargeTime < _maxChargeTime)
-            {
-                _chargeTime = Mathf.Clamp(_chargeTime + Time.deltaTime, .0f, _maxChargeTime);
-                _chargeBar.value = _chargeTime / _maxChargeTime;
-
-                _fillBar.color = Color.Lerp(_minChargeColor, _maxChargeColor, _chargeTime / _maxChargeTime);
-            }
+            UpdatePossession(inputs);
         }
+        else
+        {
+            if (_isCharging)
+            {
+                StopCharge(NoControlInputs);
+            }
 
-        UpdatePossession(inputs);
+            UpdateMovement();
+        }
     }
 
     protected override Inputs FetchInputs()
@@ -247,15 +254,14 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
     {
         base.OnUpdateNotPossessed();
 
-        Inputs inputs = NoControlInputs;
-
         if (ControlsEnabled())
         {
-            CreateInputs();
+            UpdateMovement(NoControlInputs);
         }
-
-        // Send the final inputs to the movement script
-        UpdateMovement(inputs);
+        else
+        {
+            UpdateMovement();
+        }
     }
 
     protected override Inputs CreateInputs()
@@ -495,7 +501,13 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
 
     private void UpdateMovement(Inputs inputs)
     {
-        _movementScript.UpdateInputs(inputs);
+        _movementScript.SetInputs(inputs);
+        _movementScript.UpdateMovement();
+    }
+
+    private void UpdateMovement()
+    {
+        _movementScript.UpdateMovement();
     }
 
     protected override void UpdatePossession(Inputs inputs)

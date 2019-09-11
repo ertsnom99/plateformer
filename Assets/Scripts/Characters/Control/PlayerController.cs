@@ -31,14 +31,21 @@ public class PlayerController : CharacterController
     private void Update()
     {
         // Only update when time isn't stop
-        if (Time.deltaTime > .0f && ControlsEnabled())
+        if (Time.deltaTime > .0f)
         {
-            // Get the inputs used during this frame
-            Inputs inputs = FetchInputs();
+            if (ControlsEnabled())
+            {
+                // Get the inputs used during this frame
+                Inputs inputs = FetchInputs();
 
-            UpdateMovement(inputs);
-            UpdateInteraction(inputs);
-            UpdatePossession(inputs);
+                UpdateMovement(inputs);
+                UpdateInteraction(inputs);
+                UpdatePossession(inputs);
+            }
+            else
+            {
+                UpdateMovement();
+            }
         }
     }
 
@@ -80,12 +87,19 @@ public class PlayerController : CharacterController
     {
         if (!_interaction.Interacting)
         {
-            _movementScript.UpdateInputs(inputs);
+            _movementScript.SetInputs(inputs);
         }
         else
         {
-            _movementScript.UpdateInputs(NoControlInputs);
+            _movementScript.SetInputs(NoControlInputs);
         }
+
+        _movementScript.UpdateMovement();
+    }
+
+    private void UpdateMovement()
+    {
+        _movementScript.UpdateMovement();
     }
 
     private void UpdateInteraction(Inputs inputs)

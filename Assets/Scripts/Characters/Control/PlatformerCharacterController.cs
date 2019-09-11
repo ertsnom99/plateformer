@@ -165,18 +165,20 @@ public class PlatformerCharacterController : PossessableCharacterController, IPr
 
     protected override void OnUpdatePossessed()
     {
-        // Get the inputs used during this frame
-        Inputs inputs = NoControlInputs;
-
         if (ControlsEnabled())
         {
-            inputs = FetchInputs();
-        }
+            // Get the inputs used during this frame
+            Inputs inputs = FetchInputs();
 
-        UpdateDisplayInfo(inputs);
-        UpdateMovement(inputs);
-        UpdateExplosion(inputs);
-        UpdatePossession(inputs);
+            UpdateDisplayInfo(inputs);
+            UpdateMovement(inputs);
+            UpdateExplosion(inputs);
+            UpdatePossession(inputs);
+        }
+        else
+        {
+            UpdateMovement();
+        }
     }
 
     protected override Inputs FetchInputs()
@@ -227,7 +229,7 @@ public class PlatformerCharacterController : PossessableCharacterController, IPr
             _horizontalInputForVerticalMovement = CalculateHorizontalInputForVerticalMovement();
         }*/
 
-        Inputs inputs = NoControlInputs;
+        //Inputs inputs = NoControlInputs;
 
         /*if (ControlsEnabled() && HasDetectedTarget && Path != null)
         {
@@ -268,9 +270,15 @@ public class PlatformerCharacterController : PossessableCharacterController, IPr
                 }
             }
         }*/
-
-        // Send the final inputs to the movement script
-        UpdateMovement(inputs);
+        
+        if (ControlsEnabled())
+        {
+            UpdateMovement(NoControlInputs);
+        }
+        else
+        {
+            UpdateMovement();
+        }
     }
 
     /*private bool IsWalkLinkOver(Vector2 positionToTargetWaypoint)
@@ -364,7 +372,13 @@ public class PlatformerCharacterController : PossessableCharacterController, IPr
 
     private void UpdateMovement(Inputs inputs)
     {
-        _movementScript.UpdateInputs(inputs);
+        _movementScript.SetInputs(inputs);
+        _movementScript.UpdateMovement();
+    }
+
+    private void UpdateMovement()
+    {
+        _movementScript.UpdateMovement();
     }
 
     private void UpdateExplosion(Inputs inputs)
