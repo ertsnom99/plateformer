@@ -11467,6 +11467,11 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 82653445126395802, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.55
+      objectReference: {fileID: 0}
     - target: {fileID: 114253259727586034, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
         type: 3}
       propertyPath: _wallJumpWindowTime
@@ -11476,11 +11481,6 @@ PrefabInstance:
         type: 3}
       propertyPath: _wallJumpHorizontalVelocity
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 82653445126395802, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
-        type: 3}
-      propertyPath: m_Volume
-      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 114867589610096570, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
         type: 3}
@@ -28849,6 +28849,11 @@ PrefabInstance:
     - target: {fileID: 4722981874034594172, guid: f7ae14ff146f40b4e83dbb872e459973,
         type: 3}
       propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722981874034594172, guid: f7ae14ff146f40b4e83dbb872e459973,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4722981874494835773, guid: f7ae14ff146f40b4e83dbb872e459973,

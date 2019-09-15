@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a70f298841f4efa4a89b3724e02b4344
+guid: b9f6658304bf283488aa985c96fa8d89
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -8,6 +8,9 @@ TextureImporter:
   - first:
       213: 432278829663230261
     second: sunnyland_canon_1
+  - first:
+      213: 5272762787341535957
+    second: sunnyland_canon_2
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -106,7 +109,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 23f53648eae46ce48903c64c3278e50c
+      spriteID: b5837dfdd5d125a4593f0b9e06e02c44
       internalID: -3433086533103732013
       vertices: []
       indices: 
@@ -114,6 +117,27 @@ TextureImporter:
       weights: []
     - serializedVersion: 2
       name: sunnyland_canon_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.3, y: 0.45}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e5957b1f8b7334459ea9c6c03f3a30e
+      internalID: 432278829663230261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sunnyland_canon_2
       rect:
         serializedVersion: 2
         x: 0
@@ -127,8 +151,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e978187b363c092458a5de8876f3b5ca
-      internalID: 432278829663230261
+      spriteID: ffc5126d08190824eba3329ef6706f2c
+      internalID: 5272762787341535957
       vertices: []
       indices: 
       edges: []
