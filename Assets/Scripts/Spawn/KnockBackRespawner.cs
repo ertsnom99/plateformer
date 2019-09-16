@@ -43,6 +43,9 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
 
                 Fade.FadeOut(FadeDuration);
             }
+
+            CharacterHealth characterHealth = col.GetComponent<CharacterHealth>();
+            characterHealth.Damage(1);
         }
         else if (col.CompareTag(GameManager.EnemyTag))
         {
@@ -80,6 +83,9 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
                     }
                 }
             }
+
+            CharacterHealth characterHealth = col.GetComponent<CharacterHealth>();
+            characterHealth.Damage(1);
         }
     }
 

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ScreenCaptureTaker : MonoBehaviour
+public class ScreenCaptureTaker : KeptMonoSingleton<ScreenCaptureTaker>
 {
     private void Update()
     {

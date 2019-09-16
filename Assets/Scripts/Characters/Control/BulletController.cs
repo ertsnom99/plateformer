@@ -11,6 +11,10 @@ public class BulletController : PossessableCharacterController, IPhysicsCollisio
     [SerializeField]
     float _minMagnitudeToAim = .8f;
 
+    [Header("Explosion")]
+    [SerializeField]
+    Transform _unpossessPositionOnExploded;
+
     BulletMovement _movementScript;
     ExplodableBullet _explodableBullet;
 
@@ -35,6 +39,11 @@ public class BulletController : PossessableCharacterController, IPhysicsCollisio
         if (!LeftPlayerSpawn)
         {
             Debug.LogError("No left player spawn was set for " + GetType() + " script of " + gameObject.name + "!");
+        }
+
+        if (!_unpossessPositionOnExploded)
+        {
+            Debug.LogError("No unpossess position on exploded was set for " + GetType() + " script of " + gameObject.name + "!");
         }
 
         _explodableBullet.Subscribe(this);
@@ -130,7 +139,7 @@ public class BulletController : PossessableCharacterController, IPhysicsCollisio
             IsPossessed = false;
 
             Animator.SetLayerWeight(PossessedModeAnimationLayerIndex, .0f);
-            
+
             AudioSource.pitch = Random.Range(.9f, 1.0f);
             AudioSource.PlayOneShot(OnUnpossessSound);
 
@@ -174,7 +183,7 @@ public class BulletController : PossessableCharacterController, IPhysicsCollisio
 
     public void NotifyExploded(GameObject explodableGameObject)
     {
-        Unpossess(false, transform.position);
+        Unpossess(false, _unpossessPositionOnExploded.position);
 
         VirtualCameraManager.Instance.RemoveVirtualCamera(PossessionVirtualCamera);
         Destroy(PossessionVirtualCamera.gameObject);

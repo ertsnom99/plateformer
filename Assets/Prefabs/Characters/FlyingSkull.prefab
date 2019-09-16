@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8040637978377152994}
   - component: {fileID: 7628280860078274855}
   - component: {fileID: 114671357202289926}
+  - component: {fileID: 9186098180303039536}
   m_Layer: 10
   m_Name: FlyingSkull
   m_TagString: Enemy
@@ -319,6 +320,21 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: 3
+--- !u!114 &9186098180303039536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223673435489594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1a898fc828517458f08cdea5f0d326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100000000
+  _damagedSound: {fileID: 8300000, guid: b743f93fe6a8c844ab8402d39d3b1b5c, type: 3}
+  _healedSound: {fileID: 8300000, guid: 1d1c4f6964f2b584f892faea0e30cb6d, type: 3}
 --- !u!1 &7286865481288298
 GameObject:
   m_ObjectHideFlags: 0

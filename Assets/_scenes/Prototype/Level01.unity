@@ -148120,6 +148120,41 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 82653445126395802, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: IsJumping
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: IsSlidingOfWall
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: IsWallJumping
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: IsAirborneJumping
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: IsDashing
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: IsKnockedBack
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 114253259727586034, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
         type: 3}
       propertyPath: m_fallModifier
@@ -148159,41 +148194,6 @@ PrefabInstance:
         type: 3}
       propertyPath: _wallJumpWindowTime
       value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
-        type: 3}
-      propertyPath: IsJumping
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
-        type: 3}
-      propertyPath: IsSlidingOfWall
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
-        type: 3}
-      propertyPath: IsWallJumping
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
-        type: 3}
-      propertyPath: IsAirborneJumping
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
-        type: 3}
-      propertyPath: IsDashing
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
-        type: 3}
-      propertyPath: IsKnockedBack
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 82653445126395802, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
-        type: 3}
-      propertyPath: m_Volume
-      value: 0.55
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 3}
@@ -151900,7 +151900,7 @@ MonoBehaviour:
   m_LookaheadSmoothing: 10
   m_LookaheadIgnoreY: 0
   m_XDamping: 0.3
-  m_YDamping: 0
+  m_YDamping: 0.2
   m_ZDamping: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.5

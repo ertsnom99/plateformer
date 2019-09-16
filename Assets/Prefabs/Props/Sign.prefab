@@ -252,7 +252,6 @@ GameObject:
   - component: {fileID: 7039125165360541626}
   - component: {fileID: 7039125165360541627}
   - component: {fileID: 8622499811762826653}
-  - component: {fileID: 7767362315339298374}
   m_Layer: 0
   m_Name: Sign
   m_TagString: Interactable
@@ -364,19 +363,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactableDisplay: {fileID: 7216727722234444944}
   _infoUI: {fileID: 0}
---- !u!114 &7767362315339298374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7039125165360541572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cda53d88079e104f968823082b8e2ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onlyFirstInteraction: 1
 --- !u!1 &7216727722234444944
 GameObject:
   m_ObjectHideFlags: 0

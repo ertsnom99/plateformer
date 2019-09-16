@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 114107880563175574}
   - component: {fileID: 114420989141734892}
   - component: {fileID: 4017218770949239046}
+  - component: {fileID: 1799376997013589932}
   m_Layer: 10
   m_Name: JumpingPaltformerCharacter
   m_TagString: Enemy
@@ -388,6 +389,21 @@ MonoBehaviour:
   _knockBackDuration: 0.3
   _drawExplosionRange: 0
   _maxDifMagWhenClose: 0.1
+--- !u!114 &1799376997013589932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222172137614980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1a898fc828517458f08cdea5f0d326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100000000
+  _damagedSound: {fileID: 8300000, guid: b743f93fe6a8c844ab8402d39d3b1b5c, type: 3}
+  _healedSound: {fileID: 8300000, guid: 1d1c4f6964f2b584f892faea0e30cb6d, type: 3}
 --- !u!1 &1507818175623092
 GameObject:
   m_ObjectHideFlags: 0

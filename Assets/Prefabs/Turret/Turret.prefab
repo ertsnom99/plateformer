@@ -146,8 +146,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -417,6 +417,8 @@ MonoBehaviour:
   _initialAimingDirection: {x: 1, y: 0.5}
   _canonRotationSpeed: 2
   _rotationThreshold: 0.01
+  _explosionEffect: {fileID: 1956474484916810, guid: 72d1de47a8b359a42b83f65433efe6c4,
+    type: 3}
   _bulletSpawnPosition: {fileID: 4722981874204538155}
   _bulletPrefab: {fileID: 325158076011708272, guid: ea503c4f25a66ea4f9c1f1e0b8ef6c99,
     type: 3}

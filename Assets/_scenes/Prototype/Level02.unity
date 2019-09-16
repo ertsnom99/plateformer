@@ -45002,7 +45002,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 310018831}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 37.5, y: -0.5, z: 0}
+  m_LocalPosition: {x: 37.5, y: -1.08, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1440065125}
@@ -46592,7 +46592,7 @@ MonoBehaviour:
   m_LookaheadSmoothing: 10
   m_LookaheadIgnoreY: 0
   m_XDamping: 0.3
-  m_YDamping: 0
+  m_YDamping: 0.2
   m_ZDamping: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.5
@@ -47744,7 +47744,7 @@ MonoBehaviour:
   m_LookaheadSmoothing: 10
   m_LookaheadIgnoreY: 0
   m_XDamping: 0.3
-  m_YDamping: 0
+  m_YDamping: 0.2
   m_ZDamping: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.5
@@ -71212,7 +71212,7 @@ MonoBehaviour:
   m_LookaheadSmoothing: 10
   m_LookaheadIgnoreY: 0
   m_XDamping: 0.3
-  m_YDamping: 0
+  m_YDamping: 0.2
   m_ZDamping: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.5
@@ -71911,6 +71911,11 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 82653445126395802, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.55
+      objectReference: {fileID: 0}
     - target: {fileID: 7051567255528879723, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
         type: 3}
       propertyPath: IsJumping
@@ -71940,11 +71945,6 @@ PrefabInstance:
         type: 3}
       propertyPath: IsKnockedBack
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 82653445126395802, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
-        type: 3}
-      propertyPath: m_Volume
-      value: 0.55
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 3}
@@ -72404,7 +72404,7 @@ PrefabInstance:
     - target: {fileID: 9085758524044183357, guid: b8c6f67615623644889ccc9668c3cbd1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9085758524044183357, guid: b8c6f67615623644889ccc9668c3cbd1,
         type: 3}
@@ -72500,12 +72500,12 @@ PrefabInstance:
     - target: {fileID: 8890660314785770995, guid: b8c6f67615623644889ccc9668c3cbd1,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.062745094
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8890660314785770995, guid: b8c6f67615623644889ccc9668c3cbd1,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.18258995
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8890660314785770995, guid: b8c6f67615623644889ccc9668c3cbd1,
         type: 3}

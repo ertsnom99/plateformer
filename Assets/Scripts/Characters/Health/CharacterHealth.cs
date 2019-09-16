@@ -3,7 +3,7 @@
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(AudioSource))]
 
-public class PlayerHealth : Health
+public class CharacterHealth : Health
 {
     [Header("Sound")]
     [SerializeField]

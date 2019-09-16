@@ -144,7 +144,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.85, y: 1.1431011}
+  m_Size: {x: 0.95156205, y: 1.1431011}
   m_EdgeRadius: 0.01
 --- !u!50 &50484550208919288
 Rigidbody2D:
@@ -385,6 +385,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf1a898fc828517458f08cdea5f0d326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
+  _maxHealth: 100000000
   _damagedSound: {fileID: 8300000, guid: b743f93fe6a8c844ab8402d39d3b1b5c, type: 3}
   _healedSound: {fileID: 8300000, guid: 1d1c4f6964f2b584f892faea0e30cb6d, type: 3}

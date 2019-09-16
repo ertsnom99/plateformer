@@ -12,6 +12,10 @@ public class Canon : MonoBehaviour
 
     private Vector2 _aimingDirection;
 
+    [Header("Shoot")]
+    [SerializeField]
+    private GameObject _explosionEffect;
+
     [Header("Bullet")]
     [SerializeField]
     private Transform _bulletSpawnPosition;
@@ -63,6 +67,9 @@ public class Canon : MonoBehaviour
 
     public GameObject Shoot()
     {
+        // Show explosion effect
+        Instantiate(_explosionEffect, _bulletSpawnPosition.position, Quaternion.identity);
+
         return Instantiate(_bulletPrefab, _bulletSpawnPosition.position, transform.rotation);
     }
 }
