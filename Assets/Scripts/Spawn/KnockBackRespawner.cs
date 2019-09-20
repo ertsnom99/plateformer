@@ -17,12 +17,20 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
     private CharacterController _characterController;
     private PlatformerMovement _platformerMovement;
 
+    private void Awake()
+    {
+        if (!Fade)
+        {
+            Debug.LogError("No fade was set for " + GetType() + " script of " + gameObject.name + "!");
+        }
+    }
+
     protected virtual void Start()
     {
         Fade.Subscribe(this);
     }
 
-    protected private void OnTouchSpike(Collider2D col)
+    protected virtual void OnTouchSpike(Collider2D col)
     {
         if (col.CompareTag(GameManager.PlayerTag))
         {

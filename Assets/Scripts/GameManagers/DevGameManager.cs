@@ -22,6 +22,26 @@ public class DevGameManager : GameManager, IHealthSubscriber
     private bool _gameEnded = false;
     private bool _gameWon = false;
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        if (!_enemySpawnManager)
+        {
+            Debug.LogError("No enemy spawn manager was set for " + GetType() + " script of " + gameObject.name + "!");
+        }
+
+        if (!_endGameWonText)
+        {
+            Debug.LogError("No end game won text was set for " + GetType() + " script of " + gameObject.name + "!");
+        }
+
+        if (!_endGameLoseText)
+        {
+            Debug.LogError("No end game lose text was set for " + GetType() + " script of " + gameObject.name + "!");
+        }
+    }
+
     protected override void Start()
     {
         base.Start();

@@ -41,6 +41,21 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     {
         base.Awake();
 
+        if (!Fade)
+        {
+            Debug.LogError("No fade was set for " + GetType() + " script of " + gameObject.name + "!");
+        }
+
+        if (!PlayerController)
+        {
+            Debug.LogError("No player controller was set for " + GetType() + " script of " + gameObject.name + "!");
+        }
+
+        if (!_playerMovement)
+        {
+            Debug.LogError("No player movement was set for " + GetType() + " script of " + gameObject.name + "!");
+        }
+
         InLevelStartSequence = false;
         InLevelEndSequence = false;
     }
