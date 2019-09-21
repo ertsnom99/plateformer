@@ -12,11 +12,15 @@ public class FadeImage : MonoSubscribable<IFadeImageSubscriber>
 {
     private Image _image;
 
+    public bool IsFading { get; private set; }
+
     public const float AlphaToFadeIn = 0.0f;
     public const float AlphaToFadeOut = 1.0f;
 
     private void Awake()
     {
+        IsFading = false;
+
         _image = GetComponent<Image>();
     }
 
@@ -31,12 +35,16 @@ public class FadeImage : MonoSubscribable<IFadeImageSubscriber>
     {
         StopAllCoroutines();
         StartCoroutine(FadeAlpha(_image.color.a, AlphaToFadeIn, duration));
+
+        IsFading = true;
     }
 
     public void FadeOut(float duration)
     {
         StopAllCoroutines();
         StartCoroutine(FadeAlpha(_image.color.a, AlphaToFadeOut, duration));
+
+        IsFading = true;
     }
 
     IEnumerator FadeAlpha(float from, float to, float duration)
@@ -61,6 +69,8 @@ public class FadeImage : MonoSubscribable<IFadeImageSubscriber>
             {
                 subscriber.NotifyFadeInFinished();
             }
+
+            IsFading = false;
         }
         else if (to == AlphaToFadeOut)
         {
@@ -68,6 +78,8 @@ public class FadeImage : MonoSubscribable<IFadeImageSubscriber>
             {
                 subscriber.NotifyFadeOutFinished();
             }
+
+            IsFading = false;
         }
     }
 }

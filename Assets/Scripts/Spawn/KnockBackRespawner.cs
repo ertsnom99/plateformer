@@ -49,7 +49,10 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
 
                 _characterController.EnableControl(false);
 
-                Fade.FadeOut(FadeDuration);
+                if (!Fade.IsFading)
+                {
+                    Fade.FadeOut(FadeDuration);
+                }
             }
 
             CharacterHealth characterHealth = col.GetComponent<CharacterHealth>();
@@ -86,7 +89,10 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
 
                             _characterController.EnableControl(false);
 
-                            Fade.FadeOut(FadeDuration);
+                            if (!Fade.IsFading)
+                            {
+                                Fade.FadeOut(FadeDuration);
+                            }
                         }
                     }
                 }
