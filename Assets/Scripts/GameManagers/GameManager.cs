@@ -28,6 +28,12 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     public bool InLevelStartSequence { get; private set; }
     public bool InLevelEndSequence { get; private set; }
 
+    // Levels
+    public const int Level1 = 0;
+    public const int Level2 = 1;
+    public const int Level3 = 2;
+    public const int Level4 = 3;
+
     // Tags
     public const string PlayerTag = "Player";
     public const string EnemyTag = "Enemy";
@@ -78,6 +84,23 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
+        }
+
+        if (Input.GetKey(KeyCode.L) && Input.GetKey(KeyCode.Alpha1))
+        {
+            LoadNextLevel(new Inputs(), Level1);
+        }
+        else if (Input.GetKey(KeyCode.L) && Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            LoadNextLevel(new Inputs(), Level2);
+        }
+        else if (Input.GetKey(KeyCode.L) && Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            LoadNextLevel(new Inputs(), Level3);
+        }
+        else if (Input.GetKey(KeyCode.L) && Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            LoadNextLevel(new Inputs(), Level4);
         }
     }
 

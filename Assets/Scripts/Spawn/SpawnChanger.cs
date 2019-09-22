@@ -6,9 +6,13 @@ public class SpawnChanger : MonoBehaviour
     [SerializeField]
     private Transform _spawnLocation;
 
+    [Header("Activation")]
+    [SerializeField]
+    private bool m_enemyActivateSpawnChanger = false;
+
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (_spawnLocation && col.CompareTag(GameManager.PlayerTag))
+        if (_spawnLocation && col.CompareTag(GameManager.PlayerTag) || (m_enemyActivateSpawnChanger && col.CompareTag(GameManager.EnemyTag) && col.GetComponent<PossessableCharacterController>().IsPossessed))
         {
             SpawnManager.Instance.ChangeSpawnPosition(_spawnLocation.position);
         }

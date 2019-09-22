@@ -99,7 +99,11 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
             }
 
             CharacterHealth characterHealth = col.GetComponent<CharacterHealth>();
-            characterHealth.Damage(1);
+
+            if (characterHealth)
+            {
+                characterHealth.Damage(1);
+            }
         }
     }
 
