@@ -3167,6 +3167,11 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: Fade
@@ -4269,6 +4274,11 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: Fade
@@ -56981,6 +56991,11 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: Fade
@@ -57486,6 +57501,11 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: Fade
@@ -57939,6 +57959,11 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: Fade
@@ -103021,6 +103046,11 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: Fade
@@ -147651,46 +147681,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
-        type: 3}
-      propertyPath: _respawnPos
-      value: 
-      objectReference: {fileID: 487692618}
-    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
-        type: 3}
-      propertyPath: _inactiveDuration
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
-        type: 3}
-      propertyPath: _firstActiveDelay
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
-        type: 3}
-      propertyPath: _activeDuration
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
-        type: 3}
-      propertyPath: Fade
-      value: 
-      objectReference: {fileID: 1158191023}
-    - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5929399464396104294, guid: 7eecb3b94dea7074a8a5f99601e04dce,
-        type: 3}
-      propertyPath: Fade
-      value: 
-      objectReference: {fileID: 1158191023}
     - target: {fileID: 2045393266634905610, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: m_Sprite
@@ -147717,6 +147707,51 @@ PrefabInstance:
       propertyPath: m_SortingLayer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: _respawnPos
+      value: 
+      objectReference: {fileID: 487692618}
+    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: _inactiveDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: _firstActiveDelay
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: _activeDuration
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
+    - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
+    - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5929399464396104294, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     - target: {fileID: 4432390887977920288, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: m_IsTrigger
@@ -148606,6 +148641,11 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: Fade
@@ -149883,6 +149923,11 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: Fade
@@ -150768,6 +150813,11 @@ PrefabInstance:
       propertyPath: _activeDuration
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4432390887977920295, guid: 7eecb3b94dea7074a8a5f99601e04dce,
+        type: 3}
+      propertyPath: Fade
+      value: 
+      objectReference: {fileID: 1158191023}
     - target: {fileID: 7416170687768596087, guid: 7eecb3b94dea7074a8a5f99601e04dce,
         type: 3}
       propertyPath: Fade

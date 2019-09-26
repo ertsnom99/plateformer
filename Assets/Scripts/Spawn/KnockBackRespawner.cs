@@ -17,7 +17,7 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
     private CharacterController _characterController;
     private PlatformerMovement _platformerMovement;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         if (!Fade)
         {

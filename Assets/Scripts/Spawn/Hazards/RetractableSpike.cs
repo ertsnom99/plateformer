@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(BoxCollider2D))]
 
-public class RetractableSpike : MonoBehaviour
+public class RetractableSpike : KnockBackRespawner
 {
     [Header("Activation")]
     [SerializeField]
@@ -22,14 +22,18 @@ public class RetractableSpike : MonoBehaviour
 
     public const string IsRetractedParamNameString = "IsRetracted";
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         _dangerZone = GetComponent<BoxCollider2D>();
         _animator = GetComponent<Animator>();
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         _dangerZone.enabled = false;
         _animator.SetBool(IsRetractedParamHashId, true);
 
@@ -51,5 +55,18 @@ public class RetractableSpike : MonoBehaviour
         {
             StartCoroutine(ChangeActivation(_inactiveDuration, true));
         }
+    }
+
+    protected override Vector3 CalculateKnockedBackDirection(Collider2D col)
+    {
+        Vector3 knockedBackDirection = transform.up + (col.transform.position - transform.position);
+        knockedBackDirection = new Vector3(Mathf.Sign(knockedBackDirection.x), Mathf.Sign(knockedBackDirection.y), .0f).normalized;
+
+        return knockedBackDirection;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        OnTouchSpike(collision);
     }
 }
