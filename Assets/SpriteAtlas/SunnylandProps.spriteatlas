@@ -44,7 +44,7 @@ SpriteAtlas:
     packables:
     - {fileID: 102900000, guid: 15e7312e0607f4e84aeacdc44a70744c, type: 3}
     - {fileID: 102900000, guid: 1adcdfae01120e844877b81e969af867, type: 3}
-    totalSpriteSurfaceArea: 47972
+    totalSpriteSurfaceArea: 48228
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -60,6 +60,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: f7187675ec12e4aacaeb0e97ad31230a, type: 3}
   - {fileID: 21300000, guid: f34e83b5f0fe1432cb87276148dc6341, type: 3}
   - {fileID: 21300000, guid: 8a8849b7b8b964564b9e89cb1ded0658, type: 3}
+  - {fileID: 21300000, guid: 737d80882d8e62e4a83d382c9973aab2, type: 3}
   - {fileID: -6071069297032702116, guid: 2a880f8869e78c448bc49e968228d5a2, type: 3}
   - {fileID: -3807129804340516234, guid: 2a880f8869e78c448bc49e968228d5a2, type: 3}
   - {fileID: -8552459177450350272, guid: 2a880f8869e78c448bc49e968228d5a2, type: 3}
@@ -104,6 +105,7 @@ SpriteAtlas:
   - tree
   - face-block
   - block
+  - sunnyland_changing_block
   - spikes_extra_0
   - spikes_extra_1
   - spikes_extra_2
