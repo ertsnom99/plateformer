@@ -20,6 +20,10 @@ public class EndGameManager : GameManager
             {
                 LoadNextLevel(new Inputs(), Level3);
             }
+            else if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                LoadNextLevel(new Inputs(), Level4);
+            }
         }
     }
 }

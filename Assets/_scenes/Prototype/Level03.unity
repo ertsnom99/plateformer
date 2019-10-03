@@ -11503,7 +11503,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!4 &88134944 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 4536785919381258, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+  m_CorrespondingSourceObject: {fileID: 4062579112893922, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
     type: 3}
   m_PrefabInstance: {fileID: 88134942}
   m_PrefabAsset: {fileID: 0}
@@ -27151,6 +27151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e6d027a95822f4ca81bfb6abcca484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_enemyActivateTriggerZone: 0
 --- !u!61 &1713005659
 BoxCollider2D:
   m_ObjectHideFlags: 0

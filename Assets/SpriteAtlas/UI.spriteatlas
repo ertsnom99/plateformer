@@ -45,7 +45,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 5bebbe3201024a04fa1fcd1c353c5a2a, type: 3}
     - {fileID: 102900000, guid: 30927499f073ef645a661dd18aa7e28b, type: 3}
     - {fileID: 102900000, guid: c6c526df5322c1a429adbc6ea253741f, type: 3}
-    totalSpriteSurfaceArea: 130690
+    totalSpriteSurfaceArea: 140690
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -55,6 +55,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: a3e50765f31c038419127946f55ee67d, type: 3}
   - {fileID: 21300000, guid: 055826d5442f9574cbd6712dde32d023, type: 3}
   - {fileID: 21300000, guid: 9a800727c22902c49aff75a6d6de6668, type: 3}
+  - {fileID: 21300000, guid: cdefc8a79613d474f8d10a5dba92a70a, type: 3}
   - {fileID: 21300000, guid: 44839368579d5064d805c17bd100ea8f, type: 3}
   - {fileID: 21300002, guid: 44839368579d5064d805c17bd100ea8f, type: 3}
   - {fileID: 21300000, guid: 0fbe1f89b66cd054ca1b3bfc73d0d4c1, type: 3}
@@ -73,6 +74,7 @@ SpriteAtlas:
   - 360_RB
   - Keyboard_White_2
   - Keyboard_White_E
+  - Keyboard_White_4
   - ability_frame_0
   - ability_frame_1
   - Keyboard_White_3
