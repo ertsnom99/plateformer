@@ -15,6 +15,8 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     [SerializeField]
     private PlatformerMovement _playerMovement;
     [SerializeField]
+    private bool _startOrientedLeft = false;
+    [SerializeField]
     private bool _enableControlAfterFadeIn = true;
     [SerializeField]
     private Inputs _forcedControlsAtLevelStart;
@@ -29,10 +31,10 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     public bool InLevelEndSequence { get; private set; }
 
     // Levels
-    public const int Level1 = 0;
-    public const int Level2 = 1;
-    public const int Level3 = 2;
-    public const int Level4 = 3;
+    public const int Level1 = 1;
+    public const int Level2 = 2;
+    public const int Level3 = 3;
+    public const int Level4 = 4;
 
     // Tags
     public const string PlayerTag = "Player";
@@ -74,6 +76,7 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         InLevelStartSequence = true;
 
         PlayerController.EnableControl(false);
+        _playerMovement.ChangeOrientation(_startOrientedLeft ? Vector2.left : Vector2.right);
         _playerMovement.SetInputs(_forcedControlsAtLevelStart);
 
         Fade.FadeIn(FadeDuration);
@@ -83,25 +86,36 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            Quit();
         }
 
         if (Input.GetKey(KeyCode.L) && Input.GetKey(KeyCode.Alpha1))
         {
-            LoadNextLevel(new Inputs(), Level1);
+            LoadLevel(Level1);
         }
         else if (Input.GetKey(KeyCode.L) && Input.GetKeyDown(KeyCode.Alpha2))
         {
-            LoadNextLevel(new Inputs(), Level2);
+            LoadLevel(Level2);
         }
         else if (Input.GetKey(KeyCode.L) && Input.GetKeyDown(KeyCode.Alpha3))
         {
-            LoadNextLevel(new Inputs(), Level3);
+            LoadLevel(Level3);
         }
         else if (Input.GetKey(KeyCode.L) && Input.GetKeyDown(KeyCode.Alpha4))
         {
-            LoadNextLevel(new Inputs(), Level4);
+            LoadLevel(Level4);
         }
+    }
+
+    public void LoadLevel(int sceneToLoad)
+    {
+        PlayerController.EnableControl(false);
+        _playerMovement.GetComponent<PlatformerMovement>().SetInputs(new Inputs());
+
+        _sceneToLoad = sceneToLoad;
+        InLevelEndSequence = true;
+
+        Fade.FadeOut(_nextLevelFadeDuration);
     }
 
     public void LoadNextLevel(Inputs forcedControls, int sceneToLoad)
@@ -132,5 +146,10 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
             InLevelEndSequence = false;
             SceneManager.LoadScene(_sceneToLoad, LoadSceneMode.Single);
         }
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }

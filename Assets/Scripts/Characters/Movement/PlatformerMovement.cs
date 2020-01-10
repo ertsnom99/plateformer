@@ -520,7 +520,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     private void Animate()
     {
-        AdjustSpriteOrientation();
+        AdjustOrientation();
 
         // Update animator parameters
         _animator.SetFloat(XVelocityParamHashId, Mathf.Abs(Velocity.x) / MaxSpeed);
@@ -551,7 +551,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         }*/
     }
 
-    private void AdjustSpriteOrientation()
+    private void AdjustOrientation()
     {
         // Flip the sprite if necessary
         bool flipSprite = false;
@@ -861,11 +861,23 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         return HorizontalControlDelayed();
     }
 
-    public void ChangeFacingDirection(Vector2 facingDirection)
+    public Vector2 GetOrientation()
+    {
+        if (_spriteRenderer.flipX)
+        {
+            return Vector2.left;
+        }
+        else
+        {
+            return Vector2.right;
+        }
+    }
+
+    public void ChangeOrientation(Vector2 facingDirection)
     {
         _lastHorizontalVelocityDirection = facingDirection.x;
 
-        AdjustSpriteOrientation();
+        AdjustOrientation();
     }
 
     protected override void OnDisable()

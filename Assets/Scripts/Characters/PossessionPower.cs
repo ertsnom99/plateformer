@@ -100,7 +100,7 @@ public class PossessionPower : MonoBehaviour, IPhysicsCollision2DListener
             gameObject.transform.position = respawnPos;
         }
 
-        _movementScript.ChangeFacingDirection(respawnFacingDirection);
+        _movementScript.ChangeOrientation(respawnFacingDirection);
 
         // Change the camera
         VirtualCameraManager.Instance.ChangeVirtualCamera(_virtualCamera);
