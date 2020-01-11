@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
@@ -49,6 +51,10 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     {
         base.Awake();
 
+        // Disable mouse
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         if (!Fade)
         {
             Debug.LogError("No fade was set for " + GetType() + " script of " + gameObject.name + "!");
@@ -84,6 +90,13 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
 
     protected virtual void Update()
     {
+        // Select the first selected gameobject when none is while trying to navigate
+        if (EventSystem.current.currentSelectedGameObject == null && Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0.9f)
+        {
+            EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
+        }
+        
+        // TODO: remove later
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Quit();

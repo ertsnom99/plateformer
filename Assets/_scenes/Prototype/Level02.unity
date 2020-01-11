@@ -45048,7 +45048,7 @@ MonoBehaviour:
   m_Follow: {fileID: 2120995271}
   m_Lens:
     FieldOfView: 40
-    OrthographicSize: 6.75
+    OrthographicSize: 7.5
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -47249,6 +47249,7 @@ MonoBehaviour:
   FadeDuration: 1
   PlayerController: {fileID: 2120995270}
   _playerMovement: {fileID: 2120995269}
+  _startOrientedLeft: 0
   _enableControlAfterFadeIn: 1
   _forcedControlsAtLevelStart:
     Horizontal: 1
@@ -47905,7 +47906,7 @@ MonoBehaviour:
     Power: 0
     HeldPower: 0
     ReleasePower: 0
-  _sceneToLoad: 2
+  _sceneToLoad: 3
 --- !u!61 &1209424041
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -54140,7 +54141,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1625304250}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.125, y: 3.75, z: -1.67}
+  m_LocalPosition: {x: 9, y: 3.75, z: -1.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -54171,8 +54172,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AssetsPPU: 16
-  m_RefResolutionX: 340
-  m_RefResolutionY: 180
+  m_RefResolutionX: 320
+  m_RefResolutionY: 240
   m_UpscaleRT: 0
   m_PixelSnapping: 0
   m_CropFrameX: 0

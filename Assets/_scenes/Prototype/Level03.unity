@@ -12133,7 +12133,7 @@ MonoBehaviour:
     Power: 0
     HeldPower: 0
     ReleasePower: 0
-  _sceneToLoad: 3
+  _sceneToLoad: 4
 --- !u!61 &321131363
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13143,7 +13143,7 @@ MonoBehaviour:
   m_Follow: {fileID: 88134944}
   m_Lens:
     FieldOfView: 40
-    OrthographicSize: 6.75
+    OrthographicSize: 7.5
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -25752,8 +25752,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AssetsPPU: 16
-  m_RefResolutionX: 340
-  m_RefResolutionY: 180
+  m_RefResolutionX: 320
+  m_RefResolutionY: 240
   m_UpscaleRT: 0
   m_PixelSnapping: 0
   m_CropFrameX: 0
@@ -26998,6 +26998,7 @@ MonoBehaviour:
   FadeDuration: 1
   PlayerController: {fileID: 88134946}
   _playerMovement: {fileID: 88134943}
+  _startOrientedLeft: 0
   _enableControlAfterFadeIn: 1
   _forcedControlsAtLevelStart:
     Horizontal: 1
