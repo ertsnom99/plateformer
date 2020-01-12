@@ -1,81 +1,222 @@
 fileFormatVersion: 2
 guid: 77060c312d1289b41a98bf743963e44c
-timeCreated: 1487261223
-licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: CaveTopLeft
-    21300002: CaveTop
-    21300004: CaveTopRight
-    21300006: CaveRight
-    21300008: CaveLeft
-    21300010: CaveBottomLeft
-    21300012: CaveBottomRight
-    21300014: CaveBottom
-    21300016: CaveMiddle
-    21300018: CaveBack
-    21300020: CaveBackTop
-    21300022: CaveTest
-    21300024: CaveBackBottom
-    21300026: CaveBackWall
-    21300028: CaveInnerCornerRight
-    21300030: CaveInnerCornerLeft
-    21300032: CaveInnerCornerBottomRight
-    21300034: CaveInnerCornerBottomLeft
-    21300036: CaveSlopeRight
-    21300038: CaveSlopeLeft
-    21300040: CaveSlopeLeftFill
-    21300042: CaveSlopeRightFill
-    21300044: CaveSlopeRightBottom
-    21300046: CaveSlopeLeftBottom
-    21300048: CaveSlopeLeftBottomFill
-    21300050: CaveSlopeRightBottomFill
-    21300052: CaveSlopeRightEndTop
-    21300054: CaveSlopeLeftEndTop
-    21300056: CaveSlopeRightEndBot
-    21300058: CaveSlopeLeftEndBot
-    21300060: CaveSlopeRightTop
-    21300062: CaveSlopeLeftTop
-    21300064: CaveSlopeRightEnd
-    21300066: CaveSlopeLeftEnd
-    21300068: CaveBotSlopeLeftWall
-    21300070: CaveBotSlopeRightWall
-    21300072: CavesTopLeft
-    21300074: CaveTop
-    21300076: CaveTopRight
-    21300078: CaveSlopeRight
-    21300080: CaveSlopeLeft
-    21300082: CaveLeft
-    21300084: CaveMiddle
-    21300086: CaveRight
-    21300088: CaveSlopeRightFill
-    21300090: CaveSlopeLeftFill
-    21300092: CaveBottomLeft
-    21300094: CaveBottom
-    21300096: CaveBottomRight
-    21300098: CaveSlopeRightBottomFill
-    21300100: CaveSlopeLeftBottomFill
-    21300102: CaveInnerCornerBottomLeft
-    21300104: CaveInnerCornerBottomRight
-    21300106: CaveBackWall
-    21300108: CaveSlopeBottomRight
-    21300110: CaveSlopeBottomLeft
-    21300112: CaveInnerCornerLeft
-    21300114: CaveInnerCornerRight
-    21300116: CaveSlopeRightEnd
-    21300118: CaveSlopeRightEndBot
-    21300120: CaveSlopeLeftEndBot
-    21300122: Caves_TileSet_25
-    21300124: Caves_TileSet_26
-    21300126: CaveSlopeLeftEnd
-    21300128: CaveSlopeRightTop
-    21300130: CaveSlopeLeftTop
-    21300132: CaveSlopeRightEndTop
-    21300134: CaveSlopeLeftEndTop
-    21300136: CavesBackgroundTop
-    21300138: CaveBotSlopeRightWall
-    21300140: CaveBotSlopeLeftWall
-  serializedVersion: 4
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: CaveTopLeft
+  - first:
+      213: 21300002
+    second: CaveTop
+  - first:
+      213: 21300004
+    second: CaveTopRight
+  - first:
+      213: 21300006
+    second: CaveRight
+  - first:
+      213: 21300008
+    second: CaveLeft
+  - first:
+      213: 21300010
+    second: CaveBottomLeft
+  - first:
+      213: 21300012
+    second: CaveBottomRight
+  - first:
+      213: 21300014
+    second: CaveBottom
+  - first:
+      213: 21300016
+    second: CaveMiddle
+  - first:
+      213: 21300018
+    second: CaveBack
+  - first:
+      213: 21300020
+    second: CaveBackTop
+  - first:
+      213: 21300022
+    second: CaveTest
+  - first:
+      213: 21300024
+    second: CaveBackBottom
+  - first:
+      213: 21300026
+    second: CaveBackWall
+  - first:
+      213: 21300028
+    second: CaveInnerCornerRight
+  - first:
+      213: 21300030
+    second: CaveInnerCornerLeft
+  - first:
+      213: 21300032
+    second: CaveInnerCornerBottomRight
+  - first:
+      213: 21300034
+    second: CaveInnerCornerBottomLeft
+  - first:
+      213: 21300036
+    second: CaveSlopeRight
+  - first:
+      213: 21300038
+    second: CaveSlopeLeft
+  - first:
+      213: 21300040
+    second: CaveSlopeLeftFill
+  - first:
+      213: 21300042
+    second: CaveSlopeRightFill
+  - first:
+      213: 21300044
+    second: CaveSlopeRightBottom
+  - first:
+      213: 21300046
+    second: CaveSlopeLeftBottom
+  - first:
+      213: 21300048
+    second: CaveSlopeLeftBottomFill
+  - first:
+      213: 21300050
+    second: CaveSlopeRightBottomFill
+  - first:
+      213: 21300052
+    second: CaveSlopeRightEndTop
+  - first:
+      213: 21300054
+    second: CaveSlopeLeftEndTop
+  - first:
+      213: 21300056
+    second: CaveSlopeRightEndBot
+  - first:
+      213: 21300058
+    second: CaveSlopeLeftEndBot
+  - first:
+      213: 21300060
+    second: CaveSlopeRightTop
+  - first:
+      213: 21300062
+    second: CaveSlopeLeftTop
+  - first:
+      213: 21300064
+    second: CaveSlopeRightEnd
+  - first:
+      213: 21300066
+    second: CaveSlopeLeftEnd
+  - first:
+      213: 21300068
+    second: CaveBotSlopeLeftWall
+  - first:
+      213: 21300070
+    second: CaveBotSlopeRightWall
+  - first:
+      213: 21300072
+    second: CavesTopLeft
+  - first:
+      213: 21300074
+    second: CaveTop
+  - first:
+      213: 21300076
+    second: CaveTopRight
+  - first:
+      213: 21300078
+    second: CaveSlopeRight
+  - first:
+      213: 21300080
+    second: CaveSlopeLeft
+  - first:
+      213: 21300082
+    second: CaveLeft
+  - first:
+      213: 21300084
+    second: CaveMiddle
+  - first:
+      213: 21300086
+    second: CaveRight
+  - first:
+      213: 21300088
+    second: CaveSlopeRightFill
+  - first:
+      213: 21300090
+    second: CaveSlopeLeftFill
+  - first:
+      213: 21300092
+    second: CaveBottomLeft
+  - first:
+      213: 21300094
+    second: CaveBottom
+  - first:
+      213: 21300096
+    second: CaveBottomRight
+  - first:
+      213: 21300098
+    second: CaveSlopeRightBottomFill
+  - first:
+      213: 21300100
+    second: CaveSlopeLeftBottomFill
+  - first:
+      213: 21300102
+    second: CaveInnerCornerBottomLeft
+  - first:
+      213: 21300104
+    second: CaveInnerCornerBottomRight
+  - first:
+      213: 21300106
+    second: CaveBackWall
+  - first:
+      213: 21300108
+    second: CaveSlopeBottomRight
+  - first:
+      213: 21300110
+    second: CaveSlopeBottomLeft
+  - first:
+      213: 21300112
+    second: CaveInnerCornerLeft
+  - first:
+      213: 21300114
+    second: CaveInnerCornerRight
+  - first:
+      213: 21300116
+    second: CaveSlopeRightEnd
+  - first:
+      213: 21300118
+    second: CaveSlopeRightEndBot
+  - first:
+      213: 21300120
+    second: CaveSlopeLeftEndBot
+  - first:
+      213: 21300122
+    second: Caves_TileSet_25
+  - first:
+      213: 21300124
+    second: Caves_TileSet_26
+  - first:
+      213: 21300126
+    second: CaveSlopeLeftEnd
+  - first:
+      213: 21300128
+    second: CaveSlopeRightTop
+  - first:
+      213: 21300130
+    second: CaveSlopeLeftTop
+  - first:
+      213: 21300132
+    second: CaveSlopeRightEndTop
+  - first:
+      213: 21300134
+    second: CaveSlopeLeftEndTop
+  - first:
+      213: 21300136
+    second: CavesBackgroundTop
+  - first:
+      213: 21300138
+    second: CaveBotSlopeRightWall
+  - first:
+      213: 21300140
+    second: CaveBotSlopeLeftWall
+  externalObjects: {}
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -83,6 +224,8 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -91,6 +234,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -98,10 +243,13 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: 0
     aniso: -1
-    mipBias: -1
-    wrapMode: 1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -110,49 +258,67 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: Standalone
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Standalone
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: Android
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Android
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: WebGL
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -168,7 +334,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 02305410000000000800000000000000
+      internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveTop
       rect:
@@ -181,7 +355,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 22305410000000000800000000000000
+      internalID: 21300002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveTopRight
       rect:
@@ -194,7 +376,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 42305410000000000800000000000000
+      internalID: 21300004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveSlopeRight
       rect:
@@ -207,7 +397,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 44305410000000000800000000000000
+      internalID: 21300036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveSlopeLeft
       rect:
@@ -220,7 +418,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 64305410000000000800000000000000
+      internalID: 21300038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveLeft
       rect:
@@ -233,7 +439,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 82305410000000000800000000000000
+      internalID: 21300008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveMiddle
       rect:
@@ -246,7 +460,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 03305410000000000800000000000000
+      internalID: 21300016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveRight
       rect:
@@ -259,7 +481,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 62305410000000000800000000000000
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveSlopeRightFill
       rect:
@@ -272,7 +502,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a4305410000000000800000000000000
+      internalID: 21300042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveSlopeLeftFill
       rect:
@@ -285,7 +523,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 84305410000000000800000000000000
+      internalID: 21300040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveBottomLeft
       rect:
@@ -298,7 +544,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a2305410000000000800000000000000
+      internalID: 21300010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveBottom
       rect:
@@ -311,7 +565,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e2305410000000000800000000000000
+      internalID: 21300014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveBottomRight
       rect:
@@ -324,7 +586,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c2305410000000000800000000000000
+      internalID: 21300012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveSlopeRightBottomFill
       rect:
@@ -337,7 +607,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 25305410000000000800000000000000
+      internalID: 21300050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveSlopeLeftBottomFill
       rect:
@@ -350,7 +628,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 05305410000000000800000000000000
+      internalID: 21300048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveInnerCornerBottomLeft
       rect:
@@ -363,7 +649,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 24305410000000000800000000000000
+      internalID: 21300034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveInnerCornerBottomRight
       rect:
@@ -376,7 +670,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 04305410000000000800000000000000
+      internalID: 21300032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveBackWall
       rect:
@@ -389,7 +691,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a3305410000000000800000000000000
+      internalID: 21300026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveSlopeRightBottom
       rect:
@@ -402,7 +712,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c4305410000000000800000000000000
+      internalID: 21300044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveSlopeLeftBottom
       rect:
@@ -415,7 +733,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e4305410000000000800000000000000
+      internalID: 21300046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveInnerCornerLeft
       rect:
@@ -428,7 +754,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e3305410000000000800000000000000
+      internalID: 21300030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveInnerCornerRight
       rect:
@@ -441,7 +775,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c3305410000000000800000000000000
+      internalID: 21300028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveSlopeRightEnd
       rect:
@@ -454,7 +796,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 06305410000000000800000000000000
+      internalID: 21300064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveSlopeRightEndBot
       rect:
@@ -467,7 +817,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 85305410000000000800000000000000
+      internalID: 21300056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveSlopeLeftEndBot
       rect:
@@ -480,7 +838,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a5305410000000000800000000000000
+      internalID: 21300058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Caves_TileSet_25
       rect:
@@ -493,7 +859,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a9305410000000000800000000000000
+      internalID: 21300122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: Caves_TileSet_26
       rect:
@@ -506,7 +880,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c9305410000000000800000000000000
+      internalID: 21300124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveSlopeLeftEnd
       rect:
@@ -519,7 +901,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 26305410000000000800000000000000
+      internalID: 21300066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveSlopeRightTop
       rect:
@@ -532,7 +922,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c5305410000000000800000000000000
+      internalID: 21300060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveSlopeLeftTop
       rect:
@@ -545,7 +943,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e5305410000000000800000000000000
+      internalID: 21300062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveSlopeRightEndTop
       rect:
@@ -558,7 +964,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 45305410000000000800000000000000
+      internalID: 21300052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveSlopeLeftEndTop
       rect:
@@ -571,7 +985,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 65305410000000000800000000000000
+      internalID: 21300054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CavesBackgroundTop
       rect:
@@ -584,7 +1006,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 8a305410000000000800000000000000
+      internalID: 21300136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveBotSlopeRightWall
       rect:
@@ -597,7 +1027,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 66305410000000000800000000000000
+      internalID: 21300070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: CaveBotSlopeLeftWall
       rect:
@@ -610,9 +1048,28 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 46305410000000000800000000000000
+      internalID: 21300068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
   spritePackingTag: 
+  pSDRemoveMatte: 1
+  pSDShowRemoveMatteOption: 1
   userData: 
   assetBundleName: 
   assetBundleVariant: 

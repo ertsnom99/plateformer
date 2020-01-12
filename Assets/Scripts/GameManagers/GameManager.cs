@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
@@ -22,6 +21,10 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     private bool _enableControlAfterFadeIn = true;
     [SerializeField]
     private Inputs _forcedControlsAtLevelStart;
+
+    [Header("Pause")]
+    [SerializeField]
+    private GameObject _pauseMenu;
 
     [Header("Level Change")]
     [SerializeField]
@@ -85,21 +88,27 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         _playerMovement.ChangeOrientation(_startOrientedLeft ? Vector2.left : Vector2.right);
         _playerMovement.SetInputs(_forcedControlsAtLevelStart);
 
+        if (_pauseMenu)
+        {
+            ShowPause(false);
+        }
+
         Fade.FadeIn(FadeDuration);
     }
 
     protected virtual void Update()
     {
         // Select the first selected gameobject when none is while trying to navigate
-        if (EventSystem.current.currentSelectedGameObject == null && Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0.9f)
+        if (!EventSystem.current.currentSelectedGameObject && Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0.9f)
         {
+            EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
         }
         
-        // TODO: remove later
-        if (Input.GetKeyDown(KeyCode.Escape))
+        // Pause menu
+        if (Input.GetButtonDown("Quit") && _pauseMenu && !Fade.IsFading)
         {
-            Quit();
+            ShowPause(!_pauseMenu.activeSelf);
         }
 
         if (Input.GetKey(KeyCode.L) && Input.GetKey(KeyCode.Alpha1))
@@ -120,10 +129,37 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         }
     }
 
+    public void ShowPause(bool show)
+    {
+        _pauseMenu.SetActive(show);
+        Time.timeScale = show ? 0.0f : 1.0f;
+
+        if (show && !EventSystem.current.currentSelectedGameObject)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
+        }
+    }
+
+    public void ReloadCurrentLevel()
+    {
+        int level = SceneManager.GetActiveScene().buildIndex;
+
+        if (level > -1)
+        {
+            LoadLevel(level);
+        }
+    }
+
     public void LoadLevel(int sceneToLoad)
     {
         PlayerController.EnableControl(false);
         _playerMovement.GetComponent<PlatformerMovement>().SetInputs(new Inputs());
+
+        if (_pauseMenu)
+        {
+            ShowPause(false);
+        }
 
         _sceneToLoad = sceneToLoad;
         InLevelEndSequence = true;

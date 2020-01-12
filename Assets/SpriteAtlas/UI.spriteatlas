@@ -45,13 +45,17 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 5bebbe3201024a04fa1fcd1c353c5a2a, type: 3}
     - {fileID: 102900000, guid: 30927499f073ef645a661dd18aa7e28b, type: 3}
     - {fileID: 102900000, guid: c6c526df5322c1a429adbc6ea253741f, type: 3}
-    totalSpriteSurfaceArea: 140690
+    totalSpriteSurfaceArea: 144786
     bindAsDefault: 1
+    storedHash:
+      serializedVersion: 2
+      Hash: d8cd7cfaa4944629f9d91455f129d79a
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: e69348b0783c2434095fb4965738d442, type: 3}
   - {fileID: 21300000, guid: 8d2bf07190059b04cb42d770aa6a6e23, type: 3}
   - {fileID: 21300000, guid: f642d0b2c300b2943b11d44b1c9cf3f3, type: 3}
+  - {fileID: 21300000, guid: e880e693774ee81499df2bb317606bd0, type: 3}
   - {fileID: 21300000, guid: a3e50765f31c038419127946f55ee67d, type: 3}
   - {fileID: 21300000, guid: 055826d5442f9574cbd6712dde32d023, type: 3}
   - {fileID: 21300000, guid: 9a800727c22902c49aff75a6d6de6668, type: 3}
@@ -71,6 +75,7 @@ SpriteAtlas:
   - slash
   - health_bar
   - Keyboard_White_1
+  - button
   - 360_RB
   - Keyboard_White_2
   - Keyboard_White_E

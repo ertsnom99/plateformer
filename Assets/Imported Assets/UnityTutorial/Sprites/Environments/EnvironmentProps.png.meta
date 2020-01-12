@@ -1,51 +1,132 @@
 fileFormatVersion: 2
 guid: a534c6a049c5a8f4590b2fd05700059d
-timeCreated: 1481813894
-licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Bush01
-    21300002: Rock01
-    21300004: Tree01
-    21300006: EnvironmentProps_3
-    21300008: Bush02
-    21300010: Rock02
-    21300012: EnvironmentProps_6
-    21300014: EnvironmentProps_7
-    21300016: Bush03
-    21300018: Rock03
-    21300020: Tree02
-    21300022: Tree03
-    21300024: EnvironmentProps_12
-    21300026: EnvironmentProps_13
-    21300028: EnvironmentProps_14
-    21300030: EnvironmentProps_15
-    21300032: GrassClump01
-    21300034: GrassClump02
-    21300036: GrassClump03
-    21300038: Flowers01
-    21300040: Flowers02
-    21300042: Flowers03
-    21300044: BonePile01
-    21300046: BonePile02
-    21300048: EnvironmentProps_0
-    21300050: EnvironmentProps_1
-    21300052: EnvironmentProps_2
-    21300054: EnvironmentProps_4
-    21300056: EnvironmentProps_5
-    21300058: EnvironmentProps_8
-    21300060: EnvironmentProps_9
-    21300062: EnvironmentProps_10
-    21300064: EnvironmentProps_11
-    21300066: EnvironmentProps_16
-    21300068: EnvironmentProps_17
-    21300070: EnvironmentProps_18
-    21300072: EnvironmentProps_19
-    21300074: EnvironmentProps_20
-    21300076: EnvironmentProps_21
-    21300078: EnvironmentProps_22
-    21300080: EnvironmentProps_23
-  serializedVersion: 4
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: Bush01
+  - first:
+      213: 21300002
+    second: Rock01
+  - first:
+      213: 21300004
+    second: Tree01
+  - first:
+      213: 21300006
+    second: EnvironmentProps_3
+  - first:
+      213: 21300008
+    second: Bush02
+  - first:
+      213: 21300010
+    second: Rock02
+  - first:
+      213: 21300012
+    second: EnvironmentProps_6
+  - first:
+      213: 21300014
+    second: EnvironmentProps_7
+  - first:
+      213: 21300016
+    second: Bush03
+  - first:
+      213: 21300018
+    second: Rock03
+  - first:
+      213: 21300020
+    second: Tree02
+  - first:
+      213: 21300022
+    second: Tree03
+  - first:
+      213: 21300024
+    second: EnvironmentProps_12
+  - first:
+      213: 21300026
+    second: EnvironmentProps_13
+  - first:
+      213: 21300028
+    second: EnvironmentProps_14
+  - first:
+      213: 21300030
+    second: EnvironmentProps_15
+  - first:
+      213: 21300032
+    second: GrassClump01
+  - first:
+      213: 21300034
+    second: GrassClump02
+  - first:
+      213: 21300036
+    second: GrassClump03
+  - first:
+      213: 21300038
+    second: Flowers01
+  - first:
+      213: 21300040
+    second: Flowers02
+  - first:
+      213: 21300042
+    second: Flowers03
+  - first:
+      213: 21300044
+    second: BonePile01
+  - first:
+      213: 21300046
+    second: BonePile02
+  - first:
+      213: 21300048
+    second: EnvironmentProps_0
+  - first:
+      213: 21300050
+    second: EnvironmentProps_1
+  - first:
+      213: 21300052
+    second: EnvironmentProps_2
+  - first:
+      213: 21300054
+    second: EnvironmentProps_4
+  - first:
+      213: 21300056
+    second: EnvironmentProps_5
+  - first:
+      213: 21300058
+    second: EnvironmentProps_8
+  - first:
+      213: 21300060
+    second: EnvironmentProps_9
+  - first:
+      213: 21300062
+    second: EnvironmentProps_10
+  - first:
+      213: 21300064
+    second: EnvironmentProps_11
+  - first:
+      213: 21300066
+    second: EnvironmentProps_16
+  - first:
+      213: 21300068
+    second: EnvironmentProps_17
+  - first:
+      213: 21300070
+    second: EnvironmentProps_18
+  - first:
+      213: 21300072
+    second: EnvironmentProps_19
+  - first:
+      213: 21300074
+    second: EnvironmentProps_20
+  - first:
+      213: 21300076
+    second: EnvironmentProps_21
+  - first:
+      213: 21300078
+    second: EnvironmentProps_22
+  - first:
+      213: 21300080
+    second: EnvironmentProps_23
+  externalObjects: {}
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
@@ -53,6 +134,8 @@ TextureImporter:
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -61,6 +144,8 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -68,10 +153,13 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: 0
     aniso: 16
-    mipBias: -1
-    wrapMode: 1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -80,33 +168,43 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
+  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - buildTarget: DefaultTexturePlatform
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: Standalone
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Standalone
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -124,6 +222,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 05305410000000000800000000000000
+      internalID: 21300048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_1
       rect:
@@ -138,6 +243,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 25305410000000000800000000000000
+      internalID: 21300050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_2
       rect:
@@ -152,6 +264,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 45305410000000000800000000000000
+      internalID: 21300052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_3
       rect:
@@ -166,6 +285,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 62305410000000000800000000000000
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_4
       rect:
@@ -180,6 +306,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 65305410000000000800000000000000
+      internalID: 21300054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_5
       rect:
@@ -194,6 +327,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 85305410000000000800000000000000
+      internalID: 21300056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_6
       rect:
@@ -208,6 +348,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c2305410000000000800000000000000
+      internalID: 21300012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_7
       rect:
@@ -222,6 +369,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e2305410000000000800000000000000
+      internalID: 21300014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_8
       rect:
@@ -236,6 +390,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a5305410000000000800000000000000
+      internalID: 21300058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_9
       rect:
@@ -250,6 +411,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c5305410000000000800000000000000
+      internalID: 21300060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_10
       rect:
@@ -264,6 +432,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e5305410000000000800000000000000
+      internalID: 21300062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_11
       rect:
@@ -278,6 +453,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 06305410000000000800000000000000
+      internalID: 21300064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_12
       rect:
@@ -292,6 +474,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 83305410000000000800000000000000
+      internalID: 21300024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_13
       rect:
@@ -306,6 +495,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a3305410000000000800000000000000
+      internalID: 21300026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_14
       rect:
@@ -320,6 +516,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c3305410000000000800000000000000
+      internalID: 21300028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_15
       rect:
@@ -334,6 +537,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e3305410000000000800000000000000
+      internalID: 21300030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_16
       rect:
@@ -348,6 +558,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 26305410000000000800000000000000
+      internalID: 21300066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_17
       rect:
@@ -362,6 +579,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 46305410000000000800000000000000
+      internalID: 21300068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_18
       rect:
@@ -376,6 +600,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 66305410000000000800000000000000
+      internalID: 21300070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_19
       rect:
@@ -390,6 +621,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 86305410000000000800000000000000
+      internalID: 21300072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_20
       rect:
@@ -404,6 +642,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: a6305410000000000800000000000000
+      internalID: 21300074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_21
       rect:
@@ -418,6 +663,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: c6305410000000000800000000000000
+      internalID: 21300076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_22
       rect:
@@ -432,6 +684,13 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: e6305410000000000800000000000000
+      internalID: 21300078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     - serializedVersion: 2
       name: EnvironmentProps_23
       rect:
@@ -446,9 +705,26 @@ TextureImporter:
       outline: []
       physicsShape: []
       tessellationDetail: 0
+      bones: []
+      spriteID: 07305410000000000800000000000000
+      internalID: 21300080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
