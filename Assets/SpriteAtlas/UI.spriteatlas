@@ -23,7 +23,7 @@ SpriteAtlas:
     platformSettings:
     - serializedVersion: 3
       m_BuildTarget: DefaultTexturePlatform
-      m_MaxTextureSize: 512
+      m_MaxTextureSize: 1024
       m_ResizeAlgorithm: 0
       m_TextureFormat: -1
       m_TextureCompression: 0
@@ -45,11 +45,11 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 5bebbe3201024a04fa1fcd1c353c5a2a, type: 3}
     - {fileID: 102900000, guid: 30927499f073ef645a661dd18aa7e28b, type: 3}
     - {fileID: 102900000, guid: c6c526df5322c1a429adbc6ea253741f, type: 3}
-    totalSpriteSurfaceArea: 144786
+    totalSpriteSurfaceArea: 490306
     bindAsDefault: 1
     storedHash:
       serializedVersion: 2
-      Hash: d8cd7cfaa4944629f9d91455f129d79a
+      Hash: 6b4ee317b0df97b0175f95fe1e97fe3a
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: e69348b0783c2434095fb4965738d442, type: 3}
@@ -62,13 +62,18 @@ SpriteAtlas:
   - {fileID: 21300000, guid: cdefc8a79613d474f8d10a5dba92a70a, type: 3}
   - {fileID: 21300000, guid: 44839368579d5064d805c17bd100ea8f, type: 3}
   - {fileID: 21300002, guid: 44839368579d5064d805c17bd100ea8f, type: 3}
+  - {fileID: 21300000, guid: b51841298589f4241a186c813a710f32, type: 3}
   - {fileID: 21300000, guid: 0fbe1f89b66cd054ca1b3bfc73d0d4c1, type: 3}
+  - {fileID: 21300000, guid: eedc9a1c17808ac438bc85c2eced96dc, type: 3}
+  - {fileID: 21300000, guid: c684734c543e10446995e49de4723939, type: 3}
   - {fileID: 21300006, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
   - {fileID: 21300004, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
   - {fileID: 21300002, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
   - {fileID: 21300000, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
   - {fileID: 21300008, guid: eacb808c394c3274ab5a6ce58a100c63, type: 3}
   - {fileID: 21300000, guid: db5f3f2d08a7c704eb85533692399dd3, type: 3}
+  - {fileID: 21300000, guid: c39dbf1e8adbb6c42be4d056839c3003, type: 3}
+  - {fileID: 21300000, guid: 4c17d92ed46b13e41b93d1f37dfdebe8, type: 3}
   - {fileID: 21300000, guid: a779095e94ae49043aa68b131a241559, type: 3}
   - {fileID: 21300000, guid: 7d66af5f4baa7ef43b2f623c84b79eb2, type: 3}
   m_PackedSpriteNamesToIndex:
@@ -82,13 +87,18 @@ SpriteAtlas:
   - Keyboard_White_4
   - ability_frame_0
   - ability_frame_1
+  - arcade_buttons_y
   - Keyboard_White_3
+  - arcade_buttons_x
+  - arcade_buttons_b
   - Dash Ready_3
   - Dash Ready_2
   - Dash Ready_1
   - Dash Ready_0
   - Dash Ready_4
   - charge_bar
+  - arcade_buttons_start
+  - arcade_buttons_a
   - info_window
   - Keyboard_White_Esc
   m_Tag: UI
