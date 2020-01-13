@@ -11,10 +11,6 @@ using UnityEngine;
 
 public abstract class PossessableCharacterController : CharacterController, IPossessable
 {
-    [Header("Controls")]
-    [SerializeField]
-    protected bool UseKeyboard = false;
-
     protected Inputs NoControlInputs = new Inputs();
 
     [Header("Possession")]
@@ -51,6 +47,7 @@ public abstract class PossessableCharacterController : CharacterController, IPos
     protected Collider2D[] OverlapResults = new Collider2D[4];
 
     protected PossessionPower PossessingScript;
+    protected PlayerController PossessingController;
 
     [Header("AI Target")]
     [SerializeField]
@@ -153,11 +150,9 @@ public abstract class PossessableCharacterController : CharacterController, IPos
     
     protected abstract void OnUpdatePossessed();
 
-    protected abstract Inputs FetchInputs();
-
     protected virtual void UpdateDisplayInfo(Inputs inputs)
     {
-        if (inputs.DisplayInfo)
+        if (inputs.PressHelp)
         {
             if (InfoUI)
             {
@@ -172,7 +167,7 @@ public abstract class PossessableCharacterController : CharacterController, IPos
 
     protected virtual void UpdatePossession(Inputs inputs)
     {
-        if (inputs.Possess && HasEnoughSpaceToUnpossess())
+        if (inputs.PressPossess && HasEnoughSpaceToUnpossess())
         {
             Unpossess();
         }
@@ -253,11 +248,6 @@ public abstract class PossessableCharacterController : CharacterController, IPos
 
     protected abstract Inputs CreateInputs();
 
-    public void SetKeyboardUse(bool useKeyboard)
-    {
-        UseKeyboard = useKeyboard;
-    }
-
     public void EnablePossession(bool enable)
     {
         IsPossessable = enable;
@@ -284,7 +274,7 @@ public abstract class PossessableCharacterController : CharacterController, IPos
             Target = target;
         }
     }
-     // HACK: For prototype
+    
     public void SetDistanceToDetect(float distanceToDetect)
     {
         _distanceToDetect = distanceToDetect;
@@ -310,11 +300,12 @@ public abstract class PossessableCharacterController : CharacterController, IPos
     }
 
     // Methods of the IPossessable interface
-    public virtual bool Possess(PossessionPower possessingScript)
+    public virtual bool Possess(PossessionPower possessingScript, PlayerController possessingController)
     {
         if (IsPossessable && !IsPossessed)
         {
             PossessingScript = possessingScript;
+            PossessingController = possessingController;
 
             IsPossessed = true;
 
@@ -364,6 +355,7 @@ public abstract class PossessableCharacterController : CharacterController, IPos
                 
                 spawnedCharacter = PossessingScript.gameObject;
 
+                PossessingController = null;
                 PossessingScript = null;
             }
 

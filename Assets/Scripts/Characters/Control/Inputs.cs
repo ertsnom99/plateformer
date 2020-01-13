@@ -5,15 +5,15 @@ public struct Inputs
 {
     public float Horizontal;
     public float Vertical;
-    public bool Jump;
-    public bool ReleaseJump;
-    public bool Dash;
-    public bool ReleaseDash;
-    public bool Interact;
+    public bool PressPossess;
+    public bool PressInteract;
     public bool ReleaseInteract;
-    public bool Possess;
-    public bool DisplayInfo;
-    public bool Power;
+    public bool PressHelp;
+    public bool PressJump;
+    public bool ReleaseJump;
+    public bool PressDash;
+    public bool ReleaseDash;
+    public bool PressPower;
     public bool HeldPower;
     public bool ReleasePower;
 }

@@ -1,9 +1,11 @@
 ﻿using Cinemachine;
-using System.Collections.Generic;
 using UnityEngine;
 
 // This script requires thoses components and will be added if they aren't already there
+[RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(PlatformerMovement))]
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(AudioSource))]
 
@@ -28,12 +30,15 @@ public class PossessionPower : MonoBehaviour, IPhysicsCollision2DListener
 
     private const string _possessModeAnimationLayerName = "Possess Mode";
     private int _possessModeAnimationLayerIndex;
-    
+
     /*// Layers Index
     private int _playerLayerIndex;
     private int _AILayerIndex;*/
 
+    private PlayerController _playerController;
     private PlatformerMovement _movementScript;
+    private SpriteRenderer _spriteRenderer;
+    private BoxCollider2D _boxCollider;
     private Animator _animator;
     private AudioSource _audioSource;
 
@@ -51,7 +56,10 @@ public class PossessionPower : MonoBehaviour, IPhysicsCollision2DListener
             Debug.LogError("No collider was set for " + GetType() + " script of " + gameObject.name + "!");
         }
 
+        _playerController = GetComponent<PlayerController>();
         _movementScript = GetComponent<PlatformerMovement>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _boxCollider = GetComponent<BoxCollider2D>();
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
 
@@ -80,10 +88,13 @@ public class PossessionPower : MonoBehaviour, IPhysicsCollision2DListener
     // Take possession of the given AIController
     public void TakePossession(IPossessable possessed)
     {
-        if (possessed.Possess(this))
+        if (possessed.Possess(this, _playerController))
         {
             ChangePossessionMode(false);
-            gameObject.SetActive(false);
+            _playerController.EnableControl(false);
+            _spriteRenderer.enabled = false;
+            _boxCollider.enabled = false;
+            _movementScript.enabled = false;
         }
     }
 
@@ -106,7 +117,10 @@ public class PossessionPower : MonoBehaviour, IPhysicsCollision2DListener
         VirtualCameraManager.Instance.ChangeVirtualCamera(_virtualCamera);
 
         // Show the character
-        gameObject.SetActive(true);
+        _playerController.EnableControl(true);
+        _spriteRenderer.enabled = true;
+        _boxCollider.enabled = true;
+        _movementScript.enabled = true;
     }
 
     // Methods of the IPhysicsObjectCollisionListener interface

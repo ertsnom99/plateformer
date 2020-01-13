@@ -167,46 +167,15 @@ public class PlatformerCharacterController : PossessableCharacterController, IPr
     {
         if (ControlsEnabled())
         {
-            // Get the inputs used during this frame
-            Inputs inputs = FetchInputs();
-
-            UpdateDisplayInfo(inputs);
-            UpdateMovement(inputs);
-            UpdateExplosion(inputs);
-            UpdatePossession(inputs);
+            UpdateDisplayInfo(PossessingController.CurrentInputs);
+            UpdateMovement(PossessingController.CurrentInputs);
+            UpdateExplosion(PossessingController.CurrentInputs);
+            UpdatePossession(PossessingController.CurrentInputs);
         }
         else
         {
             UpdateMovement();
         }
-    }
-
-    protected override Inputs FetchInputs()
-    {
-        Inputs inputs = new Inputs();
-
-        if (UseKeyboard)
-        {
-            // Inputs from the keyboard
-            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.Jump = Input.GetButtonDown("Jump");
-            inputs.ReleaseJump = Input.GetButtonUp("Jump");
-            inputs.Possess = Input.GetButtonDown("Possess");
-            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
-            inputs.Power = Input.GetButton("Power");
-        }
-        else
-        {
-            // Inputs from the controler
-            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.Jump = Input.GetButtonDown("Jump");
-            inputs.ReleaseJump = Input.GetButtonUp("Jump");
-            inputs.Possess = Input.GetButtonDown("Possess");
-            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
-            inputs.Power = Input.GetButton("Power");
-        }
-
-        return inputs;
     }
 
     protected override void OnUpdateNotPossessed()
@@ -383,7 +352,7 @@ public class PlatformerCharacterController : PossessableCharacterController, IPr
 
     private void UpdateExplosion(Inputs inputs)
     {
-        if (inputs.Power && !_explodableCharacterScript.CountdownStarted)
+        if (inputs.PressPower && !_explodableCharacterScript.CountdownStarted)
         {
             _explodableCharacterScript.StartCountdown();
         }

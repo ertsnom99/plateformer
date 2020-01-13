@@ -49,10 +49,8 @@ public class DevGameManager : GameManager, IHealthSubscriber
         PlayerController.GetComponent<Health>().Subscribe(this);
     }
 
-    protected override void Update()
+    protected void Update()
     {
-        base.Update();
-
         if (_gameEnded && !_fading && Input.GetButtonDown("Restart"))
         {
             Fade.FadeOut(FadeDuration);

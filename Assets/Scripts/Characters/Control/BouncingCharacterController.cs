@@ -12,7 +12,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
     // Collider that is use for collision during movement (it will be enable and disable when changing form)
     [SerializeField]
     private Collider2D _movementCollider;
-
+    
     [Header("Charge")]
     [SerializeField]
     private float _maxChargeTime = 5.0f;
@@ -161,33 +161,30 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
     {
         if (ControlsEnabled())
         {
-            // Get the inputs used during this frame
-            Inputs inputs = FetchInputs();
-
-            UpdateDisplayInfo(inputs);
+            UpdateDisplayInfo(PossessingController.CurrentInputs);
 
             // Check if charge started
-            if (_movementScript.IsGrounded && !_isCharging && inputs.HeldPower/* && HasEnoughSpaceForBounceForm()*/)
+            if (_movementScript.IsGrounded && !_isCharging && PossessingController.CurrentInputs.HeldPower/* && HasEnoughSpaceForBounceForm()*/)
             {
                 StartCharge();
             }
-            else if (_isCharging && inputs.ReleasePower)
+            else if (_isCharging && PossessingController.CurrentInputs.ReleasePower)
             {
-                StopCharge(inputs);
+                StopCharge(PossessingController.CurrentInputs);
             }
 
             if (!_isCharging)
             {
-                UpdateMovement(inputs);
+                UpdateMovement(PossessingController.CurrentInputs);
             }
             else
             {
                 // Update the charge arrow
-                if (inputs.Vertical != .0f || inputs.Horizontal != .0f)
+                if (PossessingController.CurrentInputs.Vertical != .0f || PossessingController.CurrentInputs.Horizontal != .0f)
                 {
                     _arrow.SetActive(true);
 
-                    float angle = Mathf.Atan2(inputs.Vertical, inputs.Horizontal) * Mathf.Rad2Deg;
+                    float angle = Mathf.Atan2(PossessingController.CurrentInputs.Vertical, PossessingController.CurrentInputs.Horizontal) * Mathf.Rad2Deg;
                     _arrow.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 }
                 else
@@ -205,7 +202,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
                 }
             }
 
-            UpdatePossession(inputs);
+            UpdatePossession(PossessingController.CurrentInputs);
         }
         else
         {
@@ -216,38 +213,6 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
 
             UpdateMovement();
         }
-    }
-
-    protected override Inputs FetchInputs()
-    {
-        Inputs inputs = new Inputs();
-
-        if (UseKeyboard)
-        {
-            // Inputs from the keyboard
-            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.Vertical = Input.GetAxisRaw("Vertical");
-            inputs.Jump = Input.GetButtonDown("Jump");
-            inputs.ReleaseJump = Input.GetButtonUp("Jump");
-            inputs.Possess = Input.GetButtonDown("Possess");
-            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
-            inputs.HeldPower = Input.GetButton("Power");
-            inputs.ReleasePower = Input.GetButtonUp("Power");
-        }
-        else
-        {
-            // Inputs from the controler
-            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.Vertical = Input.GetAxisRaw("Vertical");
-            inputs.Jump = Input.GetButtonDown("Jump");
-            inputs.ReleaseJump = Input.GetButtonUp("Jump");
-            inputs.Possess = Input.GetButtonDown("Possess");
-            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
-            inputs.HeldPower = Input.GetButton("Power");
-            inputs.ReleasePower = Input.GetButtonUp("Power");
-        }
-
-        return inputs;
     }
 
     protected override void OnUpdateNotPossessed()
@@ -273,11 +238,12 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
         return inputs;
     }
 
-    public override bool Possess(PossessionPower possessingScript)
+    public override bool Possess(PossessionPower possessingScript, PlayerController possessingController)
     {
         if (IsPossessable && !IsPossessed)
         {
             PossessingScript = possessingScript;
+            PossessingController = possessingController;
 
             IsPossessed = true;
 
@@ -291,7 +257,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
                 AudioSource.pitch = Random.Range(.9f, 1.0f);
                 AudioSource.PlayOneShot(OnPossessSound);
 
-                _bouncingFormController.Possess(possessingScript);
+                _bouncingFormController.Possess(possessingScript, possessingController);
 
                 OnPossess(possessingScript);
             }
@@ -330,6 +296,7 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
                     
                     spawnedCharacter = PossessingScript.gameObject;
 
+                    PossessingController = null;
                     PossessingScript = null;
                 }
 
@@ -581,9 +548,9 @@ public class BouncingCharacterController : PossessableCharacterController, IBoun
     }
 
     // Methods of the IBouncingFormControllerSubscriber interface
-    public void NotifyPossessed(BouncingFormCharacterController possessedScript, PossessionPower possessingScript)
+    public void NotifyPossessed(BouncingFormCharacterController possessedScript, PossessionPower possessingScript, PlayerController possessingController)
     {
-        Possess(possessingScript);
+        Possess(possessingScript, possessingController);
     }
 
     public void NotifyUnpossessed(BouncingFormCharacterController possessedScript)

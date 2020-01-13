@@ -25,43 +25,18 @@ public class TurretController : PossessableCharacterController
 
     protected override void OnUpdatePossessed()
     {
-        Inputs inputs = NoControlInputs;
-
         if (ControlsEnabled())
         {
-            // Get the inputs used during this frame
-            inputs = FetchInputs();
-        }
-
-        UpdateDisplayInfo(inputs);
-        UpdateCanon(inputs);
-        UpdatePossession(inputs);
-    }
-
-    protected override Inputs FetchInputs()
-    {
-        Inputs inputs = new Inputs();
-
-        if (UseKeyboard)
-        {
-            // Inputs from the keyboard
-            inputs.Vertical = Input.GetAxisRaw("Vertical");
-            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.Possess = Input.GetButtonDown("Possess");
-            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
-            inputs.Power = Input.GetButtonDown("Power");
+            UpdateDisplayInfo(PossessingController.CurrentInputs);
+            UpdateCanon(PossessingController.CurrentInputs);
+            UpdatePossession(PossessingController.CurrentInputs);
         }
         else
         {
-            // Inputs from the controler
-            inputs.Vertical = Input.GetAxisRaw("Vertical");
-            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.Possess = Input.GetButtonDown("Possess");
-            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
-            inputs.Power = Input.GetButtonDown("Power");
+            UpdateDisplayInfo(NoControlInputs);
+            UpdateCanon(NoControlInputs);
+            UpdatePossession(NoControlInputs);
         }
-
-        return inputs;
     }
 
     protected override bool UseLeftSpawn()
@@ -85,7 +60,7 @@ public class TurretController : PossessableCharacterController
             _canonScript.SetAimingDirection(aimingDirection.normalized);
         }
 
-        if (inputs.Power)
+        if (inputs.PressPower)
         {
             GameObject bullet = _canonScript.Shoot();
 

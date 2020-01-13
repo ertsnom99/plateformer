@@ -59,6 +59,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -269,7 +270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83748b8269be1934fb55c08305675f83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseKeyboard: 0
   _isPossessable: 1
   InfoUI: {fileID: 0}
   PossessionVirtualCamera: {fileID: 0}
@@ -597,8 +597,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 310d41786cf2c8244a0d2abe78b3b379, type: 3}
     m_FontSize: 1

@@ -51,41 +51,18 @@ public class BulletController : PossessableCharacterController, IPhysicsCollisio
 
     protected override void OnUpdatePossessed()
     {
-        // Get the inputs used during this frame
-        Inputs inputs = NoControlInputs;
-
         if (ControlsEnabled())
         {
-            inputs = FetchInputs();
-        }
-
-        UpdateDisplayInfo(inputs);
-        UpdateMovement(inputs);
-        UpdatePossession(inputs);
-    }
-
-    protected override Inputs FetchInputs()
-    {
-        Inputs inputs = new Inputs();
-
-        if (UseKeyboard)
-        {
-            // Inputs from the keyboard
-            inputs.Vertical = Input.GetAxisRaw("Vertical");
-            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.Possess = Input.GetButtonDown("Possess");
-            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
+            UpdateDisplayInfo(PossessingController.CurrentInputs);
+            UpdateMovement(PossessingController.CurrentInputs);
+            UpdatePossession(PossessingController.CurrentInputs);
         }
         else
         {
-            // Inputs from the controler
-            inputs.Vertical = Input.GetAxisRaw("Vertical");
-            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.Possess = Input.GetButtonDown("Possess");
-            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
+            UpdateDisplayInfo(NoControlInputs);
+            UpdateMovement(NoControlInputs);
+            UpdatePossession(NoControlInputs);
         }
-
-        return inputs;
     }
 
     protected override void OnUpdateNotPossessed() { }

@@ -1,5 +1,6 @@
 ﻿using Pathfinding;
 using UnityEngine;
+using UnityEngine.InputSystem;
 //using Pathfinding;
 
 // This script requires thoses components and will be added if they aren't already there
@@ -18,41 +19,18 @@ public class FlyingCharacterController : PossessableCharacterController
 
     protected override void OnUpdatePossessed()
     {
-        // Get the inputs used during this frame
-        Inputs inputs = NoControlInputs;
-
         if (ControlsEnabled())
         {
-            inputs = FetchInputs();
-        }
-        
-        UpdateDisplayInfo(inputs);
-        UpdateMovement(inputs);
-        UpdatePossession(inputs);
-    }
-
-    protected override Inputs FetchInputs()
-    {
-        Inputs inputs = new Inputs();
-
-        if (UseKeyboard)
-        {
-            // Inputs from the keyboard
-            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.Vertical = Input.GetAxisRaw("Vertical");
-            inputs.Possess = Input.GetButtonDown("Possess");
-            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
+            UpdateDisplayInfo(PossessingController.CurrentInputs);
+            UpdateMovement(PossessingController.CurrentInputs);
+            UpdatePossession(PossessingController.CurrentInputs);
         }
         else
         {
-            // Inputs from the controler
-            inputs.Horizontal = Input.GetAxisRaw("Horizontal");
-            inputs.Vertical = Input.GetAxisRaw("Vertical");
-            inputs.Possess = Input.GetButtonDown("Possess");
-            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
+            UpdateDisplayInfo(NoControlInputs);
+            UpdateMovement(NoControlInputs);
+            UpdatePossession(NoControlInputs);
         }
-
-        return inputs;
     }
 
     protected override void OnUpdateNotPossessed()

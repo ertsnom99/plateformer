@@ -587,19 +587,19 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
             // Once a jump, wall jump, airborne jump or a dash is triggered, nothing can be triggered again until the next FixedUpdate is executed
             if (!_triggeredJump && !_triggeredWallJump && !_triggeredAirborneJump && !_triggeredDash)
             {
-                if (_canJump && IsGrounded && _currentInputs.Jump)
+                if (_canJump && IsGrounded && _currentInputs.PressJump)
                 {
                     Jump();
                 }
-                else if (_canWallJump && (IsSlidingOfWall || InWallJumpWindow()) && _currentInputs.Jump)
+                else if (_canWallJump && (IsSlidingOfWall || InWallJumpWindow()) && _currentInputs.PressJump)
                 {
                     WallJump();
                 }
-                else if (_canAirborneJump && !IsGrounded && _airborneJumpAvailable && _currentInputs.Jump)
+                else if (_canAirborneJump && !IsGrounded && _airborneJumpAvailable && _currentInputs.PressJump)
                 {
                     AirborneJump();
                 }
-                else if (_canDash && _currentInputs.Dash && !InDashWindow() && !DashInCooldown())
+                else if (_canDash && _currentInputs.PressDash && !InDashWindow() && !DashInCooldown())
                 {
                     Dash();
                 }

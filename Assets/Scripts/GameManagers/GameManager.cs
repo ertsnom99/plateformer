@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
@@ -77,6 +78,44 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         InLevelEndSequence = false;
     }
 
+    // Methods used to react to inputs
+    #region Input action callbacks
+    public void OnPause(InputAction.CallbackContext input)
+    {
+        if (_pauseMenu && input.phase == InputActionPhase.Performed && !Fade.IsFading)
+        {
+            ShowPause(!_pauseMenu.activeSelf);
+        }
+    }
+
+    public void OnNavigate(InputAction.CallbackContext input)
+    {
+        if (_pauseMenu && _pauseMenu.activeSelf)
+        {
+            // Select the first selected gameobject when none is while trying to navigate
+            if (!EventSystem.current.currentSelectedGameObject && Mathf.Abs(input.ReadValue<Vector2>().y) > 0.9f)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
+            }
+        }
+    }
+
+    // HACK: Fixes bug with the Input System UI Input Module
+    public void OnSubmit(InputAction.CallbackContext input)
+    {
+        if (_pauseMenu && _pauseMenu.activeSelf)
+        {
+            ExecuteEvents.Execute(EventSystem.current.currentSelectedGameObject, new BaseEventData(EventSystem.current), ExecuteEvents.submitHandler);
+        }
+    }
+
+    public void OnLoadLevel(InputAction.CallbackContext input)
+    {
+        LoadLevel(int.Parse(input.control.displayName));
+    }
+    #endregion
+
     protected virtual void Start()
     {
         Fade.Subscribe(this);
@@ -94,39 +133,6 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         }
 
         Fade.FadeIn(FadeDuration);
-    }
-
-    protected virtual void Update()
-    {
-        // Select the first selected gameobject when none is while trying to navigate
-        if (!EventSystem.current.currentSelectedGameObject && Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0.9f)
-        {
-            EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
-        }
-        
-        // Pause menu
-        if (Input.GetButtonDown("Quit") && _pauseMenu && !Fade.IsFading)
-        {
-            ShowPause(!_pauseMenu.activeSelf);
-        }
-
-        if (Input.GetKey(KeyCode.L) && Input.GetKey(KeyCode.Alpha1))
-        {
-            LoadLevel(Level1);
-        }
-        else if (Input.GetKey(KeyCode.L) && Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            LoadLevel(Level2);
-        }
-        else if (Input.GetKey(KeyCode.L) && Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            LoadLevel(Level3);
-        }
-        else if (Input.GetKey(KeyCode.L) && Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            LoadLevel(Level4);
-        }
     }
 
     public void ShowPause(bool show)

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public interface IBouncingFormControllerSubscriber
 {
-    void NotifyPossessed(BouncingFormCharacterController possessedScript, PossessionPower possessingScript);
+    void NotifyPossessed(BouncingFormCharacterController possessedScript, PossessionPower possessingScript, PlayerController possessingController);
     void NotifyUnpossessed(BouncingFormCharacterController possessedScript);
     void NotifyCanceledBounce();
 }
@@ -41,43 +41,21 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
 
     protected override void OnUpdatePossessed()
     {
-        // Get the inputs used during this frame
-        Inputs inputs = NoControlInputs;
-
         if (ControlsEnabled())
         {
-            inputs = FetchInputs();
-        }
+            if (PossessingController.CurrentInputs.ReleasePower)
+            {
+                CancelBounce();
+            }
 
-        if (inputs.ReleasePower)
-        {
-            CancelBounce();
-        }
-
-        UpdateDisplayInfo(inputs);
-        UpdatePossession(inputs);
-    }
-
-    protected override Inputs FetchInputs()
-    {
-        Inputs inputs = new Inputs();
-
-        if (UseKeyboard)
-        {
-            // Inputs from the keyboard
-            inputs.ReleasePower = Input.GetButtonUp("Power");
-            inputs.Possess = Input.GetButtonDown("Possess");
-            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
+            UpdateDisplayInfo(PossessingController.CurrentInputs);
+            UpdatePossession(PossessingController.CurrentInputs);
         }
         else
         {
-            // Inputs from the controler
-            inputs.ReleasePower = Input.GetButtonUp("Power");
-            inputs.Possess = Input.GetButtonDown("Possess");
-            inputs.DisplayInfo = Input.GetButtonDown("DisplayInfo");
+            UpdateDisplayInfo(NoControlInputs);
+            UpdatePossession(NoControlInputs);
         }
-
-        return inputs;
     }
 
     public void CancelBounce()
@@ -100,11 +78,12 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
         return LeftPlayerSpawn.OverlapCollider(LeftPlayerSpawnContactFilter, OverlapResults) == 0;
     }
     
-    public override bool Possess(PossessionPower possessingScript)
+    public override bool Possess(PossessionPower possessingScript, PlayerController possessingController)
     {
         if (IsPossessable && !IsPossessed)
         {
             PossessingScript = possessingScript;
+            PossessingController = possessingController;
 
             IsPossessed = true;
 
@@ -120,7 +99,7 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
 
                 foreach (IBouncingFormControllerSubscriber subscriber in Subscribers)
                 {
-                    subscriber.NotifyPossessed(this, possessingScript);
+                    subscriber.NotifyPossessed(this, possessingScript, possessingController);
                 }
 
                 OnPossess(possessingScript);
@@ -158,6 +137,7 @@ public class BouncingFormCharacterController : SubscribablePossessableCharacterC
 
                     spawnedCharacter = PossessingScript.gameObject;
 
+                    PossessingController = null;
                     PossessingScript = null;
                 }
 
