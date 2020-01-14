@@ -7,12 +7,14 @@ public class LevelEndSequence : MonoBehaviour
     private Inputs _forcedControls;
     [SerializeField]
     private int _sceneToLoad;
+    [SerializeField]
+    private bool _deleteAmbientManager = false;
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag(GameManager.PlayerTag))
         {
-            GameManager.Instance.LoadNextLevel(_forcedControls, _sceneToLoad);
+            GameManager.Instance.LoadNextLevel(_forcedControls, _sceneToLoad, _deleteAmbientManager);
         }
         else if (col.CompareTag(GameManager.EnemyTag))
         {

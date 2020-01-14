@@ -12441,6 +12441,7 @@ MonoBehaviour:
     HeldPower: 0
     ReleasePower: 0
   _sceneToLoad: 4
+  _deleteAmbientManager: 0
 --- !u!61 &321131363
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -28035,6 +28036,7 @@ MonoBehaviour:
     PressPower: 0
     HeldPower: 0
     ReleasePower: 0
+  _quitFadeDuration: 1
 --- !u!4 &1588201105
 Transform:
   m_ObjectHideFlags: 0
@@ -29085,7 +29087,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1588201104}
-        m_MethodName: LoadLevel
+        m_MethodName: LoadLevelAndDeleteAmbientManager
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

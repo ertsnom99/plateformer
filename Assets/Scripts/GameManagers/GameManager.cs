@@ -27,6 +27,9 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     [Header("Start Game")]
     [SerializeField]
     private Inputs _forcedControlsAtGameStart;
+
+    private AmbientManager _ambientManagerToDelete;
+
     [Header("Navigation")]
     [SerializeField]
     private InputSystemUIInputModule _inputModule;
@@ -40,6 +43,7 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     private float _nextLevelFadeDuration = 1.0f;
 
     private int _sceneToLoad = -1;
+    private bool _deleteAmbientManager = false;
 
     [Header("Quit Game")]
     [SerializeField]
@@ -152,6 +156,8 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         {
             ShowPause(false);
         }
+        
+        _ambientManagerToDelete = FindObjectOfType<AmbientManager>();
 
         Fade.FadeIn(FadeDuration);
     }
@@ -197,16 +203,36 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         _sceneToLoad = sceneToLoad;
         InLevelEndSequence = true;
 
+
         Fade.FadeOut(_nextLevelFadeDuration);
     }
 
-    public void LoadNextLevel(Inputs forcedControls, int sceneToLoad)
+    public void LoadLevelAndDeleteAmbientManager(int sceneToLoad)
+    {
+        if (_ambientManagerToDelete)
+        {
+            _ambientManagerToDelete.FadeVolumeOut(_nextLevelFadeDuration);
+
+            _deleteAmbientManager = true;
+        }
+
+        LoadLevel(sceneToLoad);
+    }
+
+    public void LoadNextLevel(Inputs forcedControls, int sceneToLoad, bool deleteAmbientManager = false)
     {
         PlayerController.EnableControl(false);
         _playerMovement.GetComponent<PlatformerMovement>().SetInputs(forcedControls);
         
+        if (deleteAmbientManager && _ambientManagerToDelete)
+        {
+            _ambientManagerToDelete.FadeVolumeOut(_nextLevelFadeDuration);
+        }
+        
         _sceneToLoad = sceneToLoad;
         InLevelEndSequence = true;
+
+        _deleteAmbientManager = deleteAmbientManager;
 
         Fade.FadeOut(_nextLevelFadeDuration);
     }
@@ -248,6 +274,11 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         {
             InLevelEndSequence = false;
             SceneManager.LoadScene(_sceneToLoad, LoadSceneMode.Single);
+
+            if (_deleteAmbientManager && _ambientManagerToDelete)
+            {
+                Destroy(_ambientManagerToDelete.gameObject);
+            }
         }
         else if (QuittingGame)
         {
