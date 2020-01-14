@@ -20,16 +20,6 @@ public class House : MonoBehaviour
 
     private void Awake()
     {
-        /*if (!_doorOpenSound)
-        {
-            Debug.LogError("No door open sound was set for " + GetType() + " script of " + gameObject.name + "!");
-        }
-
-        if (!_doorCloseSound)
-        {
-            Debug.LogError("No door close sound was set for " + GetType() + " script of " + gameObject.name + "!");
-        }*/
-
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
     }
