@@ -763,7 +763,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.7
+  m_Volume: 0.326
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1522,7 +1522,7 @@ MonoBehaviour:
     PressPossess: 0
     PressInteract: 0
     ReleaseInteract: 0
-    DisplayHelp: 0
+    PressHelp: 0
     PressJump: 0
     ReleaseJump: 0
     PressDash: 0
@@ -1530,8 +1530,38 @@ MonoBehaviour:
     PressPower: 0
     HeldPower: 0
     ReleasePower: 0
+  _forcedControlsAtGameStart:
+    Horizontal: 0
+    Vertical: 0
+    PressPossess: 0
+    PressInteract: 0
+    ReleaseInteract: 0
+    PressHelp: 0
+    PressJump: 0
+    ReleaseJump: 0
+    PressDash: 0
+    ReleaseDash: 0
+    PressPower: 0
+    HeldPower: 0
+    ReleasePower: 0
+  _inputModule: {fileID: 0}
   _pauseMenu: {fileID: 0}
   _nextLevelFadeDuration: 1
+  _forcedControlsAtQuit:
+    Horizontal: 0
+    Vertical: 0
+    PressPossess: 0
+    PressInteract: 0
+    ReleaseInteract: 0
+    PressHelp: 0
+    PressJump: 0
+    ReleaseJump: 0
+    PressDash: 0
+    ReleaseDash: 0
+    PressPower: 0
+    HeldPower: 0
+    ReleasePower: 0
+  _quitFadeDuration: 1
 --- !u!4 &792133708
 Transform:
   m_ObjectHideFlags: 0
