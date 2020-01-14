@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
@@ -23,6 +24,13 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     [SerializeField]
     private Inputs _forcedControlsAtLevelStart;
 
+    [Header("Start Game")]
+    [SerializeField]
+    private Inputs _forcedControlsAtGameStart;
+    [Header("Navigation")]
+    [SerializeField]
+    private InputSystemUIInputModule _inputModule;
+
     [Header("Pause")]
     [SerializeField]
     private GameObject _pauseMenu;
@@ -32,6 +40,14 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     private float _nextLevelFadeDuration = 1.0f;
 
     private int _sceneToLoad = -1;
+
+    [Header("Quit Game")]
+    [SerializeField]
+    private Inputs _forcedControlsAtQuit;
+    [SerializeField]
+    private float _quitFadeDuration = 1.0f;
+
+    public bool QuittingGame { get; private set; }
 
     public bool InLevelStartSequence { get; private set; }
     public bool InLevelEndSequence { get; private set; }
@@ -72,6 +88,11 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         if (!_playerMovement)
         {
             Debug.LogError("No player movement was set for " + GetType() + " script of " + gameObject.name + "!");
+        }
+
+        if (!_inputModule)
+        {
+            Debug.LogError("No input module was set for " + GetType() + " script of " + gameObject.name + "!");
         }
 
         InLevelStartSequence = false;
@@ -135,6 +156,12 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         Fade.FadeIn(FadeDuration);
     }
 
+    public void StartGame()
+    {
+        _playerMovement.SetInputs(_forcedControlsAtGameStart);
+        _inputModule.enabled = false;
+    }
+
     public void ShowPause(bool show)
     {
         _pauseMenu.SetActive(show);
@@ -184,6 +211,27 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         Fade.FadeOut(_nextLevelFadeDuration);
     }
 
+    public void QuitGame()
+    {
+        _playerMovement.SetInputs(_forcedControlsAtQuit);
+        _inputModule.enabled = false;
+    }
+
+    public void QuitApplication()
+    {
+        PlayerController.EnableControl(false);
+        _playerMovement.GetComponent<PlatformerMovement>().SetInputs(new Inputs());
+
+        if (_pauseMenu)
+        {
+            ShowPause(false);
+        }
+        
+        QuittingGame = true;
+
+        Fade.FadeOut(_quitFadeDuration);
+    }
+
     // Methods of the IFadeImageSubscriber interface
     public void NotifyFadeInFinished()
     {
@@ -201,10 +249,10 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
             InLevelEndSequence = false;
             SceneManager.LoadScene(_sceneToLoad, LoadSceneMode.Single);
         }
-    }
-
-    public void Quit()
-    {
-        Application.Quit();
+        else if (QuittingGame)
+        {
+            QuittingGame = false;
+            Application.Quit();
+        }
     }
 }

@@ -44,13 +44,15 @@ SpriteAtlas:
     packables:
     - {fileID: 102900000, guid: 15e7312e0607f4e84aeacdc44a70744c, type: 3}
     - {fileID: 102900000, guid: 1adcdfae01120e844877b81e969af867, type: 3}
-    totalSpriteSurfaceArea: 48708
+    totalSpriteSurfaceArea: 67500
     bindAsDefault: 1
     storedHash:
       serializedVersion: 2
-      Hash: 46bffe4dcd057c0cabae6ec68c631631
+      Hash: cce480fec8880fb698c2b5197a457197
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: -1923994175756728024, guid: af21dd3060005e147978e3064382e4d5, type: 3}
+  - {fileID: -3211844383458338046, guid: af21dd3060005e147978e3064382e4d5, type: 3}
   - {fileID: 21300000, guid: 15fdc3c0ac15e4a62b3f968392db8b58, type: 3}
   - {fileID: 21300000, guid: 42820af2772f24bda991ed7de294c2fd, type: 3}
   - {fileID: 21300000, guid: a86fabb3151544d25b4310ff397f732a, type: 3}
@@ -97,6 +99,8 @@ SpriteAtlas:
   - {fileID: -6864231125433406560, guid: a552ecafcbacffd44bdae8897e501ce6, type: 3}
   - {fileID: -1439347449851068971, guid: a552ecafcbacffd44bdae8897e501ce6, type: 3}
   m_PackedSpriteNamesToIndex:
+  - house_0
+  - house_1
   - platform-long
   - sign
   - skulls
