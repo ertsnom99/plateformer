@@ -173,7 +173,7 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         _pauseMenu.SetActive(show);
         Time.timeScale = show ? 0.0f : 1.0f;
 
-        if (show && !EventSystem.current.currentSelectedGameObject)
+        if (show)
         {
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
