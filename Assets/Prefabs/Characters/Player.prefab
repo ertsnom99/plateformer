@@ -308,108 +308,31 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114867589610096570}
-        m_MethodName: OnMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 0439223a-6cb7-4b65-8183-47d81e923823
     m_ActionName: GamePlay/LoadLevel[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114867589610096570}
-        m_MethodName: OnChangePossessMode
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: e7590c92-a7ee-4ed6-849c-ab0a48e3a70b
     m_ActionName: GamePlay/Submit[/XInputControllerWindows/buttonSouth,/Keyboard/a]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114867589610096570}
-        m_MethodName: OnInteract
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: f8a4bc80-e1cb-4bf9-bb7c-804bc4d60402
     m_ActionName: GamePlay/Navigate[/XInputControllerWindows/leftStick,/Keyboard/upArrow,/Keyboard/downArrow]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114867589610096570}
-        m_MethodName: OnHelp
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 575ccce3-750b-4784-b426-fb4b05e7bbdc
     m_ActionName: GamePlay/Pause[/XInputControllerWindows/start,/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114867589610096570}
-        m_MethodName: OnJump
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: c85585a2-7e50-472d-9efa-5a1288c0d465
     m_ActionName: GamePlay/Power[/XInputControllerWindows/buttonWest,/Keyboard/x]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114867589610096570}
-        m_MethodName: OnDash
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 6d0c4a69-59bf-4e67-bc7e-e112b27b943f
     m_ActionName: GamePlay/Dash[/XInputControllerWindows/buttonWest,/Keyboard/x]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114867589610096570}
-        m_MethodName: OnPower
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: a8cd8230-2897-430a-a80d-b2a93d74b3bf
     m_ActionName: GamePlay/Jump[/XInputControllerWindows/buttonSouth,/Keyboard/a]
   - m_PersistentCalls:
@@ -445,6 +368,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a22dc241a534b439eff05fa92180e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputActions: {fileID: -944628639613478452, guid: de853a4a8ab95df4a8b17ab217b627d5,
+    type: 3}
+  _moveActionName: Move
+  _changePossessModeActionName: ChangePossessMode
+  _interactActionName: Interact
+  _helpActionName: Help
+  _jumpActionName: Jump
+  _dashActionName: Dash
+  _powerActionName: Power
+  _pauseActionName: Pause
+  _navigateActionName: Navigate
+  _submitActionName: Submit
+  _loadLevelActionName: LoadLevel
+  _pauseCallback:
+    m_PersistentCalls:
+      m_Calls: []
+  _navigateCallback:
+    m_PersistentCalls:
+      m_Calls: []
+  _submitCallback:
+    m_PersistentCalls:
+      m_Calls: []
+  _loadLevelCallback:
+    m_PersistentCalls:
+      m_Calls: []
   _canUsePossession: 0
 --- !u!114 &114253259727586034
 MonoBehaviour:
