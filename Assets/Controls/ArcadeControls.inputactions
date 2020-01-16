@@ -175,7 +175,7 @@
                 {
                     "name": "down",
                     "id": "7abb767e-bd41-452a-90a4-0080e43c0c0a",
-                    "path": "<Keyboard>/numpad0",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
