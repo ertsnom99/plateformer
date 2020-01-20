@@ -304,11 +304,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8443846927363810665}
     m_Modifications:
-    - target: {fileID: 142018642199914979, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
-        type: 3}
-      propertyPath: m_Name
-      value: ChangingCompositeBlock
-      objectReference: {fileID: 0}
     - target: {fileID: 142018642199914978, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -363,6 +358,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 142018642199914979, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
+        type: 3}
+      propertyPath: m_Name
+      value: ChangingCompositeBlock
       objectReference: {fileID: 0}
     - target: {fileID: 6491600675283814834, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
         type: 3}
@@ -407,11 +407,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8443846927363810665}
     m_Modifications:
-    - target: {fileID: 142018642199914979, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
-        type: 3}
-      propertyPath: m_Name
-      value: ChangingCompositeBlock
-      objectReference: {fileID: 0}
     - target: {fileID: 142018642199914978, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -466,6 +461,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 142018642199914979, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
+        type: 3}
+      propertyPath: m_Name
+      value: ChangingCompositeBlock
       objectReference: {fileID: 0}
     - target: {fileID: 6491600675283814834, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
         type: 3}
@@ -500,11 +500,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8443846927363810665}
     m_Modifications:
-    - target: {fileID: 142018642199914979, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
-        type: 3}
-      propertyPath: m_Name
-      value: ChangingCompositeBlock
-      objectReference: {fileID: 0}
     - target: {fileID: 142018642199914978, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -559,6 +554,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 142018642199914979, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
+        type: 3}
+      propertyPath: m_Name
+      value: ChangingCompositeBlock
       objectReference: {fileID: 0}
     - target: {fileID: 6491600675283814834, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
         type: 3}
@@ -603,11 +603,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8443846927363810665}
     m_Modifications:
-    - target: {fileID: 142018642199914979, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
-        type: 3}
-      propertyPath: m_Name
-      value: ChangingCompositeBlock
-      objectReference: {fileID: 0}
     - target: {fileID: 142018642199914978, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -662,6 +657,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 142018642199914979, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
+        type: 3}
+      propertyPath: m_Name
+      value: ChangingCompositeBlock
       objectReference: {fileID: 0}
     - target: {fileID: 6491600675283814834, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
         type: 3}
@@ -696,11 +696,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8443846927363810665}
     m_Modifications:
-    - target: {fileID: 142018642199914979, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
-        type: 3}
-      propertyPath: m_Name
-      value: ChangingCompositeBlock
-      objectReference: {fileID: 0}
     - target: {fileID: 142018642199914978, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -755,6 +750,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 142018642199914979, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
+        type: 3}
+      propertyPath: m_Name
+      value: ChangingCompositeBlock
       objectReference: {fileID: 0}
     - target: {fileID: 6491600675283814834, guid: db9c95c67a5ad6c408f4eb275f83c4fb,
         type: 3}

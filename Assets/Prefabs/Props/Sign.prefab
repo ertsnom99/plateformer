@@ -500,7 +500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactableDisplay: {fileID: 7216727722234444944}
-  _infoUI: {fileID: 0}
+  _infoUI: {fileID: 7216727722234444944}
 --- !u!1 &7216727722234444944
 GameObject:
   m_ObjectHideFlags: 0
