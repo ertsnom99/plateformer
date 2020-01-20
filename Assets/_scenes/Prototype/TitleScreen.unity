@@ -2328,12 +2328,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_RepeatDelay: 0.5
   m_RepeatRate: 0.1
-  m_ActionsAsset: {fileID: -944628639613478452, guid: de853a4a8ab95df4a8b17ab217b627d5,
+  m_ActionsAsset: {fileID: -944628639613478452, guid: b368074a309201a4ba101283f4b80b91,
     type: 3}
   m_PointAction: {fileID: 0}
-  m_MoveAction: {fileID: 6544913713246327892, guid: de853a4a8ab95df4a8b17ab217b627d5,
+  m_MoveAction: {fileID: 6544913713246327892, guid: b368074a309201a4ba101283f4b80b91,
     type: 3}
-  m_SubmitAction: {fileID: 8295074605281899980, guid: de853a4a8ab95df4a8b17ab217b627d5,
+  m_SubmitAction: {fileID: 8295074605281899980, guid: b368074a309201a4ba101283f4b80b91,
     type: 3}
   m_CancelAction: {fileID: 0}
   m_LeftClickAction: {fileID: 0}
