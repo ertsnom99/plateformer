@@ -6,7 +6,7 @@ namespace Pathfinding {
 	using Pathfinding.Serialization;
 
 	public interface INavmesh {
-		void GetNodes (System.Action<GraphNode> del);
+		void GetNodes(System.Action<GraphNode> del);
 	}
 
 	/// <summary>
@@ -23,6 +23,7 @@ namespace Pathfinding {
 	/// [Open online documentation to see images]
 	/// </summary>
 	[JsonOptIn]
+	[Pathfinding.Util.Preserve]
 	public class NavMeshGraph : NavmeshBase, IUpdatableGraph {
 		/// <summary>Mesh to construct navmesh from</summary>
 		[JsonMember]

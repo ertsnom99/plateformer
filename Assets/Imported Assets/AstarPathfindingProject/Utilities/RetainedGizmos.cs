@@ -69,7 +69,7 @@ namespace Pathfinding.Util {
 					var pathNode = debugData.GetPathNode(node.NodeIndex);
 					AddHash((int)pathNode.pathID);
 					AddHash(pathNode.pathID == debugData.PathID ? 1 : 0);
-					AddHash((int) pathNode.F);
+					AddHash((int)pathNode.F);
 				}
 			}
 
@@ -94,8 +94,8 @@ namespace Pathfinding.Util {
 				mesh.SetTriangles(triangles, 0);
 				mesh.colors = colors;
 
-				// Upload all data and mark the mesh as unreadable
-				mesh.UploadMeshData(true);
+				// Upload all data
+				mesh.UploadMeshData(false);
 				meshes.Add(mesh);
 			}
 
@@ -208,8 +208,8 @@ namespace Pathfinding.Util {
 					mesh.SetNormals(normals);
 					mesh.SetUVs(0, uv);
 
-					// Upload all data and mark the mesh as unreadable
-					mesh.UploadMeshData(true);
+					// Upload all data
+					mesh.UploadMeshData(false);
 
 					// Release the lists back to the pool
 					ListPool<Vector3>.Release(ref vertices);
@@ -357,7 +357,7 @@ namespace Pathfinding.Util {
 			// and j pointing to the entry that is a potential candidate for
 			// filling the entry at i.
 			// When j reaches the end of the list it will be reduced in size
-			for (int i = 0, j = 0; i < meshList.Count; ) {
+			for (int i = 0, j = 0; i < meshList.Count;) {
 				if (j == meshList.Count) {
 					j--;
 					meshList.RemoveAt(j);

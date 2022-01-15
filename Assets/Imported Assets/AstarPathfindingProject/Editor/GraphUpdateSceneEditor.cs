@@ -118,7 +118,7 @@ namespace Pathfinding {
 
 		void DrawPhysicsField () {
 			if (PropertyField("updatePhysics", "Update Physics", "Perform similar calculations on the nodes as during scan.\n" +
-					"Grid Graphs will update the position of the nodes and also check walkability using collision.\nSee online documentation for more info.")) {
+				"Grid Graphs will update the position of the nodes and also check walkability using collision.\nSee online documentation for more info.")) {
 				EditorGUI.indentLevel++;
 				PropertyField("resetPenaltyOnPhysics");
 				EditorGUI.indentLevel--;

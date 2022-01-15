@@ -26,7 +26,7 @@ namespace Pathfinding.Util {
 	/// \since Version 3.8.6
 	/// See: Pathfinding.Util.ListPool
 	/// </summary>
-	public static class ArrayPool<T>{
+	public static class ArrayPool<T> {
 #if !ASTAR_NO_POOLING
 		/// <summary>
 		/// Maximum length of an array pooled using ClaimWithExactLength.

@@ -5,18 +5,18 @@ namespace Pathfinding {
 	/// <summary>Interface for something that holds a triangle based navmesh</summary>
 	public interface INavmeshHolder : ITransformedGraph, INavmesh {
 		/// <summary>Position of vertex number i in the world</summary>
-		Int3 GetVertex (int i);
+		Int3 GetVertex(int i);
 
 		/// <summary>
 		/// Position of vertex number i in coordinates local to the graph.
 		/// The up direction is always the +Y axis for these coordinates.
 		/// </summary>
-		Int3 GetVertexInGraphSpace (int i);
+		Int3 GetVertexInGraphSpace(int i);
 
-		int GetVertexArrayIndex (int index);
+		int GetVertexArrayIndex(int index);
 
 		/// <summary>Transforms coordinates from graph space to world space</summary>
-		void GetTileCoordinates (int tileIndex, out int x, out int z);
+		void GetTileCoordinates(int tileIndex, out int x, out int z);
 	}
 
 	/// <summary>Node represented by a triangle</summary>
@@ -307,8 +307,10 @@ namespace Pathfinding {
 		public int SharedEdge (GraphNode other) {
 			var edge = -1;
 
-			for (int i = 0; i < connections.Length; i++) {
-				if (connections[i].node == other) edge = connections[i].shapeEdge;
+			if (connections != null) {
+				for (int i = 0; i < connections.Length; i++) {
+					if (connections[i].node == other) edge = connections[i].shapeEdge;
+				}
 			}
 			return edge;
 		}
@@ -337,18 +339,20 @@ namespace Pathfinding {
 			// No connection was found between the nodes
 			// Check if there is a node link that connects them
 			if (edge == -1) {
-				#if !ASTAR_NO_POINT_GRAPH
-				for (int i = 0; i < connections.Length; i++) {
-					if (connections[i].node.GraphIndex != GraphIndex) {
-						var mid = connections[i].node as NodeLink3Node;
-						if (mid != null && mid.GetOther(this) == toTriNode) {
-							// We have found a node which is connected through a NodeLink3Node
-							mid.GetPortal(toTriNode, left, right, false);
-							return true;
+#if !ASTAR_NO_POINT_GRAPH
+				if (connections != null) {
+					for (int i = 0; i < connections.Length; i++) {
+						if (connections[i].node.GraphIndex != GraphIndex) {
+							var mid = connections[i].node as NodeLink3Node;
+							if (mid != null && mid.GetOther(this) == toTriNode) {
+								// We have found a node which is connected through a NodeLink3Node
+								mid.GetPortal(toTriNode, left, right, false);
+								return true;
+							}
 						}
 					}
 				}
-				#endif
+#endif
 
 				return false;
 			}

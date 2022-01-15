@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Pathfinding {
 	/// <summary>
@@ -9,6 +10,14 @@ namespace Pathfinding {
 	/// </summary>
 	public interface IAstarAI {
 		/// <summary>
+		/// Radius of the agent in world units.
+		/// This is visualized in the scene view as a yellow cylinder around the character.
+		///
+		/// Note: The <see cref="Pathfinding.AILerp"/> script doesn't really have any use of knowing the radius or the height of the character, so this property will always return 0 in that script.
+		/// </summary>
+		float radius { get; set; }
+
+		/// <summary>
 		/// Height of the agent in world units.
 		/// This is visualized in the scene view as a yellow cylinder around the character.
 		///
@@ -18,20 +27,14 @@ namespace Pathfinding {
 		///
 		/// Note: The <see cref="Pathfinding.AILerp"/> script doesn't really have any use of knowing the radius or the height of the character, so this property will always return 0 in that script.
 		/// </summary>
-		float radius { get; set; }
-
-		/// <summary>
-		/// Radius of the agent in world units.
-		/// This is visualized in the scene view as a yellow cylinder around the character.
-		///
-		/// Note: The <see cref="Pathfinding.AILerp"/> script doesn't really have any use of knowing the radius or the height of the character, so this property will always return 0 in that script.
-		/// </summary>
 		float height { get; set; }
 
 		/// <summary>
 		/// Position of the agent.
 		/// In world space.
 		/// See: <see cref="rotation"/>
+		///
+		/// If you want to move the agent you may use <see cref="Teleport"/> or <see cref="Move"/>.
 		/// </summary>
 		Vector3 position { get; }
 
@@ -40,7 +43,7 @@ namespace Pathfinding {
 		/// In world space.
 		/// See: <see cref="position"/>
 		/// </summary>
-		Quaternion rotation { get; }
+		Quaternion rotation { get; set; }
 
 		/// <summary>Max speed in world units per second</summary>
 		float maxSpeed { get; set; }
@@ -63,9 +66,12 @@ namespace Pathfinding {
 		Vector3 desiredVelocity { get; }
 
 		/// <summary>
-		/// Remaining distance along the current path to the end of the path.
-		/// For the RichAI movement script this may not always be precisely known, especially when
-		/// far away from the destination. In those cases an approximate distance will be returned.
+		/// Approximate remaining distance along the current path to the end of the path.
+		/// The RichAI movement script approximates this distance since it is quite expensive to calculate the real distance.
+		/// However it will be accurate when the agent is within 1 corner of the destination.
+		/// You can use <see cref="GetRemainingPath"/> to calculate the actual remaining path more precisely.
+		///
+		/// The AIPath and AILerp scripts use a more accurate distance calculation at all times.
 		///
 		/// If the agent does not currently have a path, then positive infinity will be returned.
 		///
@@ -75,6 +81,7 @@ namespace Pathfinding {
 		///
 		/// See: <see cref="reachedDestination"/>
 		/// See: <see cref="reachedEndOfPath"/>
+		/// See: <see cref="pathPending"/>
 		/// </summary>
 		float remainingDistance { get; }
 
@@ -97,6 +104,19 @@ namespace Pathfinding {
 		/// even though it may actually be quite a long way around the wall to the other side.
 		///
 		/// In contrast to <see cref="reachedEndOfPath"/>, this property is immediately updated when the <see cref="destination"/> is changed.
+		///
+		/// <code>
+		/// IEnumerator Start () {
+		///     ai.destination = somePoint;
+		///     // Start to search for a path to the destination immediately
+		///     ai.SearchPath();
+		///     // Wait until the agent has reached the destination
+		///     while (!ai.reachedDestination) {
+		///         yield return null;
+		///     }
+		///     // The agent has reached the destination now
+		/// }
+		/// </code>
 		///
 		/// See: <see cref="AIPath.endReachedDistance"/>
 		/// See: <see cref="remainingDistance"/>
@@ -133,7 +153,21 @@ namespace Pathfinding {
 		/// During this time the <see cref="pathPending"/> property will return true.
 		///
 		/// If you are setting a destination and then want to know when the agent has reached that destination
-		/// then you should check both <see cref="pathPending"/> and <see cref="reachedEndOfPath"/>:
+		/// then you could either use <see cref="reachedDestination"/> (recommended) or check both <see cref="pathPending"/> and <see cref="reachedEndOfPath"/>.
+		/// Check the documentation for the respective fields to learn about their differences.
+		///
+		/// <code>
+		/// IEnumerator Start () {
+		///     ai.destination = somePoint;
+		///     // Start to search for a path to the destination immediately
+		///     ai.SearchPath();
+		///     // Wait until the agent has reached the destination
+		///     while (!ai.reachedDestination) {
+		///         yield return null;
+		///     }
+		///     // The agent has reached the destination now
+		/// }
+		/// </code>
 		/// <code>
 		/// IEnumerator Start () {
 		///     ai.destination = somePoint;
@@ -221,6 +255,23 @@ namespace Pathfinding {
 		System.Action onSearchPath { get; set; }
 
 		/// <summary>
+		/// Fills buffer with the remaining path.
+		///
+		/// <code>
+		/// var buffer = new List<Vector3>();
+		///
+		/// ai.GetRemainingPath(buffer, out bool stale);
+		/// for (int i = 0; i < buffer.Count - 1; i++) {
+		///     Debug.DrawLine(buffer[i], buffer[i+1], Color.red);
+		/// }
+		/// </code>
+		/// [Open online documentation to see images]
+		/// </summary>
+		/// <param name="buffer">The buffer will be cleared and replaced with the path. The first point is the current position of the agent.</param>
+		/// <param name="stale">May be true if the path is invalid in some way. For example if the agent has no path or (for the RichAI script only) if the agent has detected that some nodes in the path have been destroyed.</param>
+		void GetRemainingPath(List<Vector3> buffer, out bool stale);
+
+		/// <summary>
 		/// Recalculate the current path.
 		/// You can for example use this if you want very quick reaction times when you have changed the <see cref="destination"/>
 		/// so that the agent does not have to wait until the next automatic path recalculation (see <see cref="canSearch)"/>.
@@ -235,7 +286,7 @@ namespace Pathfinding {
 		///
 		/// See: <see cref="pathPending"/>
 		/// </summary>
-		void SearchPath ();
+		void SearchPath();
 
 		/// <summary>
 		/// Make the AI follow the specified path.
@@ -248,6 +299,9 @@ namespace Pathfinding {
 		/// Note that if you calculate the path using seeker.StartPath then this script will already pick it up because it is listening for
 		/// all paths that the Seeker finishes calculating. In that case you do not need to call this function.
 		///
+		/// If you pass null as a parameter then the current path will be cleared and the agent will stop moving.
+		/// Note than unless you have also disabled <see cref="canSearch"/> then the agent will soon recalculate its path and start moving again.
+		///
 		/// You can disable the automatic path recalculation by setting the <see cref="canSearch"/> field to false.
 		///
 		/// <code>
@@ -258,9 +312,14 @@ namespace Pathfinding {
 		/// // The path will be about 20 world units long (the default cost of moving 1 world unit is 1000).
 		/// var path = FleePath.Construct(ai.position, pointToAvoid, 1000 * 20);
 		/// ai.SetPath(path);
+		///
+		/// // If you want to make use of properties like ai.reachedDestination or ai.remainingDistance or similar
+		/// // you should also set the destination property to something reasonable.
+		/// // Since the agent's own path recalculation is disabled, setting this will not affect how the paths are calculated.
+		/// // ai.destination = ...
 		/// </code>
 		/// </summary>
-		void SetPath (Path path);
+		void SetPath(Path path);
 
 		/// <summary>
 		/// Instantly move the agent to a new position.
@@ -272,7 +331,7 @@ namespace Pathfinding {
 		/// See: Works similarly to Unity's NavmeshAgent.Warp.
 		/// See: <see cref="SearchPath"/>
 		/// </summary>
-		void Teleport (Vector3 newPosition, bool clearPath = true);
+		void Teleport(Vector3 newPosition, bool clearPath = true);
 
 		/// <summary>
 		/// Move the agent.
@@ -291,7 +350,7 @@ namespace Pathfinding {
 		/// </code>
 		/// </summary>
 		/// <param name="deltaPosition">Direction and distance to move the agent in world space.</param>
-		void Move (Vector3 deltaPosition);
+		void Move(Vector3 deltaPosition);
 
 		/// <summary>
 		/// Calculate how the character wants to move during this frame.
@@ -318,7 +377,7 @@ namespace Pathfinding {
 		/// <param name="deltaTime">time to simulate movement for. Usually set to Time.deltaTime.</param>
 		/// <param name="nextPosition">the position that the agent wants to move to during this frame.</param>
 		/// <param name="nextRotation">the rotation that the agent wants to rotate to during this frame.</param>
-		void MovementUpdate (float deltaTime, out Vector3 nextPosition, out Quaternion nextRotation);
+		void MovementUpdate(float deltaTime, out Vector3 nextPosition, out Quaternion nextRotation);
 
 		/// <summary>
 		/// Move the agent.
@@ -328,6 +387,6 @@ namespace Pathfinding {
 		///
 		/// See: <see cref="MovementUpdate"/> for a code example.
 		/// </summary>
-		void FinalizeMovement (Vector3 nextPosition, Quaternion nextRotation);
+		void FinalizeMovement(Vector3 nextPosition, Quaternion nextRotation);
 	}
 }

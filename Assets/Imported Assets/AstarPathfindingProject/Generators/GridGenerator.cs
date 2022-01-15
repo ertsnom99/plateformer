@@ -9,7 +9,6 @@ namespace Pathfinding {
 	using Pathfinding.Serialization;
 	using Pathfinding.Util;
 
-	[JsonOptIn]
 	/// <summary>
 	/// Generates a grid of nodes.
 	/// The GridGraph does exactly what the name implies, generates nodes in a grid pattern.\n
@@ -82,6 +81,8 @@ namespace Pathfinding {
 	/// See: <see cref="Pathfinding.GraphCollision"/> for documentation on the 'Height Testing' and 'Collision Testing' sections
 	/// of the grid graph settings.
 	/// </summary>
+	[JsonOptIn]
+	[Pathfinding.Util.Preserve]
 	public class GridGraph : NavGraph, IUpdatableGraph, ITransformedGraph {
 		/// <summary>This function will be called when this graph is destroyed</summary>
 		protected override void OnDestroy () {
@@ -104,7 +105,9 @@ namespace Pathfinding {
 		}
 
 		void RemoveGridGraphFromStatic () {
-			GridNode.SetGridGraph(AstarPath.active.data.GetGraphIndex(this), null);
+			var graphIndex = active.data.GetGraphIndex(this);
+
+			GridNode.ClearGridGraph(graphIndex, this);
 		}
 
 		/// <summary>
@@ -146,6 +149,8 @@ namespace Pathfinding {
 		/// <summary>
 		/// Determines the layout of the grid graph inspector in the Unity Editor.
 		/// This field is only used in the editor, it has no effect on the rest of the game whatsoever.
+		///
+		/// If you want to change the grid shape like in the inspector you can use the <see cref="SetGridShape"/> method.
 		/// </summary>
 		[JsonMember]
 		public InspectorGridMode inspectorGridMode = InspectorGridMode.Grid;
@@ -157,6 +162,8 @@ namespace Pathfinding {
 		///
 		/// This field is only used in the graph inspector, the <see cref="nodeSize"/> field will always use the same internal units.
 		/// If you want to set the node size through code then you can use <see cref="ConvertHexagonSizeToNodeSize"/>.
+		///
+		/// [Open online documentation to see images]
 		///
 		/// See: <see cref="InspectorGridHexagonNodeSize"/>
 		/// See: <see cref="ConvertHexagonSizeToNodeSize"/>
@@ -189,6 +196,8 @@ namespace Pathfinding {
 		/// A top down view of an isometric graph. Note that the graph is entirely 2D, there is no perspective in this image.
 		/// [Open online documentation to see images]
 		///
+		/// For commonly used values see <see cref="StandardIsometricAngle"/> and <see cref="StandardDimetricAngle"/>.
+		///
 		/// Usually the angle that you want to use is either 30 degrees (alternatively 90-30 = 60 degrees) or atan(1/sqrt(2)) which is approximately 35.264 degrees (alternatively 90 - 35.264 = 54.736 degrees).
 		/// You might also want to rotate the graph plus or minus 45 degrees around the Y axis to get the oritientation required for your game.
 		///
@@ -200,6 +209,12 @@ namespace Pathfinding {
 		/// </summary>
 		[JsonMember]
 		public float isometricAngle;
+
+		/// <summary>Commonly used value for <see cref="isometricAngle"/></summary>
+		public static readonly float StandardIsometricAngle = 90-Mathf.Atan(1/Mathf.Sqrt(2))*Mathf.Rad2Deg;
+
+		/// <summary>Commonly used value for <see cref="isometricAngle"/></summary>
+		public static readonly float StandardDimetricAngle = Mathf.Acos(1/2f)*Mathf.Rad2Deg;
 
 		/// <summary>
 		/// If true, all edge costs will be set to the same value.
@@ -427,6 +442,24 @@ namespace Pathfinding {
 		/// </summary>
 		public GraphTransform transform { get; private set; }
 
+		/// <summary>
+		/// Get or set if the graph should be in 2D mode.
+		///
+		/// Note: This is just a convenience property, this property will actually read/modify the <see cref="rotation"/> of the graph. A rotation aligned with the 2D plane is what determines if the graph is 2D or not.
+		///
+		/// See: You can also set if the graph should use 2D physics using `this.collision.use2D` (\reflink{GraphCollision.use2D}).
+		/// </summary>
+		public bool is2D {
+			get {
+				return Quaternion.Euler(this.rotation) * Vector3.up == -Vector3.forward;
+			}
+			set {
+				if (value != is2D) {
+					this.rotation = value ? new Vector3(this.rotation.y - 90, 270, 90) : new Vector3(0, this.rotation.x + 90, 0);
+				}
+			}
+		}
+
 
 		public GridGraph () {
 			unclampedSize = new Vector2(10, 10);
@@ -588,6 +621,42 @@ namespace Pathfinding {
 			return true;
 		}
 
+		/// <summary>
+		/// Changes the grid shape.
+		/// This is equivalent to changing the 'shape' dropdown in the grid graph inspector.
+		///
+		/// Calling this method will set <see cref="isometricAngle"/>, <see cref="aspectRatio"/>, <see cref="uniformEdgeCosts"/> and <see cref="neighbours"/>
+		/// to appropriate values for that shape.
+		///
+		/// Note: Setting the shape to <see cref="InspectorGridMode.Advanced"/> does not do anything except set the <see cref="inspectorGridMode"/> field.
+		///
+		/// See: <see cref="inspectorHexagonSizeMode"/>
+		/// </summary>
+		public void SetGridShape (InspectorGridMode shape) {
+			switch (shape) {
+			case InspectorGridMode.Grid:
+				isometricAngle = 0;
+				aspectRatio = 1;
+				uniformEdgeCosts = false;
+				if (neighbours == NumNeighbours.Six) neighbours = NumNeighbours.Eight;
+				break;
+			case InspectorGridMode.Hexagonal:
+				isometricAngle = StandardIsometricAngle;
+				aspectRatio = 1;
+				uniformEdgeCosts = true;
+				neighbours = NumNeighbours.Six;
+				break;
+			case InspectorGridMode.IsometricGrid:
+				uniformEdgeCosts = false;
+				if (neighbours == NumNeighbours.Six) neighbours = NumNeighbours.Eight;
+				isometricAngle = StandardIsometricAngle;
+				break;
+			case InspectorGridMode.Advanced:
+			default:
+				break;
+			}
+			inspectorGridMode = shape;
+		}
 		/// <summary>
 		/// Updates <see cref="unclampedSize"/> from <see cref="width"/>, <see cref="depth"/> and <see cref="nodeSize"/> values.
 		/// Also \link UpdateTransform generates a new matrix \endlink.
@@ -1658,11 +1727,13 @@ namespace Pathfinding {
 		}
 
 		/// <summary>
-		/// A rect with all nodes that the bounds could touch.
+		/// A rect that contains all nodes that the bounds could touch.
 		/// This correctly handles rotated graphs and other transformations.
 		/// The returned rect is guaranteed to not extend outside the graph bounds.
+		///
+		/// Note: The rect may contain nodes that are not contained in the bounding box.
 		/// </summary>
-		protected IntRect GetRectFromBounds (Bounds bounds) {
+		public IntRect GetRectFromBounds (Bounds bounds) {
 			// Take the bounds and transform it using the matrix
 			// Then convert that to a rectangle which contains
 			// all nodes that might be inside the bounds
@@ -1759,7 +1830,11 @@ namespace Pathfinding {
 			return inArea;
 		}
 
-		/// <summary>Get all nodes in a rectangle.</summary>
+		/// <summary>
+		/// Get all nodes in a rectangle.
+		///
+		/// See: <see cref="GetRectFromBounds"/>
+		/// </summary>
 		/// <param name="rect">Region in which to return nodes. It will be clamped to the grid.</param>
 		public virtual List<GraphNode> GetNodesInRegion (IntRect rect) {
 			// Clamp the rect to the grid
@@ -1790,6 +1865,8 @@ namespace Pathfinding {
 		///
 		/// Note: This method is much faster than GetNodesInRegion(IntRect) which returns a list because this method can make use of the highly optimized
 		///  System.Array.Copy method.
+		///
+		/// See: <see cref="GetRectFromBounds"/>
 		/// </summary>
 		/// <param name="rect">Region in which to return nodes. It will be clamped to the grid.</param>
 		/// <param name="buffer">Buffer in which the nodes will be stored. Should be at least as large as the number of nodes that can exist in that region.</param>

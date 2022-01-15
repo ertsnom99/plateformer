@@ -54,7 +54,7 @@ namespace Pathfinding {
 
 		/// <summary>Show the surface of the navmesh</summary>
 		[JsonMember]
-		public bool showMeshSurface;
+		public bool showMeshSurface = true;
 
 		/// <summary>Number of tiles along the X-axis</summary>
 		public int tileXCount;
@@ -120,7 +120,7 @@ namespace Pathfinding {
 		/// Does not update the <see cref="transform"/> field.
 		/// See: <see cref="RelocateNodes(GraphTransform)"/>
 		/// </summary>
-		public abstract GraphTransform CalculateTransform ();
+		public abstract GraphTransform CalculateTransform();
 
 		/// <summary>
 		/// Called when tiles have been completely recalculated.
@@ -564,6 +564,7 @@ namespace Pathfinding {
 			List<Connection> connections = ListPool<Connection>.Claim();
 
 			var nodeRefs = ObjectPoolSimple<Dictionary<Int2, int> >.Claim();
+
 			nodeRefs.Clear();
 
 			// Build node neighbours
@@ -604,10 +605,10 @@ namespace Pathfinding {
 							/// <summary>TODO: This will fail on edges which are only partially shared</summary>
 							if (other.GetVertexIndex(b) == second && other.GetVertexIndex((b+1) % bv) == first) {
 								connections.Add(new Connection(
-										other,
-										(uint)(node.position - other.position).costMagnitude,
-										(byte)a
-										));
+									other,
+									(uint)(node.position - other.position).costMagnitude,
+									(byte)a
+									));
 								break;
 							}
 						}
@@ -668,14 +669,14 @@ namespace Pathfinding {
 			// Midpoint between the two tiles
 			int midpoint = (int)Math.Round((Math.Max(t1coord, t2coord) * tileWorldSize) * Int3.Precision);
 
-			#if ASTARDEBUG
+#if ASTARDEBUG
 			Vector3 v1 = new Vector3(-100, 0, -100);
 			Vector3 v2 = new Vector3(100, 0, 100);
 			v1[coord] = midpoint*Int3.PrecisionFactor;
 			v2[coord] = midpoint*Int3.PrecisionFactor;
 
 			Debug.DrawLine(v1, v2, Color.magenta);
-			#endif
+#endif
 
 			TriangleMeshNode[] nodes1 = tile1.nodes;
 			TriangleMeshNode[] nodes2 = tile2.nodes;

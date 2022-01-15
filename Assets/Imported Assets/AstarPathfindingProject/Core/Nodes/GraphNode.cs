@@ -378,7 +378,7 @@ namespace Pathfinding {
 		/// node.GetConnections(connections.Add);
 		/// </code>
 		/// </summary>
-		public abstract void GetConnections (System.Action<GraphNode> action);
+		public abstract void GetConnections(System.Action<GraphNode> action);
 
 		/// <summary>
 		/// Add a connection from this node to the specified node.
@@ -404,7 +404,7 @@ namespace Pathfinding {
 		/// }));
 		/// </code>
 		/// </summary>
-		public abstract void AddConnection (GraphNode node, uint cost);
+		public abstract void AddConnection(GraphNode node, uint cost);
 
 		/// <summary>
 		/// Removes any connection from this node to the specified node.
@@ -430,11 +430,11 @@ namespace Pathfinding {
 		/// }));
 		/// </code>
 		/// </summary>
-		public abstract void RemoveConnection (GraphNode node);
+		public abstract void RemoveConnection(GraphNode node);
 
 		/// <summary>Remove all connections from this node.</summary>
 		/// <param name="alsoReverse">if true, neighbours will be requested to remove connections to this node.</param>
-		public abstract void ClearConnections (bool alsoReverse);
+		public abstract void ClearConnections(bool alsoReverse);
 
 		/// <summary>
 		/// Checks if this node has a connection to the specified node.
@@ -493,7 +493,7 @@ namespace Pathfinding {
 		/// Open the node.
 		/// Used internally for the A* algorithm.
 		/// </summary>
-		public abstract void Open (Path path, PathNode pathNode, PathHandler handler);
+		public abstract void Open(Path path, PathNode pathNode, PathHandler handler);
 
 		/// <summary>The surface area of the node in square world units</summary>
 		public virtual float SurfaceArea () {
@@ -507,6 +507,9 @@ namespace Pathfinding {
 		public virtual Vector3 RandomPointOnSurface () {
 			return (Vector3)position;
 		}
+
+		/// <summary>Closest point on the surface of this node to the point p</summary>
+		public abstract Vector3 ClosestPointOnNode(Vector3 p);
 
 		/// <summary>
 		/// Hash code used for checking if the gizmos need to be updated.
@@ -578,16 +581,13 @@ namespace Pathfinding {
 
 		/// <summary>Get a vertex of this node.</summary>
 		/// <param name="i">vertex index. Must be between 0 and #GetVertexCount (exclusive).</param>
-		public abstract Int3 GetVertex (int i);
+		public abstract Int3 GetVertex(int i);
 
 		/// <summary>
 		/// Number of corner vertices that this node has.
 		/// For example for a triangle node this will return 3.
 		/// </summary>
-		public abstract int GetVertexCount ();
-
-		/// <summary>Closest point on the surface of this node to the point p</summary>
-		public abstract Vector3 ClosestPointOnNode (Vector3 p);
+		public abstract int GetVertexCount();
 
 		/// <summary>
 		/// Closest point on the surface of this node when seen from above.
@@ -595,7 +595,7 @@ namespace Pathfinding {
 		/// [Open online documentation to see images]
 		/// When the blue point in the above image is used as an argument this method call will return the green point while the <see cref="ClosestPointOnNode"/> method will return the red point.
 		/// </summary>
-		public abstract Vector3 ClosestPointOnNodeXZ (Vector3 p);
+		public abstract Vector3 ClosestPointOnNodeXZ(Vector3 p);
 
 		public override void ClearConnections (bool alsoReverse) {
 			// Remove all connections to this node from our neighbours
@@ -756,7 +756,7 @@ namespace Pathfinding {
 		/// node.ContainsPointInGraphSpace(p);
 		/// </code>
 		/// </summary>
-		public abstract bool ContainsPoint (Vector3 point);
+		public abstract bool ContainsPoint(Vector3 point);
 
 		/// <summary>
 		/// Checks if point is inside the node in graph space.
@@ -764,7 +764,7 @@ namespace Pathfinding {
 		/// In graph space the up direction is always the Y axis so in principle
 		/// we project the triangle down on the XZ plane and check if the point is inside the 2D triangle there.
 		/// </summary>
-		public abstract bool ContainsPointInGraphSpace (Int3 point);
+		public abstract bool ContainsPointInGraphSpace(Int3 point);
 
 		public override int GetGizmoHashCode () {
 			var hash = base.GetGizmoHashCode();

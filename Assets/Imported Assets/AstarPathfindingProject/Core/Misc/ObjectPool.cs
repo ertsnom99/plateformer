@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.Util {
 	public interface IAstarPooledObject {
-		void OnEnterPool ();
+		void OnEnterPool();
 	}
 
 	/// <summary>

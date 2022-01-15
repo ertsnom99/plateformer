@@ -7,7 +7,7 @@ namespace Pathfinding {
 		public override void OnInspectorGUI (NavGraph target) {
 			var graph = target as NavMeshGraph;
 
-			graph.sourceMesh = ObjectField("Source Mesh", graph.sourceMesh, typeof(Mesh), false) as Mesh;
+			graph.sourceMesh = ObjectField("Source Mesh", graph.sourceMesh, typeof(Mesh), false, true) as Mesh;
 
 			graph.offset = EditorGUILayout.Vector3Field("Offset", graph.offset);
 
@@ -17,7 +17,7 @@ namespace Pathfinding {
 			graph.scale = Mathf.Abs(graph.scale) < 0.01F ? (graph.scale >= 0 ? 0.01F : -0.01F) : graph.scale;
 
 			graph.nearestSearchOnlyXZ = EditorGUILayout.Toggle(new GUIContent("Nearest node queries in XZ space",
-					"Recomended for single-layered environments.\nFaster but can be inaccurate esp. in multilayered contexts."), graph.nearestSearchOnlyXZ);
+				"Recomended for single-layered environments.\nFaster but can be inaccurate esp. in multilayered contexts."), graph.nearestSearchOnlyXZ);
 
 			if (graph.nearestSearchOnlyXZ && (Mathf.Abs(graph.rotation.x) > 1 || Mathf.Abs(graph.rotation.z) > 1)) {
 				EditorGUILayout.HelpBox("Nearest node queries in XZ space is not recommended for rotated graphs since XZ space no longer corresponds to the ground plane", MessageType.Warning);

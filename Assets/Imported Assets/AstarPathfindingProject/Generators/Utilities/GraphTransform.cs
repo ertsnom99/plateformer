@@ -11,15 +11,15 @@ namespace Pathfinding.Util {
 	/// See: <see cref="Pathfinding.Util.GraphTransform"/>
 	/// </summary>
 	public interface IMovementPlane {
-		Vector2 ToPlane (Vector3 p);
-		Vector2 ToPlane (Vector3 p, out float elevation);
-		Vector3 ToWorld (Vector2 p, float elevation = 0);
+		Vector2 ToPlane(Vector3 p);
+		Vector2 ToPlane(Vector3 p, out float elevation);
+		Vector3 ToWorld(Vector2 p, float elevation = 0);
 	}
 
 	/// <summary>Generic 3D coordinate transformation</summary>
 	public interface ITransform {
-		Vector3 Transform (Vector3 position);
-		Vector3 InverseTransform (Vector3 position);
+		Vector3 Transform(Vector3 position);
+		Vector3 InverseTransform(Vector3 position);
 	}
 
 	/// <summary>

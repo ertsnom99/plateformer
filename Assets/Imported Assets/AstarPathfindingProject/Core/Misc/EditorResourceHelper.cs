@@ -18,6 +18,7 @@ namespace Pathfinding {
 		}
 
 		static Material surfaceMat, lineMat;
+		static Texture2D handlesAALineTex;
 		public static Material GizmoSurfaceMaterial {
 			get {
 				if (!surfaceMat) surfaceMat = UnityEditor.AssetDatabase.LoadAssetAtPath(EditorResourceHelper.editorAssets + "/Materials/Navmesh.mat", typeof(Material)) as Material;
@@ -32,8 +33,28 @@ namespace Pathfinding {
 			}
 		}
 
+		public static Texture2D HandlesAALineTexture {
+			get {
+				if (!handlesAALineTex) handlesAALineTex = Resources.Load<Texture2D>("handles_aaline");
+				return handlesAALineTex;
+			}
+		}
+
 		/// <summary>Locates the editor assets folder in case the user has moved it</summary>
 		public static bool LocateEditorAssets () {
+#if UNITY_2019_3_OR_NEWER
+			var package = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(EditorResourceHelper).Assembly);
+			if (package != null) {
+				editorAssets = package.assetPath + "/Editor/EditorAssets";
+				if (System.IO.File.Exists(package.resolvedPath + "/Editor/EditorAssets/AstarEditorSkinLight.guiskin")) {
+					return true;
+				} else {
+					Debug.LogError("Could not find editor assets folder in package at " + editorAssets + ". Is the package corrupt?");
+					return false;
+				}
+			}
+#endif
+
 			string projectPath = Application.dataPath;
 
 			if (projectPath.EndsWith("/Assets")) {

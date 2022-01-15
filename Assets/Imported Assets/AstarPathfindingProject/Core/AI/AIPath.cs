@@ -166,7 +166,6 @@ namespace Pathfinding {
 
 		/// <summary>\copydoc Pathfinding::IAstarAI::Teleport</summary>
 		public override void Teleport (Vector3 newPosition, bool clearPath = true) {
-			if (clearPath) interpolator.SetPath(null);
 			reachedEndOfPath = false;
 			base.Teleport(newPosition, clearPath);
 		}
@@ -182,7 +181,7 @@ namespace Pathfinding {
 		public bool reachedDestination {
 			get {
 				if (!reachedEndOfPath) return false;
-				if (remainingDistance + movementPlane.ToPlane(destination - interpolator.endPoint).magnitude > endReachedDistance) return false;
+				if (!interpolator.valid || remainingDistance + movementPlane.ToPlane(destination - interpolator.endPoint).magnitude > endReachedDistance) return false;
 
 				// Don't do height checks in 2D mode
 				if (orientation != OrientationMode.YAxisForward) {
@@ -238,6 +237,19 @@ namespace Pathfinding {
 
 		#endregion
 
+		/// <summary>\copydoc Pathfinding::IAstarAI::GetRemainingPath</summary>
+		public void GetRemainingPath (List<Vector3> buffer, out bool stale) {
+			buffer.Clear();
+			buffer.Add(position);
+			if (!interpolator.valid) {
+				stale = true;
+				return;
+			}
+
+			stale = false;
+			interpolator.GetRemainingPath(buffer);
+		}
+
 		protected override void OnDisable () {
 			base.OnDisable();
 
@@ -245,6 +257,7 @@ namespace Pathfinding {
 			if (path != null) path.Release(this);
 			path = null;
 			interpolator.SetPath(null);
+			reachedEndOfPath = false;
 		}
 
 		/// <summary>
@@ -278,6 +291,7 @@ namespace Pathfinding {
 			// More info in p.errorLog (debug string)
 			if (p.error) {
 				p.Release(this);
+				SetPath(null);
 				return;
 			}
 
@@ -317,6 +331,14 @@ namespace Pathfinding {
 			}
 		}
 
+		protected override void ClearPath () {
+			CancelCurrentPathRequest();
+			if (path != null) path.Release(this);
+			path = null;
+			interpolator.SetPath(null);
+			reachedEndOfPath = false;
+		}
+
 		/// <summary>Called during either Update or FixedUpdate depending on if rigidbodies are used for movement or not</summary>
 		protected override void MovementUpdateInternal (float deltaTime, out Vector3 nextPosition, out Quaternion nextRotation) {
 			float currentAcceleration = maxAcceleration;
@@ -350,11 +372,12 @@ namespace Pathfinding {
 			var forwards = movementPlane.ToPlane(simulatedRotation * (orientation == OrientationMode.YAxisForward ? Vector3.up : Vector3.forward));
 
 			// Check if we have a valid path to follow and some other script has not stopped the character
-			if (interpolator.valid && !isStopped) {
+			bool stopped = isStopped || (reachedDestination && whenCloseToDestination == CloseToDestinationMode.Stop);
+			if (interpolator.valid && !stopped) {
 				// How fast to move depending on the distance to the destination.
 				// Move slower as the character gets closer to the destination.
 				// This is always a value between 0 and 1.
-				slowdown = distanceToEnd < slowdownDistance ? Mathf.Sqrt(distanceToEnd / slowdownDistance) : 1;
+				slowdown = distanceToEnd < slowdownDistance? Mathf.Sqrt(distanceToEnd / slowdownDistance) : 1;
 
 				if (reachedEndOfPath && whenCloseToDestination == CloseToDestinationMode.Stop) {
 					// Slow down as quickly as possible
@@ -421,7 +444,7 @@ namespace Pathfinding {
 			return position;
 		}
 
-	#if UNITY_EDITOR
+#if UNITY_EDITOR
 		[System.NonSerialized]
 		int gizmoHash = 0;
 
@@ -457,13 +480,12 @@ namespace Pathfinding {
 				Draw.Gizmos.CircleXZ(Vector3.zero, endReachedDistance, Color.Lerp(GizmoColor, Color.red, 0.8f) * new Color(1, 1, 1, alpha));
 			}
 		}
-	#endif
+#endif
 
 		protected override int OnUpgradeSerializedData (int version, bool unityThread) {
-			base.OnUpgradeSerializedData(version, unityThread);
 			// Approximately convert from a damping value to a degrees per second value.
 			if (version < 1) rotationSpeed *= 90;
-			return 2;
+			return base.OnUpgradeSerializedData(version, unityThread);
 		}
 	}
 }
