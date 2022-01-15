@@ -11,12 +11,6 @@ using UnityEngine;
 
 public class PhysicsObject : MonoBehaviour
 {
-    [Header("Collision")]
-    [SerializeField]
-    protected Collider2D Collider;
-    [SerializeField]
-    private bool _updateContactFilterLayerMask = false;
-
     [Header("Movement")]
     [SerializeField]
     protected float ShellRadius = 0.05f;
@@ -44,7 +38,7 @@ public class PhysicsObject : MonoBehaviour
     public Vector2 Velocity { get; protected set; }
 
     protected float TargetHorizontalVelocity;
-    protected ContactFilter2D ContactFilter;
+    protected ContactFilter2D ContactFilter = new ContactFilter2D();
     protected RaycastHit2D[] HitBuffer = new RaycastHit2D[16];
     protected List<RaycastHit2D> MoveHitBufferList = new List<RaycastHit2D>(16);
     protected List<RaycastHit2D> AllHitBufferList = new List<RaycastHit2D>(16);
@@ -54,14 +48,13 @@ public class PhysicsObject : MonoBehaviour
 
     private IPhysicsCollision2DListener[] _collisionListeners;
 
+    protected Collider2D Collider;
     protected Rigidbody2D Rigidbody2D;
 
     protected const float MinMoveDistance = 0.001f;
 
     protected virtual void Awake()
     {
-        // Tells to use the layer settings from the Physics2D settings (the matrix)
-        ContactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
         ContactFilter.useLayerMask = true;
         ContactFilter.useTriggers = false;
 
@@ -71,12 +64,13 @@ public class PhysicsObject : MonoBehaviour
 
         _collisionListeners = GetComponentsInChildren<IPhysicsCollision2DListener>();
 
+        Collider = GetComponent<Collider2D>();
+        Rigidbody2D = GetComponent<Rigidbody2D>();
+
         if (!Collider)
         {
             Debug.LogError("No collider was set for " + GetType() + " script of " + gameObject.name + "!");
         }
-
-        Rigidbody2D = GetComponent<Rigidbody2D>();
 
         InitialiseRigidbody2D();
     }
@@ -94,11 +88,6 @@ public class PhysicsObject : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        if (_updateContactFilterLayerMask)
-        {
-            ContactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
-        }
-
         IsGrounded = false;
         AllHitBufferList.Clear();
 
@@ -121,11 +110,11 @@ public class PhysicsObject : MonoBehaviour
             Velocity = new Vector2(TargetHorizontalVelocity, Velocity.y);
         }
         
-        // Create a Vector prependicular to the normal
+        // Create a Vector perpendicular to the normal
         Vector2 movementAlongGround = new Vector2(GroundNormal.y, -GroundNormal.x);
 
         // The X movement is executed first, then the Y movement is executed. This allows a better control of each type of movement and helps to avoid
-        // corner cases. This technic was used in the 16 bit era.
+        // corner cases. This technique was used in the 16 bit era.
         Vector2 deltaPosition = Velocity * Time.fixedDeltaTime;
 
         Vector2 movement = movementAlongGround * deltaPosition.x;
@@ -161,11 +150,14 @@ public class PhysicsObject : MonoBehaviour
         // Check for collision only if the object moves enough
         if (distance > MinMoveDistance)
         {
+            // Tells to use the layer settings from the Physics2D settings (the matrix)
+            ContactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+
             int count = Collider.Cast(movement, ContactFilter, HitBuffer, distance + ShellRadius);
             MoveHitBufferList.Clear();
-
+            
             // Transfer hits to MoveHitBufferList
-            // m_hitBuffer has always the same number of elements in it, but some might be null.
+            // The hit buffers have always the same number of elements in it, but some might be null.
             // The purpose of the transfer is to only keep the actual result of the cast
             for (int i = 0; i < count; i++)
             {
@@ -182,20 +174,17 @@ public class PhysicsObject : MonoBehaviour
                 Vector2 currentNormal = hit.normal;
 
                 // Check if the object is grounded
-                if (currentNormal.y >= _minGroundNormalY)
+                if (yMovement && currentNormal.y >= _minGroundNormalY)
                 {
                     IsGrounded = true;
 
-                    if (yMovement)
-                    {
-                        // Update ground normal
-                        GroundNormal = currentNormal;
-                        currentNormal.x = 0;
-                    }
+                    // Update ground normal
+                    GroundNormal = currentNormal;
+                    currentNormal.x = 0;
                 }
                 
                 Vector2 velocityUsed = yMovement ? Vector2.up * Velocity.y : Vector2.right * Velocity.x;
-                // Check how much of the velocity is responsable for going to go throw other colliders
+                // Check how much of the velocity is responsible for going to go throw other colliders
                 // Dot calculates how much two vectors are parallel
                 // For example Dot([-5, 0], [1, 0]) = -5 , Dot([-5, 0], [-1, 0]) = 5 and Dot([-5, 0], [0, 1]) = 0
                 float projection = Vector2.Dot(velocityUsed, currentNormal);
@@ -207,16 +196,12 @@ public class PhysicsObject : MonoBehaviour
                     {
                         Velocity = new Vector2(Velocity.x, Velocity.y - (projection * currentNormal).y);
                     }
-                    /*else
-                    {
-                        Velocity = new Vector2(Velocity.x - (projection * currentNormal).x, Velocity.y);
-                    }*/
                 }
 
                 // Calculate how much movement can be done, before hitting something, considering the ShellRadius  
                 float modifiedDistance = hit.distance - ShellRadius;
 
-                // If the object should move less then what was tought at first, then move less
+                // If the object should move less then what was thought at first, then move less
                 distance = modifiedDistance < distance ? modifiedDistance : distance;
 
                 // Will allow inheriting classes to add logic during the hit checks
@@ -226,12 +211,9 @@ public class PhysicsObject : MonoBehaviour
 
         // Apply the movement
         Rigidbody2D.position = Rigidbody2D.position + movement.normalized * distance;
-
-        // Updating m_rigidbody2D.position doesn't update transform.position
-        // It is only updated before or at the start of next FixedUpdate() (note sure, should be double checked)
-        //transform.position = m_rigidbody2D.position;
     }
 
+    #region Collision methods
     protected IEnumerator CallCollisionEvents()
     {
         // Make sure to call collision events after the OnCollisionXXX event functions of Unity
@@ -356,6 +338,7 @@ public class PhysicsObject : MonoBehaviour
     }
 
     protected virtual void OnColliderHitCheck(RaycastHit2D hit) { }
+    #endregion
 
     public void AddVerticalVelocity(float addedVelocity)
     {
