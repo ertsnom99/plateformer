@@ -40,11 +40,13 @@ SpriteAtlas:
       allowAlphaSplitting: 0
       enableRotation: 1
       enableTightPacking: 1
+    secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 4bc9bf0326e05a74fa17f94060999071, type: 3}
-    totalSpriteSurfaceArea: 201280
     bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 438bfdd08650d984c9f0ff401850b05e, type: 3}
@@ -60,26 +62,6 @@ SpriteAtlas:
   - {fileID: -4230088027204851832, guid: 76082735c4c5dd841b22ecfe1e615243, type: 3}
   - {fileID: -877488970987550498, guid: 76082735c4c5dd841b22ecfe1e615243, type: 3}
   - {fileID: -1430040862508568551, guid: 76082735c4c5dd841b22ecfe1e615243, type: 3}
-  - {fileID: 21300028, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300030, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300032, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300034, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300020, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300022, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300024, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300026, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300036, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300038, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300018, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300016, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300010, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300008, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300014, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300012, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300002, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300000, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300006, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
-  - {fileID: 21300004, guid: 0922ec27290295549b56d0f37bb46554, type: 3}
   - {fileID: -5582339626885402108, guid: 0f3c426d14089024fb5f9d017970bb60, type: 3}
   - {fileID: 517917471463901485, guid: 0f3c426d14089024fb5f9d017970bb60, type: 3}
   - {fileID: -2631514934714656382, guid: 0f3c426d14089024fb5f9d017970bb60, type: 3}
@@ -97,28 +79,9 @@ SpriteAtlas:
   - flames_5
   - flames_8
   - flames_9
-  - Explosion_14
-  - Explosion_15
-  - Explosion_16
-  - Explosion_17
-  - Explosion_10
-  - Explosion_11
-  - Explosion_12
-  - Explosion_13
-  - Explosion_18
-  - Explosion_19
-  - Explosion_9
-  - Explosion_8
-  - Explosion_5
-  - Explosion_4
-  - Explosion_7
-  - Explosion_6
-  - Explosion_1
-  - Explosion_0
-  - Explosion_3
-  - Explosion_2
   - smoke_particules_0
   - smoke_particules_1
   - smoke_particules_2
+  m_RenderDataMap: {}
   m_Tag: Effects
   m_IsVariant: 0

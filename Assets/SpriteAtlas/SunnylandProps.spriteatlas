@@ -40,12 +40,14 @@ SpriteAtlas:
       allowAlphaSplitting: 0
       enableRotation: 1
       enableTightPacking: 0
+    secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 15e7312e0607f4e84aeacdc44a70744c, type: 3}
     - {fileID: 102900000, guid: 1adcdfae01120e844877b81e969af867, type: 3}
-    totalSpriteSurfaceArea: 67500
     bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: -1923994175756728024, guid: af21dd3060005e147978e3064382e4d5, type: 3}
@@ -143,5 +145,6 @@ SpriteAtlas:
   - retractable_spikes_0
   - retractable_spikes_3
   - retractable_spikes_2
+  m_RenderDataMap: {}
   m_Tag: SunnylandProps
   m_IsVariant: 0

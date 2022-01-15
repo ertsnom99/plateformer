@@ -40,6 +40,7 @@ SpriteAtlas:
       allowAlphaSplitting: 0
       enableRotation: 1
       enableTightPacking: 0
+    secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 568a44ad60821451c8f1c519a34666ef, type: 3}
@@ -48,8 +49,9 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 36eea592e53a047d6be03259ef1ee568, type: 3}
     - {fileID: 102900000, guid: e09af67f02cee6847823c1d0ba6ed58d, type: 3}
     - {fileID: 102900000, guid: 5fefa841a6cb848418973ade536f0ff4, type: 3}
-    totalSpriteSurfaceArea: 35904
     bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: a01c6291f0da0c341896860d462e0b27, type: 3}
@@ -121,5 +123,6 @@ SpriteAtlas:
   - player_run_possess_mode_1
   - player_run_possess_mode_4
   - player_run_possess_mode_5
+  m_RenderDataMap: {}
   m_Tag: SunnylandCharacter
   m_IsVariant: 0

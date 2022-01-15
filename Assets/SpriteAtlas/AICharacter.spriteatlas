@@ -40,14 +40,16 @@ SpriteAtlas:
       allowAlphaSplitting: 0
       enableRotation: 1
       enableTightPacking: 0
+    secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: f0e2de7722bd37e43bb441e9bef320b0, type: 3}
     - {fileID: 102900000, guid: 8892ad7dec35ad4449675b886f122ed4, type: 3}
     - {fileID: 102900000, guid: 727bc990d35bcf6478b1013a4c23206b, type: 3}
     - {fileID: 102900000, guid: 76337cceaf9216c4abd5fd25514af113, type: 3}
-    totalSpriteSurfaceArea: 39046
     bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 8380346580697363375, guid: 98b0790051b1bd94da2eeac0960c36d1, type: 3}
@@ -213,5 +215,6 @@ SpriteAtlas:
   - bouncing_AI_airborne_0
   - sunnyland_bullet_1
   - sunnyland_bullet_0
+  m_RenderDataMap: {}
   m_Tag: AICharacter
   m_IsVariant: 0
