@@ -11,31 +11,8 @@
                     "id": "6c63b2a3-3d8f-4682-91c3-df96097e5648",
                     "expectedControlType": "Vector2",
                     "processors": "NormalizeVector2",
-                    "interactions": ""
-                },
-                {
-                    "name": "ChangePossessMode",
-                    "type": "Button",
-                    "id": "4de45f46-9b72-4e48-8e6c-4fc0fd8174f0",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Press"
-                },
-                {
-                    "name": "Interact",
-                    "type": "Button",
-                    "id": "f0300777-6750-418d-8f3c-5a25578b64f6",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Help",
-                    "type": "Button",
-                    "id": "d7a194fe-421e-4719-a83e-72e61f4fcd73",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "Press"
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Jump",
@@ -43,7 +20,8 @@
                     "id": "1e5052b1-af02-4aba-b612-cdfe41210922",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Dash",
@@ -51,7 +29,26 @@
                     "id": "c8f1a77a-8f24-4e4e-9217-d94066a7a41f",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "f0300777-6750-418d-8f3c-5a25578b64f6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ChangePossessMode",
+                    "type": "Button",
+                    "id": "4de45f46-9b72-4e48-8e6c-4fc0fd8174f0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Power",
@@ -59,7 +56,17 @@
                     "id": "c403b5c4-4f6b-4b0e-a553-b75ace44e93b",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Help",
+                    "type": "Button",
+                    "id": "d7a194fe-421e-4719-a83e-72e61f4fcd73",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Pause",
@@ -67,7 +74,8 @@
                     "id": "7fa115e5-55d6-46bc-8884-b8df72f5d7ff",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Navigate",
@@ -75,7 +83,8 @@
                     "id": "fedbbe29-e0c0-4b7a-9293-af85475d49ed",
                     "expectedControlType": "Vector2",
                     "processors": "NormalizeVector2",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Submit",
@@ -83,7 +92,8 @@
                     "id": "91c4edd8-57f1-491d-ac18-6d964e291a16",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "LoadLevel",
@@ -91,7 +101,8 @@
                     "id": "bce4ce18-0630-43b7-9d0b-cdfbf75904c4",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -235,94 +246,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "ChangePossessMode",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d0cf415e-983d-483a-ad22-c85adad76bf4",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1ceacb3d-81e3-4f95-b3db-79a4d366f1b7",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "23e72b06-59cb-41f5-8174-4ba3f6123e13",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Help",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "15f9b22b-a183-4b3c-9b27-22d4629718fe",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Help",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "616ab497-ffd8-4e2e-b1f1-7b6ec999d959",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "77649081-1c10-47f2-8699-e9f325c63ba9",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0ca31977-23c8-496b-a718-8888fbf0e5c0",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f2e9a9ba-4b33-4e19-acfe-00eeac86169e",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -510,6 +433,94 @@
                     "processors": "",
                     "groups": "",
                     "action": "LoadLevel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "23e72b06-59cb-41f5-8174-4ba3f6123e13",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Help",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "15f9b22b-a183-4b3c-9b27-22d4629718fe",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Help",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "616ab497-ffd8-4e2e-b1f1-7b6ec999d959",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "77649081-1c10-47f2-8699-e9f325c63ba9",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0ca31977-23c8-496b-a718-8888fbf0e5c0",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f2e9a9ba-4b33-4e19-acfe-00eeac86169e",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d0cf415e-983d-483a-ad22-c85adad76bf4",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ceacb3d-81e3-4f95-b3db-79a4d366f1b7",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1245,6 +1245,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 82653445126395802, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: m_Pitch
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 114253259727586034, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
         type: 3}
       propertyPath: Collider
@@ -1259,6 +1264,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _updateContactFilterLayerMask
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114867589610096570, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
+        type: 3}
+      propertyPath: _canUsePossession
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 212392765523624570, guid: d4c96b84a5a52cc409ce4a62f6c566b0,
         type: 3}

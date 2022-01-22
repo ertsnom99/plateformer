@@ -1,10 +1,5 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
-
-[Serializable]
-public class ActionEvent : UnityEvent<InputAction.CallbackContext> { }
 
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(PlayerInput))]
@@ -21,49 +16,19 @@ public class PlayerController : CharacterController
     [SerializeField]
     private string _moveActionName = "Move";
     [SerializeField]
-    private string _changePossessModeActionName = "ChangePossessMode";
-    [SerializeField]
-    private string _interactActionName = "Interact";
-    [SerializeField]
-    private string _helpActionName = "Help";
-    [SerializeField]
     private string _jumpActionName = "Jump";
     [SerializeField]
     private string _dashActionName = "Dash";
     [SerializeField]
-    private string _powerActionName = "Power";
+    private string _interactActionName = "Interact";
     [SerializeField]
-    private string _pauseActionName = "Pause";
-    [SerializeField]
-    private string _navigateActionName = "Navigate";
-    [SerializeField]
-    private string _submitActionName = "Submit";
-    [SerializeField]
-    private string _loadLevelActionName = "LoadLevel";
+    private string _changePossessModeActionName = "ChangePossessMode";
 
-    [Header("Actions callback")]
-    [SerializeField]
-    private ActionEvent _moveCallback;
-    [SerializeField]
-    private ActionEvent _changePossessModeCallback;
-    [SerializeField]
-    private ActionEvent _interactCallback;
-    [SerializeField]
-    private ActionEvent _helpCallback;
-    [SerializeField]
-    private ActionEvent _jumpCallback;
-    [SerializeField]
-    private ActionEvent _dashCallback;
-    [SerializeField]
-    private ActionEvent _powerCallback;
-    [SerializeField]
-    private ActionEvent _pauseCallback;
-    [SerializeField]
-    private ActionEvent _navigateCallback;
-    [SerializeField]
-    private ActionEvent _submitCallback;
-    [SerializeField]
-    private ActionEvent _loadLevelCallback;
+    private InputAction _moveAction;
+    private InputAction _jumpAction;
+    private InputAction _dashAction;
+    private InputAction _interactAction;
+    private InputAction _changePossessModeAction;
 
     [Header("Possession")]
     [SerializeField]
@@ -83,204 +48,108 @@ public class PlayerController : CharacterController
         _interaction = GetComponent<Interaction>();
         _possession = GetComponent<PossessionPower>();
 
-        BindActions();
+        SaveActions();
     }
 
-    private void BindActions()
+    private void SaveActions()
     {
-        _playerInput.actions[_moveActionName].started += OnMove;
-        _playerInput.actions[_moveActionName].performed += OnMove;
-        _playerInput.actions[_moveActionName].canceled += OnMove;
-
-        _playerInput.actions[_changePossessModeActionName].started += OnChangePossessMode;
-        _playerInput.actions[_changePossessModeActionName].performed += OnChangePossessMode;
-        _playerInput.actions[_changePossessModeActionName].canceled += OnChangePossessMode;
-
-        _playerInput.actions[_interactActionName].started += OnInteract;
-        _playerInput.actions[_interactActionName].performed += OnInteract;
-        _playerInput.actions[_interactActionName].canceled += OnInteract;
-
-        _playerInput.actions[_helpActionName].started += OnHelp;
-        _playerInput.actions[_helpActionName].performed += OnHelp;
-        _playerInput.actions[_helpActionName].canceled += OnHelp;
-
-        _playerInput.actions[_jumpActionName].started += OnJump;
-        _playerInput.actions[_jumpActionName].performed += OnJump;
-        _playerInput.actions[_jumpActionName].canceled += OnJump;
-
-        _playerInput.actions[_dashActionName].started += OnDash;
-        _playerInput.actions[_dashActionName].performed += OnDash;
-        _playerInput.actions[_dashActionName].canceled += OnDash;
-
-        _playerInput.actions[_powerActionName].started += OnPower;
-        _playerInput.actions[_powerActionName].performed += OnPower;
-        _playerInput.actions[_powerActionName].canceled += OnPower;
-
-        _playerInput.actions[_pauseActionName].started += OnPause;
-        _playerInput.actions[_pauseActionName].performed += OnPause;
-        _playerInput.actions[_pauseActionName].canceled += OnPause;
-
-        _playerInput.actions[_navigateActionName].started += OnNavigate;
-        _playerInput.actions[_navigateActionName].performed += OnNavigate;
-        _playerInput.actions[_navigateActionName].canceled += OnNavigate;
-
-        _playerInput.actions[_submitActionName].started += OnSubmit;
-        _playerInput.actions[_submitActionName].performed += OnSubmit;
-        _playerInput.actions[_submitActionName].canceled += OnSubmit;
-
-        _playerInput.actions[_loadLevelActionName].started += OnLoadLevel;
-        _playerInput.actions[_loadLevelActionName].performed += OnLoadLevel;
-        _playerInput.actions[_loadLevelActionName].canceled += OnLoadLevel;
+        _moveAction = _playerInput.actions[_moveActionName];
+        _jumpAction = _playerInput.actions[_jumpActionName];
+        _dashAction = _playerInput.actions[_dashActionName];
+        _interactAction = _playerInput.actions[_interactActionName];
+        _changePossessModeAction = _playerInput.actions[_changePossessModeActionName];
     }
 
     // Methods used to update the inputs
-    #region Input action callbacks
-    private void OnMove(InputAction.CallbackContext input)
+    #region Inputs update
+    private void UpdateCurrentInputs()
     {
-        Vector2 moveInput = input.ReadValue<Vector2>();
-
-        Inputs currentInputs = CurrentInputs;
-        currentInputs.Horizontal = input.ReadValue<Vector2>().x;
-        currentInputs.Vertical = input.ReadValue<Vector2>().y;
-
-        CurrentInputs = currentInputs;
-
-        _moveCallback.Invoke(input);
+        UpdateMoveInputs();
+        UpdateJumpInput();
+        UpdateDashInput();
+        UpdateInteract();
+        UpdateChangePossessModeInput();
     }
 
-    private void OnChangePossessMode(InputAction.CallbackContext input)
+    private void UpdateMoveInputs()
     {
+        Vector2 moveInput = _moveAction.ReadValue<Vector2>();
+
         Inputs currentInputs = CurrentInputs;
-        currentInputs.PressPossess = true;
+        currentInputs.Horizontal = moveInput.x;
+        currentInputs.Vertical = moveInput.y;
 
         CurrentInputs = currentInputs;
-
-        _changePossessModeCallback.Invoke(input);
     }
 
-    private void OnInteract(InputAction.CallbackContext input)
+    private void UpdateJumpInput()
     {
-        float interactValue = input.ReadValue<float>();
-
         Inputs currentInputs = CurrentInputs;
 
-        switch (interactValue)
+        if (_jumpAction.triggered && _jumpAction.ReadValue<float>() == 1.0f)
         {
-            case 1.0f:
-                currentInputs.PressInteract = true;
-                break;
-            case .0f:
-                currentInputs.ReleaseInteract = true;
-                break;
+            currentInputs.PressJump = true;
+        }
+        else if (_jumpAction.triggered && _jumpAction.ReadValue<float>() == .0f)
+        {
+            currentInputs.ReleaseJump = true;
         }
 
         CurrentInputs = currentInputs;
-
-        _interactCallback.Invoke(input);
     }
 
-    private void OnHelp(InputAction.CallbackContext input)
+    private void UpdateDashInput()
     {
         Inputs currentInputs = CurrentInputs;
-        currentInputs.PressHelp = true;
 
-        CurrentInputs = currentInputs;
-
-        _helpCallback.Invoke(input);
-    }
-
-    private void OnJump(InputAction.CallbackContext input)
-    {
-        float jumpValue = input.ReadValue<float>();
-
-        Inputs currentInputs = CurrentInputs;
-
-        switch (jumpValue)
+        if (_dashAction.triggered && _dashAction.ReadValue<float>() == 1.0f)
         {
-            case 1.0f:
-                currentInputs.PressJump = true;
-                break;
-            case .0f:
-                currentInputs.ReleaseJump = true;
-                break;
+            currentInputs.PressDash = true;
+        }
+        else if (_dashAction.triggered && _dashAction.ReadValue<float>() == .0f)
+        {
+            currentInputs.ReleaseDash = true;
         }
 
         CurrentInputs = currentInputs;
-
-        _jumpCallback.Invoke(input);
     }
 
-    private void OnDash(InputAction.CallbackContext input)
+    private void UpdateInteract()
     {
-        float dashValue = input.ReadValue<float>();
-
         Inputs currentInputs = CurrentInputs;
 
-        switch (dashValue)
+        if (_interactAction.triggered && _interactAction.ReadValue<float>() == 1.0f)
         {
-            case 1.0f:
-                currentInputs.PressDash = true;
-                break;
-            case .0f:
-                currentInputs.ReleaseDash = true;
-                break;
+            currentInputs.PressInteract = true;
+        }
+        else if (_interactAction.triggered && _interactAction.ReadValue<float>() == .0f)
+        {
+            currentInputs.ReleaseInteract = true;
         }
 
         CurrentInputs = currentInputs;
-
-        _dashCallback.Invoke(input);
     }
 
-    private void OnPower(InputAction.CallbackContext input)
+    private void UpdateChangePossessModeInput()
     {
-        float powerValue = input.ReadValue<float>();
-
         Inputs currentInputs = CurrentInputs;
 
-        switch (powerValue)
+        if (_changePossessModeAction.triggered && _changePossessModeAction.ReadValue<float>() == 1.0f)
         {
-            case 1.0f:
-                currentInputs.PressPower = true;
-                currentInputs.HeldPower = true;
-                break;
-            case .0f:
-                currentInputs.HeldPower = false;
-                currentInputs.ReleasePower = true;
-                break;
+            currentInputs.PressPossess = true;
         }
 
         CurrentInputs = currentInputs;
-
-        _powerCallback.Invoke(input);
-    }
-
-    private void OnPause(InputAction.CallbackContext input)
-    {
-        _pauseCallback.Invoke(input);
-    }
-
-    private void OnNavigate(InputAction.CallbackContext input)
-    {
-        _navigateCallback.Invoke(input);
-    }
-
-    private void OnSubmit(InputAction.CallbackContext input)
-    {
-        _submitCallback.Invoke(input);
-    }
-
-    private void OnLoadLevel(InputAction.CallbackContext input)
-    {
-        _loadLevelCallback.Invoke(input);
     }
     #endregion
 
-    //Debug.Log(Time.frameCount + ":" + input.ReadValue<float>());
     private void Update()
     {
         // Only update when time isn't stop
         if (Time.deltaTime > .0f)
         {
+            UpdateCurrentInputs();
+
             if (ControlsEnabled())
             {
                 UpdateMovement(CurrentInputs);
@@ -342,16 +211,13 @@ public class PlayerController : CharacterController
     {
         Inputs currentInputs = CurrentInputs;
 
-        currentInputs.PressPossess = false;
-        currentInputs.PressInteract = false;
-        currentInputs.ReleaseInteract = false;
-        currentInputs.PressHelp = false;
         currentInputs.PressJump = false;
         currentInputs.ReleaseJump = false;
         currentInputs.PressDash = false;
         currentInputs.ReleaseDash = false;
-        currentInputs.PressPower = false;
-        currentInputs.ReleasePower = false;
+        currentInputs.PressInteract = false;
+        currentInputs.ReleaseInteract = false;
+        currentInputs.PressPossess = false;
 
         CurrentInputs = currentInputs;
     }
