@@ -9,6 +9,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : CharacterController
 {
+    private InputDevice activeGamepad;
+
     public Inputs CurrentInputs { get; protected set; }
     protected Inputs NoControlInputs = new Inputs();
 
@@ -48,7 +50,64 @@ public class PlayerController : CharacterController
         _interaction = GetComponent<Interaction>();
         _possession = GetComponent<PossessionPower>();
 
+        EnableFirstGamepad();
+        InputSystem.onDeviceChange += UpdateGamepads;
+
         SaveActions();
+    }
+
+    private void EnableFirstGamepad()
+    {
+        activeGamepad = null;
+
+        foreach (InputDevice device in _playerInput.devices)
+        {
+            if (!(device is Gamepad))
+            {
+                continue;
+            }
+
+            if (activeGamepad == null)
+            {
+                InputSystem.EnableDevice(device);
+                activeGamepad = device;
+            }
+            else
+            {
+                InputSystem.DisableDevice(device);
+            }
+        }
+    }
+
+    private void UpdateGamepads(InputDevice device, InputDeviceChange change)
+    {
+        if (!(device is Gamepad))
+        {
+            return;
+        }
+
+        switch (change)
+        {
+            case InputDeviceChange.Added:
+                if (activeGamepad != null)
+                {
+                    InputSystem.DisableDevice(device);
+                }
+                else
+                {
+                    activeGamepad = device;
+                }
+
+                break;
+
+            case InputDeviceChange.Removed:
+                if (activeGamepad == device)
+                {
+                    EnableFirstGamepad();
+                }
+
+                break;
+        }
     }
 
     private void SaveActions()
