@@ -46,7 +46,7 @@ public class DevGameManager : GameManager, IHealthSubscriber
     {
         base.Start();
 
-        PlayerController.GetComponent<Health>().Subscribe(this);
+        PlayerCharacter.GetComponent<Health>().Subscribe(this);
     }
 
     protected void Update()
@@ -77,7 +77,7 @@ public class DevGameManager : GameManager, IHealthSubscriber
             }
 
             // Disable player
-            PlayerController.EnableControl(false);
+            PlayerCharacter.Controller.EnableControl(false);
 
             // Show end text
             if (won)

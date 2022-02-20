@@ -14,7 +14,7 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
     [SerializeField]
     private float _knockBackDuration = .3f;
 
-    private CharacterController _characterController;
+    private Character _character;
     private PlatformerMovement _platformerMovement;
 
     protected virtual void Awake()
@@ -43,11 +43,10 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
 
             _platformerMovement.KnockBack(knockBackForce, _knockBackDuration);
 
-            if (!_characterController)
+            if (!_character)
             {
-                _characterController = col.GetComponent<CharacterController>();
-
-                _characterController.EnableControl(false);
+                _character = col.GetComponent<Character>();
+                _character.Controller.EnableControl(false);
 
                 if (!Fade.IsFading)
                 {
@@ -68,9 +67,9 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
             }
             else if (!bouncingFormCharacterController)
             {
-                CharacterController characterController = col.GetComponent<CharacterController>();
+                Character character = col.GetComponent<Character>();
 
-                if (characterController)
+                if (character)
                 {
                     Vector2 knockBackForce = CalculateKnockedBackDirection(col).normalized * _knockBackStrength;
 
@@ -83,11 +82,11 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
                     {
                         _platformerMovement.KnockBack(knockBackForce, _knockBackDuration);
 
-                        if (!_characterController)
+                        if (!_character)
                         {
-                            _characterController = characterController;
+                            _character = character;
 
-                            _characterController.EnableControl(false);
+                            _character.Controller.EnableControl(false);
 
                             if (!Fade.IsFading)
                             {
@@ -112,26 +111,26 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
     // Methods of the IFadeImageSubscriber interface
     public void NotifyFadeInFinished()
     {
-        if (_characterController)
+        if (_character)
         {
-            _characterController.EnableControl(true);
+            _character.Controller.EnableControl(true);
 
-            _characterController = null;
+            _character = null;
             _platformerMovement = null;
         }
     }
 
     public virtual void NotifyFadeOutFinished()
     {
-        if (_characterController)
+        if (_character)
         {
-            if (_characterController.CompareTag(GameManager.PlayerTag))
+            if (_character.CompareTag(GameManager.PlayerTag))
             {
-                _characterController.transform.position = SpawnManager.Instance.SpawnPosition;
+                _character.transform.position = SpawnManager.Instance.SpawnPosition;
             }
             else
             {
-                _characterController.transform.position = EnemySpawnManager.Instance.GetSpawnPosition(_characterController.gameObject);
+                _character.transform.position = EnemySpawnManager.Instance.GetSpawnPosition(_character.gameObject);
             }
 
             _platformerMovement.EndKnockBack();

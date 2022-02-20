@@ -14,7 +14,7 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     
     [Header("Player")]
     [SerializeField]
-    protected PlayerController PlayerController;
+    protected PlayerCharacter PlayerCharacter;
     [SerializeField]
     private PlatformerMovement _playerMovement;
     [SerializeField]
@@ -56,6 +56,9 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     public bool InLevelStartSequence { get; private set; }
     public bool InLevelEndSequence { get; private set; }
 
+    private bool _forcingControls = false;
+    private Inputs _currentForcedControls;
+
     // Levels
     public const int Level1 = 1;
     public const int Level2 = 2;
@@ -76,17 +79,17 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         base.Awake();
 
         // Disable mouse
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
 
         if (!Fade)
         {
             Debug.LogError("No fade was set for " + GetType() + " script of " + gameObject.name + "!");
         }
 
-        if (!PlayerController)
+        if (!PlayerCharacter)
         {
-            Debug.LogError("No player controller was set for " + GetType() + " script of " + gameObject.name + "!");
+            Debug.LogError("No player character was set for " + GetType() + " script of " + gameObject.name + "!");
         }
 
         if (!_playerMovement)
@@ -148,9 +151,13 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
 
         InLevelStartSequence = true;
 
-        PlayerController.EnableControl(false);
+        if (PlayerCharacter.Controller)
+        {
+            PlayerCharacter.Controller.EnableControl(false);
+        }
+
         _playerMovement.ChangeOrientation(_startOrientedLeft ? Vector2.left : Vector2.right);
-        _playerMovement.SetInputs(_forcedControlsAtLevelStart);
+        ForceControls(_forcedControlsAtLevelStart);
 
         if (_pauseMenu)
         {
@@ -162,9 +169,28 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         Fade.FadeIn(FadeDuration);
     }
 
+    private void Update()
+    {
+        if(PlayerCharacter && _forcingControls)
+        {
+            PlayerCharacter.UpdateWithInputs(_currentForcedControls);
+        }
+    }
+
+    public void ForceControls(Inputs controls)
+    {
+        _currentForcedControls = controls;
+        _forcingControls = true;
+    }
+
+    public void StopForceControls()
+    {
+        _forcingControls = false;
+    }
+
     public void StartGame()
     {
-        _playerMovement.SetInputs(_forcedControlsAtGameStart);
+        ForceControls(_forcedControlsAtGameStart);
         _inputModule.enabled = false;
     }
 
@@ -192,7 +218,11 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
 
     public void LoadLevel(int sceneToLoad)
     {
-        PlayerController.EnableControl(false);
+        if (PlayerCharacter.Controller)
+        {
+            PlayerCharacter.Controller.EnableControl(false);
+        }
+
         _playerMovement.GetComponent<PlatformerMovement>().SetInputs(new Inputs());
 
         if (_pauseMenu)
@@ -221,7 +251,11 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
 
     public void LoadNextLevel(Inputs forcedControls, int sceneToLoad, bool deleteAmbientManager = false)
     {
-        PlayerController.EnableControl(false);
+        if (PlayerCharacter.Controller)
+        {
+            PlayerCharacter.Controller.EnableControl(false);
+        }
+
         _playerMovement.GetComponent<PlatformerMovement>().SetInputs(forcedControls);
         
         if (deleteAmbientManager && _ambientManagerToDelete)
@@ -239,13 +273,17 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
 
     public void QuitGame()
     {
-        _playerMovement.SetInputs(_forcedControlsAtQuit);
+        ForceControls(_forcedControlsAtQuit);
         _inputModule.enabled = false;
     }
 
     public void QuitApplication()
     {
-        PlayerController.EnableControl(false);
+        if (PlayerCharacter.Controller)
+        {
+            PlayerCharacter.Controller.EnableControl(false);
+        }
+
         _playerMovement.GetComponent<PlatformerMovement>().SetInputs(new Inputs());
 
         if (_pauseMenu)
@@ -264,7 +302,12 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         if (InLevelStartSequence && _enableControlAfterFadeIn)
         {
             InLevelStartSequence = false;
-            PlayerController.EnableControl(true);
+            StopForceControls();
+
+            if (PlayerCharacter.Controller)
+            {
+                PlayerCharacter.Controller.EnableControl(true);
+            }
         }
     }
 

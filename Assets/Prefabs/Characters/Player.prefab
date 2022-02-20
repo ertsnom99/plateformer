@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 50484550208919288}
   - component: {fileID: 95540619641372390}
   - component: {fileID: 82653445126395802}
-  - component: {fileID: 4578068161320441561}
   - component: {fileID: 114867589610096570}
   - component: {fileID: 114253259727586034}
   - component: {fileID: 2790183897355854456}
@@ -87,6 +86,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -284,78 +284,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &4578068161320441561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1508018494202180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: b368074a309201a4ba101283f4b80b91,
-    type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 6c63b2a3-3d8f-4682-91c3-df96097e5648
-    m_ActionName: GamePlay/Move[/XInputControllerWindows/leftStick,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4de45f46-9b72-4e48-8e6c-4fc0fd8174f0
-    m_ActionName: GamePlay/ChangePossessMode[/XInputControllerWindows/buttonNorth,/Keyboard/q]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: f0300777-6750-418d-8f3c-5a25578b64f6
-    m_ActionName: GamePlay/Interact[/XInputControllerWindows/rightShoulder,/Keyboard/e]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: d7a194fe-421e-4719-a83e-72e61f4fcd73
-    m_ActionName: GamePlay/Help[/XInputControllerWindows/rightShoulder,/Keyboard/e]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 1e5052b1-af02-4aba-b612-cdfe41210922
-    m_ActionName: GamePlay/Jump[/XInputControllerWindows/buttonSouth,/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c8f1a77a-8f24-4e4e-9217-d94066a7a41f
-    m_ActionName: GamePlay/Dash[/XInputControllerWindows/buttonWest,/Keyboard/leftShift]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c403b5c4-4f6b-4b0e-a553-b75ace44e93b
-    m_ActionName: GamePlay/Power[/XInputControllerWindows/buttonWest,/Keyboard/leftShift]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 7fa115e5-55d6-46bc-8884-b8df72f5d7ff
-    m_ActionName: GamePlay/Pause[/XInputControllerWindows/start,/Keyboard/escape]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: fedbbe29-e0c0-4b7a-9293-af85475d49ed
-    m_ActionName: GamePlay/Navigate[/XInputControllerWindows/leftStick,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/w,/Keyboard/s]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 91c4edd8-57f1-491d-ac18-6d964e291a16
-    m_ActionName: GamePlay/Submit[/XInputControllerWindows/buttonSouth,/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: bce4ce18-0630-43b7-9d0b-cdfbf75904c4
-    m_ActionName: GamePlay/LoadLevel[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: GamePlay
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &114867589610096570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,50 +296,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a22dc241a534b439eff05fa92180e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveActionName: Move
-  _changePossessModeActionName: ChangePossessMode
-  _interactActionName: Interact
-  _helpActionName: Help
-  _jumpActionName: Jump
-  _dashActionName: Dash
-  _powerActionName: Power
-  _pauseActionName: Pause
-  _navigateActionName: Navigate
-  _submitActionName: Submit
-  _loadLevelActionName: LoadLevel
-  _moveCallback:
-    m_PersistentCalls:
-      m_Calls: []
-  _changePossessModeCallback:
-    m_PersistentCalls:
-      m_Calls: []
-  _interactCallback:
-    m_PersistentCalls:
-      m_Calls: []
-  _helpCallback:
-    m_PersistentCalls:
-      m_Calls: []
-  _jumpCallback:
-    m_PersistentCalls:
-      m_Calls: []
-  _dashCallback:
-    m_PersistentCalls:
-      m_Calls: []
-  _powerCallback:
-    m_PersistentCalls:
-      m_Calls: []
-  _pauseCallback:
-    m_PersistentCalls:
-      m_Calls: []
-  _navigateCallback:
-    m_PersistentCalls:
-      m_Calls: []
-  _submitCallback:
-    m_PersistentCalls:
-      m_Calls: []
-  _loadLevelCallback:
-    m_PersistentCalls:
-      m_Calls: []
   _canUsePossession: 0
 --- !u!114 &114253259727586034
 MonoBehaviour:
@@ -425,8 +309,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e959c4768de2674ea60d1c59356d971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Collider: {fileID: 61353411224531644}
-  _updateContactFilterLayerMask: 0
   ShellRadius: 0.05
   GravityModifier: 5
   MaxFallVelocity: 44
@@ -484,7 +366,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29202b3a3cd1f2c449086e10342b4920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collider: {fileID: 61353411224531644}
   _virtualCamera: {fileID: 0}
   _enterPossessionModeSound: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922,
     type: 3}

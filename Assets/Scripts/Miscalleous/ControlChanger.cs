@@ -21,7 +21,7 @@ public class ControlChanger : MonoBehaviour
         if (collision.CompareTag(GameManager.PlayerTag))
         {
             PlatformerMovement platformerMovement = collision.GetComponent<PlatformerMovement>();
-            platformerMovement.SetInputs(_enterForcedControls);
+            GameManager.Instance.ForceControls(_enterForcedControls);
 
             StartCoroutine(ReleaseJump(platformerMovement));
             StartCoroutine(AfterEnter(platformerMovement));
@@ -35,13 +35,13 @@ public class ControlChanger : MonoBehaviour
         Inputs input = _enterForcedControls;
         input.PressJump = false;
 
-        platformerMovement.SetInputs(input);
+        GameManager.Instance.ForceControls(input);
     }
 
     private IEnumerator AfterEnter(PlatformerMovement platformerMovement)
     {
         yield return new WaitForSeconds(_afterEnterDelay);
 
-        platformerMovement.SetInputs(_afterEnterForcedControls);
+        GameManager.Instance.ForceControls(_afterEnterForcedControls);
     }
 }

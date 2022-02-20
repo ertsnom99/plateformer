@@ -38,7 +38,7 @@ public class PossessionPowerUp : MonoBehaviour
 
             _spriteRenderer.enabled = false;
 
-            col.GetComponent<PlayerController>().SetCanUsePossession(true);
+            col.GetComponent<PlayerCharacter>().SetCanUsePossession(true);
         }
     }
 }
