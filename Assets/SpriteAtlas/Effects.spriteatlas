@@ -65,6 +65,30 @@ SpriteAtlas:
   - {fileID: -5582339626885402108, guid: 0f3c426d14089024fb5f9d017970bb60, type: 3}
   - {fileID: 517917471463901485, guid: 0f3c426d14089024fb5f9d017970bb60, type: 3}
   - {fileID: -2631514934714656382, guid: 0f3c426d14089024fb5f9d017970bb60, type: 3}
+  - {fileID: -3806839202968226997, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: 1213653969873606975, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: -4915350518889871028, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: -966352174932169086, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: -7061159883300251746, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: 497560801652076451, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: -222035745519106718, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: -5197271548307897853, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: 5240812164920822625, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: -293603124231823741, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: -8875219262236141736, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: 6340498610658388462, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: -6028636648774303401, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: -3137233733933034950, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: -5876230404456235001, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: 7788287979965792003, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: -2330519403281856691, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: -49130668184793455, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: 4348620978117878488, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: -4796932125324312052, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: -5600206312213581617, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: 5986030973748356752, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: -3690502768834906923, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
+  - {fileID: 3815954189206336483, guid: 45a147bf401e4ff45b8615e14a3cbdb8, type: 3}
   m_PackedSpriteNamesToIndex:
   - particle
   - flames_11
@@ -82,6 +106,30 @@ SpriteAtlas:
   - smoke_particules_0
   - smoke_particules_1
   - smoke_particules_2
+  - Explosion_14
+  - Explosion_15
+  - Explosion_16
+  - Explosion_17
+  - Explosion_10
+  - Explosion_11
+  - Explosion_12
+  - Explosion_13
+  - Explosion_18
+  - Explosion_19
+  - Explosion_21
+  - Explosion_20
+  - Explosion_23
+  - Explosion_22
+  - Explosion_9
+  - Explosion_8
+  - Explosion_5
+  - Explosion_4
+  - Explosion_7
+  - Explosion_6
+  - Explosion_1
+  - Explosion_0
+  - Explosion_3
+  - Explosion_2
   m_RenderDataMap: {}
   m_Tag: Effects
   m_IsVariant: 0

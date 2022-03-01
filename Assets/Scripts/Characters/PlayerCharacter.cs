@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 
 // This script requires thoses components and will be added if they aren't already there
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(PlatformerMovement))]
 [RequireComponent(typeof(Interaction))]
 [RequireComponent(typeof(PossessionPower))]
 
-public class PlayerCharacter : Character
+public class PlayerCharacter : Pawn
 {
     [Header("Possession")]
     [SerializeField]
@@ -13,15 +15,30 @@ public class PlayerCharacter : Character
 
     private Inputs _noControlInputs = new Inputs();
 
+    private SpriteRenderer _spriteRenderer;
+    private Collider2D _collider;
     private PlatformerMovement _movementScript;
-    private Interaction _interaction;
-    private PossessionPower _possession;
+    private Interaction _interactionScript;
+    private PossessionPower _possessionScript;
 
     private void Awake()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _collider = GetComponent<Collider2D>();
         _movementScript = GetComponent<PlatformerMovement>();
-        _interaction = GetComponent<Interaction>();
-        _possession = GetComponent<PossessionPower>();
+        _interactionScript = GetComponent<Interaction>();
+        _possessionScript = GetComponent<PossessionPower>();
+
+        _possessionScript.SetPossessingCharacter(this);
+        _possessionScript.SetShowCharacterDelegate(ShowCharacter);
+        _possessionScript.SetChangeOrientationDelegate(_movementScript.ChangeOrientation);
+    }
+
+    private void ShowCharacter(bool show)
+    {
+        _spriteRenderer.enabled = show;
+        _collider.enabled = show;
+        _movementScript.enabled = show;
     }
 
     public override void UpdateWithInputs(Inputs inputs)
@@ -33,7 +50,7 @@ public class PlayerCharacter : Character
 
     private void UpdateMovement(Inputs inputs)
     {
-        if (!_interaction.Interacting)
+        if (!_interactionScript.Interacting)
         {
             _movementScript.SetInputs(inputs);
         }
@@ -45,28 +62,23 @@ public class PlayerCharacter : Character
         _movementScript.UpdateMovement();
     }
 
-    private void UpdateMovement()
-    {
-        _movementScript.UpdateMovement();
-    }
-
     private void UpdateInteraction(Inputs inputs)
     {
         if (inputs.PressInteract)
         {
-            _interaction.BeginInteraction();
+            _interactionScript.BeginInteraction();
         }
-        else if (inputs.ReleaseInteract && _interaction.Interacting)
+        else if (inputs.ReleaseInteract && _interactionScript.Interacting)
         {
-            _interaction.StopInteraction();
+            _interactionScript.StopInteraction();
         }
     }
 
     private void UpdatePossession(Inputs inputs)
     {
-        if (inputs.PressPossess && !_interaction.Interacting)
+        if (inputs.PressPossess && !_interactionScript.Interacting)
         {
-            _possession.ChangePossessionMode(_canUsePossession && !_possession.InPossessionMode);
+            _possessionScript.ChangePossessionMode(_canUsePossession && !_possessionScript.InPossessionMode);
         }
     }
 

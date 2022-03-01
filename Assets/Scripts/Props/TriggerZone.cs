@@ -13,7 +13,7 @@ public class TriggerZone : MonoSubscribable<ITriggerZoneSubscriber>
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.CompareTag(GameManager.PlayerTag) || (m_enemyActivateTriggerZone && col.CompareTag(GameManager.EnemyTag) && col.GetComponent<PossessableCharacterController>().IsPossessed))
+        if (col.CompareTag(GameManager.PlayerTag) || (m_enemyActivateTriggerZone && col.CompareTag(GameManager.EnemyTag) && col.GetComponent<PossessablePawn>().IsPossessed))
         {
             foreach(ITriggerZoneSubscriber subscriber in Subscribers)
             {

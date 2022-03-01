@@ -18,11 +18,14 @@ public class LevelEndSequence : MonoBehaviour
         }
         else if (col.CompareTag(GameManager.EnemyTag))
         {
-            PossessableCharacterController controller = col.GetComponent<PossessableCharacterController>();
+            PossessablePawn enemy = col.GetComponent<PossessablePawn>();
 
-            if (controller.IsPossessed)
+            if (enemy.IsPossessed)
             {
-                GameObject player = controller.Unpossess();
+                Inputs inputs = new Inputs();
+                inputs.PressPossess = true;
+
+                enemy.UpdateWithInputs(inputs);
 
                 GameManager.Instance.LoadNextLevel(_forcedControls, _sceneToLoad);
             }

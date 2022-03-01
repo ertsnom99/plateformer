@@ -46,12 +46,9 @@ public class EnemySpawnManager : MonoSingleton<EnemySpawnManager>, IProximityExp
         yield return new WaitForSeconds(_spawnSettings[settingIndex].SpawnDelay);
 
         GameObject instanciatedEnemie = Instantiate(_spawnSettings[settingIndex].SpawnedEnemie, _spawnSettings[settingIndex].SpawnPosition.position, Quaternion.identity);
-        PossessableCharacterController possessableCharacterControllerScript = instanciatedEnemie.GetComponent<PossessableCharacterController>();
+        PossessablePawn possessablePawn = instanciatedEnemie.GetComponent<PossessablePawn>();
 
-        possessableCharacterControllerScript.SetInfoUI(_spawnSettings[settingIndex].InfoUI);
-        possessableCharacterControllerScript.SetPossessionVirtualCamera(_spawnSettings[settingIndex].VirtualCamera);
-        possessableCharacterControllerScript.SetTarget(_spawnSettings[settingIndex].Target);
-        possessableCharacterControllerScript.SetDistanceToDetect(_spawnSettings[settingIndex].DistanceToDetect);
+        possessablePawn.SetPossessionVirtualCamera(_spawnSettings[settingIndex].VirtualCamera);
 
         _spawnSettings[settingIndex].VirtualCamera.Follow = instanciatedEnemie.transform;
 

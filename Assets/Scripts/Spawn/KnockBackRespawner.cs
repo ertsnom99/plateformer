@@ -14,7 +14,7 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
     [SerializeField]
     private float _knockBackDuration = .3f;
 
-    private Character _character;
+    private Pawn _pawn;
     private PlatformerMovement _platformerMovement;
 
     protected virtual void Awake()
@@ -43,10 +43,10 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
 
             _platformerMovement.KnockBack(knockBackForce, _knockBackDuration);
 
-            if (!_character)
+            if (!_pawn)
             {
-                _character = col.GetComponent<Character>();
-                _character.Controller.EnableControl(false);
+                _pawn = col.GetComponent<Pawn>();
+                _pawn.Controller.EnableControl(false);
 
                 if (!Fade.IsFading)
                 {
@@ -59,17 +59,17 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
         }
         else if (col.CompareTag(GameManager.EnemyTag))
         {
-            BouncingFormCharacterController bouncingFormCharacterController = col.GetComponent<BouncingFormCharacterController>();
+            BouncingFormCharacter bouncingFormCharacter = col.GetComponent<BouncingFormCharacter>();
 
-            if (bouncingFormCharacterController)
+            if (bouncingFormCharacter)
             {
-                bouncingFormCharacterController.CancelBounce();
+                bouncingFormCharacter.CancelBounce();
             }
-            else if (!bouncingFormCharacterController)
+            else if (!bouncingFormCharacter)
             {
-                Character character = col.GetComponent<Character>();
+                Pawn Enemy = col.GetComponent<Pawn>();
 
-                if (character)
+                if (Enemy)
                 {
                     Vector2 knockBackForce = CalculateKnockedBackDirection(col).normalized * _knockBackStrength;
 
@@ -82,11 +82,11 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
                     {
                         _platformerMovement.KnockBack(knockBackForce, _knockBackDuration);
 
-                        if (!_character)
+                        if (!_pawn)
                         {
-                            _character = character;
+                            _pawn = Enemy;
 
-                            _character.Controller.EnableControl(false);
+                            _pawn.Controller.EnableControl(false);
 
                             if (!Fade.IsFading)
                             {
@@ -111,26 +111,26 @@ public abstract class KnockBackRespawner : MonoBehaviour, IFadeImageSubscriber
     // Methods of the IFadeImageSubscriber interface
     public void NotifyFadeInFinished()
     {
-        if (_character)
+        if (_pawn)
         {
-            _character.Controller.EnableControl(true);
+            _pawn.Controller.EnableControl(true);
 
-            _character = null;
+            _pawn = null;
             _platformerMovement = null;
         }
     }
 
     public virtual void NotifyFadeOutFinished()
     {
-        if (_character)
+        if (_pawn)
         {
-            if (_character.CompareTag(GameManager.PlayerTag))
+            if (_pawn.CompareTag(GameManager.PlayerTag))
             {
-                _character.transform.position = SpawnManager.Instance.SpawnPosition;
+                _pawn.transform.position = SpawnManager.Instance.SpawnPosition;
             }
             else
             {
-                _character.transform.position = EnemySpawnManager.Instance.GetSpawnPosition(_character.gameObject);
+                _pawn.transform.position = EnemySpawnManager.Instance.GetSpawnPosition(_pawn.gameObject);
             }
 
             _platformerMovement.EndKnockBack();

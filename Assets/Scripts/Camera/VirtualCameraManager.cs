@@ -1,5 +1,4 @@
 ﻿using Cinemachine;
-using System;
 using System.Collections.Generic;
 
 public class VirtualCameraManager : MonoSingleton<VirtualCameraManager>

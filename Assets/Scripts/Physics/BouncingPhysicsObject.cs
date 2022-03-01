@@ -121,6 +121,9 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
     {
         if (!MovementFrozen)
         {
+            // Tells to use the layer settings from the Physics2D settings (the matrix)
+            ContactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
+
             AllHitBufferList.Clear();
 
             // Apply gravity

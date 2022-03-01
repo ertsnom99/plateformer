@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-public class FlyingSkullController : FlyingCharacterController
+public class FlyingSkull : FlyingCharacter
 {
     [Header("Particules")]
     [SerializeField]
     private ParticleSystem _normalParticles;
     [SerializeField]
     private ParticleSystem _possessedParticles;
-
+#if UNITY_EDITOR
     protected override void Awake()
     {
         base.Awake();
@@ -21,26 +21,29 @@ public class FlyingSkullController : FlyingCharacterController
         {
             Debug.LogError("No possessed particle system was set for " + GetType() + " script of " + gameObject.name + "!");
         }
-        
-        _normalParticles.Clear();
+    }
+#endif
+    protected override void Start()
+    {
+        base.Start();
 
-        _normalParticles.Play();
+        _possessedParticles.Clear();
         _possessedParticles.Stop();
+        _normalParticles.Play();
+        _normalParticles.Clear();
     }
 
-    protected override void OnPossess(PossessionPower possessingScript)
+    protected override void OnPossess()
     {
         _normalParticles.Stop();
         _possessedParticles.Play();
-
         _possessedParticles.Clear();
     }
 
     protected override void OnUnpossess()
     {
-        _normalParticles.Play();
         _possessedParticles.Stop();
-
+        _normalParticles.Play();
         _normalParticles.Clear();
     }
 }

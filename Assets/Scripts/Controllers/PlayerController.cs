@@ -4,12 +4,11 @@ using UnityEngine.InputSystem;
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(PlayerInput))]
 
-public class PlayerController : CharacterController
+public class PlayerController : Controller
 {
     private InputDevice activeGamepad;
 
     // Action map names
-    private readonly string _gamePlayActionMapName = "GamePlay";
     private readonly string _moveActionName = "Move";
     private readonly string _jumpActionName = "Jump";
     private readonly string _dashActionName = "Dash";
@@ -33,18 +32,22 @@ public class PlayerController : CharacterController
 
     private PlayerInput _playerInput;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
+        CurrentInputs = new Inputs();
 
         _playerInput = GetComponent<PlayerInput>();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
 
         EnableFirstGamepad();
         InputSystem.onDeviceChange += UpdateGamepads;
 
         //EnableActionMaps();
 
-        CurrentInputs = new Inputs();
         SaveActions();
     }
 
@@ -257,9 +260,9 @@ public class PlayerController : CharacterController
             
             // TODO: Handle pause input
 
-            if (_controlledCharacter && ControlsEnabled())
+            if (_controlledPawn && ControlsEnabled())
             {
-                _controlledCharacter.UpdateWithInputs(CurrentInputs);
+                _controlledPawn.UpdateWithInputs(CurrentInputs);
             }
         }
     }

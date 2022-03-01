@@ -21,7 +21,7 @@ public class Canon : MonoBehaviour
     private Transform _bulletSpawnPosition;
     [SerializeField]
     private GameObject _bulletPrefab;
-
+#if UNITY_EDITOR
     private void Awake()
     {
         if (_rotationThreshold <= .0f)
@@ -39,7 +39,7 @@ public class Canon : MonoBehaviour
             Debug.LogError("No bullet prefab was set for " + GetType() + " script of " + gameObject.name + "!");
         }
     }
-
+#endif
     private void Start()
     {
         _aimingDirection = _initialAimingDirection;

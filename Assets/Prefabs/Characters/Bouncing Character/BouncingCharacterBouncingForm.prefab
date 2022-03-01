@@ -93,7 +93,6 @@ GameObject:
   - component: {fileID: 8337540354551453392}
   - component: {fileID: 3023590716689418016}
   - component: {fileID: 2975785866116692636}
-  - component: {fileID: 914704710232293002}
   - component: {fileID: 3057897618992837933}
   m_Layer: 12
   m_Name: BouncingCharacterBouncingForm
@@ -133,6 +132,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -336,6 +336,7 @@ TrailRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -439,49 +440,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isPossessable: 1
-  InfoUI: {fileID: 0}
   PossessionVirtualCamera: {fileID: 0}
+  _unpossessShell: {x: 0.1, y: 0.1}
   OnPossessSound: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922, type: 3}
   OnUnpossessSound: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a, type: 3}
-  LeftPlayerSpawn: {fileID: 8589823316589347862}
-  RightPlayerSpawn: {fileID: 0}
-  Target: {fileID: 0}
-  _distanceToDetect: 10
-  StopDistanceToTarget: 0.4
-  MinDistanceForTargetReachable: 4
-  UpdateRate: 5
-  MinDistanceToChangeWaypoint: 0.5
-  StopWhenUnreachable: 1
-  _drawDistanceToDetect: 0
-  _logPathFailedError: 0
---- !u!114 &914704710232293002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8337540354551453393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: -1
+  _spawnArea: {fileID: 8589823316589347862}
 --- !u!114 &3057897618992837933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -494,8 +457,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625d55b537e031c479103a6a625c82b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Collider: {fileID: 8337540354551453398}
-  _updateContactFilterLayerMask: 0
   ShellRadius: 0.05
   GravityModifier: 0
   MaxFallVelocity: 44
@@ -505,10 +466,10 @@ MonoBehaviour:
   _bounciness: 1
   _bounceFreezeDuration: 0
   BounceMaxTry: 100
-  _bounceHasStopCondition: 0
+  _bounceHasStopCondition: 1
   _freezeWhenStopConditionReached: 0
   _bounceSound: {fileID: 8300000, guid: 97753f95fd25e2c41a5ac7c8e9e5d310, type: 3}
   _bounceStopCondition: 1
-  _bounceDuration: 10
-  _maxBounceCount: 40
+  _bounceDuration: 2
+  _maxBounceCount: 10
   _minVelocity: 5

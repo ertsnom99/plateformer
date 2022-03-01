@@ -56,6 +56,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -257,21 +258,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isPossessable: 1
-  InfoUI: {fileID: 0}
   PossessionVirtualCamera: {fileID: 0}
+  _unpossessShell: {x: 0.1, y: 0.1}
   OnPossessSound: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922, type: 3}
   OnUnpossessSound: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a, type: 3}
-  LeftPlayerSpawn: {fileID: 804197203678045442}
-  RightPlayerSpawn: {fileID: 0}
-  Target: {fileID: 0}
-  _distanceToDetect: 10
-  StopDistanceToTarget: 0.4
-  MinDistanceForTargetReachable: 4
-  UpdateRate: 5
-  MinDistanceToChangeWaypoint: 0.5
-  StopWhenUnreachable: 1
-  _drawDistanceToDetect: 0
-  _logPathFailedError: 0
+  _spawnArea: {fileID: 804197203678045442}
   _minMagnitudeToAim: 0.8
   _unpossessPositionOnExploded: {fileID: 1681763641472105466}
 --- !u!114 &7407082722486382377
@@ -388,7 +379,7 @@ GameObject:
   - component: {fileID: 2370141598486433319}
   - component: {fileID: 804197203678045442}
   m_Layer: 0
-  m_Name: LeftPlayerSpawn
+  m_Name: Spawn Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

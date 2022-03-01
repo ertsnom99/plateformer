@@ -12,7 +12,7 @@ public class SpawnChanger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (_spawnLocation && col.CompareTag(GameManager.PlayerTag) || (m_enemyActivateSpawnChanger && col.CompareTag(GameManager.EnemyTag) && col.GetComponent<PossessableCharacterController>().IsPossessed))
+        if (_spawnLocation && col.CompareTag(GameManager.PlayerTag) || (m_enemyActivateSpawnChanger && col.CompareTag(GameManager.EnemyTag) && col.GetComponent<PossessablePawn>().IsPossessed))
         {
             SpawnManager.Instance.ChangeSpawnPosition(_spawnLocation.position);
         }

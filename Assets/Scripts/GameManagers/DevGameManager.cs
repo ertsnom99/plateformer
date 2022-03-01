@@ -68,7 +68,7 @@ public class DevGameManager : GameManager, IHealthSubscriber
             foreach (GameObject enemie in enemies)
             {
                 enemie.GetComponent<Explodable>().enabled = false;
-                enemie.GetComponent<PossessableCharacterController>().EnableControl(false);
+                enemie.GetComponent<PossessablePawn>().Controller.EnableControl(false);
             }
 
             if (_enemySpawnManager)

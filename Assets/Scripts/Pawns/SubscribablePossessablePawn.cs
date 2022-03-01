@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public abstract class SubscribablePossessableCharacterController<T> : PossessableCharacterController
+public abstract class SubscribablePossessablePawn<T> : PossessablePawn
 {
     protected List<T> Subscribers = new List<T>();
 

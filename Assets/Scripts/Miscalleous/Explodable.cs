@@ -96,7 +96,7 @@ public class Explodable : MonoSubscribable<IProximityExplodableSubscriber>
         {
             subscriber.NotifyExploded(gameObject);
         }
-
+        
         DamageInRange();
 
         // Destroy the exploding GameObject
