@@ -186,6 +186,7 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     public void StopForceControls()
     {
         _forcingControls = false;
+        PlayerCharacter.UpdateWithInputs(new Inputs());
     }
 
     public void StartGame()
@@ -256,7 +257,7 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
             PlayerCharacter.Controller.EnableControl(false);
         }
 
-        _playerMovement.GetComponent<PlatformerMovement>().SetInputs(forcedControls);
+        ForceControls(forcedControls);
         
         if (deleteAmbientManager && _ambientManagerToDelete)
         {

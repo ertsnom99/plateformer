@@ -29270,6 +29270,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2993133250336701885, guid: 62f973593c3d05149910ee2a9a2d5456,
         type: 3}
+      propertyPath: _controlledPawn
+      value: 
+      objectReference: {fileID: 88134946}
+    - target: {fileID: 2993133250336701885, guid: 62f973593c3d05149910ee2a9a2d5456,
+        type: 3}
       propertyPath: _controlledCharacter
       value: 
       objectReference: {fileID: 88134946}
