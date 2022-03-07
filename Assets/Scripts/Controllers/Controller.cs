@@ -2,6 +2,7 @@
 
 public abstract class Controller : MonoBehaviour
 {
+    [Header("Pawn")]
     [SerializeField]
     protected Pawn _controlledPawn; 
 

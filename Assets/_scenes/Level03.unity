@@ -12804,7 +12804,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4536785919381258, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4536785919381258, guid: d4c96b84a5a52cc409ce4a62f6c566b0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13458,7 +13458,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4536785919381258, guid: 0e5696e4269bcee42ac3317dddef7201, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4536785919381258, guid: 0e5696e4269bcee42ac3317dddef7201, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29278,6 +29278,41 @@ PrefabInstance:
       propertyPath: _controlledCharacter
       value: 
       objectReference: {fileID: 88134946}
+    - target: {fileID: 2993133250336701885, guid: 62f973593c3d05149910ee2a9a2d5456,
+        type: 3}
+      propertyPath: _pauseCallback.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2993133250336701885, guid: 62f973593c3d05149910ee2a9a2d5456,
+        type: 3}
+      propertyPath: _pauseCallback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2993133250336701885, guid: 62f973593c3d05149910ee2a9a2d5456,
+        type: 3}
+      propertyPath: _pauseCallback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1588201104}
+    - target: {fileID: 2993133250336701885, guid: 62f973593c3d05149910ee2a9a2d5456,
+        type: 3}
+      propertyPath: _pauseCallback.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2993133250336701885, guid: 62f973593c3d05149910ee2a9a2d5456,
+        type: 3}
+      propertyPath: _pauseCallback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TogglePause
+      objectReference: {fileID: 0}
+    - target: {fileID: 2993133250336701885, guid: 62f973593c3d05149910ee2a9a2d5456,
+        type: 3}
+      propertyPath: _pauseCallback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2993133250336701885, guid: 62f973593c3d05149910ee2a9a2d5456,
+        type: 3}
+      propertyPath: _pauseCallback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2993133250336701887, guid: 62f973593c3d05149910ee2a9a2d5456,
         type: 3}
       propertyPath: m_RootOrder
@@ -29335,6 +29370,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62f973593c3d05149910ee2a9a2d5456, type: 3}
+--- !u!114 &1395459631 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2993133250336701885, guid: 62f973593c3d05149910ee2a9a2d5456,
+    type: 3}
+  m_PrefabInstance: {fileID: 1395459630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24376e6c9eacedd4eaa901156c4c592c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1402494021
 GameObject:
   m_ObjectHideFlags: 0
@@ -30469,7 +30516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Fade: {fileID: 1894905376}
   FadeDuration: 1
-  PlayerCharacter: {fileID: 88134946}
+  PlayerController: {fileID: 1395459631}
   _playerMovement: {fileID: 88134943}
   _startOrientedLeft: 0
   _enableControlAfterFadeIn: 1
@@ -32840,7 +32887,7 @@ PrefabInstance:
     - target: {fileID: 4722981874034594170, guid: f7ae14ff146f40b4e83dbb872e459973,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4722981874034594170, guid: f7ae14ff146f40b4e83dbb872e459973,
         type: 3}

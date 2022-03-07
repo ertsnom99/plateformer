@@ -46,7 +46,10 @@ public class DevGameManager : GameManager, IHealthSubscriber
     {
         base.Start();
 
-        PlayerCharacter.GetComponent<Health>().Subscribe(this);
+        if (PlayerController.GetControlledPawn())
+        {
+            PlayerController.GetControlledPawn().GetComponent<Health>().Subscribe(this);
+        }
     }
 
     protected void Update()
@@ -77,7 +80,7 @@ public class DevGameManager : GameManager, IHealthSubscriber
             }
 
             // Disable player
-            PlayerCharacter.Controller.EnableControl(false);
+            PlayerController.EnableControl(false);
 
             // Show end text
             if (won)

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 // This script requires thoses components and will be added if they aren't already there
@@ -29,6 +30,10 @@ public class PlayerController : Controller
     private InputAction _pauseAction;
 
     public Inputs CurrentInputs { get; protected set; }
+
+    [Header("Pause Menu")]
+    [SerializeField]
+    private UnityEvent _pauseCallback;
 
     private PlayerInput _playerInput;
 
@@ -127,13 +132,18 @@ public class PlayerController : Controller
     #region Inputs update
     private void UpdateCurrentInputs()
     {
-        UpdateMoveInputs();
-        UpdateJumpInput();
-        UpdateDashInput();
-        UpdateInteractInput();
-        UpdatePossessInput();
-        UpdatePowerInput();
-        UpdateHelpInput();
+        if (Time.deltaTime > .0f)
+        {
+            UpdateMoveInputs();
+            UpdateJumpInput();
+            UpdateDashInput();
+            UpdateInteractInput();
+            UpdatePossessInput();
+            UpdatePowerInput();
+            UpdateHelpInput();
+        }
+
+        // The pause input need to still be detected even when the game is paused
         UpdatePauseInput();
     }
 
@@ -253,16 +263,18 @@ public class PlayerController : Controller
 
     private void Update()
     {
-        // Only update when time isn't stop
-        if (Time.deltaTime > .0f)
+        if (ControlsEnabled())
         {
             UpdateCurrentInputs();
-            
-            // TODO: Handle pause input
 
-            if (_controlledPawn && ControlsEnabled())
+            if (Time.deltaTime > .0f && _controlledPawn)
             {
                 _controlledPawn.UpdateWithInputs(CurrentInputs);
+            }
+
+            if (CurrentInputs.PressPause)
+            {
+                _pauseCallback.Invoke();
             }
         }
     }
