@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6749087909132388633}
   - component: {fileID: 8040637978377152994}
   - component: {fileID: 7628280860078274855}
+  - component: {fileID: 2929507794894467046}
   - component: {fileID: 9186098180303039536}
   m_Layer: 10
   m_Name: FlyingSkull
@@ -260,6 +261,8 @@ MonoBehaviour:
   _isPossessable: 1
   PossessionVirtualCamera: {fileID: 0}
   _unpossessShell: {x: 0.1, y: 0.1}
+  OnPossessSound: {fileID: 0}
+  OnUnpossessSound: {fileID: 0}
   _normalParticles: {fileID: 2202599371795070783}
   _possessedParticles: {fileID: 2613677919791454141}
 --- !u!114 &7628280860078274855
@@ -277,6 +280,20 @@ MonoBehaviour:
   _speed: 65
   _minVelocityToRotate: 4
   _rotationSpeed: 15
+--- !u!114 &2929507794894467046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223673435489594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bad5c27bb598bd4d929707df72bd804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _infosHUD: {fileID: 6712110659715729313, guid: 7a39044df63300e46aea0911d2006511,
+    type: 3}
 --- !u!114 &9186098180303039536
 MonoBehaviour:
   m_ObjectHideFlags: 0

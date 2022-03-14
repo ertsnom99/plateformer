@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 3023590716689418016}
   - component: {fileID: 2975785866116692636}
   - component: {fileID: 3057897618992837933}
+  - component: {fileID: 1656535289433884078}
   m_Layer: 12
   m_Name: BouncingCharacterBouncingForm
   m_TagString: Enemy
@@ -473,3 +474,17 @@ MonoBehaviour:
   _bounceDuration: 2
   _maxBounceCount: 10
   _minVelocity: 5
+--- !u!114 &1656535289433884078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8337540354551453393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bad5c27bb598bd4d929707df72bd804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _infosHUD: {fileID: 6712110659715729313, guid: c36a123509a8ed4478eea3252ec92d82,
+    type: 3}

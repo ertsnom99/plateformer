@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 114253259727586034}
   - component: {fileID: 2790183897355854456}
   - component: {fileID: 8197806341230259179}
+  - component: {fileID: 8479989366020437796}
   - component: {fileID: 114959804128495902}
   m_Layer: 8
   m_Name: Player
@@ -370,6 +371,20 @@ MonoBehaviour:
   _enterPossessionModeSound: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922,
     type: 3}
   _exitPossessionModeSound: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a,
+    type: 3}
+--- !u!114 &8479989366020437796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1508018494202180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bad5c27bb598bd4d929707df72bd804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _infosHUD: {fileID: 6712110659715729313, guid: e043a3f7a6b2a814fa95df26491134b2,
     type: 3}
 --- !u!114 &114959804128495902
 MonoBehaviour:

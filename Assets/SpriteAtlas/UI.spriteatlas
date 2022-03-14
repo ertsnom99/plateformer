@@ -55,10 +55,14 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 8d2bf07190059b04cb42d770aa6a6e23, type: 3}
   - {fileID: 21300000, guid: f642d0b2c300b2943b11d44b1c9cf3f3, type: 3}
   - {fileID: 21300000, guid: e880e693774ee81499df2bb317606bd0, type: 3}
-  - {fileID: 21300000, guid: a3e50765f31c038419127946f55ee67d, type: 3}
+  - {fileID: 21300000, guid: 19e41f7437809fe42b5e58338b9c6555, type: 3}
   - {fileID: 21300000, guid: 055826d5442f9574cbd6712dde32d023, type: 3}
+  - {fileID: 21300000, guid: 243d173654283ea4c8f56d27ce7411d1, type: 3}
   - {fileID: 21300000, guid: 9a800727c22902c49aff75a6d6de6668, type: 3}
+  - {fileID: 21300000, guid: b4159947f4436214e92893fc9739df1a, type: 3}
   - {fileID: 21300000, guid: cdefc8a79613d474f8d10a5dba92a70a, type: 3}
+  - {fileID: 21300000, guid: 2361fce70db35924fa073099d57e10d7, type: 3}
+  - {fileID: 21300000, guid: 8d55d418923b13641afcecc448282771, type: 3}
   - {fileID: 21300000, guid: 44839368579d5064d805c17bd100ea8f, type: 3}
   - {fileID: 21300002, guid: 44839368579d5064d805c17bd100ea8f, type: 3}
   - {fileID: 21300000, guid: b51841298589f4241a186c813a710f32, type: 3}
@@ -80,10 +84,14 @@ SpriteAtlas:
   - health_bar
   - Keyboard_White_1
   - button
-  - 360_RB
+  - Keyboard_White_Q
   - Keyboard_White_2
+  - XboxOne_RB
   - Keyboard_White_E
+  - XboxOne_Y
   - Keyboard_White_4
+  - Keyboard_White_Shift
+  - XboxOne_X
   - ability_frame_0
   - ability_frame_1
   - arcade_buttons_y

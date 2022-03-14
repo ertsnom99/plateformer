@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 82653445126395802}
   - component: {fileID: 5972519021654783211}
   - component: {fileID: 114253259727586034}
+  - component: {fileID: 1790958544163228892}
   - component: {fileID: 8322002998477585682}
   m_Layer: 10
   m_Name: BouncingCharacter
@@ -304,7 +305,6 @@ MonoBehaviour:
   _unpossessShell: {x: 0.1, y: 0.1}
   OnPossessSound: {fileID: 8300000, guid: 175dd00feaeda9b4a82c01a2fe1f5922, type: 3}
   OnUnpossessSound: {fileID: 8300000, guid: 0c0b529af8044c74886d0f0b47ca237a, type: 3}
-  _movementCollider: {fileID: 61353411224531644}
   _maxChargeTime: 5
   _chargeBar: {fileID: 4344940331940471848}
   _fillBar: {fileID: 3869119297630943804}
@@ -367,6 +367,20 @@ MonoBehaviour:
   _jumpSound: {fileID: 8300000, guid: d91b828e8fde9e748a781a3b50778117, type: 3}
   _airborneJumpSound: {fileID: 0}
   _dashSound: {fileID: 0}
+--- !u!114 &1790958544163228892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1508018494202180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bad5c27bb598bd4d929707df72bd804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _infosHUD: {fileID: 6712110659715729313, guid: c36a123509a8ed4478eea3252ec92d82,
+    type: 3}
 --- !u!114 &8322002998477585682
 MonoBehaviour:
   m_ObjectHideFlags: 0

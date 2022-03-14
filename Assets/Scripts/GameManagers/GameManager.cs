@@ -36,7 +36,7 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
 
     [Header("Pause")]
     [SerializeField]
-    private GameObject _pauseMenu;
+    private PauseMenu _pauseMenu;
 
     [Header("Level Change")]
     [SerializeField]
@@ -108,7 +108,7 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
 
     // Methods used to react to inputs
     #region Input action callbacks
-    public void OnPause(InputAction.CallbackContext input)
+    /*public void OnPause(InputAction.CallbackContext input)
     {
         if (input.phase == InputActionPhase.Performed)
         {
@@ -118,7 +118,7 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
 
     public void OnNavigate(InputAction.CallbackContext input)
     {
-        if (_pauseMenu && _pauseMenu.activeSelf)
+        if (_pauseMenu && _pauseMenu.gameObject.activeSelf)
         {
             // Select the first selected gameobject when none is while trying to navigate
             if (!EventSystem.current.currentSelectedGameObject && Mathf.Abs(input.ReadValue<Vector2>().y) > 0.9f)
@@ -127,12 +127,12 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
                 EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
             }
         }
-    }
+    }*/
 
     // HACK: Fixes bug with the Input System UI Input Module
     public void OnSubmit(InputAction.CallbackContext input)
     {
-        if (_pauseMenu && _pauseMenu.activeSelf)
+        if (_pauseMenu && _pauseMenu.gameObject.activeSelf)
         {
             ExecuteEvents.Execute(EventSystem.current.currentSelectedGameObject, new BaseEventData(EventSystem.current), ExecuteEvents.submitHandler);
         }
@@ -199,13 +199,13 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     {
         if (_pauseMenu && !Fade.IsFading)
         {
-            ShowPause(!_pauseMenu.activeSelf);
+            ShowPause(!_pauseMenu.gameObject.activeSelf);
         }
     }
 
     public void ShowPause(bool show)
     {
-        _pauseMenu.SetActive(show);
+        _pauseMenu.Show(show);
         Time.timeScale = show ? 0.0f : 1.0f;
 
         if (show)

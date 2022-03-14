@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 7407082722486382377}
   - component: {fileID: 325158076011708277}
   - component: {fileID: 5101016945249513652}
+  - component: {fileID: -8780093506526355215}
   m_Layer: 10
   m_Name: Bullet
   m_TagString: Enemy
@@ -338,6 +339,20 @@ MonoBehaviour:
   _knockBackDuration: 0.3
   _drawExplosionRange: 0
   _maxDifMagWhenClose: 0.1
+--- !u!114 &-8780093506526355215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325158076011708272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bad5c27bb598bd4d929707df72bd804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _infosHUD: {fileID: 6712110659715729313, guid: 659da671ab32e674e92d786f53910bd6,
+    type: 3}
 --- !u!1 &5277043817021445395
 GameObject:
   m_ObjectHideFlags: 0

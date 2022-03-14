@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6749087909132388633}
   - component: {fileID: 4208820249501803803}
   - component: {fileID: 7684617137239305518}
+  - component: {fileID: -27046532957809513}
   - component: {fileID: 7320430229602560592}
   m_Layer: 10
   m_Name: FlyingCharacter
@@ -256,9 +257,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isPossessable: 1
-  _possessionVirtualCamera: {fileID: 0}
+  PossessionVirtualCamera: {fileID: 0}
   _unpossessShell: {x: 0.1, y: 0.1}
-  _propellantAnimator: {fileID: 95314765945920930}
+  OnPossessSound: {fileID: 0}
+  OnUnpossessSound: {fileID: 0}
+  _propellantAnimator: {fileID: 95907456829324252}
 --- !u!114 &7684617137239305518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,6 +278,20 @@ MonoBehaviour:
   _minVelocityToRotatePropellant: 4
   _propellantRotationSpeed: 10
   _propellantSprite: {fileID: 212940772010136382}
+--- !u!114 &-27046532957809513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223673435489594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bad5c27bb598bd4d929707df72bd804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _infosHUD: {fileID: 6712110659715729313, guid: bb3c9e8a81ff76a47ab96aee1c479cc9,
+    type: 3}
 --- !u!114 &7320430229602560592
 MonoBehaviour:
   m_ObjectHideFlags: 0
