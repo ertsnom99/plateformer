@@ -23,6 +23,7 @@ public class Sign : MonoBehaviour, IInteractable
 
     public bool BeginInteraction()
     {
+        GameManager.Instance.EnablePause(_infoUI.activeSelf);
         _infoUI.SetActive(!_infoUI.activeSelf);
         return _infoUI.activeSelf;
     }

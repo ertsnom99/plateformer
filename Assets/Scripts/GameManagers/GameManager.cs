@@ -38,6 +38,8 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     [SerializeField]
     private PauseMenu _pauseMenu;
 
+    private bool _pauseEnable = true;
+
     [Header("Level Change")]
     [SerializeField]
     private float _nextLevelFadeDuration = 1.0f;
@@ -195,9 +197,14 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         _inputModule.enabled = false;
     }
     
+    public void EnablePause(bool enable)
+    {
+        _pauseEnable = enable;
+    }
+
     public void TogglePause()
     {
-        if (_pauseMenu && !Fade.IsFading)
+        if (_pauseMenu && _pauseEnable && !Fade.IsFading)
         {
             ShowPause(!_pauseMenu.gameObject.activeSelf);
         }
