@@ -66,9 +66,10 @@ public abstract class PossessablePawn : Pawn
 
         UpdateVisual();
     }
-#if UNITY_EDITOR
+
     protected virtual void Start()
     {
+#if UNITY_EDITOR
         if (!VirtualCameraManager.Instance)
         {
             Debug.LogError("Couldn't find an instance of VirtualCameraManager for " + GetType() + " script of " + gameObject.name + "!");
@@ -78,8 +79,8 @@ public abstract class PossessablePawn : Pawn
         {
             Debug.LogError("No virtual camera was set for " + GetType() + " script of " + gameObject.name + "!");
         }
-    }
 #endif
+    }
     public void SetPossessionVirtualCamera(CinemachineVirtualCamera possessionVirtualCamera)
     {
         PossessionVirtualCamera = possessionVirtualCamera;
