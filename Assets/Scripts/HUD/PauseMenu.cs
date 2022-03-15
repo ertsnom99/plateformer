@@ -1,10 +1,16 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour
 {
+    [Header("Controls")]
     [SerializeField]
     private PlayerController _playerController;
 
+    [Header("UI")]
+    [SerializeField]
+    private GameObject _buttonToFocus;
     [SerializeField]
     private RectTransform _infosTransform;
 
@@ -44,5 +50,21 @@ public class PauseMenu : MonoBehaviour
         }
 
         gameObject.SetActive(show);
+
+        if (show)
+        {
+            // Focus on first button
+            StartCoroutine(FocusButtonLater());
+        }
+    }
+
+    private IEnumerator FocusButtonLater()
+    {
+        yield return null;
+
+        // Focus on first button
+        EventSystem eventSystem = EventSystem.current;
+        eventSystem.SetSelectedGameObject(null);
+        eventSystem.SetSelectedGameObject(_buttonToFocus);
     }
 }

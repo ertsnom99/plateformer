@@ -108,43 +108,10 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
         InLevelEndSequence = false;
     }
 
-    // Methods used to react to inputs
-    #region Input action callbacks
-    /*public void OnPause(InputAction.CallbackContext input)
-    {
-        if (input.phase == InputActionPhase.Performed)
-        {
-            TogglePause();
-        }
-    }
-
-    public void OnNavigate(InputAction.CallbackContext input)
-    {
-        if (_pauseMenu && _pauseMenu.gameObject.activeSelf)
-        {
-            // Select the first selected gameobject when none is while trying to navigate
-            if (!EventSystem.current.currentSelectedGameObject && Mathf.Abs(input.ReadValue<Vector2>().y) > 0.9f)
-            {
-                EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
-            }
-        }
-    }*/
-
-    // HACK: Fixes bug with the Input System UI Input Module
-    public void OnSubmit(InputAction.CallbackContext input)
-    {
-        if (_pauseMenu && _pauseMenu.gameObject.activeSelf)
-        {
-            ExecuteEvents.Execute(EventSystem.current.currentSelectedGameObject, new BaseEventData(EventSystem.current), ExecuteEvents.submitHandler);
-        }
-    }
-
     public void OnLoadLevel(InputAction.CallbackContext input)
     {
         LoadLevel(int.Parse(input.control.displayName));
     }
-    #endregion
 
     protected virtual void Start()
     {

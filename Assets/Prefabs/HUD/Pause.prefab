@@ -455,6 +455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerController: {fileID: 0}
+  _buttonToFocus: {fileID: 749029475915350932}
   _infosTransform: {fileID: 749029475677159507}
 --- !u!1 &749029475339987287
 GameObject:

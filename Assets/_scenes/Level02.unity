@@ -79325,6 +79325,31 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.000015258789
       objectReference: {fileID: 0}
+    - target: {fileID: 749029474849858837, guid: c79705ef9fa0e40408b5cb80f109e85a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 749029474849858837, guid: c79705ef9fa0e40408b5cb80f109e85a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1047698318}
+    - target: {fileID: 749029474849858837, guid: c79705ef9fa0e40408b5cb80f109e85a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 749029474849858837, guid: c79705ef9fa0e40408b5cb80f109e85a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 749029474849858837, guid: c79705ef9fa0e40408b5cb80f109e85a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 749029474949329515, guid: c79705ef9fa0e40408b5cb80f109e85a,
         type: 3}
       propertyPath: m_Name
@@ -79445,6 +79470,41 @@ PrefabInstance:
       propertyPath: _playerController
       value: 
       objectReference: {fileID: 460419670}
+    - target: {fileID: 749029475915350934, guid: c79705ef9fa0e40408b5cb80f109e85a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 749029475915350934, guid: c79705ef9fa0e40408b5cb80f109e85a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1047698318}
+    - target: {fileID: 749029475915350934, guid: c79705ef9fa0e40408b5cb80f109e85a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TogglePause
+      objectReference: {fileID: 0}
+    - target: {fileID: 749029475915350934, guid: c79705ef9fa0e40408b5cb80f109e85a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 749029475928386208, guid: c79705ef9fa0e40408b5cb80f109e85a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1047698318}
+    - target: {fileID: 749029475928386208, guid: c79705ef9fa0e40408b5cb80f109e85a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadLevelAndDeleteAmbientManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 749029475928386208, guid: c79705ef9fa0e40408b5cb80f109e85a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 1201830590109944153, guid: c79705ef9fa0e40408b5cb80f109e85a,
         type: 3}
       propertyPath: m_IsActive
