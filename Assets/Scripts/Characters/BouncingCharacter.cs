@@ -94,6 +94,8 @@ public class BouncingCharacter : PossessablePawn, IBouncingPhysicsObjectSubscrib
             Debug.LogError("No bounce form spawn area was set for " + GetType() + " script of " + gameObject.name + "!");
         }
 #endif
+        SetIsLookingForwardDelegate(_movementScript.IsLookingForward);
+
         _chargeBar.value = .0f;
         _chargeBar.gameObject.SetActive(false);
 

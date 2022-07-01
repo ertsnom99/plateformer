@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 8197806341230259179}
   - component: {fileID: 8479989366020437796}
   - component: {fileID: 114959804128495902}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -324,7 +324,7 @@ MonoBehaviour:
   _canSlideOfWall: 1
   _wallLayers:
     serializedVersion: 2
-    m_Bits: 18945
+    m_Bits: 19009
   _canSlideGoingUp: 0
   _canSlideDuringKnockBack: 0
   _slideRaycastOffset: 0.4

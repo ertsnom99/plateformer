@@ -16,6 +16,8 @@ public interface IPlatformerMovementSubscriber
 // WARNING: This movement script isn't made to work in slopes!!!
 public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementSubscriber>
 {
+    protected enum FlipType { Sprite, Scale };
+
     [SerializeField]
     private float _maxSpeed = 9.0f;
 
@@ -114,6 +116,10 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     private bool _triggeredDash = false;
 
     public bool IsDashing { get; private set; }
+
+    [Header("Visual")]
+    [SerializeField]
+    protected FlipType FlipMethod = FlipType.Sprite;
 
     [Header("Sound")]
     [SerializeField]
@@ -220,7 +226,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
             UpdateWallSlide(Rigidbody2D.position - previousRigidbodyPosition);
         }
         
-        // Cancel dash window if hitted a wall
+        // Cancel dash window if hit a wall
         if (IsDashing && _hitWall)
         {
             EndDashWindow();
@@ -392,7 +398,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
             if (_lastHorizontalVelocityDirection == .0f)
             {
-                lineDirection = _spriteRenderer.flipX ? -1 : 1;
+                lineDirection = IsLookingForward() ? 1 : -1;
             }
             else
             {
@@ -526,8 +532,17 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
         _animator.SetFloat(XVelocityParamHashId, Mathf.Abs(Velocity.x) / MaxSpeed);
         _animator.SetFloat(YVelocityParamHashId, Velocity.y);
         _animator.SetBool(IsGroundedParamNameString, IsGrounded);
-        _animator.SetBool(IsSlidingOfWallParamHashId, IsSlidingOfWall/* && m_wasDashAnimeDelayed*/);
-        _animator.SetBool(IsDashingParamHashId, IsDashing);
+        
+        if (_canSlideOfWall)
+        {
+            _animator.SetBool(IsSlidingOfWallParamHashId, IsSlidingOfWall/* && m_wasDashAnimeDelayed*/);
+        }
+        
+        if (_canDash)
+        {
+            _animator.SetBool(IsDashingParamHashId, IsDashing);
+        }
+
         _animator.SetBool(KnockedBackParamHashId, IsKnockedBack);
 
         if (_triggeredAirborneJump)
@@ -553,21 +568,60 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     private void AdjustOrientation()
     {
-        // Flip the sprite if necessary
-        bool flipSprite = false;
+        if (_lastHorizontalVelocityDirection > -.01f && _lastHorizontalVelocityDirection < .01f)
+        {
+            return;
+        }
+
+        if (ShouldFlip())
+        {
+            Flip();
+        }
+    }
+
+    private bool ShouldFlip()
+    {
+        bool shouldFlip = false;
 
         if (!IsSlidingOfWall && !HorizontalControlDelayed())
         {
-            flipSprite = (_spriteRenderer.flipX == _lastHorizontalVelocityDirection >= .0f);
+            shouldFlip = (IsLookingForward() == _lastHorizontalVelocityDirection < -.01f);
         }
         else if (IsSlidingOfWall || IsKnockedBack)
         {
-            flipSprite = (_spriteRenderer.flipX == _lastHorizontalVelocityDirection < .0f);
+            shouldFlip = (IsLookingForward() == _lastHorizontalVelocityDirection > .01f);
         }
 
-        if (flipSprite)
+        return shouldFlip;
+    }
+
+    public bool IsLookingForward()
+    {
+        bool lookingForward = true;
+
+        switch (FlipMethod)
         {
-            _spriteRenderer.flipX = !_spriteRenderer.flipX;
+            case FlipType.Sprite:
+                lookingForward = !_spriteRenderer.flipX;
+                break;
+            case FlipType.Scale:
+                lookingForward = transform.localScale.x > 0;
+                break;
+        }
+
+        return lookingForward;
+    }
+
+    protected void Flip()
+    {
+        switch (FlipMethod)
+        {
+            case FlipType.Sprite:
+                _spriteRenderer.flipX = !_spriteRenderer.flipX;
+                break;
+            case FlipType.Scale:
+                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                break;
         }
     }
 
@@ -638,7 +692,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     {
         _triggeredWallJump = true;
 
-        TargetHorizontalVelocity = _spriteRenderer.flipX ? -_wallJumpHorizontalVelocity : _wallJumpHorizontalVelocity;
+        TargetHorizontalVelocity = IsLookingForward() ? _wallJumpHorizontalVelocity : -_wallJumpHorizontalVelocity;
 
         if (InWallJumpWindow())
         {
@@ -667,7 +721,7 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
     {
         _triggeredDash = true;
 
-        TargetHorizontalVelocity = _spriteRenderer.flipX ? -_dashSpeed : _dashSpeed;
+        TargetHorizontalVelocity = IsLookingForward() ? _dashSpeed : -_dashSpeed;
         
         // Play sounds
         _audioSource.pitch = Random.Range(.9f, 1.0f);
@@ -863,13 +917,13 @@ public class PlatformerMovement : SubscribablePhysicsObject<IPlatformerMovementS
 
     public Vector2 GetOrientation()
     {
-        if (_spriteRenderer.flipX)
+        if (IsLookingForward())
         {
-            return Vector2.left;
+            return Vector2.right;
         }
         else
         {
-            return Vector2.right;
+            return Vector2.left;
         }
     }
 

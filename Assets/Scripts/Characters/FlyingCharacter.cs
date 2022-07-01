@@ -12,6 +12,8 @@ public class FlyingCharacter : PossessablePawn
         base.Awake();
 
         _movementScript = GetComponent<FlyingMovement>();
+
+        SetIsLookingForwardDelegate(_movementScript.IsLookingForward);
     }
 
     public override void UpdateWithInputs(Inputs inputs)

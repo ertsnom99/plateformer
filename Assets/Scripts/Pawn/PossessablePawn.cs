@@ -11,6 +11,9 @@ public abstract class PossessablePawn : Pawn
 {
     protected Inputs NoControlInputs = new Inputs();
 
+    protected delegate bool IsLookingForwardDelegate();
+    protected IsLookingForwardDelegate IsLookingForward;
+
     [Header("Possession")]
     [SerializeField]
     private bool _isPossessable = true;
@@ -47,7 +50,7 @@ public abstract class PossessablePawn : Pawn
 
     protected SpriteRenderer SpriteRenderer;
     protected Collider2D Collider;
-    private Animator _animator;
+    protected Animator Animator;
     protected AudioSource AudioSource;
 
     protected virtual void Awake()
@@ -59,10 +62,10 @@ public abstract class PossessablePawn : Pawn
 
         SpriteRenderer = GetComponent<SpriteRenderer>();
         Collider = GetComponent<Collider2D>();
-        _animator = GetComponent<Animator>();
+        Animator = GetComponent<Animator>();
         AudioSource = GetComponent<AudioSource>();
 
-        PossessedModeAnimationLayerIndex = _animator.GetLayerIndex(PossessedModeAnimationLayerName);
+        PossessedModeAnimationLayerIndex = Animator.GetLayerIndex(PossessedModeAnimationLayerName);
 
         UpdateVisual();
     }
@@ -107,7 +110,7 @@ public abstract class PossessablePawn : Pawn
     {
         spawnPosition.y = CalculateSpawnY();
 
-        if (LookingLeft())
+        if (!IsLookingForward())
         {
             spawnPosition.x = CalculateLeftSpawnX();
             spawnFacingDirection = Vector2.left;
@@ -138,10 +141,11 @@ public abstract class PossessablePawn : Pawn
         return Collider.bounds.center.x + Collider.bounds.extents.x + UnpossessBounds.extents.x + _unpossessShell.x;
     }
 
-    protected virtual bool LookingLeft()
+    protected void SetIsLookingForwardDelegate(IsLookingForwardDelegate IsLookingForward)
     {
-        return SpriteRenderer.flipX;
+        this.IsLookingForward = IsLookingForward;
     }
+
 #if UNITY_EDITOR
     protected void DrawRect(Rect rect, float duration)
     {
@@ -226,6 +230,6 @@ public abstract class PossessablePawn : Pawn
 
     protected void UpdateVisual()
     {
-        _animator.SetLayerWeight(PossessedModeAnimationLayerIndex, IsPossessed ? 1.0f : .0f);
+        Animator.SetLayerWeight(PossessedModeAnimationLayerIndex, IsPossessed ? 1.0f : .0f);
     }
 }

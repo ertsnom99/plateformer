@@ -133,7 +133,7 @@ public class BouncingPhysicsObject : SubscribablePhysicsObject<IBouncingPhysicsO
             Vector2 movement = Velocity * Time.fixedDeltaTime;
             Move(movement);
 
-            StartCoroutine(CallCollisionEvents());
+            StartCoroutine(CallCollisionEvents(movement));
 
             if (DebugVelocity)
             {

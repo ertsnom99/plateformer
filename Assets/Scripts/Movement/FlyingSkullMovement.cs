@@ -13,8 +13,10 @@ public class FlyingSkullMovement : FlyingMovement
         Vector3 originalPropellantRotation = transform.localRotation.eulerAngles;
 
         // Flip the sprite if necessary
-        if (ShouldFlipSprite())
+        if (ShouldFlip())
         {
+            Debug.Log("IsLookingForward: " + IsLookingForward());
+            Debug.Log("CurrentInputs.Horizontal < .0f: " + (CurrentInputs.Horizontal < .0f));
             SpriteRenderer.flipX = !SpriteRenderer.flipX;
             
             transform.rotation = Quaternion.Euler(originalPropellantRotation.x, originalPropellantRotation.y, -originalPropellantRotation.z);

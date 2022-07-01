@@ -27,9 +27,9 @@ public class PropelledFlyingMovement : FlyingMovement
         Vector3 originalPropellantRotation = _propellantSprite.transform.localRotation.eulerAngles;
 
         // Flip the sprite if necessary
-        if (ShouldFlipSprite())
+        if (ShouldFlip())
         {
-            SpriteRenderer.flipX = !SpriteRenderer.flipX;
+            Flip();
 
             // Flip propellant
             Vector3 originalPropellantPosition = _propellantSprite.transform.localPosition;

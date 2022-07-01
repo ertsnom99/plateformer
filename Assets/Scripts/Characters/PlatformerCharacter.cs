@@ -16,6 +16,8 @@ public class PlatformerCharacter : PossessablePawn, IProximityExplodableSubscrib
         _movementScript = GetComponent<PlatformerMovement>();
         _explodableCharacterScript = GetComponent<ExplodableCharacter>();
 
+        SetIsLookingForwardDelegate(_movementScript.IsLookingForward);
+
         _explodableCharacterScript.Subscribe(this);
     }
 
@@ -29,11 +31,6 @@ public class PlatformerCharacter : PossessablePawn, IProximityExplodableSubscrib
     private void UpdateMovement(Inputs inputs)
     {
         _movementScript.SetInputs(inputs);
-        _movementScript.UpdateMovement();
-    }
-
-    private void UpdateMovement()
-    {
         _movementScript.UpdateMovement();
     }
 
@@ -55,6 +52,6 @@ public class PlatformerCharacter : PossessablePawn, IProximityExplodableSubscrib
     public void NotifyExploded(GameObject explodableGameObject)
     {
         Vector2 spawnPosition = new Vector2(transform.position.x, CalculateSpawnY());
-        Unpossess(spawnPosition, LookingLeft() ? Vector2.left : Vector2.right);
+        Unpossess(spawnPosition, IsLookingForward() ? Vector2.right : Vector2.left);
     }
 }

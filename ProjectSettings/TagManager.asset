@@ -4,19 +4,21 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - AmbiantSound
   - Enemy
   - Interactable
+  - Burrowable
+  - BurrowLimit
+  - AmbiantSound
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - Player
+  - BurrowableSurface
+  - Burrowed
+  - BurrowLimit
   - Ground
   - AI
   - Destroyable
@@ -53,6 +55,9 @@ TagManager:
   - name: Player
     uniqueID: 4144600267
     locked: 0
+  - name: AI
+    uniqueID: 4234718813
+    locked: 0
   - name: Platforms
     uniqueID: 1011929847
     locked: 0
@@ -61,9 +66,6 @@ TagManager:
     locked: 0
   - name: Gems
     uniqueID: 1520962181
-    locked: 0
-  - name: AI
-    uniqueID: 4234718813
     locked: 0
   - name: Foreground
     uniqueID: 3661822639

@@ -6,29 +6,23 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/_scenes/DevScenes/BouncingMechanic.unity
-    guid: 2dd84a93954ab5644b1fc5f6a8ce7492
-  - enabled: 0
-    path: Assets/_scenes/DevScenes/DevDemo/Boss.unity
-    guid: 3b7d9eedf07bb374eb5599c89a3619e0
-  - enabled: 1
     path: Assets/_scenes/TitleScreen.unity
     guid: d4eec0fa65a2b7c409ad4b1dded660a8
-  - enabled: 1
+  - enabled: 0
     path: Assets/_scenes/Level01.unity
     guid: be85cfc70c581f949835e4c1c7924601
-  - enabled: 1
+  - enabled: 0
     path: Assets/_scenes/Level02.unity
     guid: d776953feda58ac49b0a9f6e18ac1fe0
-  - enabled: 1
+  - enabled: 0
     path: Assets/_scenes/Level03.unity
     guid: 03c1038f5fc312f479e2e6e8350654b1
-  - enabled: 1
+  - enabled: 0
     path: Assets/_scenes/Level04.unity
     guid: 03d202b754477d341b29d3e9d90ea060
-  - enabled: 0
-    path: Assets/_scenes/DevScenes/DevDemo/Tutorial.unity
-    guid: cb3c3c1028cc8fc4990daeb78afe9c21
+  - enabled: 1
+    path: Assets/_scenes/DevScenes/DrillCharacter.unity
+    guid: 06450c2b797837d48ac95be388ce5c08
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: fb9fa21912aff094ebf2eb8f8bf3dd3f,
       type: 2}

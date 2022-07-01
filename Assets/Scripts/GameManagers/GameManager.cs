@@ -71,10 +71,14 @@ public class GameManager : MonoSingleton<GameManager>, IFadeImageSubscriber
     public const string PlayerTag = "Player";
     public const string EnemyTag = "Enemy";
     public const string InteractableTag = "Interactable";
+    public const string BurrowableTag = "Burrowable";
+    public const string BurrowLimitTag = "BurrowLimit";
 
     // Layers
+    public const string DefaultLayer = "Default";
     public const string PlayerLayer = "Player";
     public const string AILayer = "AI";
+    public const string BurrowedLayer = "Burrowed";
 
     protected override void Awake()
     {

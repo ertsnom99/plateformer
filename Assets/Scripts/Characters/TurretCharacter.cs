@@ -18,6 +18,9 @@ public class TurretCharacter : PossessablePawn
         base.Awake();
 
         _canonScript = GetComponentInChildren<Canon>();
+
+        SetIsLookingForwardDelegate(IsCanonLookingForward);
+
 #if UNITY_EDITOR
         if (!_canonScript)
         {
@@ -32,9 +35,9 @@ public class TurretCharacter : PossessablePawn
         base.UpdateWithInputs(inputs);
     }
 
-    protected override bool LookingLeft()
+    private bool IsCanonLookingForward()
     {
-        return _canonScript.transform.right.x < .0f;
+        return _canonScript.transform.right.x > .0f;
     }
 
     private void UpdateCanon(Inputs inputs)

@@ -5,6 +5,7 @@ using UnityEngine;
 // This script requires thoses components and will be added if they aren't already there
 [RequireComponent(typeof(Rigidbody2D))]
 
+// TODO: PhysicsObject was updated for better detection of collision, this wasn't. Update this if used!!!
 public class BulletMovement : MonoBehaviour
 {
     [Header("Rotation")]
@@ -169,7 +170,7 @@ public class BulletMovement : MonoBehaviour
 
         foreach (IPhysicsCollision2DListener collisionListener in _collisionListeners)
         {
-            // If the hitted gameObject wasn't previously hitted
+            // If the hit gameObject wasn't previously hit
             if (!PreviouslyCollidingGameObject.ContainsKey(hit.collider))
             {
                 collisionListener.OnPhysicsCollision2DEnter(physicsObjectCollision2D);
@@ -178,7 +179,7 @@ public class BulletMovement : MonoBehaviour
             collisionListener.OnPhysicsCollision2DStay(physicsObjectCollision2D);
         }
 
-        // Call OnPhysicsObjectCollisionEnter on all script, of the hitted gameobject, that implement the interface
+        // Call OnPhysicsObjectCollisionEnter on all script, of the hit gameobject, that implement the interface
         IPhysicsCollision2DListener[] collisionListeners = hit.collider.GetComponents<IPhysicsCollision2DListener>();
 
         if (collisionListeners.Length > 0)
@@ -198,7 +199,7 @@ public class BulletMovement : MonoBehaviour
 
             foreach (IPhysicsCollision2DListener listener in collisionListeners)
             {
-                // If the hitted gameObject wasn't previously hitted
+                // If the hit gameObject wasn't previously hit
                 if (!PreviouslyCollidingGameObject.ContainsKey(hit.collider))
                 {
                     listener.OnPhysicsCollision2DEnter(physicsObjectCollision2D);
@@ -217,10 +218,10 @@ public class BulletMovement : MonoBehaviour
 
     private void CheckCollisionExit()
     {
-        // If a gameObject isn't hitted anymore
+        // If a gameObject isn't hit anymore
         foreach (KeyValuePair<Collider2D, IPhysicsCollision2DListener[]> entry in PreviouslyCollidingGameObject)
         {
-            // Call OnBulletMovementCollisionExit on all script, of the hitted gameobject, that implement the interface
+            // Call OnBulletMovementCollisionExit on all script, of the hit gameobject, that implement the interface
             if (entry.Key && !CollidingGameObjects.ContainsKey(entry.Key))
             {
                 // Call OnPhysicsObjectCollisionExit on all script, of this gameobject, that implement the interface
