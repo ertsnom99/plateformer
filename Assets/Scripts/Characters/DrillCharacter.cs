@@ -31,14 +31,13 @@ public class DrillCharacter : PossessablePawn, IPhysicsCollision2DListener
     private BurrowMovement _burrowMovementScript;
     private AudioSource _audioSource;
 
-    protected int BurrowingParamHashId = Animator.StringToHash(BurrowingParamNameString);
-    protected int BurrowXParamHashId = Animator.StringToHash(BurrowXParamNameString);
-    protected int BurrowYParamHashId = Animator.StringToHash(BurrowYParamNameString);
+    private int BurrowingParamHashId = Animator.StringToHash(BurrowingParamNameString);
+    private int BurrowXParamHashId = Animator.StringToHash(BurrowXParamNameString);
+    private int BurrowYParamHashId = Animator.StringToHash(BurrowYParamNameString);
 
-    public const string BurrowingParamNameString = "Burrowing";
-    public const string BurrowInParamNameString = "BurrowIn";
-    public const string BurrowXParamNameString = "BurrowX";
-    public const string BurrowYParamNameString = "BurrowY";
+    private const string BurrowingParamNameString = "Burrowing";
+    private const string BurrowXParamNameString = "BurrowX";
+    private const string BurrowYParamNameString = "BurrowY";
 
     protected override void Awake()
     {
@@ -63,11 +62,12 @@ public class DrillCharacter : PossessablePawn, IPhysicsCollision2DListener
     {
         UpdateMovement(inputs);
         UpdateBurrowing(inputs);
+        base.UpdateWithInputs(inputs);
+    }
 
-        if (_transitionCoroutine == null && !_burrowed)
-        {
-            base.UpdateWithInputs(inputs);
-        }
+    protected override bool CanUnpossess()
+    {
+        return _transitionCoroutine == null && !_burrowed;
     }
 
     private void UpdateMovement(Inputs inputs)

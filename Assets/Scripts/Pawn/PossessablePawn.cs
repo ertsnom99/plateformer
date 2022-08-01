@@ -96,6 +96,11 @@ public abstract class PossessablePawn : Pawn
 
     protected virtual void UpdatePossession(Inputs inputs)
     {
+        if (!CanUnpossess())
+        {
+            return;
+        }
+
         Vector2 spawnPosition = Vector2.zero;
         Vector2 spawnFacingDirection = Vector2.zero;
 
@@ -103,6 +108,11 @@ public abstract class PossessablePawn : Pawn
         {
             Unpossess(spawnPosition, spawnFacingDirection);
         }
+    }
+
+    protected virtual bool CanUnpossess()
+    {
+        return true;
     }
 
     // Returns if the area to respawn is free. The area checked is based on the facing direction of the pawn

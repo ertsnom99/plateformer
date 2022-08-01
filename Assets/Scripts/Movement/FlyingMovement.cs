@@ -81,7 +81,7 @@ public class FlyingMovement : MonoBehaviour
                 lookingForward = !SpriteRenderer.flipX;
                 break;
             case FlipType.Scale:
-                lookingForward = transform.localScale.x > 0;
+                lookingForward = transform.eulerAngles.y == 0;
                 break;
         }
 
@@ -96,7 +96,8 @@ public class FlyingMovement : MonoBehaviour
                 SpriteRenderer.flipX = !SpriteRenderer.flipX;
                 break;
             case FlipType.Scale:
-                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                float y = transform.rotation.eulerAngles.y == 0 ? 180 : 0;
+                transform.rotation = Quaternion.Euler(transform.eulerAngles.x, y, transform.eulerAngles.z);
                 break;
         }
     }
