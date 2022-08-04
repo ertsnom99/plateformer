@@ -184,10 +184,10 @@ public class PhysicsObject : MonoBehaviour
                 if (yMovement && currentNormal.y >= _minGroundNormalY)
                 {
                     IsGrounded = true;
+                    currentNormal.x = 0;
 
                     // Update ground normal
                     GroundNormal = currentNormal;
-                    currentNormal.x = 0;
                 }
                 
                 Vector2 velocityUsed = yMovement ? Vector2.up * Velocity.y : Vector2.right * Velocity.x;

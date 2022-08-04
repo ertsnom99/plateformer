@@ -5308,7 +5308,7 @@ MonoBehaviour:
   FallModifier: 1
   _minGroundNormalY: 0.4
   DebugVelocity: 0
-  _maxSpeed: 3.5
+  _maxSpeed: 4.5
   _canJump: 0
   _jumpTakeOffSpeed: 20
   _canAirborneJump: 0
